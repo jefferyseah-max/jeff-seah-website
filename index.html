@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeff Seah - Strategic Timing Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cosmic Background -->
+    <div class="cosmic-bg"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-container">
+            <div class="nav-logo">Jeff Seah</div>
+            <ul class="nav-menu">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#value">Value</a></li>
+                <li><a href="#calendar">Get Started</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+            <button class="nav-cta" onclick="scrollToSection('calendar')">Get Free Calendar</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-label fade-in">Strategic Timing Intelligence</div>
+                <h1 class="hero-title fade-in-delay-1">
+                    Timing Is Everything.<br>
+                    <span class="gold-text">Now You Can See It.</span>
+                </h1>
+                <p class="hero-subtitle fade-in-delay-2">
+                    Get your free personalized Power Calendar and discover<br>
+                    the best days to act on what matters most.
+                </p>
+                <div class="hero-note fade-in-delay-3">
+                    Based on your unique birth chart, not generic horoscopes.
+                </div>
+                <button class="hero-cta fade-in-delay-4" onclick="scrollToSection('calendar')">
+                    Get Your Free Power Calendar
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="hero-visual fade-in-delay-2">
+                <div class="orbital-system">
+                    <div class="orbit orbit-1"></div>
+                    <div class="orbit orbit-2"></div>
+                    <div class="orbit orbit-3"></div>
+                    <div class="center-star"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem" id="problem">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title reveal">
+                    Ever noticed how some days everything flows,<br>
+                    and others feel like <span class="gold-text">pushing uphill?</span>
+                </h2>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card reveal">
+                    <div class="problem-icon">⏰</div>
+                    <h3>Misaligned Timing</h3>
+                    <p>You're working hard, but the results don't match the effort. Important launches fall flat.</p>
+                </div>
+                <div class="problem-card reveal">
+                    <div class="problem-icon">🔄</div>
+                    <h3>Stalled Progress</h3>
+                    <p>Deals that should close don't. Conversations go nowhere. Momentum disappears.</p>
+                </div>
+                <div class="problem-card reveal">
+                    <div class="problem-icon">❓</div>
+                    <h3>Decision Paralysis</h3>
+                    <p>You know what to do, but not when. The uncertainty keeps you waiting, hesitating.</p>
+                </div>
+            </div>
+            <div class="problem-solution reveal">
+                <div class="solution-line"></div>
+                <p class="solution-text">
+                    It's not luck. It's not coincidence. It's <strong>timing</strong>.<br>
+                    And for thousands of years, Chinese metaphysics has been the strategic timing intelligence
+                    used by leaders, entrepreneurs, and decision-makers.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="value" id="value">
+        <div class="container">
+            <div class="value-header reveal">
+                <h2 class="section-title">What You Get</h2>
+                <p class="section-subtitle">Your personalized Power Calendar shows you exactly:</p>
+            </div>
+            <div class="value-grid">
+                <div class="value-card reveal">
+                    <div class="value-number">01</div>
+                    <h3>Favorable Days</h3>
+                    <p>The best days to schedule important meetings, launch projects, make decisions, or sign contracts.</p>
+                    <div class="value-decoration"></div>
+                </div>
+                <div class="value-card reveal">
+                    <div class="value-number">02</div>
+                    <h3>Strategic Pauses</h3>
+                    <p>Days to hold back, observe, or avoid major commitments. Sometimes the best move is no move.</p>
+                    <div class="value-decoration"></div>
+                </div>
+                <div class="value-card reveal">
+                    <div class="value-number">03</div>
+                    <h3>Personal Alignment</h3>
+                    <p>Calculated from your unique birth chart—not generic horoscopes or one-size-fits-all predictions.</p>
+                    <div class="value-decoration"></div>
+                </div>
+                <div class="value-card reveal">
+                    <div class="value-number">04</div>
+                    <h3>Monthly Insights</h3>
+                    <p>Delivered to your inbox every month, so you can plan ahead with confidence and precision.</p>
+                    <div class="value-decoration"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lead Magnet Form -->
+    <section class="calendar-form" id="calendar">
+        <div class="container">
+            <div class="form-wrapper reveal">
+                <div class="form-content">
+                    <h2 class="form-title">Get Your Free Power Calendar</h2>
+                    <p class="form-subtitle">Enter your birth details below. We'll calculate your personalized calendar and send it within 7 days.</p>
+
+                    <form class="birth-form" id="birthForm" onsubmit="handleFormSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName">Full Name</label>
+                                <input type="text" id="fullName" name="fullName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="birthDate">Date of Birth</label>
+                                <input type="date" id="birthDate" name="birthDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthTime">Time of Birth</label>
+                                <input type="time" id="birthTime" name="birthTime" required>
+                                <span class="form-hint">Be as accurate as possible</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="birthCity">City of Birth</label>
+                            <input type="text" id="birthCity" name="birthCity" placeholder="e.g., Singapore, New York, London" required>
+                        </div>
+
+                        <button type="submit" class="form-submit">
+                            Get My Free Calendar
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+
+                        <p class="form-note">No cost. No commitment. Delivered within 7 days.</p>
+                    </form>
+                </div>
+                <div class="form-visual">
+                    <div class="calendar-showcase">
+                        <div class="calendar-month">MARCH 2026</div>
+                        <div class="calendar-grid-demo">
+                            <div class="calendar-day favorable">8</div>
+                            <div class="calendar-day">9</div>
+                            <div class="calendar-day">10</div>
+                            <div class="calendar-day favorable">11</div>
+                            <div class="calendar-day">12</div>
+                            <div class="calendar-day caution">13</div>
+                            <div class="calendar-day">14</div>
+                            <div class="calendar-day favorable">15</div>
+                            <div class="calendar-day">16</div>
+                        </div>
+                        <div class="calendar-legend">
+                            <div class="legend-item">
+                                <span class="legend-dot favorable-dot"></span> Favorable
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-dot caution-dot"></span> Caution
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Steps -->
+    <section class="process" id="process">
+        <div class="container">
+            <h2 class="section-title reveal">How It Works</h2>
+            <div class="process-steps">
+                <div class="process-step reveal">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Share Your Birth Details</h3>
+                        <p>Provide your date, time, and place of birth. This is what makes your calendar uniquely yours.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="process-step reveal">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Receive Your Calendar</h3>
+                        <p>Within 7 days, get your personalized Power Calendar delivered to your inbox.</p>
+                    </div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="process-step reveal">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Time Your Actions</h3>
+                        <p>Use your calendar to schedule important activities on favorable days and gain confidence in your timing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Tiers -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="pricing-header reveal">
+                <h2 class="section-title">Investment Options</h2>
+                <p class="section-subtitle">Choose the level of guidance that fits your needs</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card reveal">
+                    <div class="pricing-label">Monthly</div>
+                    <h3 class="pricing-name">Essential</h3>
+                    <div class="pricing-price">
+                        <span class="currency">$</span>150<span class="period">/month</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Monthly Power Calendar</li>
+                        <li>Favorable day indicators</li>
+                        <li>Email delivery</li>
+                        <li>Basic timing guidance</li>
+                    </ul>
+                    <a href="#https://buy.stripe.com/aFa28t3Uz6Oq6A2fCFbwk00" class="pricing-cta-link">
+                        <button class="pricing-cta">Get Started</button>
+                    </a>
+                </div>
+
+                <div class="pricing-card reveal">
+                    <div class="pricing-label">One-Time</div>
+                    <h3 class="pricing-name">Single Session</h3>
+                    <div class="pricing-price">
+                        <span class="currency">$</span>250<span class="period">/session</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>One-on-one consultation</li>
+                        <li>Deep dive birth chart analysis</li>
+                        <li>Specific question focus</li>
+                        <li>Personalized recommendations</li>
+                    </ul>
+                    <a href="https://meeting.calendarhero.com/meeting/new/5f76b7f56d08b80020fec8d3/lifecoaching" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
+                        <button class="pricing-cta">Book Session</button>
+                    </a>
+                </div>
+
+                <div class="pricing-card featured reveal">
+                    <div class="pricing-badge">Most Popular</div>
+                    <div class="pricing-label">Monthly</div>
+                    <h3 class="pricing-name">Combo</h3>
+                    <div class="pricing-price">
+                        <span class="currency">$</span>297<span class="period">/month</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Monthly Power Calendar</li>
+                        <li>1 consultation per month</li>
+                        <li>Priority email support</li>
+                        <li>Custom timing strategies</li>
+                        <li>Quarterly deep-dive review</li>
+                    </ul>
+                    <a href="https://buy.stripe.com/4gMdRbdv96Oq2jM2PTbwk01" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
+                        <button class="pricing-cta primary">Get Started</button>
+                    </a>
+                </div>
+
+                <div class="pricing-card reveal">
+                    <div class="pricing-label">Monthly</div>
+                    <h3 class="pricing-name">Premium</h3>
+                    <div class="pricing-price">
+                        <span class="currency">$</span>397<span class="period">/month</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>Everything in Combo</li>
+                        <li>2 consultations per month</li>
+                        <li>Unlimited email support</li>
+                        <li>Real-time timing alerts</li>
+                        <li>Annual strategic planning</li>
+                    </ul>
+                    <a href="https://buy.stripe.com/aFa14pezdegS4rU4Y1bwk02" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
+                        <button class="pricing-cta">Get Started</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content reveal">
+                <div class="about-text">
+                    <h2 class="section-title">Why This Works</h2>
+                    <p class="about-intro">
+                        For over 15 years, I've been practicing and refining the art of Chinese metaphysics—not as mysticism,
+                        but as a practical framework for strategic timing.
+                    </p>
+                    <p>
+                        I don't do vague predictions or fortune-cookie wisdom. What I offer is precise, personalized guidance
+                        based on your unique birth chart. Think of it as a weather forecast for your decisions: you still choose
+                        what to do, but now you know when conditions are most favorable.
+                    </p>
+                    <p>
+                        My clients are entrepreneurs, executives, and professionals who understand that timing isn't just
+                        important—it's everything. They use their Power Calendars to schedule launches, negotiations, hiring
+                        decisions, and major announcements with confidence.
+                    </p>
+                    <div class="about-signature">
+                        <div class="signature-line"></div>
+                        <span>Jeff Seah</span>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="timeline-visual">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2010</div>
+                            <div class="timeline-desc">Began formal study</div>
+                        </div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2015</div>
+                            <div class="timeline-desc">Professional practice</div>
+                        </div>
+                        <div class="timeline-line"></div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2026</div>
+                            <div class="timeline-desc">15+ years expertise</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title reveal">Common Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How is this different from horoscopes?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Horoscopes are based on your sun sign alone—just one-twelfth of the population. Your Power Calendar is calculated from your complete birth chart: date, time, and place. It's as personalized as your fingerprint, not a generic forecast for millions of people.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What if I don't know my exact birth time?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Birth time is important for precision, but we can still provide valuable insights with an approximate time. Your birth certificate usually has this information. If you're truly unsure, we can work with what you have and adjust as needed.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>I'm skeptical. Does this actually work?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Good. Skepticism is healthy. The free Power Calendar is your chance to test it without risk. Use it for a month, notice the patterns, and decide for yourself. Most skeptics become believers after seeing the results—not because it's magic, but because the patterns are consistent and actionable.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What happens after the free calendar?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Nothing, unless you want more. The free calendar is yours to keep and use. If you find it valuable and want ongoing monthly updates or deeper consultations, you can choose one of the paid options. No pressure, no automatic charges.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item reveal">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you use I-Ching, Tarot, or other divination methods?</span>
+                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes. In addition to Chinese metaphysics and birth chart analysis, I work with I-Ching, Tarot, Lenormand, and Moon cards for specific questions and situational guidance. Each tool serves a different purpose, and I'll recommend the best approach for your needs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta">
+        <div class="container">
+            <div class="cta-content reveal">
+                <h2 class="cta-title">Start With Your Free Power Calendar</h2>
+                <p class="cta-subtitle">No cost. No commitment. Just better timing.</p>
+                <button class="cta-button" onclick="scrollToSection('calendar')">
+                    Get Started Now
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">Jeff Seah</div>
+                    <p>Strategic Timing Intelligence</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#about">About</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="mailto:hello@jeffseah.rocks">Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Jeff Seah. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
