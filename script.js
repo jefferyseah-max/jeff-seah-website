@@ -89,7 +89,7 @@ function toggleFAQ(button) {
 // ====================================
 
 // Google Sheets Web App URL - UPDATE THIS AFTER SETTING UP GOOGLE SHEETS
-const GOOGLE_SHEETS_URL = 'YOUR_GOOGLE_SHEETS_WEB_APP_URL_HERE';
+const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbx_Wb-LmRg9a9aIr72KOSniYz_HzFGQ0ampK_JLedVuYB3idr8z3AQHSc5WK8pYZJGK/exec';
 
 function handleFormSubmit(event) {
     event.preventDefault();
