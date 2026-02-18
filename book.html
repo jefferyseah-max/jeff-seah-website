@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Session — Jeff Seah</title>
+  <meta name="description" content="Book your one-on-one timing consultation with Jeff Seah. Personalized birth chart analysis and strategic timing guidance." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Design Tokens ───────────────────────────────────────────── */
+    :root {
+      --bg:          #0a0a0f;
+      --bg-card:     #111118;
+      --bg-elevated: #16161f;
+      --border:      rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(196, 160, 96, 0.35);
+      --gold:        #c4a060;
+      --gold-light:  #e2c98a;
+      --text:        #e8e4dc;
+      --text-muted:  #7a7870;
+      --text-dim:    #4a4845;
+      --serif:       'Cormorant Garamond', Georgia, serif;
+      --sans:        'DM Sans', system-ui, sans-serif;
+      --radius:      4px;
+      --glow:        0 0 60px rgba(196, 160, 96, 0.08);
+    }
+
+    /* ── Reset ───────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── Background Texture ──────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(196, 160, 96, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 90% 80%, rgba(196, 160, 96, 0.03) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Grain overlay ───────────────────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ── Layout Wrapper ──────────────────────────────────────────── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ─────────────────────────────────────────────────────── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--gold);
+    }
+
+    .nav-back {
+      font-size: 0.8125rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--gold-light); }
+
+    .nav-back svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── Hero Header ─────────────────────────────────────────────── */
+    .header {
+      text-align: center;
+      padding: 5rem 2rem 3.5rem;
+      max-width: 680px;
+      margin: 0 auto;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .header-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .header-eyebrow::before,
+    .header-eyebrow::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--border-gold);
+    }
+
+    .header h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+
+    .header h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    /* ── Divider ─────────────────────────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0 2rem 3rem;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+
+    .divider-line {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-gold));
+    }
+
+    .divider-line.right {
+      background: linear-gradient(to left, transparent, var(--border-gold));
+    }
+
+    .divider-icon {
+      color: var(--gold);
+      font-size: 1rem;
+      opacity: 0.7;
+    }
+
+    /* ── Embed Section ───────────────────────────────────────────── */
+    .embed-section {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 2rem 5rem;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+
+    .embed-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--glow), 0 24px 64px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .embed-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.5;
+    }
+
+    .embed-wrapper {
+      padding: 0;
+      min-height: 600px;
+    }
+
+    /* The CalendarHero embed itself */
+    .embed-wrapper iframe,
+    .embed-wrapper > * {
+      width: 100%;
+      min-height: 600px;
+      border: none;
+      display: block;
+    }
+
+    /* Placeholder state (remove once embed is added) */
+    .embed-placeholder {
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: var(--text-dim);
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      text-align: center;
+      padding: 3rem;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        rgba(255,255,255,0.01) 20px,
+        rgba(255,255,255,0.01) 40px
+      );
+    }
+
+    .embed-placeholder svg {
+      width: 40px;
+      height: 40px;
+      stroke: var(--text-dim);
+      fill: none;
+    }
+
+    /* ── What to Expect ──────────────────────────────────────────── */
+    .expect-section {
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .expect-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .expect-item {
+      background: var(--bg-card);
+      padding: 2rem 1.75rem;
+      transition: background 0.25s;
+    }
+
+    .expect-item:hover {
+      background: var(--bg-elevated);
+    }
+
+    .expect-number {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--gold);
+      opacity: 0.5;
+      line-height: 1;
+      margin-bottom: 0.75rem;
+    }
+
+    .expect-title {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .expect-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── Footer ──────────────────────────────────────────────────── */
+    footer {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding: 2rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 0.9375rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-link {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--gold-light); }
+
+    /* ── Animations ──────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ──────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+
+      .header { padding: 3.5rem 1.5rem 2.5rem; }
+
+      .embed-section,
+      .expect-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+
+      .expect-grid {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 0.75rem;
+        text-align: center;
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-logo { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ── Navigation ── -->
+    <nav>
+      <a href="https://jeffseah.rocks" class="nav-logo">Jeff <span>Seah</span></a>
+      <a href="https://jeffseah.rocks" class="nav-back">
+        <svg viewBox="0 0 24 24" stroke-width="1.5">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+        Back to Home
+      </a>
+    </nav>
+
+    <!-- ── Header ── -->
+    <header class="header">
+      <div class="header-eyebrow">Schedule Your Session</div>
+      <h1>A conversation guided by <em>your</em> timing</h1>
+      <p>
+        Your session is 60 minutes. Come with your questions and an open mind.
+        We'll work through your chart together and surface the timing patterns most relevant to where you are now.
+      </p>
+    </header>
+
+    <!-- ── Decorative Divider ── -->
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-icon">◈</div>
+      <div class="divider-line right"></div>
+    </div>
+
+    <!-- ── CalendarHero Embed ── -->
+    <section class="embed-section">
+      <div class="embed-card">
+        <div class="embed-wrapper">
+
+          <!-- ============================================================
+               PASTE YOUR CALENDARHERO EMBED CODE BELOW THIS COMMENT
+               Remove the placeholder div when you do.
+               ============================================================ -->
+
+       <!-- CalendarHero inline embed script begin -->
+<div class="calendarhero-inline-widget" data-url="https://meeting.calendarhero.com/meeting/new/5f76b7f56d08b80020fec8d3/lifecoaching" style="min-width:320px; height:630px;"></div>
+<script type="text/javascript" src="https://app.calendarhero.com/assets/widget.js"></script>
+<!-- CalendarHero inline embed script end -->
+
+          <!-- ============================================================
+               END OF EMBED PLACEHOLDER
+               ============================================================ -->
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── What to Expect ── -->
+    <section class="expect-section">
+      <div class="expect-grid">
+        <div class="expect-item">
+          <div class="expect-number">01</div>
+          <div class="expect-title">Before the Call</div>
+          <div class="expect-desc">Have your date, time, and place of birth ready. Think about 1–3 decisions or areas of life you want to focus on.</div>
+        </div>
+        <div class="expect-item">
+          <div class="expect-number">02</div>
+          <div class="expect-title">During the Session</div>
+          <div class="expect-desc">60 minutes of focused analysis. We'll cover your current timing cycle, favorable windows, and specific guidance for your questions.</div>
+        </div>
+        <div class="expect-item">
+          <div class="expect-number">03</div>
+          <div class="expect-title">After the Call</div>
+          <div class="expect-desc">You'll receive a summary with key dates and action points within 48 hours. Combo and Premium clients get ongoing monthly support.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer>
+      <div class="footer-brand">Jeff Seah — Strategic Timing Intelligence</div>
+      <a href="mailto:coaching@jeffseah.rocks" class="footer-link">coaching@jeffseah.rocks</a>
+      <div class="footer-copy">© 2026 Jeff Seah</div>
+    </footer>
+
+  </div>
+</body>
+</html>
