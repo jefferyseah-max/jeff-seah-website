@@ -8,6 +8,41 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <style>
+      /* Logo image: use mix-blend-mode to drop the black bg */
+      .nav-logo-img {
+        height: 44px;
+        width: 44px;
+        object-fit: contain;
+        mix-blend-mode: screen;
+        display: block;
+      }
+      .footer-logo-img {
+        height: 48px;
+        width: 48px;
+        object-fit: contain;
+        mix-blend-mode: screen;
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+      /* Fix: stack form rows on mobile */
+      @media (max-width: 640px) {
+        .form-row {
+          flex-direction: column !important;
+          gap: 0 !important;
+        }
+        .form-row .form-group {
+          width: 100% !important;
+        }
+        .form-wrapper {
+          padding: 2rem 1.25rem !important;
+        }
+        .form-content {
+          padding: 0 !important;
+        }
+      }
+    </style>
 </head>
 <body>
     <!-- Cosmic Background -->
@@ -17,7 +52,7 @@
     <!-- Navigation -->
     <nav class="nav" id="nav">
         <div class="nav-container">
-            <div class="nav-logo">Jeff Seah</div>
+            <div class="nav-logo"><img src="JS_Ceremonial_Seal_Final.png" alt="Jeff Seah" class="nav-logo-img"></div>
             <ul class="nav-menu">
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#value">Value</a></li>
@@ -466,7 +501,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="footer-logo">Jeff Seah</div>
+                    <div class="footer-logo"><img src="JS_Ceremonial_Seal_Final.png" alt="Jeff Seah" class="footer-logo-img"></div>
                     <p>Strategic Timing Intelligence</p>
                 </div>
                 <div class="footer-links">
