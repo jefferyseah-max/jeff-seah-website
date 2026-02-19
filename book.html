@@ -14,20 +14,20 @@
   <style>
     /* ── Design Tokens ───────────────────────────────────────────── */
     :root {
-      --bg:          #0a0a0f;
-      --bg-card:     #111118;
-      --bg-elevated: #16161f;
+      --bg:          #0a0e27;
+      --bg-card:     #0f1430;
+      --bg-elevated: #141938;
       --border:      rgba(255, 255, 255, 0.08);
       --border-gold: rgba(196, 160, 96, 0.35);
       --gold:        #c4a060;
       --gold-light:  #e2c98a;
       --text:        #e8e4dc;
-      --text-muted:  #7a7870;
-      --text-dim:    #4a4845;
+      --text-muted:  #7a7880;
+      --text-dim:    #4a4858;
       --serif:       'Cormorant Garamond', Georgia, serif;
       --sans:        'DM Sans', system-ui, sans-serif;
       --radius:      4px;
-      --glow:        0 0 60px rgba(196, 160, 96, 0.08);
+      --glow:        0 0 60px rgba(196, 160, 96, 0.10);
     }
 
     /* ── Reset ───────────────────────────────────────────────────── */
@@ -51,8 +51,9 @@
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(196, 160, 96, 0.06) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 90% 80%, rgba(196, 160, 96, 0.03) 0%, transparent 60%);
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(196, 160, 96, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 90% 80%, rgba(30, 50, 120, 0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 0% 50%, rgba(196, 160, 96, 0.03) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
     }
@@ -221,13 +222,14 @@
 
     .embed-card {
       background: var(--bg-card);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-gold);
       border-radius: 8px;
       overflow: hidden;
-      box-shadow: var(--glow), 0 24px 64px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--glow), 0 24px 64px rgba(0, 0, 0, 0.5);
       position: relative;
     }
 
+    /* Gold accent line at top */
     .embed-card::before {
       content: '';
       position: absolute;
@@ -236,12 +238,27 @@
       right: 0;
       height: 1px;
       background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      opacity: 0.5;
+      opacity: 0.6;
+      z-index: 2;
+    }
+
+    /* Fade overlay: softens the white widget edges into the dark background */
+    .embed-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, var(--bg-card) 0%, transparent 70px),
+        linear-gradient(to top,    var(--bg-card) 0%, transparent 70px);
+      pointer-events: none;
+      z-index: 2;
     }
 
     .embed-wrapper {
       padding: 0;
       min-height: 600px;
+      position: relative;
+      z-index: 1;
     }
 
     /* The CalendarHero embed itself */
@@ -480,10 +497,4 @@
     <!-- ── Footer ── -->
     <footer>
       <div class="footer-brand">Jeff Seah — Strategic Timing Intelligence</div>
-      <a href="mailto:coaching@jeffseah.rocks" class="footer-link">coaching@jeffseah.rocks</a>
-      <div class="footer-copy">© 2026 Jeff Seah</div>
-    </footer>
-
-  </div>
-</body>
-</html>
+      <a href="/cdn-cgi/l/email-protection#c4a7aba5a7acadaaa384aea1a2a2b7a1a5aceab6aba7afb7" class="footer-link"><span class="__cf_email__" data-cfemail="0e6d616f6d666760694e646b68687d6b6f66
