@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="styles.css">
 
     <style>
-      /* Logo image: use mix-blend-mode to drop the black bg */
       .nav-logo-img {
         height: 44px;
         width: 44px;
@@ -25,22 +24,6 @@
         mix-blend-mode: screen;
         display: block;
         margin-bottom: 0.5rem;
-      }
-      /* Fix: stack form rows on mobile */
-      @media (max-width: 640px) {
-        .form-row {
-          flex-direction: column !important;
-          gap: 0 !important;
-        }
-        .form-row .form-group {
-          width: 100% !important;
-        }
-        .form-wrapper {
-          padding: 2rem 1.25rem !important;
-        }
-        .form-content {
-          padding: 0 !important;
-        }
       }
     </style>
 </head>
