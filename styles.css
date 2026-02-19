@@ -1383,6 +1383,13 @@ body {
 
     .form-wrapper {
         grid-template-columns: 1fr;
+        padding: 2rem 1.5rem;
+        gap: 2rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
     }
 
     .form-visual {
@@ -1391,6 +1398,10 @@ body {
 
     .about-content {
         grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 0 1.25rem;
     }
 }
 
@@ -1404,17 +1415,21 @@ body {
     }
 
     .form-wrapper {
-        padding: 2rem 1.25rem;
-        gap: 2rem;
+        padding: 1.75rem 1rem;
+        gap: 1.5rem;
     }
 
     .form-row {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1.25rem;
     }
 
     .form-title {
         font-size: 1.75rem;
+    }
+
+    .form-subtitle {
+        font-size: 1rem;
     }
 
     .pricing-grid {
