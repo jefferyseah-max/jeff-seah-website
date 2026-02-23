@@ -926,9 +926,58 @@ body {
 
 .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 2rem;
 }
+
+/* Single card centered layout (One-Time tab) */
+.pricing-grid-single {
+    display: flex;
+    justify-content: center;
+}
+.pricing-grid-single .pricing-card {
+    max-width: 380px;
+    width: 100%;
+}
+
+/* Pricing tab toggle */
+.pricing-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(196, 160, 96, 0.3);
+    border-radius: 4px;
+    overflow: hidden;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+.pricing-tab {
+    padding: 0.65rem 2.5rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: transparent;
+    color: rgba(232, 228, 220, 0.45);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.pricing-tab:first-child {
+    border-right: 1px solid rgba(196, 160, 96, 0.3);
+}
+.pricing-tab.active {
+    background: rgba(196, 160, 96, 0.12);
+    color: #c4a060;
+}
+.pricing-tab:hover:not(.active) {
+    background: rgba(196, 160, 96, 0.05);
+    color: rgba(232, 228, 220, 0.7);
+}
+.pricing-panel { display: block; }
+.pricing-panel.hidden { display: none; }
 
 .pricing-card {
     background: rgba(10, 14, 39, 0.6);
