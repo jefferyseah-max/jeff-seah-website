@@ -7,24 +7,56 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=3">
-
+    <link rel="stylesheet" href="styles.css">
     <style>
-      .nav-logo-img {
-        height: 44px;
-        width: 44px;
-        object-fit: contain;
-        mix-blend-mode: screen;
-        display: block;
-      }
-      .footer-logo-img {
-        height: 48px;
-        width: 48px;
-        object-fit: contain;
-        mix-blend-mode: screen;
-        display: block;
-        margin-bottom: 0.5rem;
-      }
+        /* Pricing tab toggle */
+        .pricing-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(196, 160, 96, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .pricing-tab {
+            padding: 0.65rem 2.5rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: transparent;
+            color: rgba(232, 228, 220, 0.45);
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .pricing-tab:first-child {
+            border-right: 1px solid rgba(196, 160, 96, 0.3);
+        }
+        .pricing-tab.active {
+            background: rgba(196, 160, 96, 0.12);
+            color: #c4a060;
+        }
+        .pricing-tab:hover:not(.active) {
+            background: rgba(196, 160, 96, 0.05);
+            color: rgba(232, 228, 220, 0.7);
+        }
+        .pricing-panel { display: block; }
+        .pricing-panel.hidden { display: none; }
+
+        /* Single card centered layout for One-Time tab */
+        .pricing-grid-single {
+            display: flex;
+            justify-content: center;
+        }
+        .pricing-grid-single .pricing-card {
+            max-width: 380px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -35,7 +67,7 @@
     <!-- Navigation -->
     <nav class="nav" id="nav">
         <div class="nav-container">
-            <div class="nav-logo"><img src="JS_Ceremonial_Seal_Final.png" alt="Jeff Seah" class="nav-logo-img"></div>
+            <div class="nav-logo">Jeff Seah</div>
             <ul class="nav-menu">
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#value">Value</a></li>
@@ -44,7 +76,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
-            <button class="nav-cta" onclick="scrollToSection('calendar')">Get Free Calendar</button>
+            <button class="nav-cta" onclick="scrollToSection('calendar')">Claim Your First Month</button>
         </div>
     </nav>
 
@@ -58,14 +90,14 @@
                     <span class="gold-text">Now You Can See It.</span>
                 </h1>
                 <p class="hero-subtitle fade-in-delay-2">
-                    Get your free personalized Power Calendar and discover<br>
+                    Claim your complimentary Power Calendar and discover<br>
                     the best days to act on what matters most.
                 </p>
                 <div class="hero-note fade-in-delay-3">
                     Based on your unique birth chart, not generic horoscopes.
                 </div>
                 <button class="hero-cta fade-in-delay-4" onclick="scrollToSection('calendar')">
-                    Get Your Free Power Calendar
+                    Claim Your First Month
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -97,17 +129,17 @@
             </div>
             <div class="problem-grid">
                 <div class="problem-card reveal">
-                    <div class="problem-icon">⏰</div>
+                    <div class="problem-icon">â°</div>
                     <h3>Misaligned Timing</h3>
                     <p>You're working hard, but the results don't match the effort. Important launches fall flat.</p>
                 </div>
                 <div class="problem-card reveal">
-                    <div class="problem-icon">🔄</div>
+                    <div class="problem-icon">ðŸ”„</div>
                     <h3>Stalled Progress</h3>
                     <p>Deals that should close don't. Conversations go nowhere. Momentum disappears.</p>
                 </div>
                 <div class="problem-card reveal">
-                    <div class="problem-icon">❓</div>
+                    <div class="problem-icon">â“</div>
                     <h3>Decision Paralysis</h3>
                     <p>You know what to do, but not when. The uncertainty keeps you waiting, hesitating.</p>
                 </div>
@@ -146,7 +178,7 @@
                 <div class="value-card reveal">
                     <div class="value-number">03</div>
                     <h3>Personal Alignment</h3>
-                    <p>Calculated from your unique birth chart—not generic horoscopes or one-size-fits-all predictions.</p>
+                    <p>Calculated from your unique birth chartâ€”not generic horoscopes or one-size-fits-all predictions.</p>
                     <div class="value-decoration"></div>
                 </div>
                 <div class="value-card reveal">
@@ -164,8 +196,8 @@
         <div class="container">
             <div class="form-wrapper reveal">
                 <div class="form-content">
-                    <h2 class="form-title">Get Your Free Power Calendar</h2>
-                    <p class="form-subtitle">Enter your birth details below. We'll calculate your personalized calendar and send it within 7 days.</p>
+                    <h2 class="form-title">Claim Your Complimentary First Month</h2>
+                    <p class="form-subtitle">Enter your birth details below. We'll calculate your personalized Power Calendar and deliver it within 7 days — complimentary for your first month.</p>
 
                     <form class="birth-form" id="birthForm" onsubmit="handleFormSubmit(event)">
                         <div class="form-row">
@@ -197,13 +229,13 @@
                         </div>
 
                         <button type="submit" class="form-submit">
-                            Get My Free Calendar
+                            Claim My Complimentary Calendar
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
                         </button>
 
-                        <p class="form-note">No cost. No commitment. Delivered within 7 days.</p>
+                        <p class="form-note">Complimentary for your first month. No credit card required.</p>
                     </form>
                 </div>
                 <div class="form-visual">
@@ -273,78 +305,94 @@
                 <h2 class="section-title">Investment Options</h2>
                 <p class="section-subtitle">Choose the level of guidance that fits your needs</p>
             </div>
-            <div class="pricing-grid">
-                <div class="pricing-card reveal">
-                    <div class="pricing-label">Monthly</div>
-                    <h3 class="pricing-name">Essential</h3>
-                    <div class="pricing-price">
-                        <span class="currency">$</span>150<span class="period">/month</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>Monthly Power Calendar</li>
-                        <li>Favorable day indicators</li>
-                        <li>Email delivery</li>
-                        <li>Basic timing guidance</li>
-                    </ul>
-                    <a href="https://buy.stripe.com/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
-                        <button class="pricing-cta">Get Started</button>
-                    </a>
-                </div>
 
-                <div class="pricing-card reveal">
-                    <div class="pricing-label">One-Time</div>
-                    <h3 class="pricing-name">Single Session</h3>
-                    <div class="pricing-price">
-                        <span class="currency">$</span>250<span class="period">/session</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>One-on-one consultation</li>
-                        <li>Deep dive birth chart analysis</li>
-                        <li>Specific question focus</li>
-                        <li>Personalized recommendations</li>
-                    </ul>
-                    <a href="/book.html" class="pricing-cta-link">
-                        <button class="pricing-cta">Book Session</button>
-                    </a>
-                </div>
+            <!-- Tab Toggle -->
+            <div class="pricing-tabs reveal">
+                <button class="pricing-tab active" onclick="switchPricingTab('monthly', this)">Monthly</button>
+                <button class="pricing-tab" onclick="switchPricingTab('onetime', this)">One-Time</button>
+            </div>
 
-                <div class="pricing-card featured reveal">
-                    <div class="pricing-badge">Most Popular</div>
-                    <div class="pricing-label">Monthly</div>
-                    <h3 class="pricing-name">Combo</h3>
-                    <div class="pricing-price">
-                        <span class="currency">$</span>297<span class="period">/month</span>
+            <!-- Monthly Plans -->
+            <div class="pricing-panel" id="pricing-monthly">
+                <div class="pricing-grid">
+                    <div class="pricing-card reveal">
+                        <div class="pricing-label">Monthly</div>
+                        <h3 class="pricing-name">Essential</h3>
+                        <div class="pricing-price">
+                            <span class="currency">$</span>150<span class="period">/month</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Monthly Power Calendar</li>
+                            <li>Favorable day indicators</li>
+                            <li>Email delivery</li>
+                            <li>Basic timing guidance</li>
+                        </ul>
+                        <a href="https://buy.stripe.com/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
+                            <button class="pricing-cta">Get Started</button>
+                        </a>
                     </div>
-                    <ul class="pricing-features">
-                        <li>Monthly Power Calendar</li>
-                        <li>1 consultation per month</li>
-                        <li>Priority email support</li>
-                        <li>Custom timing strategies</li>
-                        <li>Quarterly deep-dive review</li>
-                    </ul>
-                    <a href="https://buy.stripe.com/4gMdRbdv96Oq2jM2PTbwk01" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
-                        <button class="pricing-cta primary">Get Started</button>
-                    </a>
-                </div>
 
-                <div class="pricing-card reveal">
-                    <div class="pricing-label">Monthly</div>
-                    <h3 class="pricing-name">Premium</h3>
-                    <div class="pricing-price">
-                        <span class="currency">$</span>397<span class="period">/month</span>
+                    <div class="pricing-card featured reveal">
+                        <div class="pricing-badge">Most Popular</div>
+                        <div class="pricing-label">Monthly</div>
+                        <h3 class="pricing-name">Combo</h3>
+                        <div class="pricing-price">
+                            <span class="currency">$</span>297<span class="period">/month</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Monthly Power Calendar</li>
+                            <li>1 consultation per month</li>
+                            <li>Priority email support</li>
+                            <li>Custom timing strategies</li>
+                            <li>Quarterly deep-dive review</li>
+                        </ul>
+                        <a href="https://buy.stripe.com/4gMdRbdv96Oq2jM2PTbwk01" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
+                            <button class="pricing-cta primary">Get Started</button>
+                        </a>
                     </div>
-                    <ul class="pricing-features">
-                        <li>Everything in Combo</li>
-                        <li>2 consultations per month</li>
-                        <li>Unlimited email support</li>
-                        <li>Real-time timing alerts</li>
-                        <li>Annual strategic planning</li>
-                    </ul>
-                    <a href="https://buy.stripe.com/aFa14pezdegS4rU4Y1bwk02" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
-                        <button class="pricing-cta">Get Started</button>
-                    </a>
+
+                    <div class="pricing-card reveal">
+                        <div class="pricing-label">Monthly</div>
+                        <h3 class="pricing-name">Premium</h3>
+                        <div class="pricing-price">
+                            <span class="currency">$</span>397<span class="period">/month</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Everything in Combo</li>
+                            <li>2 consultations per month</li>
+                            <li>Unlimited email support</li>
+                            <li>Real-time timing alerts</li>
+                            <li>Annual strategic planning</li>
+                        </ul>
+                        <a href="https://buy.stripe.com/aFa14pezdegS4rU4Y1bwk02" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
+                            <button class="pricing-cta">Get Started</button>
+                        </a>
+                    </div>
                 </div>
             </div>
+
+            <!-- One-Time Plan -->
+            <div class="pricing-panel hidden" id="pricing-onetime">
+                <div class="pricing-grid pricing-grid-single">
+                    <div class="pricing-card reveal">
+                        <div class="pricing-label">One-Time Investment</div>
+                        <h3 class="pricing-name">Single Session</h3>
+                        <div class="pricing-price">
+                            <span class="currency">$</span>250<span class="period">/session</span>
+                        </div>
+                        <ul class="pricing-features">
+                            <li>Focused on your most pressing decision or challenge</li>
+                            <li>Timing analysis specific to your current situation</li>
+                            <li>One-on-one 60-minute consultation</li>
+                            <li>Clear next steps you can act on right away</li>
+                        </ul>
+                        <a href="/book" class="pricing-cta-link">
+                            <button class="pricing-cta primary">Book Session</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -355,7 +403,7 @@
                 <div class="about-text">
                     <h2 class="section-title">Why This Works</h2>
                     <p class="about-intro">
-                        For over 15 years, I've been practicing and refining the art of Chinese metaphysics—not as mysticism,
+                        For over 15 years, I've been practicing and refining the art of Chinese metaphysicsâ€”not as mysticism,
                         but as a practical framework for strategic timing.
                     </p>
                     <p>
@@ -365,7 +413,7 @@
                     </p>
                     <p>
                         My clients are entrepreneurs, executives, and professionals who understand that timing isn't just
-                        important—it's everything. They use their Power Calendars to schedule launches, negotiations, hiring
+                        importantâ€”it's everything. They use their Power Calendars to schedule launches, negotiations, hiring
                         decisions, and major announcements with confidence.
                     </p>
                     <div class="about-signature">
@@ -408,7 +456,7 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Horoscopes are based on your sun sign alone—just one-twelfth of the population. Your Power Calendar is calculated from your complete birth chart: date, time, and place. It's as personalized as your fingerprint, not a generic forecast for millions of people.</p>
+                        <p>Horoscopes are based on your sun sign aloneâ€”just one-twelfth of the population. Your Power Calendar is calculated from your complete birth chart: date, time, and place. It's as personalized as your fingerprint, not a generic forecast for millions of people.</p>
                     </div>
                 </div>
 
@@ -432,19 +480,19 @@
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Good. Skepticism is healthy. The free Power Calendar is your chance to test it without risk. Use it for a month, notice the patterns, and decide for yourself. Most skeptics become believers after seeing the results—not because it's magic, but because the patterns are consistent and actionable.</p>
+                        <p>Good. Skepticism is healthy. Your complimentary first month is your chance to test it without risk. Use it for a month, notice the patterns, and decide for yourself. Most skeptics become believers after seeing the results — not because it's magic, but because the patterns are consistent and actionable.</p>
                     </div>
                 </div>
 
                 <div class="faq-item reveal">
                     <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What happens after the free calendar?</span>
+                        <span>What happens after my complimentary month?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Nothing, unless you want more. The free calendar is yours to keep and use. If you find it valuable and want ongoing monthly updates or deeper consultations, you can choose one of the paid options. No pressure, no automatic charges.</p>
+                        <p>Nothing, unless you want more. Your first month calendar is yours to keep and use. If you find it valuable and want ongoing monthly updates or deeper consultations, you can choose one of the paid plans. No pressure, no automatic charges.</p>
                     </div>
                 </div>
 
@@ -467,10 +515,10 @@
     <section class="final-cta">
         <div class="container">
             <div class="cta-content reveal">
-                <h2 class="cta-title">Start With Your Free Power Calendar</h2>
-                <p class="cta-subtitle">No cost. No commitment. Just better timing.</p>
+                <h2 class="cta-title">Claim Your Complimentary First Month</h2>
+                <p class="cta-subtitle">No credit card required. Your personalized calendar delivered within 7 days.</p>
                 <button class="cta-button" onclick="scrollToSection('calendar')">
-                    Get Started Now
+                    Claim Your First Month
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -484,7 +532,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <div class="footer-logo"><img src="JS_Ceremonial_Seal_Final.png" alt="Jeff Seah" class="footer-logo-img"></div>
+                    <div class="footer-logo">Jeff Seah</div>
                     <p>Strategic Timing Intelligence</p>
                 </div>
                 <div class="footer-links">
@@ -500,6 +548,16 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
-</body>
-</html>
+
+    <script>
+        function switchPricingTab(tab, btn) {
+            // Toggle active class on buttons
+            document.querySelectorAll('.pricing-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Show/hide panels
+            document.querySelectorAll('.pricing-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('pricing-' + tab).classList.remove('hidden');
+        }
+    </script>
+    <script
