@@ -501,13 +501,51 @@
 
     <script>
         function switchPricingTab(tab, btn) {
-            // Toggle active class on buttons
             document.querySelectorAll('.pricing-tab').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-
-            // Show/hide panels
             document.querySelectorAll('.pricing-panel').forEach(p => p.classList.add('hidden'));
             document.getElementById('pricing-' + tab).classList.remove('hidden');
         }
+        // ── Scroll reveal observer ──────────────────────────────────────
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ── Nav scroll behaviour ────────────────────────────────────────
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ── Smooth scroll to section ────────────────────────────────────
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ── FAQ accordion ───────────────────────────────────────────────
+        function toggleFAQ(btn) {
+            const item = btn.closest('.faq-item');
+            const isOpen = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!isOpen) item.classList.add('active');
+        }
+
+        // ── Form submit handler ─────────────────────────────────────────
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('.form-submit');
+            btn.textContent = 'Thank you! Calendar coming within 7 days.';
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+        }
     </script>
-    <script
+</body>
+</html>
