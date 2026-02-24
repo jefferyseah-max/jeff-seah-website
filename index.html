@@ -1464,22 +1464,22 @@
         <div class="section-label" style="justify-content:center;">Free to Start</div>
         <h2>Try Your <em>Power Calendar</em></h2>
         <p>Enter your birth details. We'll calculate your personalized Power Calendar and deliver it as a PDF to your inbox within 7 days, complimentary for your first month. No credit card required.</p>
-        <form class="lead-form" onsubmit="handleSubmit(event)">
+        <form class="lead-form" onsubmit="handleSubmit(event)" autocomplete="off">
           <div class="lead-row">
-            <input class="lead-input" id="leadName" type="text" placeholder="Full Name" required />
-            <input class="lead-input" id="leadEmail" type="email" placeholder="Email Address" required />
+            <input class="lead-input" id="leadName" type="text" placeholder="Full Name" autocomplete="off" required />
+            <input class="lead-input" id="leadEmail" type="email" placeholder="Email Address" autocomplete="off" required />
           </div>
           <div class="lead-row">
             <div class="lead-field">
-              <label class="lead-above-label" for="birthDate">Date of Birth</label>
-              <input class="lead-input" id="birthDate" type="date" required />
+              <label class="lead-above-label" for="dob">Date of Birth</label>
+              <input class="lead-input" id="dob" type="date" autocomplete="off" required />
             </div>
             <div class="lead-field">
-              <label class="lead-above-label" for="birthTime">Time of Birth</label>
-              <input class="lead-input" id="birthTime" type="time" required />
+              <label class="lead-above-label" for="tob">Time of Birth</label>
+              <input class="lead-input" id="tob" type="time" autocomplete="off" required />
             </div>
           </div>
-          <input class="lead-input" id="birthCity" type="text" placeholder="City of Birth (e.g. Singapore, London, New York)" required />
+          <input class="lead-input" id="cob" type="text" placeholder="City of Birth (e.g. Singapore, London, New York)" autocomplete="off" required />
           <button type="submit" class="lead-submit" id="submitBtn">
             Try My Power Calendar
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1951,9 +1951,9 @@
       const payload = {
         name:      document.getElementById('leadName').value,
         email:     document.getElementById('leadEmail').value,
-        birthDate: document.getElementById('birthDate').value,
-        birthTime: document.getElementById('birthTime').value,
-        birthCity: document.getElementById('birthCity').value
+        birthDate: document.getElementById('dob').value,
+        birthTime: document.getElementById('tob').value,
+        birthCity: document.getElementById('cob').value
       };
 
       try {
