@@ -6,38 +6,35 @@
   <title>Book a Session — Jeff Seah</title>
   <meta name="description" content="Book your one-on-one timing consultation with Jeff Seah. Personalized birth chart analysis and strategic timing guidance." />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Serif+TC:wght@300;400&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── Design Tokens ───────────────────────────────────────────── */
+    /* ── Tokens ── */
     :root {
-      --bg:          #0a0e27;
-      --bg-card:     #0f1430;
-      --bg-elevated: #141938;
-      --border:      rgba(255, 255, 255, 0.08);
-      --border-gold: rgba(196, 160, 96, 0.35);
-      --gold:        #c4a060;
-      --gold-light:  #e2c98a;
-      --text:        #e8e4dc;
-      --text-muted:  #7a7880;
-      --text-dim:    #4a4858;
-      --serif:       'Cormorant Garamond', Georgia, serif;
-      --sans:        'DM Sans', system-ui, sans-serif;
-      --radius:      4px;
-      --glow:        0 0 60px rgba(196, 160, 96, 0.10);
+      --void:       #05070f;
+      --deep:       #080c1a;
+      --midnight:   #0d1225;
+      --gold:       #c9943a;
+      --gold-light: #e8bc6a;
+      --gold-dim:   rgba(201,148,58,0.35);
+      --text:       #ede8df;
+      --text-muted: #7a7468;
+      --text-dim:   #3a3830;
+      --border:     rgba(201,148,58,0.10);
+      --border-mid: rgba(201,148,58,0.22);
+      --serif:      'Cormorant Garamond', Georgia, serif;
+      --sans:       'DM Sans', system-ui, sans-serif;
+      --noto:       'Noto Serif TC', serif;
     }
 
-    /* ── Reset ───────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
       font-family: var(--sans);
-      background: var(--bg);
+      background: var(--void);
       color: var(--text);
       min-height: 100vh;
       line-height: 1.6;
@@ -45,32 +42,28 @@
       overflow-x: hidden;
     }
 
-    /* ── Background Texture ──────────────────────────────────────── */
+    /* ── Star field ── */
+    #stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* ── Ambient glow ── */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(196, 160, 96, 0.08) 0%, transparent 70%),
-        radial-gradient(ellipse 40% 40% at 90% 80%, rgba(30, 50, 120, 0.15) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 40% at 0% 50%, rgba(196, 160, 96, 0.03) 0%, transparent 60%);
+        radial-gradient(ellipse 70% 50% at 50% -5%, rgba(201,148,58,0.07) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 80% 90%, rgba(20,40,100,0.12) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
     }
 
-    /* ── Grain overlay ───────────────────────────────────────────── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.6;
-    }
-
-    /* ── Layout Wrapper ──────────────────────────────────────────── */
+    /* ── Layout ── */
     .page {
       position: relative;
       z-index: 1;
@@ -79,269 +72,369 @@
       flex-direction: column;
     }
 
-    /* ── Nav ─────────────────────────────────────────────────────── */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+    }
+
+    /* ── Nav ── */
     nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 1.5rem 3rem;
       border-bottom: 1px solid var(--border);
-      background: rgba(10, 10, 15, 0.7);
-      backdrop-filter: blur(12px);
+      background: rgba(5,7,15,0.75);
+      backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
-    .nav-logo {
-      font-family: var(--serif);
-      font-size: 1.25rem;
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .nav-logo span {
-      color: var(--gold);
+    .nav-logo-img {
+      height: 38px;
+      width: 38px;
+      object-fit: contain;
+      mix-blend-mode: screen;
+      display: block;
     }
 
     .nav-back {
-      font-size: 0.8125rem;
-      font-weight: 300;
+      font-size: 0.75rem;
+      font-weight: 400;
       color: var(--text-muted);
       text-decoration: none;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      transition: color 0.2s;
+      transition: color 0.25s;
     }
-
     .nav-back:hover { color: var(--gold-light); }
-
     .nav-back svg {
-      width: 14px;
-      height: 14px;
-      stroke: currentColor;
-      fill: none;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+      width: 14px; height: 14px;
+      stroke: currentColor; fill: none;
+      stroke-linecap: round; stroke-linejoin: round;
     }
 
-    /* ── Hero Header ─────────────────────────────────────────────── */
-    .header {
+    /* ── Hero ── */
+    .hero {
+      padding: 6rem 2rem 4rem;
       text-align: center;
-      padding: 5rem 2rem 3.5rem;
       max-width: 680px;
       margin: 0 auto;
       animation: fadeUp 0.7s ease both;
     }
 
-    .header-eyebrow {
-      font-size: 0.75rem;
+    .eyebrow {
+      font-size: 0.7rem;
       font-weight: 400;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 1rem;
     }
-
-    .header-eyebrow::before,
-    .header-eyebrow::after {
+    .eyebrow::before, .eyebrow::after {
       content: '';
       display: block;
-      width: 40px;
+      width: 36px;
       height: 1px;
-      background: var(--border-gold);
+      background: var(--gold-dim);
     }
 
-    .header h1 {
+    .hero h1 {
       font-family: var(--serif);
-      font-size: clamp(2.25rem, 5vw, 3.5rem);
+      font-size: clamp(2.25rem, 5vw, 3.75rem);
       font-weight: 300;
       line-height: 1.15;
-      letter-spacing: -0.01em;
       color: var(--text);
       margin-bottom: 1.25rem;
     }
-
-    .header h1 em {
+    .hero h1 em {
       font-style: italic;
       color: var(--gold-light);
     }
 
-    .header p {
+    .hero-sub {
       font-size: 1rem;
       font-weight: 300;
       color: var(--text-muted);
-      line-height: 1.7;
-      max-width: 480px;
-      margin: 0 auto;
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
     }
 
-    /* ── Divider ─────────────────────────────────────────────────── */
+    /* ── Price anchor ── */
+    .price-anchor {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.375rem;
+      background: rgba(201,148,58,0.07);
+      border: 1px solid var(--border-mid);
+      border-radius: 4px;
+      padding: 0.6rem 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .price-anchor .amount {
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--gold-light);
+      line-height: 1;
+    }
+    .price-anchor .label {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    /* ── Primary CTA ── */
+    .cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--gold);
+      color: var(--void);
+      border: 1px solid var(--gold);
+      padding: 1rem 2.75rem;
+      border-radius: 4px;
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 24px rgba(201,148,58,0.22);
+    }
+    .cta-primary:hover {
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(201,148,58,0.38);
+    }
+    .cta-primary svg {
+      transition: transform 0.3s ease;
+    }
+    .cta-primary:hover svg {
+      transform: translateX(4px);
+    }
+
+    .cta-note {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Divider ── */
     .divider {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 1rem;
-      padding: 0 2rem 3rem;
-      animation: fadeUp 0.7s 0.1s ease both;
+      padding: 1rem 2rem 3.5rem;
     }
-
     .divider-line {
-      width: 80px;
+      flex: 1;
+      max-width: 120px;
       height: 1px;
-      background: linear-gradient(to right, transparent, var(--border-gold));
+      background: linear-gradient(to right, transparent, var(--gold-dim));
+    }
+    .divider-line.r { background: linear-gradient(to left, transparent, var(--gold-dim)); }
+    .divider-glyph {
+      font-family: var(--noto);
+      font-size: 1.1rem;
+      color: rgba(201,148,58,0.35);
     }
 
-    .divider-line.right {
-      background: linear-gradient(to left, transparent, var(--border-gold));
-    }
-
-    .divider-icon {
-      color: var(--gold);
-      font-size: 1rem;
-      opacity: 0.7;
-    }
-
-    /* ── Embed Section ───────────────────────────────────────────── */
-    .embed-section {
-      max-width: 900px;
-      width: 100%;
-      margin: 0 auto;
+    /* ── What to expect ── */
+    .expect {
       padding: 0 2rem 5rem;
-      animation: fadeUp 0.7s 0.2s ease both;
+      animation: fadeUp 0.7s 0.15s ease both;
     }
 
-    .embed-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-gold);
-      border-radius: 8px;
-      box-shadow: var(--glow), 0 24px 64px rgba(0, 0, 0, 0.5);
-      position: relative;
-    }
-
-    /* Gold accent line at top */
-    .embed-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      opacity: 0.6;
-      z-index: 2;
-    }
-
-
-
-    .embed-wrapper {
-      padding: 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* The CalendarHero embed itself */
-    .embed-wrapper iframe,
-    .embed-wrapper > * {
-      width: 100%;
-      border: none;
-      display: block;
-    }
-
-    /* Placeholder state (remove once embed is added) */
-    .embed-placeholder {
-      min-height: 600px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      color: var(--text-dim);
-      font-family: var(--sans);
-      font-size: 0.875rem;
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
       text-align: center;
-      padding: 3rem;
-      background: repeating-linear-gradient(
-        45deg,
-        transparent,
-        transparent 20px,
-        rgba(255,255,255,0.01) 20px,
-        rgba(255,255,255,0.01) 40px
-      );
-    }
-
-    .embed-placeholder svg {
-      width: 40px;
-      height: 40px;
-      stroke: var(--text-dim);
-      fill: none;
-    }
-
-    /* ── What to Expect ──────────────────────────────────────────── */
-    .expect-section {
-      max-width: 900px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 2rem 6rem;
-      animation: fadeUp 0.7s 0.3s ease both;
+      margin-bottom: 2.5rem;
+      opacity: 0.8;
     }
 
     .expect-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+      border: 1px solid var(--border-mid);
+      border-radius: 10px;
       overflow: hidden;
+      background: var(--border);
+      gap: 1px;
     }
 
     .expect-item {
-      background: var(--bg-card);
+      background: var(--deep);
       padding: 2rem 1.75rem;
       transition: background 0.25s;
     }
-
-    .expect-item:hover {
-      background: var(--bg-elevated);
-    }
+    .expect-item:hover { background: var(--midnight); }
 
     .expect-number {
       font-family: var(--serif);
-      font-size: 2rem;
+      font-size: 1.875rem;
       font-weight: 300;
       color: var(--gold);
-      opacity: 0.5;
+      opacity: 0.35;
       line-height: 1;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.875rem;
     }
 
     .expect-title {
-      font-size: 0.8125rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.625rem;
     }
 
     .expect-desc {
       font-size: 0.875rem;
       font-weight: 300;
       color: var(--text-muted);
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
-    /* ── Footer ──────────────────────────────────────────────────── */
+    /* ── Value props ── */
+    .value {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem 6rem;
+      animation: fadeUp 0.7s 0.25s ease both;
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border-mid);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .value-item {
+      background: var(--deep);
+      padding: 1.75rem;
+      display: flex;
+      gap: 1.125rem;
+      align-items: flex-start;
+      transition: background 0.25s;
+    }
+    .value-item:hover { background: var(--midnight); }
+
+    .value-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border-mid);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--noto);
+      font-size: 1rem;
+      color: var(--gold);
+      background: rgba(201,148,58,0.05);
+      margin-top: 2px;
+    }
+
+    .value-text h4 {
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.375rem;
+    }
+
+    .value-text p {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ── Second CTA block ── */
+    .cta-block {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 2rem 8rem;
+      text-align: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+
+    .cta-block-inner {
+      border: 1px solid var(--border-mid);
+      border-radius: 12px;
+      padding: 3.5rem 2rem;
+      background: var(--deep);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-block-inner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.5;
+    }
+
+    .cta-block-glyph {
+      font-family: var(--noto);
+      font-size: 5rem;
+      color: rgba(201,148,58,0.06);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+
+    .cta-block h2 {
+      font-family: var(--serif);
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 0.875rem;
+      line-height: 1.2;
+    }
+    .cta-block h2 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .cta-block p {
+      font-size: 0.9375rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 460px;
+      margin: 0 auto 2.25rem;
+      line-height: 1.75;
+    }
+
+    /* ── Footer ── */
     footer {
       margin-top: auto;
       border-top: 1px solid var(--border);
@@ -353,148 +446,218 @@
 
     .footer-brand {
       font-family: var(--serif);
-      font-size: 0.9375rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
       font-weight: 300;
     }
 
-    .footer-copy {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      letter-spacing: 0.04em;
-    }
-
     .footer-link {
-      font-size: 0.8125rem;
-      color: var(--text-muted);
+      font-size: 0.8rem;
+      color: var(--text-dim);
       text-decoration: none;
+      letter-spacing: 0.04em;
       transition: color 0.2s;
     }
-
     .footer-link:hover { color: var(--gold-light); }
 
-    /* ── Animations ──────────────────────────────────────────────── */
+    /* ── Animation ── */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Responsive ──────────────────────────────────────────────── */
+    /* ── Responsive ── */
     @media (max-width: 768px) {
       nav { padding: 1.25rem 1.5rem; }
-
-      .header { padding: 3.5rem 1.5rem 2.5rem; }
-
-      .embed-section,
-      .expect-section { padding-left: 1.25rem; padding-right: 1.25rem; }
-
-      .expect-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .calendarhero-inline-widget {
-        height: 900px !important;
-      }
-
-      footer {
-        flex-direction: column;
-        gap: 0.75rem;
-        text-align: center;
-        padding: 1.5rem;
-      }
+      .hero { padding: 4rem 1.5rem 3rem; }
+      .expect-grid { grid-template-columns: 1fr; }
+      .value-grid  { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; padding: 1.5rem; }
     }
 
     @media (max-width: 480px) {
       nav { padding: 1rem 1.25rem; }
-      .nav-logo { font-size: 1.1rem; }
-    }
-
-    /* Logo image */
-    .nav-logo-img {
-      height: 40px;
-      width: 40px;
-      object-fit: contain;
-      mix-blend-mode: screen;
-      display: block;
+      .cta-block-inner { padding: 2.5rem 1.25rem; }
     }
   </style>
 </head>
 <body>
+
+  <!-- Stars -->
+  <canvas id="stars"></canvas>
+
   <div class="page">
 
-    <!-- ── Navigation ── -->
+    <!-- Nav -->
     <nav>
-      <a href="https://jeffseah.rocks" class="nav-logo"><img src="JS_Ceremonial_Seal_Final.png" alt="Jeff Seah" class="nav-logo-img"></a>
+      <a href="https://jeffseah.rocks">
+        <img src="JS_Ceremonial_Seal_Final.png" alt="Jeff Seah" class="nav-logo-img">
+      </a>
       <a href="https://jeffseah.rocks" class="nav-back">
-        <svg viewBox="0 0 24 24" stroke-width="1.5">
-          <polyline points="15 18 9 12 15 6"/>
-        </svg>
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
         Back to Home
       </a>
     </nav>
 
-    <!-- ── Header ── -->
-    <header class="header">
-      <div class="header-eyebrow">Schedule Your Session</div>
-      <h1>A conversation guided by <em>your</em> timing</h1>
-      <p>
-        Your session is 60 minutes. Come with your questions and an open mind.
-        We'll work through your chart together and surface the timing patterns most relevant to where you are now.
+    <!-- Hero -->
+    <header class="hero">
+      <div class="eyebrow">One-on-One Session</div>
+      <h1>A conversation guided<br>by <em>your</em> timing</h1>
+      <p class="hero-sub">
+        60 minutes. Your birth chart. Your most pressing decisions.
+        We surface the timing patterns that are active right now and show you exactly when to move.
       </p>
+
+      <div class="price-anchor">
+        <span class="amount">$197</span>
+        <span class="label">USD &nbsp;·&nbsp; single session</span>
+      </div>
+
+      <div>
+        <a href="https://meeting.calendarhero.com/meeting/new/5f76b7f56d08b80020fec8d3/lifecoaching"
+           target="_blank" rel="noopener noreferrer" class="cta-primary">
+          Reserve Your Session
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p class="cta-note">Payment collected at booking. 48-hour reschedule policy.</p>
+      </div>
     </header>
 
-    <!-- ── Decorative Divider ── -->
+    <!-- Divider -->
     <div class="divider">
       <div class="divider-line"></div>
-      <div class="divider-icon">◈</div>
-      <div class="divider-line right"></div>
+      <div class="divider-glyph">時</div>
+      <div class="divider-line r"></div>
     </div>
 
-    <!-- ── CalendarHero Embed ── -->
-    <section class="embed-section">
-      <div class="embed-card">
-        <div class="embed-wrapper">
-
-          <!-- ============================================================
-               PASTE YOUR CALENDARHERO EMBED CODE BELOW THIS COMMENT
-               Remove the placeholder div when you do.
-               ============================================================ -->
-
-       <!-- CalendarHero inline embed script begin -->
-<div class="calendarhero-inline-widget" data-url="https://meeting.calendarhero.com/meeting/new/5f76b7f56d08b80020fec8d3/meeting" style="min-width:320px; height:800px;"></div>
-<script type="text/javascript" src="https://app.calendarhero.com/assets/widget.js"></script>
-<!-- CalendarHero inline embed script end -->
-
-          <!-- ============================================================
-               END OF EMBED PLACEHOLDER
-               ============================================================ -->
-
+    <!-- What to expect -->
+    <section class="expect">
+      <div class="container">
+        <div class="section-label">What to Expect</div>
+        <div class="expect-grid">
+          <div class="expect-item">
+            <div class="expect-number">01</div>
+            <div class="expect-title">Before the Call</div>
+            <div class="expect-desc">Have your date, time, and place of birth ready. Think about 1–3 decisions or areas of life you want to focus on.</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-number">02</div>
+            <div class="expect-title">During the Session</div>
+            <div class="expect-desc">60 minutes of focused analysis. Your current timing cycle, favorable windows, and specific guidance for your questions.</div>
+          </div>
+          <div class="expect-item">
+            <div class="expect-number">03</div>
+            <div class="expect-title">After the Call</div>
+            <div class="expect-desc">A PDF summary with key dates and action points delivered within 48 hours. Combo and Premium clients get ongoing monthly support.</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ── What to Expect ── -->
-    <section class="expect-section">
-      <div class="expect-grid">
-        <div class="expect-item">
-          <div class="expect-number">01</div>
-          <div class="expect-title">Before the Call</div>
-          <div class="expect-desc">Have your date, time, and place of birth ready. Think about 1–3 decisions or areas of life you want to focus on.</div>
+    <!-- Value props -->
+    <section class="value">
+      <div class="section-label" style="margin-bottom:2rem;">What This Session Covers</div>
+      <div class="value-grid">
+        <div class="value-item">
+          <div class="value-icon">命</div>
+          <div class="value-text">
+            <h4>Your Current Cycle</h4>
+            <p>Where you are in your 10-year luck pillar and what that means for the decisions in front of you right now.</p>
+          </div>
         </div>
-        <div class="expect-item">
-          <div class="expect-number">02</div>
-          <div class="expect-title">During the Session</div>
-          <div class="expect-desc">60 minutes of focused analysis. We'll cover your current timing cycle, favorable windows, and specific guidance for your questions.</div>
+        <div class="value-item">
+          <div class="value-icon">時</div>
+          <div class="value-text">
+            <h4>Favorable Windows</h4>
+            <p>The specific dates and periods in the coming months when your timing is aligned for launches, negotiations, or major moves.</p>
+          </div>
         </div>
-        <div class="expect-item">
-          <div class="expect-number">03</div>
-          <div class="expect-title">After the Call</div>
-          <div class="expect-desc">You'll receive a summary with key dates and action points within 48 hours. Combo and Premium clients get ongoing monthly support.</div>
+        <div class="value-item">
+          <div class="value-icon">運</div>
+          <div class="value-text">
+            <h4>Caution Periods</h4>
+            <p>When to hold back, observe, and avoid committing. Knowing when not to move is just as valuable as knowing when to act.</p>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">策</div>
+          <div class="value-text">
+            <h4>Your Specific Questions</h4>
+            <p>Bring your real decisions. Career, business, relationships, investments. The session is built around what matters most to you.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ── Footer ── -->
+    <!-- Second CTA -->
+    <section class="cta-block">
+      <div class="cta-block-inner">
+        <span class="cta-block-glyph">易</span>
+        <h2>Ready to see your<br><em>timing with clarity?</em></h2>
+        <p>
+          Select a time that works for you. Payment is collected at booking.
+          A Google Meet link is sent automatically once confirmed.
+        </p>
+        <a href="https://meeting.calendarhero.com/meeting/new/5f76b7f56d08b80020fec8d3/lifecoaching"
+           target="_blank" rel="noopener noreferrer" class="cta-primary">
+          Reserve Your Session
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <p class="cta-note" style="margin-top:1.25rem;">$197 USD &nbsp;·&nbsp; 60 minutes &nbsp;·&nbsp; 48-hour reschedule policy</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
       <div class="footer-brand">Jeff Seah — Strategic Timing Intelligence</div>
-      <a href="/cdn-cgi/l/email-protection#c4a7aba5a7acadaaa384aea1a2a2b7a1a5aceab6aba7afb7" class="footer-link"><span class="__cf_email__" data-cfemail="0e6d616f6d666760694e646b68687d6b6f66
+      <a href="mailto:jeff@jeffseah.rocks" class="footer-link">jeff@jeffseah.rocks</a>
+    </footer>
+
+  </div>
+
+  <script>
+    // ── Star field ──
+    const canvas = document.getElementById('stars');
+    const ctx    = canvas.getContext('2d');
+    let stars    = [];
+
+    function resize() {
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function initStars(n) {
+      stars = Array.from({ length: n }, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.2 + 0.2,
+        a: Math.random(),
+        speed: Math.random() * 0.004 + 0.002,
+        phase: Math.random() * Math.PI * 2
+      }));
+    }
+
+    function drawStars(t) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      stars.forEach(s => {
+        const alpha = s.a * (0.4 + 0.6 * Math.sin(t * s.speed + s.phase));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(drawStars);
+    }
+
+    resize();
+    initStars(160);
+    requestAnimationFrame(drawStars);
+    window.addEventListener('resize', () => { resize(); initStars(160); });
+  </script>
+
+</body>
+</html>
