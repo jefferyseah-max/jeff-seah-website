@@ -1,551 +1,1977 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeff Seah - Strategic Timing Intelligence</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeff Seah — Strategic Timing Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --void: #05070f;
+      --deep: #080c1a;
+      --midnight: #0d1225;
+      --gold: #c9943a;
+      --gold-light: #e8bc6a;
+      --gold-dim: rgba(201,148,58,0.25);
+      --jade: #4a7c6f;
+      --crimson: #8b1a1a;
+      --text: #ede8df;
+      --text-muted: #7a7468;
+      --text-dim: #3a3830;
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+      --mono: 'Space Mono', monospace;
+      --noto: 'Noto Serif TC', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--void);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Noise Overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.5;
+    }
+
+    /* ── Star Field ── */
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle var(--d, 4s) ease-in-out infinite var(--delay, 0s);
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--min-op, 0.1); transform: scale(1); }
+      50% { opacity: var(--max-op, 0.8); transform: scale(1.3); }
+    }
+
+    /* ── I-Ching Hexagram Texture ── */
+    .hexagram-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg width='80' height='96' viewBox='0 0 80 96' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9943a' fill-rule='evenodd'%3E%3Crect x='8' y='8' width='64' height='4'/%3E%3Crect x='8' y='20' width='64' height='4'/%3E%3Crect x='8' y='32' width='28' height='4'/%3E%3Crect x='44' y='32' width='28' height='4'/%3E%3Crect x='8' y='44' width='64' height='4'/%3E%3Crect x='8' y='56' width='28' height='4'/%3E%3Crect x='44' y='56' width='28' height='4'/%3E%3Crect x='8' y='68' width='64' height='4'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 160px 192px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      padding: 0.875rem 2rem;
+      border-radius: 100px;
+      background: rgba(5,7,15,0.4);
+      border: 1px solid rgba(201,148,58,0.15);
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+      white-space: nowrap;
+    }
+    nav.scrolled {
+      background: rgba(5,7,15,0.85);
+      border-color: rgba(201,148,58,0.3);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--gold-light);
+      letter-spacing: 0.06em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold-light); transform: translateY(-1px); }
+    .nav-cta {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--void);
+      background: var(--gold);
+      border: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .nav-cta:hover {
+      transform: scale(1.03) translateY(-1px);
+      box-shadow: 0 8px 24px rgba(201,148,58,0.4);
+      background: var(--gold-light);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100dvh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Compass Container */
+    .compass-container {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .compass-wrapper {
+      position: relative;
+      width: min(75vw, 75vh);
+      height: min(75vw, 75vh);
+      opacity: 0.75;
+    }
+
+    .compass-ring-outer {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid rgba(201,148,58,0.6);
+      animation: compassSpin 120s linear infinite;
+    }
+
+    .compass-ring-mid {
+      position: absolute;
+      inset: 8%;
+      border-radius: 50%;
+      border: 1px solid rgba(201,148,58,0.4);
+      animation: compassSpin 80s linear infinite reverse;
+    }
+
+    .compass-ring-inner {
+      position: absolute;
+      inset: 18%;
+      border-radius: 50%;
+      border: 1px solid rgba(201,148,58,0.3);
+      animation: compassSpin 60s linear infinite;
+    }
+
+    .compass-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      animation: compassSpin 180s linear infinite;
+    }
+
+    .compass-center {
+      position: absolute;
+      inset: 30%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,148,58,0.08) 0%, transparent 70%);
+      border: 1px solid rgba(201,148,58,0.2);
+      animation: compassSpin 90s linear infinite reverse;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .compass-center-glyph {
+      font-family: var(--noto);
+      font-size: 2rem;
+      color: var(--gold);
+      opacity: 0.6;
+      animation: compassSpin 90s linear infinite; /* counter-rotate to stay still */
+    }
+
+    @keyframes compassSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes counterSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    /* Degree ticks on the compass */
+    .tick {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; left: 0;
+    }
+
+    /* Hero gradient */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 50% 50%, transparent 30%, var(--void) 80%),
+        linear-gradient(to top, var(--void) 0%, transparent 50%),
+        linear-gradient(to bottom, var(--void) 0%, transparent 30%);
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      padding: 0 6rem 6rem;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s ease both;
+    }
+    .hero-eyebrow::before {
+      content: '易';
+      font-family: var(--noto);
+      font-size: 1rem;
+      color: var(--gold);
+    }
+
+    .hero-title {
+      font-family: var(--sans);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.5s ease both;
+    }
+
+    .hero-title-drama {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1;
+      color: var(--gold-light);
+      display: block;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.7s ease both;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 460px;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s 0.9s ease both;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--gold);
+      color: var(--void);
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 100px;
+      font-family: var(--sans);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+      opacity: 0;
+      animation: fadeUp 1s 1.1s ease both;
+      text-decoration: none;
+    }
+    .hero-cta:hover {
+      transform: scale(1.03) translateY(-2px);
+      box-shadow: 0 12px 40px rgba(201,148,58,0.5);
+      background: var(--gold-light);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 6rem;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s 1.5s ease both;
+    }
+    .hero-scroll span {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.5); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold-dim);
+    }
+
+    /* ── PROBLEM / BRIDGE ── */
+    .bridge {
+      padding: 10rem 0 8rem;
+      background: linear-gradient(to bottom, var(--void), var(--deep));
+    }
+
+    .bridge-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .bridge-left h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 4vw, 3.75rem);
+      font-weight: 300;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .bridge-left h2 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .bridge-left p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.8;
+    }
+
+    .bridge-right {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .bridge-card {
+      padding: 1.75rem 2rem;
+      border: 1px solid rgba(201,148,58,0.12);
+      border-radius: 1rem;
+      background: rgba(201,148,58,0.03);
+      transition: all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+      cursor: default;
+    }
+    .bridge-card:hover {
+      border-color: rgba(201,148,58,0.3);
+      background: rgba(201,148,58,0.06);
+      transform: translateX(8px);
+    }
+    .bridge-card-glyph {
+      font-family: var(--noto);
+      font-size: 1.5rem;
+      color: var(--gold);
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+    .bridge-card h3 {
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .bridge-card p {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── VALUE / FEATURES ── */
+    .features {
+      padding: 8rem 0;
+      background: var(--deep);
+    }
+
+    .features-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    .features-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .features-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: rgba(201,148,58,0.08);
+      border: 1px solid rgba(201,148,58,0.08);
+      border-radius: 1.5rem;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--deep);
+      padding: 3rem 2.5rem;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .feature-card:hover { background: var(--midnight); }
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-number {
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .feature-glyph {
+      font-family: var(--noto);
+      font-size: 2rem;
+      color: var(--gold);
+      opacity: 0.5;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .feature-card h3 {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Typewriter card */
+    .typewriter-feed {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--gold);
+      line-height: 2;
+      margin-top: 1rem;
+      min-height: 80px;
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 0.9em;
+      background: var(--gold);
+      animation: blink 1s step-end infinite;
+      vertical-align: middle;
+      margin-left: 1px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* Calendar demo card */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-top: 1rem;
+    }
+    .cal-day-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      text-align: center;
+      padding: 4px 0;
+      letter-spacing: 0.05em;
+    }
+    .cal-day {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      border: 1px solid rgba(201,148,58,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      transition: all 0.3s;
+    }
+    .cal-day.favorable {
+      background: rgba(201,148,58,0.2);
+      border-color: var(--gold);
+      color: var(--gold-light);
+    }
+    .cal-day.caution {
+      background: rgba(139,26,26,0.2);
+      border-color: rgba(139,26,26,0.5);
+      color: rgba(220,100,100,0.8);
+    }
+    .cal-day.active {
+      background: var(--gold);
+      color: var(--void);
+      border-color: var(--gold);
+      transform: scale(1.1);
+    }
+
+    /* ── PHILOSOPHY / MANIFESTO ── */
+    .manifesto {
+      padding: 10rem 0;
+      background: var(--void);
+      position: relative;
+      overflow: hidden;
+    }
+    .manifesto-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+    .manifesto-bg-glyph {
+      font-family: var(--noto);
+      font-size: 40vw;
+      color: var(--gold);
+      line-height: 1;
+      user-select: none;
+    }
+    .manifesto-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+    }
+    .manifesto-neutral {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+    .manifesto-bold {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+    .manifesto-bold em {
+      color: var(--gold-light);
+      font-style: italic;
+    }
+    .manifesto-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-top: 2rem;
+      max-width: 500px;
+      line-height: 1.7;
+    }
+
+    /* ── PROCESS ── */
+    .process {
+      padding: 8rem 0;
+      background: linear-gradient(to bottom, var(--void), var(--deep));
+    }
+    .process-header {
+      margin-bottom: 5rem;
+    }
+    .process-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: var(--text);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 2.5rem;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .step-num {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      border: 1px solid rgba(201,148,58,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--gold);
+      background: var(--deep);
+      position: relative;
+      z-index: 1;
+    }
+    .step-glyph {
+      font-family: var(--noto);
+      font-size: 0.9rem;
+      position: absolute;
+      top: -0.5rem;
+      right: -0.5rem;
+      color: var(--gold);
+      opacity: 0.6;
+    }
+    .process-step h3 {
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .process-step p {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── PRICING ── */
+    .pricing {
+      padding: 8rem 0;
+      background: var(--deep);
+    }
+    .pricing-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    .pricing-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .pricing-header p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .pricing-card {
+      border: 1px solid rgba(201,148,58,0.15);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      background: var(--void);
+      transition: all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+      position: relative;
+      overflow: hidden;
+    }
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+    .pricing-card:hover {
+      border-color: rgba(201,148,58,0.35);
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+    .pricing-card.featured {
+      border-color: rgba(201,148,58,0.4);
+      background: linear-gradient(160deg, rgba(201,148,58,0.08) 0%, var(--void) 60%);
+      transform: scale(1.03);
+    }
+    .pricing-card.featured:hover {
+      transform: scale(1.03) translateY(-8px);
+    }
+    .pricing-badge {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--void);
+      background: var(--gold);
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+    }
+    .pricing-tier {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+    .pricing-name {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .pricing-amount {
+      font-family: var(--serif);
+      font-size: 3.5rem;
+      font-weight: 300;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .pricing-amount sup {
+      font-size: 1.5rem;
+      vertical-align: super;
+    }
+    .pricing-period {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    .pricing-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(201,148,58,0.1);
+      margin-bottom: 1.5rem;
+    }
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+    .pricing-features li {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      line-height: 1.5;
+    }
+    .pricing-features li::before {
+      content: '⌘';
+      color: var(--gold);
+      opacity: 0.7;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .pricing-btn {
+      width: 100%;
+      padding: 0.875rem;
+      border-radius: 100px;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+      border: 1px solid rgba(201,148,58,0.4);
+      background: transparent;
+      color: var(--gold);
+      text-decoration: none;
+      display: block;
+      text-align: center;
+    }
+    .pricing-btn:hover {
+      background: rgba(201,148,58,0.1);
+      transform: translateY(-2px);
+    }
+    .pricing-btn.primary {
+      background: var(--gold);
+      color: var(--void);
+      border-color: var(--gold);
+    }
+    .pricing-btn.primary:hover {
+      background: var(--gold-light);
+      box-shadow: 0 8px 30px rgba(201,148,58,0.4);
+    }
+
+    /* ── LEAD MAGNET ── */
+    .lead {
+      padding: 8rem 0;
+      background: var(--void);
+      position: relative;
+      overflow: hidden;
+    }
+    .lead-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201,148,58,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .lead-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .lead-inner h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 300;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .lead-inner h2 em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .lead-inner p {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .lead-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .lead-input {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,148,58,0.2);
+      border-radius: 0.75rem;
+      padding: 0.875rem 1.25rem;
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--text);
+      width: 100%;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .lead-input::placeholder { color: var(--text-dim); }
+    .lead-input:focus { border-color: rgba(201,148,58,0.5); }
+    .lead-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .lead-above-label {
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.75;
+      padding-left: 0.25rem;
+    }
+
+    .lead-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 100%;
+      background: var(--gold);
+      color: var(--void);
+      border: 1px solid var(--gold);
+      padding: 1rem 2.5rem;
+      border-radius: 4px;
+      font-family: var(--sans);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: all 0.3s cubic-bezier(0.25,0.46,0.45,0.94);
+      box-shadow: 0 4px 20px rgba(201,148,58,0.25);
+    }
+    .lead-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 36px rgba(201,148,58,0.45);
+      background: var(--gold-light);
+      border-color: var(--gold-light);
+    }
+    .lead-submit svg {
+      transition: transform 0.3s ease;
+    }
+    .lead-submit:hover svg {
+      transform: translateX(4px);
+    }
+    .lead-note {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 1rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--void);
+      border-top: 1px solid rgba(201,148,58,0.08);
+      padding: 3rem 0 2rem;
+      border-radius: 3rem 3rem 0 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+    .footer-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+    @keyframes statusPulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+      50% { opacity: 0.7; box-shadow: 0 0 0 4px rgba(74,222,128,0); }
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(201,148,58,0.05);
+    }
+
+
+    /* ── Pricing Tabs ── */
+    .pricing-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 3rem;
+      border: 1px solid rgba(201,148,58,0.25);
+      border-radius: 100px;
+      overflow: hidden;
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .pricing-tab {
+      padding: 0.65rem 2.5rem;
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: transparent;
+      color: rgba(237,232,223,0.4);
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .pricing-tab:first-child { border-right: 1px solid rgba(201,148,58,0.25); }
+    .pricing-tab.active {
+      background: rgba(201,148,58,0.12);
+      color: var(--gold-light);
+    }
+    .pricing-tab:hover:not(.active) {
+      background: rgba(201,148,58,0.05);
+      color: rgba(237,232,223,0.65);
+    }
+    .pricing-panel { display: block; }
+    .pricing-panel.hidden { display: none; }
+    .pricing-grid-single {
+      display: flex;
+      justify-content: center;
+    }
+    .pricing-grid-single .pricing-card {
+      max-width: 420px;
+      width: 100%;
+    }
+
+
+    /* ══════════════════════════════════════
+       FAQ BENTO SECTION
+    ══════════════════════════════════════ */
+    .faq-section {
+      padding: 8rem 0 6rem;
+      position: relative;
+    }
+    .faq-header { margin-bottom: 4rem; }
+    .faq-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.4rem, 4vw, 3.5rem);
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+    .faq-header h2 em { font-style: italic; color: var(--gold-light); }
+    .faq-header p { font-size: 1rem; font-weight: 300; color: var(--text-muted); margin-top: 0.75rem; }
+
+    .faq-bento {
+      display: grid;
+      grid-template-columns: 1.55fr 1fr;
+      gap: 0.875rem;
+    }
+    .faq-card {
+      position: relative;
+      border-radius: 1.125rem;
+      border: 1px solid rgba(201,148,58,0.12);
+      background: rgba(11,15,32,0.55);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      overflow: hidden;
+      transition: border-color 0.4s, box-shadow 0.4s, transform 0.3s;
+    }
+    .faq-card:hover { border-color: rgba(201,148,58,0.28); transform: translateY(-2px); }
+    .faq-card.open {
+      border-color: rgba(201,148,58,0.48);
+      box-shadow: 0 0 0 1px rgba(201,148,58,0.07),
+                  0 20px 60px rgba(0,0,0,0.5),
+                  inset 0 1px 0 rgba(201,148,58,0.2);
+    }
+    .faq-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(201,148,58,0.07) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.45s; pointer-events: none; z-index: 0;
+    }
+    .faq-card.open::before { opacity: 1; }
+
+    /* Bento layout */
+    .faq-card--large   { grid-column: 1; }
+    .faq-card--featured { grid-column: 2; grid-row: 1 / 3; }
+    .faq-card--wide    { grid-column: 1 / 3; }
+
+    .faq-card--featured {
+      background: rgba(201,148,58,0.04);
+      border-color: rgba(201,148,58,0.22);
+    }
+    .faq-card--featured::after {
+      content: '';
+      position: absolute; top: -50px; right: -50px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(201,148,58,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .faq-q {
+      position: relative; z-index: 1;
+      width: 100%; background: none; border: none;
+      padding: 1.625rem 1.75rem;
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 1.25rem;
+      cursor: pointer; text-align: left;
+    }
+    .faq-q-text {
+      font-family: var(--serif);
+      font-size: 1.2rem; font-weight: 400; line-height: 1.35;
+      color: var(--text); transition: color 0.3s;
+    }
+    .faq-card.open .faq-q-text { color: var(--gold-light); }
+
+    .faq-icon-wrap {
+      flex-shrink: 0;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,148,58,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); margin-top: 2px;
+      transition: transform 0.45s cubic-bezier(0.34,1.56,0.64,1),
+                  background 0.3s, border-color 0.3s;
+    }
+    .faq-card.open .faq-icon-wrap {
+      transform: rotate(45deg);
+      background: rgba(201,148,58,0.14);
+      border-color: var(--gold);
+    }
+
+    /* Grid-based smooth height animation */
+    .faq-a {
+      position: relative; z-index: 1;
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+    .faq-card.open .faq-a { grid-template-rows: 1fr; }
+    .faq-a-inner {
+      overflow: hidden;
+      opacity: 0; transform: translateY(-8px);
+      transition: opacity 0.38s ease 0.08s, transform 0.38s ease 0.08s;
+    }
+    .faq-card.open .faq-a-inner { opacity: 1; transform: translateY(0); }
+    .faq-a-inner p {
+      font-size: 0.9375rem; font-weight: 300;
+      color: var(--text-muted); line-height: 1.85;
+      margin: 0 1.75rem 1.625rem;
+      padding-left: 1.25rem;
+      border-left: 2px solid rgba(201,148,58,0.25);
+    }
+
+    .faq-element-tag {
+      position: absolute; bottom: 0.875rem; right: 1.125rem;
+      font-size: 0.7rem; letter-spacing: 0.18em;
+      color: rgba(201,148,58,0.15); pointer-events: none;
+      transition: color 0.4s; z-index: 0;
+    }
+    .faq-card.open .faq-element-tag { color: rgba(201,148,58,0.35); }
+
+    @keyframes faqPulse {
+      0%   { box-shadow: 0 0 0 0   rgba(201,148,58,0.3); }
+      70%  { box-shadow: 0 0 0 14px rgba(201,148,58,0); }
+      100% { box-shadow: 0 0 0 0   rgba(201,148,58,0); }
+    }
+    .faq-card.pulse { animation: faqPulse 0.65s ease-out forwards; }
+
+    @media (max-width: 800px) {
+      .faq-bento { grid-template-columns: 1fr; }
+      .faq-card--featured,
+      .faq-card--wide { grid-column: 1; grid-row: auto; }
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94),
+                  transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      nav { gap: 1.5rem; padding: 0.75rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 2rem 4rem; }
+      .bridge-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .process-steps::before { display: none; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-card.featured { transform: none; }
+      .lead-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; gap: 1rem; text-align: center; }
+      .container { padding: 0 1.5rem; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Cosmic Background -->
-    <div class="cosmic-bg"></div>
-    <div class="grid-overlay"></div>
 
-    <!-- Navigation -->
-    <nav class="nav" id="nav">
-        <div class="nav-container">
-            <div class="nav-logo">Jeff Seah</div>
-            <ul class="nav-menu">
-                <li><a href="#hero">Home</a></li>
-                <li><a href="#value">Value</a></li>
-                <li><a href="#calendar">Get Started</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#faq">FAQ</a></li>
+  <!-- Stars -->
+  <div class="stars" id="stars"></div>
+  <div class="hexagram-bg"></div>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo"><img src="JS_Ceremonial_Seal_Final.png" alt="Jeff Seah" style="height:38px;width:38px;object-fit:contain;mix-blend-mode:screen;display:block;"></a>
+    <ul class="nav-links">
+      <li><a href="#value">Value</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('calendar').scrollIntoView({behavior:'smooth'})">Try Power Calendar</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="compass-container">
+      <div class="compass-wrapper">
+
+        <!-- Single SVG: entire compass spins together.
+             Each text element has a counter-rotate animation so characters
+             orbit with the wheel but always stay upright and readable. -->
+        <svg id="compassSvg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"
+             style="position:absolute;inset:0;width:100%;height:100%;animation:compassSpin 120s linear infinite;">
+
+          <!-- ── Rings ── -->
+          <circle cx="250" cy="250" r="240" fill="none" stroke="rgba(201,148,58,0.65)" stroke-width="1.5"/>
+          <circle cx="250" cy="250" r="226" fill="none" stroke="rgba(201,148,58,0.15)" stroke-width="0.5"/>
+          <circle cx="250" cy="250" r="196" fill="none" stroke="rgba(201,148,58,0.28)" stroke-width="0.75"/>
+          <circle cx="250" cy="250" r="156" fill="none" stroke="rgba(201,148,58,0.28)" stroke-width="0.75"/>
+          <circle cx="250" cy="250" r="120" fill="none" stroke="rgba(201,148,58,0.12)" stroke-width="0.5"/>
+          <circle cx="250" cy="250" r="80"  fill="rgba(201,148,58,0.04)" stroke="rgba(201,148,58,0.2)" stroke-width="1"/>
+
+          <!-- ── Crosshairs & ticks ── -->
+          <line x1="250" y1="10"  x2="250" y2="490" stroke="rgba(201,148,58,0.06)" stroke-width="0.5"/>
+          <line x1="10"  y1="250" x2="490" y2="250" stroke="rgba(201,148,58,0.06)" stroke-width="0.5"/>
+          <line x1="75"  y1="75"  x2="425" y2="425" stroke="rgba(201,148,58,0.04)" stroke-width="0.5"/>
+          <line x1="425" y1="75"  x2="75"  y2="425" stroke="rgba(201,148,58,0.04)" stroke-width="0.5"/>
+          <line x1="250" y1="10"  x2="250" y2="24"  stroke="rgba(201,148,58,0.6)" stroke-width="2"/>
+          <line x1="490" y1="250" x2="476" y2="250" stroke="rgba(201,148,58,0.6)" stroke-width="2"/>
+          <line x1="250" y1="490" x2="250" y2="476" stroke="rgba(201,148,58,0.6)" stroke-width="2"/>
+          <line x1="10"  y1="250" x2="24"  y2="250" stroke="rgba(201,148,58,0.6)" stroke-width="2"/>
+
+          <!-- ── Centre ── -->
+          <text x="250" y="265" text-anchor="middle" font-family="Noto Serif TC,serif" font-size="46" fill="rgba(201,148,58,0.18)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">☯</text>
+          <text x="250" y="258" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="22" fill="rgba(201,148,58,0.6)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">命</text>
+
+          <!-- ── N/E/S/W labels (counter-rotate so they stay readable) ── -->
+          <text x="250" y="11"  text-anchor="middle" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(201,148,58,0.7)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">N</text>
+          <text x="489" y="250" text-anchor="middle" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(201,148,58,0.7)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">E</text>
+          <text x="250" y="489" text-anchor="middle" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(201,148,58,0.7)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">S</text>
+          <text x="11"  y="250" text-anchor="middle" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(201,148,58,0.7)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">W</text>
+
+          <!-- ── 8 Trigrams at r=210 (counter-rotate) ── -->
+          <text x="250"   y="40"    text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.95)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">坎</text>
+          <text x="398.5" y="101.5" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.9)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">艮</text>
+          <text x="460"   y="250"   text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.95)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">震</text>
+          <text x="398.5" y="398.5" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.9)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">巽</text>
+          <text x="250"   y="460"   text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.95)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">離</text>
+          <text x="101.5" y="398.5" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.9)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">坤</text>
+          <text x="40"    y="250"   text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.95)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">兌</text>
+          <text x="101.5" y="101.5" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.9)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">乾</text>
+
+          <!-- ── 12 Earthly Branches at r=172 (counter-rotate) ── -->
+          <text x="250" y="78"  text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">子</text>
+          <text x="336" y="101" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">丑</text>
+          <text x="399" y="164" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">寅</text>
+          <text x="422" y="250" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">卯</text>
+          <text x="399" y="336" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">辰</text>
+          <text x="336" y="399" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">巳</text>
+          <text x="250" y="422" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">午</text>
+          <text x="164" y="399" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">未</text>
+          <text x="101" y="336" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">申</text>
+          <text x="78"  y="250" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">酉</text>
+          <text x="101" y="164" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">戌</text>
+          <text x="164" y="101" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)"
+                style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">亥</text>
+
+        </svg>
+
+      </div>
+    </div>
+    <!-- Radial glow behind compass -->
+    <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(201,148,58,0.06) 0%, transparent 70%);pointer-events:none;"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">Strategic Timing Intelligence</div>
+      <h1 class="hero-title">Timing is not luck.</h1>
+      <span class="hero-title-drama">Now you can see it.</span>
+      <p class="hero-sub">Based on 5,000 years of Chinese metaphysics and your unique birth chart. Personalized timing intelligence for every decision that matters.</p>
+      <a href="#calendar" class="hero-cta" onclick="document.getElementById('calendar').scrollIntoView({behavior:'smooth'});return false;">
+        Try Your Power Calendar
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- LEAD MAGNET -->
+  <section class="lead" id="calendar">
+    <div class="lead-glow"></div>
+    <div class="container">
+      <div class="lead-inner reveal">
+        <div class="section-label" style="justify-content:center;">Free to Start</div>
+        <h2>Try Your <em>Power Calendar</em></h2>
+        <p>Enter your birth details. We'll calculate your personalized Power Calendar and deliver it as a PDF to your inbox within 7 days, complimentary for your first month. No credit card required.</p>
+        <form class="lead-form" onsubmit="handleSubmit(event)">
+          <div class="lead-row">
+            <input class="lead-input" id="leadName" type="text" placeholder="Full Name" required />
+            <input class="lead-input" id="leadEmail" type="email" placeholder="Email Address" required />
+          </div>
+          <div class="lead-row">
+            <div class="lead-field">
+              <label class="lead-above-label" for="birthDate">Date of Birth</label>
+              <input class="lead-input" id="birthDate" type="date" required />
+            </div>
+            <div class="lead-field">
+              <label class="lead-above-label" for="birthTime">Time of Birth</label>
+              <input class="lead-input" id="birthTime" type="time" required />
+            </div>
+          </div>
+          <input class="lead-input" id="birthCity" type="text" placeholder="City of Birth (e.g. Singapore, London, New York)" required />
+          <button type="submit" class="lead-submit" id="submitBtn">
+            Try My Power Calendar
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <p class="lead-note">Complimentary first month. No credit card required.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- BRIDGE -->
+  <section class="bridge" id="value">
+    <div class="container">
+      <div class="bridge-inner">
+        <div class="bridge-left reveal">
+          <div class="section-label">The Problem</div>
+          <h2>You work hard.<br>But have you ever noticed some days just <em>flow</em>, and others feel like pushing uphill?</h2>
+          <p>It's not random. Chinese metaphysics has mapped these patterns for millennia. Your birth chart holds the key to your personal timing cycles: when to push, when to wait, when to move.</p>
+        </div>
+        <div class="bridge-right">
+          <div class="bridge-card reveal reveal-delay-1">
+            <div class="bridge-card-glyph">時</div>
+            <h3>Misaligned Timing</h3>
+            <p>Important launches fall flat. Deals that should close don't. You're doing everything right... at the wrong moment.</p>
+          </div>
+          <div class="bridge-card reveal reveal-delay-2">
+            <div class="bridge-card-glyph">機</div>
+            <h3>Missed Windows</h3>
+            <p>Every month has peak momentum windows unique to your chart. Without a map, you're navigating blind.</p>
+          </div>
+          <div class="bridge-card reveal reveal-delay-3">
+            <div class="bridge-card-glyph">決</div>
+            <h3>Decision Paralysis</h3>
+            <p>You know what to do. You just don't know when. That uncertainty costs you momentum and confidence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="features-header reveal">
+        <div class="section-label">What You Get</div>
+        <h2>Your Power Calendar, Decoded</h2>
+        <p>A personalized monthly intelligence report calculated from your unique birth chart, not generic horoscopes.</p>
+      </div>
+      <div class="features-grid reveal">
+
+        <!-- Card 1: Favorable Days -->
+        <div class="feature-card">
+          <div class="feature-number">01</div>
+          <span class="feature-glyph">吉</span>
+          <h3>Favorable Days</h3>
+          <p>The exact days to schedule important meetings, launch projects, sign contracts, or make pivotal decisions.</p>
+          <div class="cal-grid" style="margin-top:1.5rem;">
+            <div class="cal-day-label">M</div><div class="cal-day-label">T</div><div class="cal-day-label">W</div><div class="cal-day-label">T</div><div class="cal-day-label">F</div><div class="cal-day-label">S</div><div class="cal-day-label">S</div>
+            <div class="cal-day">3</div><div class="cal-day favorable">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day favorable">7</div><div class="cal-day">8</div><div class="cal-day caution">9</div>
+            <div class="cal-day favorable">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day caution">13</div><div class="cal-day favorable active" id="calActive">14</div><div class="cal-day">15</div><div class="cal-day">16</div>
+          </div>
+        </div>
+
+        <!-- Card 2: Typewriter -->
+        <div class="feature-card">
+          <div class="feature-number">02</div>
+          <span class="feature-glyph">算</span>
+          <h3>Strategic Pauses</h3>
+          <p>Days to hold back, observe, or avoid major commitments. Sometimes the best move is no move.</p>
+          <div class="typewriter-feed" id="typewriterFeed">
+            <span id="typewriterText"></span><span class="cursor"></span>
+          </div>
+        </div>
+
+        <!-- Card 3: Personal Alignment -->
+        <div class="feature-card">
+          <div class="feature-number">03</div>
+          <span class="feature-glyph">命</span>
+          <h3>Personal Alignment</h3>
+          <p>Calculated from your date, time, and place of birth. As unique as your fingerprint, not a one-size-fits-all forecast.</p>
+          <div style="margin-top:1.5rem;padding:1rem;border:1px solid rgba(201,148,58,0.15);border-radius:0.75rem;background:rgba(201,148,58,0.03);">
+            <div style="font-family:var(--mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:0.15em;margin-bottom:0.75rem;">BIRTH CHART ANALYSIS</div>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+              <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
+                <span style="color:var(--text-muted)">Day Master</span>
+                <span style="font-family:var(--noto);color:var(--gold)">甲木</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
+                <span style="color:var(--text-muted)">Current Luck Pillar</span>
+                <span style="font-family:var(--noto);color:var(--gold)">庚申</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
+                <span style="color:var(--text-muted)">Annual Qi</span>
+                <span style="font-family:var(--noto);color:var(--gold)">丙火</span>
+              </div>
+              <div style="height:1px;background:rgba(201,148,58,0.1);margin:0.25rem 0;"></div>
+              <div style="display:flex;justify-content:space-between;font-size:0.8rem;">
+                <span style="color:var(--text-muted)">Peak Window</span>
+                <span style="color:var(--gold-light);font-weight:500;">Mar 4–12</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <div class="manifesto-bg">
+      <div class="manifesto-bg-glyph">時</div>
+    </div>
+    <div class="container">
+      <div class="manifesto-inner reveal">
+        <div class="section-label">Philosophy</div>
+        <p class="manifesto-neutral">Most advisors focus on: strategy, effort, and market conditions.</p>
+        <h2 class="manifesto-bold">We focus on<br><em>when</em> you act.</h2>
+        <p class="manifesto-sub">The same action taken on different days produces vastly different outcomes. Chinese metaphysics has documented this for 5,000 years. Your Power Calendar puts that intelligence in your hands every month.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="process-header reveal">
+        <div class="section-label">How It Works</div>
+        <h2>Three steps to timing clarity</h2>
+      </div>
+      <div class="process-steps">
+        <div class="process-step reveal reveal-delay-1">
+          <div class="step-num">
+            01
+            <span class="step-glyph">生</span>
+          </div>
+          <h3>Share Your Birth Details</h3>
+          <p>Date, time, and city of birth. This is the foundation of your unique chart: the map of your personal timing cycles.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-2">
+          <div class="step-num">
+            02
+            <span class="step-glyph">算</span>
+          </div>
+          <h3>Receive Your Calendar</h3>
+          <p>Within 7 days, your personalized Power Calendar arrives. Favorable days highlighted, caution windows marked, monthly themes explained.</p>
+        </div>
+        <div class="process-step reveal reveal-delay-3">
+          <div class="step-num">
+            03
+            <span class="step-glyph">行</span>
+          </div>
+          <h3>Act With Precision</h3>
+          <p>Schedule what matters on your peak days. Hold back on caution days. Watch the difference that intentional timing makes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="pricing-header reveal">
+        <div class="section-label" style="justify-content:center;">Investment</div>
+        <h2>Choose Your Level</h2>
+        <p>Start free. Upgrade when you see the difference.</p>
+      </div>
+
+      <!-- Tab Toggle -->
+      <div class="pricing-tabs reveal">
+        <button class="pricing-tab active" onclick="switchTab('monthly', this)">Monthly</button>
+        <button class="pricing-tab" onclick="switchTab('onetime', this)">One-Time</button>
+      </div>
+
+      <!-- Monthly Plans -->
+      <div class="pricing-panel" id="panel-monthly">
+        <div class="pricing-grid reveal">
+
+          <div class="pricing-card">
+            <div class="pricing-tier">Monthly</div>
+            <div class="pricing-name">Essential</div>
+            <div class="pricing-amount"><sup>$</sup>150</div>
+            <div class="pricing-period">per month · USD</div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Monthly Power Calendar</li>
+              <li>Favorable day indicators</li>
+              <li>Strategic pause windows</li>
+              <li>Dedicated shared Google Calendar, updated monthly</li>
             </ul>
-            <button class="nav-cta" onclick="scrollToSection('calendar')">Claim Your First Month</button>
-        </div>
-    </nav>
+            <a href="#" class="pricing-btn">Get Started</a>
+          </div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-label fade-in">Strategic Timing Intelligence</div>
-                <h1 class="hero-title fade-in-delay-1">
-                    Timing Is Everything.<br>
-                    <span class="gold-text">Now You Can See It.</span>
-                </h1>
-                <p class="hero-subtitle fade-in-delay-2">
-                    Claim your complimentary Power Calendar and discover<br>
-                    the best days to act on what matters most.
-                </p>
-                <div class="hero-note fade-in-delay-3">
-                    Based on your unique birth chart, not generic horoscopes.
-                </div>
-                <button class="hero-cta fade-in-delay-4" onclick="scrollToSection('calendar')">
-                    Claim Your First Month
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="hero-visual fade-in-delay-2">
-                <div class="orbital-system">
-                    <div class="orbit orbit-1"></div>
-                    <div class="orbit orbit-2"></div>
-                    <div class="orbit orbit-3"></div>
-                    <div class="center-star"></div>
-                </div>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <span>Scroll to explore</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
+          <div class="pricing-card featured">
+            <div class="pricing-badge">Most Popular</div>
+            <div class="pricing-tier">Monthly</div>
+            <div class="pricing-name">Combo</div>
+            <div class="pricing-amount"><sup>$</sup>297</div>
+            <div class="pricing-period">per month · USD</div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Monthly Power Calendar</li>
+              <li>Dedicated shared Google Calendar, updated monthly</li>
+              <li>1 consultation per month</li>
+              <li>Priority email support</li>
+              <li>Monthly reports</li>
+              <li>Session recordings and summaries</li>
+            </ul>
+            <a href="#" class="pricing-btn primary">Get Started</a>
+          </div>
 
-    <!-- Problem Section -->
-    <section class="problem" id="problem">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title reveal">
-                    Ever noticed how some days everything flows,<br>
-                    and others feel like <span class="gold-text">pushing uphill?</span>
-                </h2>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card reveal">
-                    <div class="problem-icon">⏰</div>
-                    <h3>Misaligned Timing</h3>
-                    <p>You're working hard, but the results don't match the effort. Important launches fall flat.</p>
-                </div>
-                <div class="problem-card reveal">
-                    <div class="problem-icon">🔄</div>
-                    <h3>Stalled Progress</h3>
-                    <p>Deals that should close don't. Conversations go nowhere. Momentum disappears.</p>
-                </div>
-                <div class="problem-card reveal">
-                    <div class="problem-icon">❓</div>
-                    <h3>Decision Paralysis</h3>
-                    <p>You know what to do, but not when. The uncertainty keeps you waiting, hesitating.</p>
-                </div>
-            </div>
-            <div class="problem-solution reveal">
-                <div class="solution-line"></div>
-                <p class="solution-text">
-                    It's not luck. It's not coincidence. It's <strong>timing</strong>.<br>
-                    And for thousands of years, Chinese metaphysics has been the strategic timing intelligence
-                    used by leaders, entrepreneurs, and decision-makers.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Value Proposition -->
-    <section class="value" id="value">
-        <div class="container">
-            <div class="value-header reveal">
-                <h2 class="section-title">What You Get</h2>
-                <p class="section-subtitle">Your personalized Power Calendar shows you exactly:</p>
-            </div>
-            <div class="value-grid">
-                <div class="value-card reveal">
-                    <div class="value-number">01</div>
-                    <h3>Favorable Days</h3>
-                    <p>The best days to schedule important meetings, launch projects, make decisions, or sign contracts.</p>
-                    <div class="value-decoration"></div>
-                </div>
-                <div class="value-card reveal">
-                    <div class="value-number">02</div>
-                    <h3>Strategic Pauses</h3>
-                    <p>Days to hold back, observe, or avoid major commitments. Sometimes the best move is no move.</p>
-                    <div class="value-decoration"></div>
-                </div>
-                <div class="value-card reveal">
-                    <div class="value-number">03</div>
-                    <h3>Personal Alignment</h3>
-                    <p>Calculated from your unique birth chart—not generic horoscopes or one-size-fits-all predictions.</p>
-                    <div class="value-decoration"></div>
-                </div>
-                <div class="value-card reveal">
-                    <div class="value-number">04</div>
-                    <h3>Monthly Insights</h3>
-                    <p>Delivered to your inbox every month, so you can plan ahead with confidence and precision.</p>
-                    <div class="value-decoration"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Lead Magnet Form -->
-    <section class="calendar-form" id="calendar">
-        <div class="container">
-            <div class="form-wrapper reveal">
-                <div class="form-content">
-                    <h2 class="form-title">Claim Your Complimentary First Month</h2>
-                    <p class="form-subtitle">Enter your birth details below. We'll calculate your personalized Power Calendar and deliver it within 7 days — complimentary for your first month.</p>
-
-                    <form class="birth-form" id="birthForm" onsubmit="handleFormSubmit(event)">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="fullName">Full Name</label>
-                                <input type="text" id="fullName" name="fullName" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="birthDate">Date of Birth</label>
-                                <input type="date" id="birthDate" name="birthDate" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="birthTime">Time of Birth</label>
-                                <input type="time" id="birthTime" name="birthTime" required>
-                                <span class="form-hint">Be as accurate as possible</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="birthCity">City of Birth</label>
-                            <input type="text" id="birthCity" name="birthCity" placeholder="e.g., Singapore, New York, London" required>
-                        </div>
-
-                        <button type="submit" class="form-submit">
-                            Claim My Complimentary Calendar
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                                <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-
-                        <p class="form-note">Complimentary for your first month. No credit card required.</p>
-                    </form>
-                </div>
-                <div class="form-visual">
-                    <div class="calendar-showcase">
-                        <div class="calendar-month">MARCH 2026</div>
-                        <div class="calendar-grid-demo">
-                            <div class="calendar-day favorable">8</div>
-                            <div class="calendar-day">9</div>
-                            <div class="calendar-day">10</div>
-                            <div class="calendar-day favorable">11</div>
-                            <div class="calendar-day">12</div>
-                            <div class="calendar-day caution">13</div>
-                            <div class="calendar-day">14</div>
-                            <div class="calendar-day favorable">15</div>
-                            <div class="calendar-day">16</div>
-                        </div>
-                        <div class="calendar-legend">
-                            <div class="legend-item">
-                                <span class="legend-dot favorable-dot"></span> Favorable
-                            </div>
-                            <div class="legend-item">
-                                <span class="legend-dot caution-dot"></span> Caution
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Process Steps -->
-    <section class="process" id="process">
-        <div class="container">
-            <h2 class="section-title reveal">How It Works</h2>
-            <div class="process-steps">
-                <div class="process-step reveal">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>Share Your Birth Details</h3>
-                        <p>Provide your date, time, and place of birth. This is what makes your calendar uniquely yours.</p>
-                    </div>
-                    <div class="step-connector"></div>
-                </div>
-                <div class="process-step reveal">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>Receive Your Calendar</h3>
-                        <p>Within 7 days, get your personalized Power Calendar delivered to your inbox.</p>
-                    </div>
-                    <div class="step-connector"></div>
-                </div>
-                <div class="process-step reveal">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>Time Your Actions</h3>
-                        <p>Use your calendar to schedule important activities on favorable days and gain confidence in your timing.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Tiers -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="pricing-header">
-                <h2 class="section-title">Investment Options</h2>
-                <p class="section-subtitle">Choose the level of guidance that fits your needs</p>
-            </div>
-
-            <!-- Tab Toggle -->
-            <div class="pricing-tabs">
-                <button class="pricing-tab active" onclick="switchPricingTab('monthly', this)">Monthly</button>
-                <button class="pricing-tab" onclick="switchPricingTab('onetime', this)">One-Time</button>
-            </div>
-
-            <!-- Monthly Plans -->
-            <div class="pricing-panel" id="pricing-monthly">
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <div class="pricing-label">Monthly</div>
-                        <h3 class="pricing-name">Essential</h3>
-                        <div class="pricing-price">
-                            <span class="currency">$</span>150<span class="period">/month</span>
-                        </div>
-                        <ul class="pricing-features">
-                            <li>Monthly Power Calendar</li>
-                            <li>Favorable day indicators</li>
-                            <li>Email delivery</li>
-                            <li>Basic timing guidance</li>
-                        </ul>
-                        <a href="https://buy.stripe.com/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
-                            <button class="pricing-cta">Get Started</button>
-                        </a>
-                    </div>
-
-                    <div class="pricing-card featured">
-                        <div class="pricing-badge">Most Popular</div>
-                        <div class="pricing-label">Monthly</div>
-                        <h3 class="pricing-name">Combo</h3>
-                        <div class="pricing-price">
-                            <span class="currency">$</span>297<span class="period">/month</span>
-                        </div>
-                        <ul class="pricing-features">
-                            <li>Monthly Power Calendar</li>
-                            <li>1 consultation per month</li>
-                            <li>Priority email support</li>
-                            <li>Custom timing strategies</li>
-                            <li>Quarterly deep-dive review</li>
-                        </ul>
-                        <a href="https://buy.stripe.com/4gMdRbdv96Oq2jM2PTbwk01" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
-                            <button class="pricing-cta primary">Get Started</button>
-                        </a>
-                    </div>
-
-                    <div class="pricing-card">
-                        <div class="pricing-label">Monthly</div>
-                        <h3 class="pricing-name">Premium</h3>
-                        <div class="pricing-price">
-                            <span class="currency">$</span>397<span class="period">/month</span>
-                        </div>
-                        <ul class="pricing-features">
-                            <li>Everything in Combo</li>
-                            <li>2 consultations per month</li>
-                            <li>Unlimited email support</li>
-                            <li>Real-time timing alerts</li>
-                            <li>Annual strategic planning</li>
-                        </ul>
-                        <a href="https://buy.stripe.com/aFa14pezdegS4rU4Y1bwk02" target="_blank" rel="noopener noreferrer" class="pricing-cta-link">
-                            <button class="pricing-cta">Get Started</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- One-Time Plan -->
-            <div class="pricing-panel hidden" id="pricing-onetime">
-                <div class="pricing-grid pricing-grid-single">
-                    <div class="pricing-card">
-                        <div class="pricing-label">One-Time Investment</div>
-                        <h3 class="pricing-name">Single Session</h3>
-                        <div class="pricing-price">
-                            <span class="currency">$</span>197<span class="period">/session</span>
-                        </div>
-                        <ul class="pricing-features">
-                            <li>Focused on your most pressing decision or challenge</li>
-                            <li>Timing analysis specific to your current situation</li>
-                            <li>One-on-one 60-minute consultation</li>
-                            <li>Clear next steps you can act on right away</li>
-                        </ul>
-                        <a href="/book" class="pricing-cta-link">
-                            <button class="pricing-cta primary">Book Session</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
+          <div class="pricing-card">
+            <div class="pricing-tier">Monthly</div>
+            <div class="pricing-name">Premium</div>
+            <div class="pricing-amount"><sup>$</sup>397</div>
+            <div class="pricing-period">per month · USD</div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Everything in Combo</li>
+              <li>Dedicated shared Google Calendar, updated monthly</li>
+              <li>2 consultations per month</li>
+              <li>Unlimited email support</li>
+              <li>Monthly Bonus Reports</li>
+              <li>Private personal portal</li>
+              <li>Monthly divinations</li>
+            </ul>
+            <a href="#" class="pricing-btn">Get Started</a>
+          </div>
 
         </div>
-    </section>
+      </div>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="about-content reveal">
-                <div class="about-text">
-                    <h2 class="section-title">Why This Works</h2>
-                    <p class="about-intro">
-                        For over 15 years, I've been practicing and refining the art of Chinese metaphysics, not as mysticism,
-                        but as a practical framework for strategic timing.
-                    </p>
-                    <p>
-                        I don't do vague predictions or fortune-cookie wisdom. What I offer is precise, personalized guidance
-                        based on your unique birth chart. Think of it as a weather forecast for your decisions: you still choose
-                        what to do, but now you know when conditions are most favorable.
-                    </p>
-                    <p>
-                        My clients are entrepreneurs, executives, and professionals who understand that timing isn't just
-                        important—it's everything. They use their Power Calendars to schedule launches, negotiations, hiring
-                        decisions, and major announcements with confidence.
-                    </p>
-                    <div class="about-signature">
-                        <div class="signature-line"></div>
-                        <span>Jeff Seah</span>
-                    </div>
-                </div>
-                <div class="about-visual">
-                    <div class="timeline-visual">
-                        <div class="timeline-item">
-                            <div class="timeline-year">2010</div>
-                            <div class="timeline-desc">Began formal study</div>
-                        </div>
-                        <div class="timeline-line"></div>
-                        <div class="timeline-item">
-                            <div class="timeline-year">2015</div>
-                            <div class="timeline-desc">Professional practice</div>
-                        </div>
-                        <div class="timeline-line"></div>
-                        <div class="timeline-item">
-                            <div class="timeline-year">2026</div>
-                            <div class="timeline-desc">15+ years expertise</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- One-Time Plan -->
+      <div class="pricing-panel hidden" id="panel-onetime">
+        <div class="pricing-grid-single reveal">
+          <div class="pricing-card">
+            <div class="pricing-tier">One-Time</div>
+            <div class="pricing-name">Single Session</div>
+            <div class="pricing-amount"><sup>$</sup>197</div>
+            <div class="pricing-period">per session · USD</div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>60-minute one-on-one consultation</li>
+              <li>Focused on your most pressing decision</li>
+              <li>Timing analysis for your current situation</li>
+              <li>Clear next steps you can act on immediately</li>
+              <li>Session summary within 48 hours</li>
+            </ul>
+            <a href="/book" class="pricing-btn primary">Book Session</a>
+          </div>
         </div>
-    </section>
+      </div>
 
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
-        <div class="container">
-            <h2 class="section-title reveal">Common Questions</h2>
-            <div class="faq-list">
-                <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>How is this different from horoscopes?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Horoscopes are based on your sun sign alone, just one-twelfth of the population. Your Power Calendar is calculated from your complete birth chart: date, time, and place. It's as personalized as your fingerprint, not a generic forecast for millions of people.</p>
-                    </div>
-                </div>
+    </div>
+  </section>
 
-                <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What if I don't know my exact birth time?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Birth time is important for precision, but we can still provide valuable insights with an approximate time. Your birth certificate usually has this information. If you're truly unsure, we can work with what you have and adjust as needed.</p>
-                    </div>
-                </div>
 
-                <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>I'm skeptical. Does this actually work?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Good. Skepticism is healthy. Your complimentary first month is your chance to test it without risk. Use it for a month, notice the patterns, and decide for yourself. Most skeptics become believers after seeing the results — not because it's magic, but because the patterns are consistent and actionable.</p>
-                    </div>
-                </div>
 
-                <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>What happens after my complimentary month?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Nothing, unless you want more. Your first month calendar is yours to keep and use. If you find it valuable and want ongoing monthly updates or deeper consultations, you can choose one of the paid plans. No pressure, no automatic charges.</p>
-                    </div>
-                </div>
+  <!-- FAQ -->
+  <section class="faq-section" id="faq">
+    <div class="container">
+      <div class="faq-header reveal">
+        <div class="section-label">The Map &amp; The Journey</div>
+        <h2>Your Questions,<br><em>Answered with Clarity</em></h2>
+        <p>Everything you need to decide whether this intelligence is for you.</p>
+      </div>
 
-                <div class="faq-item reveal">
-                    <button class="faq-question" onclick="toggleFAQ(this)">
-                        <span>Do you use I-Ching, Tarot, or other divination methods?</span>
-                        <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M19 9L12 16L5 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes. In addition to Chinese metaphysics and birth chart analysis, I work with I-Ching, Tarot, Lenormand, and Moon cards for specific questions and situational guidance. Each tool serves a different purpose, and I'll recommend the best approach for your needs.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="faq-bento reveal">
+
+        <div class="faq-card faq-card--large">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">I'm skeptical. Does this actually work?</span>
+            <div class="faq-icon-wrap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Good. Skepticism means you think critically... exactly the kind of person who benefits most from this work. Your complimentary first month exists precisely for you. Use it for 30 days. Observe the patterns. Notice what happens when you act on favorable days versus caution windows. Most skeptics become believers not through faith, but because the patterns are consistent, repeatable, and quietly undeniable. The proof was never meant to come before the experience.</p>
+          </div></div>
+          <span class="faq-element-tag">水 Water — Flow</span>
         </div>
-    </section>
 
-    <!-- Final CTA -->
-    <section class="final-cta">
-        <div class="container">
-            <div class="cta-content reveal">
-                <h2 class="cta-title">Claim Your Complimentary First Month</h2>
-                <p class="cta-subtitle">No credit card required. Your personalized calendar delivered within 7 days.</p>
-                <button class="cta-button" onclick="scrollToSection('calendar')">
-                    Claim Your First Month
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M4 10H16M16 10L10 4M16 10L10 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
+        <div class="faq-card faq-card--featured">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Why are there no testimonials on your site?</span>
+            <div class="faq-icon-wrap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Because the clients who benefit most prefer it that way. They have found a genuine edge in business timing, negotiations, launches, and pivotal decisions. They treat it the way a master investor treats their best strategy: privately. I am, for many of them, a competitive advantage they have no intention of sharing. The absence of public testimonials is not a gap in credibility. It is, perhaps, the most honest signal I can offer: the people who know, don't tell.</p>
+          </div></div>
+          <span class="faq-element-tag">金 Metal — Precision</span>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">Jeff Seah</div>
-                    <p>Strategic Timing Intelligence</p>
-                </div>
-                <div class="footer-links">
-                    <a href="#about">About</a>
-                    <a href="#pricing">Pricing</a>
-                    <a href="#faq">FAQ</a>
-                    <a href="/cdn-cgi/l/email-protection#620a070e0e0d22080704041107030a4c100d010911">Contact</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Jeff Seah. All rights reserved.</p>
-            </div>
+        <div class="faq-card faq-card--small">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">How is this different from horoscopes?</span>
+            <div class="faq-icon-wrap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Horoscopes speak to one-twelfth of the population with the same message. Your Power Calendar is calculated from your exact date, time, and place of birth. It is personalised strategic intelligence, as unique as your fingerprint, not a generalised forecast written for millions.</p>
+          </div></div>
+          <span class="faq-element-tag">木 Wood — Growth</span>
         </div>
-    </footer>
+
+        <div class="faq-card faq-card--wide">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">What happens after my complimentary month?</span>
+            <div class="faq-icon-wrap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Nothing... unless you want more. Your first PDF calendar is yours to keep and reference, with no obligation and no automatic charges. If you find value and want ongoing monthly intelligence, paid plans include a dedicated shared Google Calendar that lives inside your calendar app and updates automatically each month. You see your Power Calendar right alongside your regular schedule... always there, never in the way. The decision is entirely yours.</p>
+          </div></div>
+          <span class="faq-element-tag">土 Earth — Stability</span>
+        </div>
+
+        <div class="faq-card faq-card--small">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">What if I don't know my exact birth time?</span>
+            <div class="faq-icon-wrap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Birth time adds precision, but meaningful guidance is still possible with an approximate time. Your birth certificate is usually the best starting point. If genuinely unknown, we work with what you have and refine from there.</p>
+          </div></div>
+          <span class="faq-element-tag">火 Fire — Clarity</span>
+        </div>
+
+        <div class="faq-card faq-card--small">
+          <button class="faq-q" onclick="toggleFaq(this)">
+            <span class="faq-q-text">Do you use I-Ching, Tarot, or other methods?</span>
+            <div class="faq-icon-wrap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+          </button>
+          <div class="faq-a"><div class="faq-a-inner">
+            <p>Yes. Beyond Bazi and Qimen, I work with I-Ching, Tarot, Lenormand, and Moon cards for situational guidance. Each tool serves a distinct purpose, so I recommend the right approach based on your specific question and context.</p>
+          </div></div>
+          <span class="faq-element-tag">水 Water — Wisdom</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
 
-    <script>
-        function switchPricingTab(tab, btn) {
-            document.querySelectorAll('.pricing-tab').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            document.querySelectorAll('.pricing-panel').forEach(p => p.classList.add('hidden'));
-            document.getElementById('pricing-' + tab).classList.remove('hidden');
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">Jeff Seah — Strategic Timing Intelligence</div>
+        <div class="footer-status">
+          <div class="status-dot"></div>
+          System Operational
+        </div>
+      </div>
+      <div class="footer-copy">© 2026 Jeff Seah. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+
+
+    // ── FAQ Bento toggle ──
+    function toggleFaq(btn) {
+      const card = btn.closest('.faq-card');
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.faq-card.open').forEach(c => c.classList.remove('open'));
+      if (!isOpen) {
+        card.classList.add('open');
+        card.classList.remove('pulse');
+        void card.offsetWidth;
+        card.classList.add('pulse');
+      }
+    }
+
+    // ── Pricing Tab Switch ──
+    function switchTab(tab, btn) {
+      document.querySelectorAll('.pricing-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.pricing-panel').forEach(p => p.classList.add('hidden'));
+      document.getElementById('panel-' + tab).classList.remove('hidden');
+    }
+
+    // ── Generate Stars ──
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 150; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const size = Math.random() * 2 + 0.5;
+      star.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${Math.random() * 100}%;
+        top: ${Math.random() * 100}%;
+        --d: ${3 + Math.random() * 5}s;
+        --delay: ${-Math.random() * 6}s;
+        --min-op: ${0.05 + Math.random() * 0.1};
+        --max-op: ${0.4 + Math.random() * 0.5};
+      `;
+      starsEl.appendChild(star);
+    }
+
+    // ── Nav Scroll ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // ── Scroll Reveal ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
         }
-        // ── Scroll reveal observer ──────────────────────────────────────
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
 
-        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    // ── Typewriter ──
+    const messages = [
+      '> Mar 13: Hold major decisions',
+      '> Mar 17: Avoid contract signing',
+      '> Mar 21: Low energy window',
+      '> Mar 25: Review, don\'t initiate',
+      '> Apr 02: Caution in negotiations',
+    ];
+    let msgIdx = 0;
+    let charIdx = 0;
+    let isDeleting = false;
+    const typeEl = document.getElementById('typewriterText');
 
-        // ── Nav scroll behaviour ────────────────────────────────────────
-        const nav = document.getElementById('nav');
-        window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 50);
+    function typewriter() {
+      const current = messages[msgIdx];
+      if (!isDeleting) {
+        typeEl.textContent = current.slice(0, charIdx + 1);
+        charIdx++;
+        if (charIdx === current.length) {
+          isDeleting = true;
+          setTimeout(typewriter, 2000);
+          return;
+        }
+      } else {
+        typeEl.textContent = current.slice(0, charIdx - 1);
+        charIdx--;
+        if (charIdx === 0) {
+          isDeleting = false;
+          msgIdx = (msgIdx + 1) % messages.length;
+        }
+      }
+      setTimeout(typewriter, isDeleting ? 30 : 60);
+    }
+    setTimeout(typewriter, 1000);
+
+    // ── Calendar active day pulse ──
+    const calActive = document.getElementById('calActive');
+    setInterval(() => {
+      calActive.style.transform = 'scale(1.15)';
+      setTimeout(() => { calActive.style.transform = 'scale(1.1)'; }, 300);
+    }, 2000);
+
+    // ── Form Submit ──
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const originalHTML = btn.innerHTML;
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      btn.style.opacity = '0.7';
+
+      const payload = {
+        name:      document.getElementById('leadName').value,
+        email:     document.getElementById('leadEmail').value,
+        birthDate: document.getElementById('birthDate').value,
+        birthTime: document.getElementById('birthTime').value,
+        birthCity: document.getElementById('birthCity').value
+      };
+
+      try {
+        await fetch('https://script.google.com/macros/s/AKfycbwS4IpuJQ6wgmc6Bn53yEapbw2m_tThKuFHLwTNDJCSvfaqyY4YtV4HmQ-Z_FA-ej6Z/exec', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
         });
-
-        // ── Smooth scroll to section ────────────────────────────────────
-        function scrollToSection(id) {
-            const el = document.getElementById(id);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // ── FAQ accordion ───────────────────────────────────────────────
-        function toggleFAQ(btn) {
-            const item = btn.closest('.faq-item');
-            const isOpen = item.classList.contains('active');
-            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-            if (!isOpen) item.classList.add('active');
-        }
-
-        // ── Form submit handler ─────────────────────────────────────────
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            const btn = e.target.querySelector('.form-submit');
-            btn.textContent = 'Thank you! Calendar coming within 7 days.';
-            btn.disabled = true;
-            btn.style.opacity = '0.7';
-        }
-    </script>
+        btn.textContent = '✓ Received — your calendar arrives within 7 days';
+        btn.style.opacity = '0.6';
+      } catch(err) {
+        btn.innerHTML = originalHTML;
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        alert('Something went wrong. Please try again or email jefferyseah@gmail.com directly.');
+      }
+    }
+  </script>
 </body>
 </html>
