@@ -1332,6 +1332,11 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
 
+    /* ── Force Noto font on compass SVG text ── */
+    .compass-wrapper svg text {
+      font-family: 'Noto Serif TC', 'Source Han Serif TC', 'AR PL UMing TW', serif !important;
+    }
+
     /* ── Responsive ── */
     @media (max-width: 900px) {
       nav { gap: 1.5rem; padding: 0.75rem 1.5rem; }
@@ -1351,8 +1356,8 @@
       .compass-wrapper {
         width: min(55vw, 55vh);
         height: min(55vw, 55vh);
-        opacity: 0.3;
-        transform: translateX(35%);
+        opacity: 0.55;
+        transform: translateX(28%);
       }
 
       /* Scroll indicator clips badly on narrow screens */
