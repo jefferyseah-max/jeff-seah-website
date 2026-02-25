@@ -169,7 +169,7 @@
     /* ── HERO ── */
     .hero {
       position: relative;
-      height: 100dvh;
+      min-height: 100dvh;
       display: flex;
       align-items: flex-end;
       overflow: hidden;
@@ -1343,7 +1343,7 @@
     @media (max-width: 900px) {
       nav { gap: 1.5rem; padding: 0.75rem 1.5rem; }
       .nav-links { display: none; }
-      .hero-content { padding: 0 2rem 4rem; position: relative; z-index: 3; }
+      .hero-content { padding: 6rem 1.5rem 3rem; position: relative; z-index: 3; }
       .bridge-inner { grid-template-columns: 1fr; gap: 3rem; }
       .features-grid { grid-template-columns: 1fr; }
       .process-steps { grid-template-columns: 1fr; }
@@ -1356,10 +1356,10 @@
 
       /* Compass: shrink and shift right so hero text stays readable */
       .compass-wrapper {
-        width: min(55vw, 55vh);
-        height: min(55vw, 55vh);
-        opacity: 0.55;
-        transform: translateX(28%);
+        width: min(45vw, 45vh);
+        height: min(45vw, 45vh);
+        opacity: 0.4;
+        transform: translateX(40%) translateY(10%);
       }
 
       /* Scroll indicator clips badly on narrow screens */
@@ -1422,6 +1422,12 @@
              orbit with the wheel but always stay upright and readable. -->
         <svg id="compassSvg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"
              style="position:absolute;inset:0;width:100%;height:100%;animation:compassSpin 120s linear infinite;">
+          <defs>
+            <style>
+              @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400&display=block');
+              text { font-family: 'Noto Serif TC', 'Noto Sans CJK TC', 'Noto Sans TC', 'Source Han Sans TC', serif; }
+            </style>
+          </defs>
 
           <!-- ── Rings ── -->
           <circle cx="250" cy="250" r="240" fill="none" stroke="rgba(201,148,58,0.65)" stroke-width="1.5"/>
