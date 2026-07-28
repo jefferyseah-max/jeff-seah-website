@@ -1,5 +1,12 @@
 # Google Sheets Setup - Step by Step
 
+> **Already set up and want to add spam protection + email verification?**
+> See **[FORM_SECURITY_SETUP.md](FORM_SECURITY_SETUP.md)** — it upgrades the Apps
+> Script below with a honeypot check, double opt-in confirmation, spam scoring,
+> and optional Cloudflare Turnstile. The front-end guards are already live in
+> `index.html`.
+
+
 ## Step 1: Create the Google Sheet
 
 1. Go to [Google Sheets](https://sheets.google.com)

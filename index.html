@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400&display=block" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
+  <!-- Cloudflare Turnstile (free bot protection). Renders the widget marked .cf-turnstile in the form. -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <style>
     :root {
@@ -1528,6 +1530,8 @@
         <h2>Try Your <em>Power Calendar</em></h2>
         <p>Enter your birth details. We'll calculate your personalized Power Calendar and deliver it to your inbox within 7 days, complimentary for your first month. No credit card required.</p>
         <form class="lead-form" onsubmit="handleSubmit(event)" autocomplete="off">
+          <!-- Honeypot: hidden from humans; bots fill it and get silently rejected. Do not remove. -->
+          <input class="lead-hp" id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute !important; left:-9999px !important; top:-9999px !important; width:1px; height:1px; opacity:0; pointer-events:none;" />
           <div class="lead-row">
             <input class="lead-input" id="leadName" type="text" placeholder="Full Name" autocomplete="off" required />
             <input class="lead-input" id="leadEmail" type="email" placeholder="Email Address" autocomplete="off" required />
@@ -1543,6 +1547,8 @@
             </div>
           </div>
           <input class="lead-input" id="cob" type="text" placeholder="City of Birth (e.g. Singapore, London, New York)" autocomplete="off" required />
+          <!-- Cloudflare Turnstile mounts here once TURNSTILE_SITE_KEY is set in the script below. Stays empty (and unenforced) until then, so the form keeps working. -->
+          <div id="turnstile-widget" style="margin:0.25rem 0;"></div>
           <button type="submit" class="lead-submit" id="submitBtn">
             Try My Power Calendar
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2000,22 +2006,93 @@
       setTimeout(() => { calActive.style.transform = 'scale(1.1)'; }, 300);
     }, 2000);
 
+    // ── Cloudflare Turnstile config ──
+    // Paste your Turnstile SITE key here to turn on the invisible bot check.
+    // Leave it empty and the check stays off (the form still works normally).
+    const TURNSTILE_SITE_KEY = '';
+
+    if (TURNSTILE_SITE_KEY) {
+      function renderTurnstile() {
+        try {
+          turnstile.render('#turnstile-widget', { sitekey: TURNSTILE_SITE_KEY, theme: 'dark' });
+        } catch (_) {}
+      }
+      if (window.turnstile) { turnstile.ready(renderTurnstile); }
+      else { window.addEventListener('load', () => { if (window.turnstile) turnstile.ready(renderTurnstile); }); }
+    }
+
+    // ── Anti-spam: record when the form became available to the visitor ──
+    const FORM_READY_AT = Date.now();
+
+    function fakeSuccess(btn) {
+      // Present a success state without submitting — used to silently drop bots
+      // so they don't retry with a different strategy.
+      btn.textContent = '✓ Received — check your email to confirm';
+      btn.disabled = true;
+      btn.style.opacity = '0.6';
+    }
+
     // ── Form Submit ──
     async function handleSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('submitBtn');
       const originalHTML = btn.innerHTML;
 
+      const name     = document.getElementById('leadName').value.trim();
+      const email    = document.getElementById('leadEmail').value.trim();
+      const dob      = document.getElementById('dob').value;
+      const tob      = document.getElementById('tob').value;
+      const city     = document.getElementById('cob').value.trim();
+      const honeypot = document.getElementById('company_website').value;
+      const elapsedMs = Date.now() - FORM_READY_AT;
+
+      // 1) Honeypot — invisible to humans. If filled, it's a bot.
+      if (honeypot) { fakeSuccess(btn); return; }
+
+      // 2) Time-trap — nobody fills real birth details in under 3 seconds.
+      if (elapsedMs < 3000) { fakeSuccess(btn); return; }
+
+      // 3) Human-facing sanity checks (friendly, blocking)
+      if (/\d/.test(city)) {
+        alert('Please enter your city of birth as a place name (e.g. Singapore), not a date or number.');
+        return;
+      }
+      const birth = new Date(dob);
+      const now = new Date();
+      const ageYears = (now - birth) / (365.25 * 24 * 3600 * 1000);
+      if (isNaN(birth.getTime()) || birth > now || ageYears > 120) {
+        alert('Please enter a valid date of birth.');
+        return;
+      }
+      if (name.length < 2 || /https?:|www\.|@/i.test(name)) {
+        alert('Please enter your full name.');
+        return;
+      }
+
+      // 4) Cloudflare Turnstile — must pass the bot check when a site key is configured
+      let turnstileToken = '';
+      if (TURNSTILE_SITE_KEY) {
+        try { turnstileToken = turnstile.getResponse(); } catch (_) {}
+        if (!turnstileToken) {
+          alert('Please complete the verification check below the form, then submit again.');
+          return;
+        }
+      }
+
       btn.textContent = 'Sending...';
       btn.disabled = true;
       btn.style.opacity = '0.7';
 
       const payload = {
-        name:      document.getElementById('leadName').value,
-        email:     document.getElementById('leadEmail').value,
-        birthDate: document.getElementById('dob').value,
-        birthTime: document.getElementById('tob').value,
-        birthCity: document.getElementById('cob').value
+        name:      name,
+        email:     email,
+        birthDate: dob,
+        birthTime: tob,
+        birthCity: city,
+        submittedAt: new Date().toISOString(),
+        elapsedMs: elapsedMs,       // server re-checks the time-trap
+        website: honeypot,          // honeypot echoed for server-side re-check
+        turnstileToken: turnstileToken
       };
 
       try {
@@ -2025,12 +2102,13 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        btn.textContent = '✓ Received — your calendar arrives within 7 days';
+        btn.textContent = '✓ Almost there — check your email to confirm your request';
         btn.style.opacity = '0.6';
       } catch(err) {
         btn.innerHTML = originalHTML;
         btn.disabled = false;
         btn.style.opacity = '1';
+        try { if (TURNSTILE_SITE_KEY && window.turnstile) turnstile.reset(); } catch (_) {}
         alert('Something went wrong. Please try again or email jefferyseah@gmail.com directly.');
       }
     }
