@@ -818,13 +818,19 @@
 
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+    .pricing-note {
+      text-align: center;
+      margin-top: 2.5rem;
+      font-size: 0.9rem;
+      color: #a39c8e;
     }
     .pricing-card {
       border: 1px solid rgba(201,148,58,0.15);
       border-radius: 1.5rem;
-      padding: 2.5rem;
+      padding: 2.25rem 1.75rem;
       background: var(--void);
       transition: all 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
       position: relative;
@@ -1342,6 +1348,12 @@
     }
 
     /* ── Responsive ── */
+    @media (min-width: 1201px) {
+      .pricing-grid .pricing-name { font-size: 1.5rem; white-space: nowrap; }
+    }
+    @media (min-width: 901px) and (max-width: 1200px) {
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 900px) {
       nav { gap: 1.5rem; padding: 0.75rem 1.5rem; }
       .nav-links { display: none; }
@@ -1729,56 +1741,64 @@
 
           <div class="pricing-card">
             <div class="pricing-tier">Monthly</div>
-            <div class="pricing-name">Essential</div>
-            <div class="pricing-amount"><sup>$</sup>150</div>
+            <div class="pricing-name">Calendar</div>
+            <div class="pricing-amount"><sup>$</sup>97</div>
             <div class="pricing-period">per month · USD</div>
             <div class="pricing-divider"></div>
             <ul class="pricing-features">
-              <li>Monthly Power Calendar</li>
+              <li>Monthly Power Calendar, delivered into your Google Calendar</li>
               <li>Favorable day indicators</li>
               <li>Strategic pause windows</li>
-              <li>Shared timing calendar, synced monthly</li>
+              <li>First month complimentary</li>
             </ul>
-            <a href="https://buy.stripe.com/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer" class="pricing-btn">Get Started</a>
+            <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer" class="pricing-btn">Start free month</a>
+          </div>
+
+          <div class="pricing-card">
+            <div class="pricing-tier">Monthly</div>
+            <div class="pricing-name">Calendar + Brief</div>
+            <div class="pricing-amount"><sup>$</sup>197</div>
+            <div class="pricing-period">per month · USD</div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Everything in Calendar</li>
+              <li>Brief monthly report: a short read of the month for your chart</li>
+              <li>Email support</li>
+            </ul>
+            <a href="https://buy.stripe.com/bJebJ30Inc8K4rU3TXbwk06" target="_blank" rel="noopener noreferrer" class="pricing-btn">Get Started</a>
+          </div>
+
+          <div class="pricing-card">
+            <div class="pricing-tier">Monthly</div>
+            <div class="pricing-name">Calendar + Premium</div>
+            <div class="pricing-amount"><sup>$</sup>297</div>
+            <div class="pricing-period">per month · USD</div>
+            <div class="pricing-divider"></div>
+            <ul class="pricing-features">
+              <li>Everything in Calendar</li>
+              <li>Full premium monthly report</li>
+              <li>Priority email support</li>
+            </ul>
+            <a href="https://buy.stripe.com/4gMfZjcr51u6cYqduxbwk07" target="_blank" rel="noopener noreferrer" class="pricing-btn">Get Started</a>
           </div>
 
           <div class="pricing-card featured">
             <div class="pricing-badge">Most Popular</div>
             <div class="pricing-tier">Monthly</div>
-            <div class="pricing-name">Combo</div>
-            <div class="pricing-amount"><sup>$</sup>297</div>
-            <div class="pricing-period">per month · USD</div>
-            <div class="pricing-divider"></div>
-            <ul class="pricing-features">
-              <li>Monthly Power Calendar</li>
-              <li>Shared timing calendar, synced monthly</li>
-              <li>1 consultation per month</li>
-              <li>Priority email support</li>
-              <li>Monthly reports</li>
-              <li>Session recordings and summaries</li>
-            </ul>
-            <a href="https://buy.stripe.com/4gMdRbdv96Oq2jM2PTbwk01" target="_blank" rel="noopener noreferrer" class="pricing-btn primary">Get Started</a>
-          </div>
-
-          <div class="pricing-card">
-            <div class="pricing-tier">Monthly</div>
-            <div class="pricing-name">Premium</div>
+            <div class="pricing-name">Coaching</div>
             <div class="pricing-amount"><sup>$</sup>397</div>
             <div class="pricing-period">per month · USD</div>
             <div class="pricing-divider"></div>
             <ul class="pricing-features">
-              <li>Everything in Combo</li>
-              <li>Shared timing calendar, synced monthly</li>
-              <li>2 consultations per month</li>
-              <li>Unlimited email support</li>
-              <li>Monthly Bonus Reports</li>
-              <li>Private personal portal</li>
-              <li>Monthly divinations</li>
+              <li>Everything in Calendar + Premium</li>
+              <li>1 coaching session per month</li>
+              <li>Session recording and summary</li>
             </ul>
-            <a href="https://buy.stripe.com/aFa14pezdegS4rU4Y1bwk02" target="_blank" rel="noopener noreferrer" class="pricing-btn">Get Started</a>
+            <a href="https://buy.stripe.com/eVq8wR0In4Gie2u2PTbwk08" target="_blank" rel="noopener noreferrer" class="pricing-btn primary">Get Started</a>
           </div>
 
         </div>
+        <p class="pricing-note">Monthly plans renew each month until you cancel. Cancel anytime.</p>
       </div>
 
       <!-- One-Time Plan -->
