@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Power Calendar: your month's dates and hours, in your Google Calendar | Jeff Seah</title>
+  <meta name="description" content="A sample Power Calendar month you can click through. Hand-picked favorable days, caution days and hours calculated from your own birth chart, delivered every month into your personal Google Calendar. First month complimentary." />
+  <link rel="canonical" href="https://www.jeffseah.rocks/power-calendar" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/img/seal-64.png" />
+  <link rel="apple-touch-icon" href="/img/seal-128.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Jeff Seah" />
+  <meta property="og:title" content="Power Calendar | Jeff Seah" />
+  <meta property="og:description" content="Your month's favorable days, caution days and hours, calculated from your birth chart and delivered into your Google Calendar. First month complimentary." />
+  <meta property="og:url" content="https://www.jeffseah.rocks/power-calendar" />
+  <meta property="og:image" content="https://www.jeffseah.rocks/img/2027/og-2027.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Power Calendar | Jeff Seah" />
+  <meta name="twitter:description" content="A sample month you can click through. First month complimentary." />
+  <meta name="twitter:image" content="https://www.jeffseah.rocks/img/2027/og-2027.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/2027.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="hexagram-bg" aria-hidden="true"></div>
+
+  <nav id="nav" aria-label="Primary">
+    <a href="/" class="nav-logo" aria-label="Jeff Seah, home"><img src="/img/seal-128.png" alt="" width="38" height="38"></a>
+    <ul class="nav-links">
+      <li><a href="/2027">2027 Outlook</a></li>
+      <li><a href="/power-calendar" aria-current="page">Power Calendar</a></li>
+      <li><a href="#how">How it arrives</a></li>
+      <li><a href="#plans">Plans</a></li>
+    </ul>
+    <a href="/#calendar" class="nav-cta">Try my first month</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menu">
+      <svg class="icon-open" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg class="icon-close" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </nav>
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a href="/2027">2027 Outlook</a></li>
+      <li><a href="/power-calendar">Power Calendar</a></li>
+      <li><a href="#how">How it arrives</a></li>
+      <li><a href="#plans">Plans</a></li>
+      <li><a href="/">Home</a></li>
+      <li><a href="/#calendar" class="nav-menu-cta">Try my first month</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+
+  <section class="pc-hero">
+    <div class="container">
+      <div class="pc-hero-inner hero-seq">
+        <div class="eyebrow" style="--i:0">Power Calendar</div>
+        <h1 style="--i:1">The outlook gives you months. <em>This gives you days.</em></h1>
+        <p style="--i:2">Every month I read the coming month against your chart and pick the days and hours that matter: when to push, when to sign, when to hold. Each one lands as an entry in your own Google Calendar, beside your real schedule.</p>
+        <div class="pc-hint" style="--i:3">Tap a marked day below to read a sample entry</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pc-sample" aria-labelledby="sampleTitle">
+    <div class="container">
+      <div class="pc-layout">
+        <div class="pc-cal reveal">
+          <div class="pc-cal-head">
+            <h2 id="sampleTitle">A sample month</h2>
+            <span>Illustrative, not a real client</span>
+          </div>
+          <div class="pc-grid" id="pcGrid" role="group" aria-label="Sample calendar month. Marked days open a sample entry.">
+            <div class="pc-dow">Mon</div><div class="pc-dow">Tue</div><div class="pc-dow">Wed</div><div class="pc-dow">Thu</div><div class="pc-dow">Fri</div><div class="pc-dow">Sat</div><div class="pc-dow">Sun</div>
+          </div>
+          <div class="pc-legend" aria-hidden="true">
+            <span><i class="l-fav"></i>Favorable day</span>
+            <span><i class="l-peak"></i>The month's best day</span>
+            <span><i class="l-caut"></i>Caution day</span>
+            <span><i class="l-pers"></i>Personal to your chart</span>
+          </div>
+        </div>
+
+        <div class="pc-entry reveal" id="pcEntry" aria-live="polite">
+          <div class="pc-entry-kicker" id="pcKicker">Sample entry</div>
+          <h3 id="pcTitle">Pick a day to read its entry</h3>
+          <div id="pcBody">
+            <p>Not every day gets an entry. Most days are ordinary and the calendar leaves them alone. The days that carry a note are the ones worth planning around.</p>
+            <p>Your own calendar is calculated from your date, time and place of birth, so the marked days and the hours inside them will not be the same as this sample.</p>
+          </div>
+          <span class="pc-entry-tag">Sample month, illustrative only</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pc-how" id="how">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">How it arrives</div>
+        <h2>In your Google Calendar, not in another app</h2>
+      </div>
+      <div class="pc-how-grid">
+        <div class="pc-how-card reveal">
+          <h3>Delivered into your own calendar</h3>
+          <p>Each month's entries are written directly into your personal Google Calendar. Open the day, read the note, plan around it. Nothing to download, nothing to log in to.</p>
+          <div class="pc-gcal"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="3" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 7h14M6 1.5v3M12 1.5v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Works with the Google Calendar you already use</div>
+        </div>
+        <div class="pc-how-card reveal">
+          <h3>Read from your chart, every month</h3>
+          <p>The month's energy meets your four pillars differently from anyone else's. I read that meeting and mark the days that matter for you: favorable days for the things you want to start or sign, caution days for the things you should not.</p>
+        </div>
+        <div class="pc-how-card reveal">
+          <h3>Hours, not just days</h3>
+          <p>On the days that matter, the entry names the best hours and the usable ones, so a meeting or a signing can sit in the right window. The rest of the day is yours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pc-offer" id="plans">
+    <div class="container">
+      <div class="pc-offer-inner reveal">
+        <div class="section-label">Plans</div>
+        <h2>Your first month is complimentary</h2>
+        <p>Send your birth details and I will calculate your first Power Calendar month, no card and no obligation. Every 2027 Annual Outlook buyer gets the same first month. After that, the calendar continues at USD 97 per month, and the higher plans add a monthly report and coaching.</p>
+        <ul class="ladder">
+          <li class="is-first">
+            <span class="ladder-name">Power Calendar</span>
+            <span class="ladder-what">Your month's dates and hours, in your Google Calendar. First month complimentary.</span>
+            <span class="ladder-price">USD 97<small>per month</small></span>
+          </li>
+          <li>
+            <span class="ladder-name">Calendar and brief monthly report</span>
+            <span class="ladder-what">The calendar plus a short written read of the month for your chart.</span>
+            <span class="ladder-price">USD 197<small>per month</small></span>
+          </li>
+          <li>
+            <span class="ladder-name">Calendar and premium monthly report</span>
+            <span class="ladder-what">The calendar plus the full monthly report.</span>
+            <span class="ladder-price">USD 297<small>per month</small></span>
+          </li>
+          <li>
+            <span class="ladder-name">Premium report and coaching</span>
+            <span class="ladder-what">Everything above plus one coaching session each month.</span>
+            <span class="ladder-price">USD 397<small>per month</small></span>
+          </li>
+        </ul>
+        <div class="pc-offer-actions">
+          <a href="/#calendar" class="btn-primary">Try my first month, complimentary</a>
+          <a href="mailto:jefferyseah@gmail.com?subject=Power%20Calendar" class="btn-secondary">Ask Jeff a question</a>
+        </div>
+        <p class="pc-offer-note">The first month is calculated from your birth details on the <a href="/#calendar">home page form</a>. Continuing after it is a separate step; nothing renews on its own. <!-- [STRIPE LINK PENDING] Monthly plan checkout links for the 97/197/297/397 ladder go here once Jeff creates them. --></p>
+        <p class="pc-offer-note">Want the year first? <a href="/2027">The 2027 Annual Outlook</a> maps your twelve months, and includes this first month.</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand"><img src="/img/seal-128.png" alt="" width="32" height="32"><span>Strategic Timing Intelligence</span></div>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/2027">2027 Outlook</a></li>
+          <li><a href="/book">Book a session</a></li>
+          <li><a href="mailto:jefferyseah@gmail.com">Email Jeff</a></li>
+        </ul>
+      </div>
+      <div class="footer-copy">&copy; 2026 Jeff Seah. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="/2027.js"></script>
+  <script>
+    // Sample month: 30 days, starting on a Wednesday. Generic entries, no real client, no real dates.
+    const START_OFFSET = 2; // Mon=0
+    const DAYS = 30;
+    const ENTRIES = {
+      3:  { kind: 'favorable', kicker: 'Favorable day', title: 'A good day to open things',
+            body: ['A clear, forward-moving day. Use it for the first move on something you have been holding: the first call, the first draft sent, the meeting that starts a conversation.'],
+            facts: [['Good for', 'starting, meeting, asking'], ['Best hours', '9 to 11 am, 1 to 3 pm'], ['Usable', 'the rest of the working day']] },
+      6:  { kind: 'favorable personal', kicker: 'Favorable day, personal to your chart', title: 'Your chart likes this one',
+            body: ['This day is not on everyone\'s list; it is marked because of how it meets your own chart. Days like this are where a personal calendar earns its keep.'],
+            facts: [['Good for', 'negotiating, presenting, being seen'], ['Best hours', '11 am to 1 pm'], ['Usable', '3 to 5 pm']] },
+      9:  { kind: 'caution', kicker: 'Caution day', title: 'Hold back, observe',
+            body: ['Not a bad day, a careful one. Keep commitments small and reversible. A good day for tidying, reviewing and listening, a poor one for signing.'],
+            facts: [['Avoid', 'signing, launching, confrontations'], ['Fine for', 'routine work, review, rest']] },
+      11: { kind: 'favorable', kicker: 'Favorable day', title: 'Steady ground for agreements',
+            body: ['A settled day that favours things meant to last. If a contract, a lease or a hire is close, this is the kind of day to land it.'],
+            facts: [['Good for', 'signing, agreements, long-term steps'], ['Best hours', '9 to 11 am'], ['Usable', '1 to 5 pm']] },
+      14: { kind: 'peak personal', kicker: 'The month\'s best day for you', title: 'The month\'s peak window',
+            body: ['The one day this month I would move a meeting for. General timing and your own chart line up, so what you start here has both the wind and your own energy behind it.', 'If there is one decision waiting on the right moment, this is the entry to plan it around.'],
+            facts: [['Good for', 'the month\'s most important move'], ['Best hours', '9 to 11 am, 1 to 3 pm'], ['Usable', '7 to 9 am, 3 to 5 pm']] },
+      17: { kind: 'caution personal', kicker: 'Caution day, personal to your chart', title: 'A clash with your own chart',
+            body: ['This day pushes against your chart specifically. It recurs in a pattern, so once you know it you can plan around it every month: no big asks, no big commitments, keep the diary light.'],
+            facts: [['Avoid', 'major decisions, travel you can move'], ['Fine for', 'quiet work, preparation']] },
+      22: { kind: 'favorable', kicker: 'Favorable day', title: 'Momentum for outreach',
+            body: ['An outward-facing day. Reach out, follow up, send the proposal you polished last week.'],
+            facts: [['Good for', 'outreach, follow-ups, travel'], ['Best hours', '1 to 3 pm'], ['Usable', '9 am to 12 pm']] },
+      25: { kind: 'caution', kicker: 'Caution day', title: 'Keep the day simple',
+            body: ['A day for finishing rather than starting. Clear the desk, close loops, and let the bigger moves wait for the window that follows.'],
+            facts: [['Avoid', 'new commitments'], ['Fine for', 'finishing, admin, recovery']] },
+      28: { kind: 'favorable', kicker: 'Favorable day', title: 'Close the month well',
+            body: ['A warm, supportive day near the month\'s end. Good for conversations that need goodwill on both sides, and for the money review you keep postponing.'],
+            facts: [['Good for', 'reviews, reconciliations, thank-yous'], ['Best hours', '11 am to 1 pm'], ['Usable', '3 to 5 pm']] }
+    };
+
+    const grid = document.getElementById('pcGrid');
+    const entry = document.getElementById('pcEntry');
+    const kickerEl = document.getElementById('pcKicker');
+    const titleEl = document.getElementById('pcTitle');
+    const bodyEl = document.getElementById('pcBody');
+    const buttons = [];
+
+    for (let i = 0; i < START_OFFSET; i++) { const b = document.createElement('div'); b.className = 'pc-day blank'; b.setAttribute('aria-hidden', 'true'); grid.appendChild(b); }
+    for (let d = 1; d <= DAYS; d++) {
+      const e = ENTRIES[d];
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'pc-day' + (e ? ' ' + e.kind : '');
+      b.textContent = d;
+      b.setAttribute('aria-pressed', 'false');
+      b.setAttribute('aria-label', e ? `Day ${d}, ${e.kicker}` : `Day ${d}, no entry`);
+      b.addEventListener('click', () => show(d, b));
+      grid.appendChild(b);
+      buttons.push(b);
+    }
+
+    function show(d, b) {
+      buttons.forEach(x => x.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      const e = ENTRIES[d];
+      entry.classList.remove('is-caution', 'is-peak');
+      if (!e) {
+        kickerEl.textContent = `Day ${d}`;
+        titleEl.textContent = 'An ordinary day, no entry';
+        bodyEl.innerHTML = '<p>Nothing to plan around here. Most days are like this. The calendar stays quiet so that the marked days mean something when they come.</p>';
+        return;
+      }
+      if (e.kind.includes('caution')) entry.classList.add('is-caution');
+      if (e.kind.includes('peak')) entry.classList.add('is-peak');
+      kickerEl.textContent = `Day ${d}. ${e.kicker}`;
+      titleEl.textContent = e.title;
+      const paras = e.body.map(p => `<p>${p}</p>`).join('');
+      const facts = e.facts ? `<dl>${e.facts.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>` : '';
+      bodyEl.innerHTML = paras + facts;
+      if (window.innerWidth < 860) entry.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>

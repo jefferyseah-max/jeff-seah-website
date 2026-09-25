@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your birth details | 2027 Annual Outlook | Jeff Seah</title>
+  <meta name="description" content="Send Jeff your birth details to begin your 2027 Annual Outlook." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://www.jeffseah.rocks/2027-next" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/img/seal-64.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/2027.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+  <div class="hexagram-bg" aria-hidden="true"></div>
+
+  <nav id="nav" aria-label="Primary">
+    <a href="/" class="nav-logo" aria-label="Jeff Seah, home"><img src="/img/seal-128.png" alt="" width="38" height="38"></a>
+    <ul class="nav-links">
+      <li><a href="/2027">2027 Outlook</a></li>
+      <li><a href="/power-calendar">Power Calendar</a></li>
+    </ul>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menu">
+      <svg class="icon-open" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg class="icon-close" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </nav>
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a href="/2027">2027 Outlook</a></li>
+      <li><a href="/power-calendar">Power Calendar</a></li>
+      <li><a href="/">Home</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+  <section class="intake-section">
+    <div class="container">
+      <div class="intake-inner">
+        <div class="section-label centered">Thank you, one more step</div>
+        <h1>Your birth details</h1>
+        <p class="intake-sub">Two minutes. This is what your 2027 Annual Outlook is calculated from. Your private page and PDF follow within 7 days.</p>
+
+        <form class="lead-form" id="intakeForm" novalidate>
+          <!-- Honeypot: hidden from humans; bots fill it and get silently rejected. Do not remove. -->
+          <input class="lead-hp" id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute !important; left:-9999px !important; top:-9999px !important; width:1px; height:1px; opacity:0; pointer-events:none;" />
+
+          <div class="lead-row two">
+            <div class="lead-field">
+              <label class="lead-above-label" for="fullName">Full name</label>
+              <input class="lead-input" id="fullName" name="name" type="text" autocomplete="name" required />
+              <span class="field-error" id="err-fullName">Please enter the full name of the person the outlook is for.</span>
+            </div>
+            <div class="lead-field">
+              <label class="lead-above-label" for="email">Email for delivery</label>
+              <input class="lead-input" id="email" name="email" type="email" autocomplete="email" inputmode="email" required />
+              <span class="field-error" id="err-email">Please enter a valid email address.</span>
+            </div>
+          </div>
+
+          <div class="lead-row two">
+            <div class="lead-field">
+              <label class="lead-above-label" for="birthDate">Date of birth</label>
+              <input class="lead-input" id="birthDate" name="birthDate" type="date" autocomplete="bday" required />
+              <span class="field-error" id="err-birthDate">Please enter a valid date of birth.</span>
+            </div>
+            <div class="lead-field">
+              <label class="lead-above-label" for="birthTime">Time of birth</label>
+              <input class="lead-input" id="birthTime" name="birthTime" type="time" required />
+              <span class="field-error" id="err-birthTime">Enter a time, or tick the box below if it is unknown.</span>
+            </div>
+          </div>
+          <div class="checkbox-row">
+            <input type="checkbox" id="unknownTime" name="birthTimeUnknown" />
+            <label for="unknownTime">I do not know my birth time (a two-hour window is enough if you have one)</label>
+          </div>
+
+          <div class="lead-field">
+            <label class="lead-above-label" for="birthCity">City and country of birth</label>
+            <input class="lead-input" id="birthCity" name="birthCity" type="text" placeholder="Singapore; London, UK; Penang, Malaysia" required />
+            <span class="field-error" id="err-birthCity">Please enter the place of birth as a place name, not a number.</span>
+          </div>
+
+          <fieldset class="lead-field">
+            <legend class="lead-above-label">Gender</legend>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="gender" value="female" required /> Female</label>
+              <label class="radio-option"><input type="radio" name="gender" value="male" /> Male</label>
+            </div>
+            <span class="lead-help">The luck pillar sequence runs in a different direction for each; this is a calculation input, not a preference.</span>
+            <span class="field-error" id="err-gender">Please choose one.</span>
+          </fieldset>
+
+          <fieldset class="lead-field">
+            <legend class="lead-above-label">Employed or business owner</legend>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="workType" value="employed" required /> Employed</label>
+              <label class="radio-option"><input type="radio" name="workType" value="business-owner" /> Business owner</label>
+              <label class="radio-option"><input type="radio" name="workType" value="both" /> Both</label>
+            </div>
+            <span class="field-error" id="err-workType">Please choose one.</span>
+          </fieldset>
+
+          <div class="lead-field">
+            <label class="lead-above-label" for="decisions">The two or three decisions on your mind for 2027</label>
+            <textarea class="form-textarea" id="decisions" name="decisions" placeholder="Whether to change jobs. When to launch. Whether to sign the lease." required></textarea>
+            <span class="field-error" id="err-decisions">A line or two is enough; this shapes the When To index.</span>
+          </div>
+
+          <fieldset class="lead-field">
+            <legend class="lead-above-label">Which edition do you want to open first?</legend>
+            <div class="radio-group">
+              <label class="radio-option"><input type="radio" name="edition" value="simplified" required checked /> Simplified, plain English</label>
+              <label class="radio-option"><input type="radio" name="edition" value="advanced" /> Advanced, shows the working</label>
+            </div>
+            <span class="lead-help">Both are on the same page. This only sets which one opens first.</span>
+          </fieldset>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="consent" name="consent" required />
+            <label for="consent">These details are mine, or I have the consent of the person they belong to.</label>
+          </div>
+          <span class="field-error" id="err-consent">Please confirm this before sending.</span>
+
+          <button type="submit" class="lead-submit" id="submitBtn">Send my birth details</button>
+          <p class="lead-note">Your birth details are used only to calculate your chart, are stored on my own machine and are never shared. Something wrong with the form? Email <a href="mailto:jefferyseah@gmail.com">jefferyseah@gmail.com</a> with your birth date, time and place.</p>
+        </form>
+
+        <div class="form-state" id="successState" role="status">
+          <h2>Received, thank you</h2>
+          <p>Your 2027 Annual Outlook is on its way. Expect your private page and PDF within 7 days at the email you gave. If you ordered by 15 January it arrives before Li Chun.</p>
+        </div>
+
+        <div class="form-state form-error" id="errorState" role="alert">
+          <h2>Your details were not sent</h2>
+          <p>Please try again, or email <a href="mailto:jefferyseah@gmail.com">jefferyseah@gmail.com</a> directly with your birth date, time and place. Your payment is safe either way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-copy">&copy; 2026 Jeff Seah. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="/2027.js"></script>
+  <script>
+    // [APPS SCRIPT ENDPOINT PENDING] Codex: paste the Apps Script Web App URL
+    // for the new 'annual-2027' sheet tab. While empty, submissions show the
+    // error state with the email fallback so nobody's details vanish.
+    const INTAKE_ENDPOINT = '';
+
+    const form = document.getElementById('intakeForm');
+    const unknownTimeBox = document.getElementById('unknownTime');
+    const birthTimeInput = document.getElementById('birthTime');
+    const btn = document.getElementById('submitBtn');
+    const successState = document.getElementById('successState');
+    const errorState = document.getElementById('errorState');
+    const FORM_READY_AT = Date.now();
+
+    unknownTimeBox.addEventListener('change', () => {
+      const unknown = unknownTimeBox.checked;
+      birthTimeInput.value = '';
+      birthTimeInput.disabled = unknown;
+      birthTimeInput.required = !unknown;
+      showError('birthTime', false);
+    });
+
+    function showError(key, on) {
+      const el = document.getElementById('err-' + key);
+      if (el) el.classList.toggle('visible', on);
+    }
+    function markInvalid(input, on) {
+      if (!input) return;
+      input.setAttribute('aria-invalid', on ? 'true' : 'false');
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      successState.classList.remove('visible');
+      errorState.classList.remove('visible');
+
+      // Honeypot and time-trap, same pattern as the homepage lead form.
+      const honeypot = document.getElementById('company_website').value;
+      if (honeypot || Date.now() - FORM_READY_AT < 3000) return;
+
+      let ok = true;
+      const name = document.getElementById('fullName').value.trim();
+      const nameOk = name.length >= 2 && !/https?:|www\.|@/i.test(name);
+      showError('fullName', !nameOk); markInvalid(document.getElementById('fullName'), !nameOk); ok = ok && nameOk;
+
+      const emailEl = document.getElementById('email');
+      const emailOk = emailEl.validity.valid && emailEl.value.trim() !== '';
+      showError('email', !emailOk); markInvalid(emailEl, !emailOk); ok = ok && emailOk;
+
+      const dobValue = document.getElementById('birthDate').value;
+      const dob = new Date(dobValue);
+      const ageYears = (Date.now() - dob) / (365.25 * 24 * 3600 * 1000);
+      const dobOk = !isNaN(dob.getTime()) && dob <= new Date() && ageYears <= 120;
+      showError('birthDate', !dobOk); markInvalid(document.getElementById('birthDate'), !dobOk); ok = ok && dobOk;
+
+      const timeOk = unknownTimeBox.checked || birthTimeInput.value !== '';
+      showError('birthTime', !timeOk); markInvalid(birthTimeInput, !timeOk); ok = ok && timeOk;
+
+      const city = document.getElementById('birthCity').value.trim();
+      const cityOk = city.length >= 2 && !/\d/.test(city);
+      showError('birthCity', !cityOk); markInvalid(document.getElementById('birthCity'), !cityOk); ok = ok && cityOk;
+
+      const genderOk = !!form.gender.value; showError('gender', !genderOk); ok = ok && genderOk;
+      const workOk = !!form.workType.value; showError('workType', !workOk); ok = ok && workOk;
+
+      const decisions = document.getElementById('decisions').value.trim();
+      const decOk = decisions.length >= 3; showError('decisions', !decOk); ok = ok && decOk;
+
+      const consentOk = document.getElementById('consent').checked; showError('consent', !consentOk); ok = ok && consentOk;
+
+      if (!ok) {
+        const firstBad = form.querySelector('[aria-invalid="true"], .field-error.visible');
+        if (firstBad) firstBad.scrollIntoView({ block: 'center', behavior: 'smooth' });
+        return;
+      }
+
+      const params = new URLSearchParams(location.search);
+      const payload = {
+        product: '2027-annual-outlook',
+        name,
+        email: emailEl.value.trim(),
+        birthDate: dobValue,
+        birthTime: unknownTimeBox.checked ? 'Unknown' : birthTimeInput.value,
+        birthTimeUnknown: unknownTimeBox.checked,
+        birthCity: city,
+        gender: form.gender.value,
+        workType: form.workType.value,
+        decisions,
+        edition: form.edition.value,
+        consent: true,
+        paid: params.get('paid') === '1',
+        submittedAt: new Date().toISOString(),
+        elapsedMs: Date.now() - FORM_READY_AT,
+        website: honeypot
+      };
+
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        if (!INTAKE_ENDPOINT) throw new Error('intake endpoint not configured');
+        await fetch(INTAKE_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        form.hidden = true;
+        successState.classList.add('visible');
+        successState.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      } catch (err) {
+        errorState.classList.add('visible');
+        btn.disabled = false;
+        btn.textContent = 'Send my birth details';
+      }
+    });
+  </script>
+</body>
+</html>

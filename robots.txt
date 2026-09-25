@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /2027-next
+
+Sitemap: https://www.jeffseah.rocks/sitemap.xml

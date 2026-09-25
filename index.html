@@ -3,7 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jeff Seah — Strategic Timing Intelligence</title>
+  <title>Jeff Seah: Strategic Timing Intelligence, Power Calendar and 2027 Annual Outlook</title>
+  <meta name="description" content="Personal timing intelligence from your birth chart. A monthly Power Calendar of favorable and caution days delivered into your Google Calendar, one-to-one sessions, and the 2027 Annual Outlook. First calendar month complimentary." />
+  <link rel="canonical" href="https://www.jeffseah.rocks/" />
+  <link rel="icon" type="image/png" sizes="64x64" href="/img/seal-64.png" />
+  <link rel="apple-touch-icon" href="/img/seal-128.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Jeff Seah" />
+  <meta property="og:title" content="Jeff Seah: Strategic Timing Intelligence" />
+  <meta property="og:description" content="Timing is not luck. A monthly Power Calendar of favorable and caution days calculated from your birth chart, plus the 2027 Annual Outlook. First calendar month complimentary." />
+  <meta property="og:url" content="https://www.jeffseah.rocks/" />
+  <meta property="og:image" content="https://www.jeffseah.rocks/img/2027/og-2027.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Jeff Seah: Strategic Timing Intelligence" />
+  <meta name="twitter:description" content="A monthly Power Calendar of favorable and caution days calculated from your birth chart, plus the 2027 Annual Outlook." />
+  <meta name="twitter:image" content="https://www.jeffseah.rocks/img/2027/og-2027.jpg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400&display=block" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400&display=block" />
@@ -23,8 +39,8 @@
       --jade: #4a7c6f;
       --crimson: #8b1a1a;
       --text: #ede8df;
-      --text-muted: #7a7468;
-      --text-dim: #3a3830;
+      --text-muted: #8f887a; /* was #7a7468 (4.3:1 on the navy); this reads 5.5:1 on --deep, WCAG AA */
+      --text-dim: #3a3830;   /* decorative labels only, never body copy */
       --serif: 'Cormorant Garamond', Georgia, serif;
       --sans: 'DM Sans', sans-serif;
       --mono: 'Space Mono', monospace;
@@ -148,6 +164,8 @@
     }
     .nav-links a:hover { color: var(--gold-light); transform: translateY(-1px); }
     .nav-cta {
+      text-decoration: none;
+      display: inline-block;
       font-size: 0.75rem;
       font-weight: 500;
       letter-spacing: 0.1em;
@@ -167,6 +185,45 @@
       box-shadow: 0 8px 24px rgba(201,148,58,0.4);
       background: var(--gold-light);
     }
+    .nav-logo img { height: 38px; width: 38px; object-fit: contain; mix-blend-mode: screen; display: block; }
+    :focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+
+    /* Mobile menu (below 900px the inline links are hidden; this replaces them) */
+    .nav-toggle {
+      display: none; background: none; border: 1px solid rgba(201,148,58,0.3); color: var(--gold-light);
+      width: 40px; height: 40px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center;
+    }
+    .nav-toggle svg { display: block; }
+    .nav-toggle .icon-close { display: none; }
+    nav.menu-open .nav-toggle .icon-open { display: none; }
+    nav.menu-open .nav-toggle .icon-close { display: block; }
+    .nav-menu {
+      display: none; position: fixed; left: 1rem; right: 1rem; top: 5.25rem; z-index: 99;
+      background: rgba(5,7,15,0.96); border: 1px solid rgba(201,148,58,0.25); border-radius: 1.25rem;
+      padding: 0.75rem; box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    }
+    .nav-menu.open { display: block; }
+    .nav-menu ul { list-style: none; }
+    .nav-menu a {
+      display: block; padding: 0.9rem 1rem; border-radius: 0.75rem; text-decoration: none;
+      font-family: var(--serif); font-size: 1.25rem; color: var(--text);
+    }
+    .nav-menu a:hover, .nav-menu a:focus-visible { background: rgba(201,148,58,0.08); color: var(--gold-light); }
+    .nav-menu a.nav-menu-cta { margin-top: 0.5rem; text-align: center; font-family: var(--sans); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; background: var(--gold); color: var(--void); border-radius: 100px; }
+
+    /* 2027 Outlook banner, inside the hero above the eyebrow */
+    .hero-banner {
+      display: inline-flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+      margin-bottom: 1.75rem; padding: 0.55rem 1rem 0.55rem 0.7rem; border-radius: 100px;
+      border: 1px solid rgba(201,148,58,0.35); background: rgba(201,148,58,0.07);
+      font-size: 0.82rem; color: var(--text); text-decoration: none;
+      opacity: 0; animation: fadeUp 1s 0.2s ease both;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .hero-banner:hover { border-color: var(--gold); background: rgba(201,148,58,0.12); }
+    .hero-banner .hero-banner-tag { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--void); background: var(--gold); border-radius: 100px; padding: 0.3rem 0.6rem; }
+    .hero-banner span:last-child { color: var(--gold-light); }
 
     /* ── HERO ── */
     .hero {
@@ -1073,9 +1130,14 @@
     }
     .lead-note {
       font-size: 0.8rem;
-      color: var(--text-dim);
+      color: var(--text-muted);
       margin-top: 1rem;
     }
+    .lead-checkbox { display: flex; align-items: center; gap: 0.6rem; justify-content: flex-start; text-align: left; }
+    .lead-checkbox input { width: 18px; height: 18px; accent-color: var(--gold); flex-shrink: 0; }
+    .lead-checkbox label { font-size: 0.85rem; color: var(--text-muted); }
+    .lead-input:disabled { opacity: 0.4; }
+    .lead-input { color-scheme: dark; }
 
     /* ── FOOTER ── */
     footer {
@@ -1343,8 +1405,10 @@
 
     /* ── Responsive ── */
     @media (max-width: 900px) {
-      nav { gap: 1.5rem; padding: 0.75rem 1.5rem; }
+      nav { gap: 1rem; padding: 0.6rem 0.75rem 0.6rem 1rem; left: 1rem; right: 1rem; transform: none; width: auto; justify-content: space-between; top: 1rem; }
       .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .nav-toggle { display: inline-flex; }
       .hero-content { padding: 6rem 1.5rem 3rem; position: relative; z-index: 3; }
       .bridge-inner { grid-template-columns: 1fr; gap: 3rem; }
       .features-grid { grid-template-columns: 1fr; }
@@ -1367,7 +1431,7 @@
       /* Scroll indicator clips badly on narrow screens */
       .hero-scroll { display: none; }
 
-      /* Reduce section padding — desktop 8–10rem is too tall on mobile */
+      /* Reduce section padding: desktop 8 to 10rem is too tall on mobile */
       .bridge       { padding: 5rem 0 4rem; }
       .features     { padding: 4rem 0; }
       .process      { padding: 4rem 0; }
@@ -1378,6 +1442,15 @@
       /* Pricing tabs: full width, even split */
       .pricing-tabs { width: 100%; max-width: 320px; }
       .pricing-tab { flex: 1; padding: 0.65rem 1rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .star, .astrolabe-bg svg, #compassSvg, #compassSvg text, .compass-ring-outer, .compass-ring-mid, .compass-ring-inner, .compass-center, .compass-center-glyph { animation: none !important; }
+      .hero-eyebrow, .hero-title, .hero-title-drama, .hero-sub, .hero-cta, .hero-banner { animation: none; opacity: 1; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .faq-card.pulse { animation: none; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
     }
   </style>
 </head>
@@ -1410,17 +1483,32 @@
   </div>
 
   <!-- NAV -->
-  <nav id="nav">
-    <a href="#" class="nav-logo"><img src="JS_Ceremonial_Seal_Final.png" alt="Jeff Seah" style="height:38px;width:38px;object-fit:contain;mix-blend-mode:screen;display:block;"></a>
+  <nav id="nav" aria-label="Primary">
+    <a href="#" class="nav-logo" aria-label="Jeff Seah, top of page"><img src="/img/seal-128.png" alt="" width="38" height="38"></a>
     <ul class="nav-links">
-      <li><a href="#value">Value</a></li>
+      <li><a href="/2027">2027 Outlook</a></li>
+      <li><a href="#features">Value</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#about">About</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <button class="nav-cta" onclick="document.getElementById('calendar').scrollIntoView({behavior:'smooth'})">Try Power Calendar</button>
+    <a href="#calendar" class="nav-cta">Try Power Calendar</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menu">
+      <svg class="icon-open" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg class="icon-close" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
   </nav>
+  <div class="nav-menu" id="navMenu">
+    <ul>
+      <li><a href="/2027">2027 Outlook</a></li>
+      <li><a href="/power-calendar">Power Calendar</a></li>
+      <li><a href="#features">Value</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#calendar" class="nav-menu-cta">Try Power Calendar</a></li>
+    </ul>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -1473,7 +1561,7 @@
           <text x="11"  y="250" text-anchor="middle" dominant-baseline="middle" font-family="DM Sans,sans-serif" font-size="9" fill="rgba(201,148,58,0.7)"
                 style="animation:counterSpin 120s linear infinite;transform-box:fill-box;transform-origin:center;">W</text>
 
-          <!-- ── 8 Trigrams at r=210 — g rotate around compass centre (250,250) ── -->
+          <!-- ── 8 Trigrams at r=210, g rotate around compass centre (250,250) ── -->
           <g transform="rotate(0,250,250)">  <text x="250" y="40" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.95)">坎</text></g>
           <g transform="rotate(45,250,250)"> <text x="250" y="40" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.95)">艮</text></g>
           <g transform="rotate(90,250,250)"> <text x="250" y="40" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.95)">震</text></g>
@@ -1483,7 +1571,7 @@
           <g transform="rotate(270,250,250)"><text x="250" y="40" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.95)">兌</text></g>
           <g transform="rotate(315,250,250)"><text x="250" y="40" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="16" fill="rgba(201,148,58,0.95)">乾</text></g>
 
-          <!-- ── 12 Earthly Branches at r=172 — g rotate pattern ── -->
+          <!-- ── 12 Earthly Branches at r=172, g rotate pattern ── -->
           <g transform="rotate(0,250,250)">  <text x="250" y="78" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)">子</text></g>
           <g transform="rotate(30,250,250)"> <text x="250" y="78" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)">丑</text></g>
           <g transform="rotate(60,250,250)"> <text x="250" y="78" text-anchor="middle" dominant-baseline="middle" font-family="Noto Serif TC,serif" font-size="13" fill="rgba(201,148,58,0.75)">寅</text></g>
@@ -1505,6 +1593,7 @@
     <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(201,148,58,0.06) 0%, transparent 70%);pointer-events:none;"></div>
 
     <div class="hero-content">
+      <a href="/2027" class="hero-banner"><span class="hero-banner-tag">New</span><span>2027 Annual Outlook is open. USD 88 until 31 December.</span><span>Read more</span></a>
       <div class="hero-eyebrow">Strategic Timing Intelligence</div>
       <h1 class="hero-title">Timing is not luck.</h1>
       <span class="hero-title-drama">Now you can see it.</span>
@@ -1533,20 +1622,33 @@
           <!-- Honeypot: hidden from humans; bots fill it and get silently rejected. Do not remove. -->
           <input class="lead-hp" id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute !important; left:-9999px !important; top:-9999px !important; width:1px; height:1px; opacity:0; pointer-events:none;" />
           <div class="lead-row">
-            <input class="lead-input" id="leadName" type="text" placeholder="Full Name" autocomplete="off" required />
-            <input class="lead-input" id="leadEmail" type="email" placeholder="Email Address" autocomplete="off" required />
+            <div class="lead-field">
+              <label class="lead-above-label" for="leadName">Full Name</label>
+              <input class="lead-input" id="leadName" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="lead-field">
+              <label class="lead-above-label" for="leadEmail">Email Address</label>
+              <input class="lead-input" id="leadEmail" name="email" type="email" autocomplete="email" inputmode="email" required />
+            </div>
           </div>
           <div class="lead-row">
             <div class="lead-field">
               <label class="lead-above-label" for="dob">Date of Birth</label>
-              <input class="lead-input" id="dob" type="date" autocomplete="off" required />
+              <input class="lead-input" id="dob" name="birthDate" type="date" autocomplete="bday" required />
             </div>
             <div class="lead-field">
               <label class="lead-above-label" for="tob">Time of Birth</label>
-              <input class="lead-input" id="tob" type="time" autocomplete="off" required />
+              <input class="lead-input" id="tob" name="birthTime" type="time" required />
             </div>
           </div>
-          <input class="lead-input" id="cob" type="text" placeholder="City of Birth (e.g. Singapore, London, New York)" autocomplete="off" required />
+          <div class="lead-checkbox">
+            <input type="checkbox" id="tobUnknown" name="birthTimeUnknown" />
+            <label for="tobUnknown">I do not know my birth time</label>
+          </div>
+          <div class="lead-field">
+            <label class="lead-above-label" for="cob">City of Birth</label>
+            <input class="lead-input" id="cob" name="birthCity" type="text" placeholder="Singapore, London, New York" required />
+          </div>
           <!-- Cloudflare Turnstile mounts here once TURNSTILE_SITE_KEY is set in the script below. Stays empty (and unenforced) until then, so the form keeps working. -->
           <div id="turnstile-widget" style="margin:0.25rem 0;"></div>
           <button type="submit" class="lead-submit" id="submitBtn">
@@ -1826,7 +1928,7 @@
           <div class="faq-a"><div class="faq-a-inner">
             <p>Good. Skepticism means you think critically... exactly the kind of person who benefits most from this work. Your complimentary first month exists precisely for you. Use it for 30 days. Observe the patterns. Notice what happens when you act on favorable days versus caution windows. Most skeptics become believers not through faith, but because the patterns are consistent, repeatable, and quietly undeniable. The proof was never meant to come before the experience.</p>
           </div></div>
-          <span class="faq-element-tag">水 Water — Flow</span>
+          <span class="faq-element-tag">水 Water, Flow</span>
         </div>
 
         <div class="faq-card faq-card--featured">
@@ -1837,7 +1939,7 @@
           <div class="faq-a"><div class="faq-a-inner">
             <p>Because the clients who benefit most prefer it that way. They have found a genuine edge in business timing, negotiations, launches, and pivotal decisions. They treat it the way a master investor treats their best strategy: privately. I am, for many of them, a competitive advantage they have no intention of sharing. The absence of public testimonials is not a gap in credibility. It is, perhaps, the most honest signal I can offer: the people who know, don't tell.</p>
           </div></div>
-          <span class="faq-element-tag">金 Metal — Precision</span>
+          <span class="faq-element-tag">金 Metal, Precision</span>
         </div>
 
         <div class="faq-card faq-card--small">
@@ -1848,7 +1950,7 @@
           <div class="faq-a"><div class="faq-a-inner">
             <p>Horoscopes speak to one-twelfth of the population with the same message. Your Power Calendar is calculated from your exact date, time, and place of birth. It is personalised strategic intelligence, as unique as your fingerprint, not a generalised forecast written for millions.</p>
           </div></div>
-          <span class="faq-element-tag">木 Wood — Growth</span>
+          <span class="faq-element-tag">木 Wood, Growth</span>
         </div>
 
         <div class="faq-card faq-card--wide">
@@ -1857,9 +1959,9 @@
             <div class="faq-icon-wrap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
           </button>
           <div class="faq-a"><div class="faq-a-inner">
-            <p>Nothing... unless you want more. Your first calendar is yours to keep and reference, with no obligation and no automatic charges. If you find value and want ongoing monthly intelligence, paid plans include a shared timing calendar that lives inside your calendar app and syncs automatically each month. You see your Power Calendar right alongside your regular schedule — always there, never in the way. The decision is entirely yours.</p>
+            <p>Nothing... unless you want more. Your first calendar is yours to keep and reference, with no obligation and no automatic charges. If you find value and want ongoing monthly intelligence, paid plans include a shared timing calendar that lives inside your calendar app and syncs automatically each month. You see your Power Calendar right alongside your regular schedule, always there, never in the way. The decision is entirely yours.</p>
           </div></div>
-          <span class="faq-element-tag">土 Earth — Stability</span>
+          <span class="faq-element-tag">土 Earth, Stability</span>
         </div>
 
         <div class="faq-card faq-card--small">
@@ -1870,7 +1972,7 @@
           <div class="faq-a"><div class="faq-a-inner">
             <p>Birth time adds precision, but meaningful guidance is still possible with an approximate time. Your birth certificate is usually the best starting point. If genuinely unknown, we work with what you have and refine from there.</p>
           </div></div>
-          <span class="faq-element-tag">火 Fire — Clarity</span>
+          <span class="faq-element-tag">火 Fire, Clarity</span>
         </div>
 
         <div class="faq-card faq-card--small">
@@ -1881,7 +1983,7 @@
           <div class="faq-a"><div class="faq-a-inner">
             <p>Yes. Beyond Bazi and Qimen, I work with I-Ching, Tarot, Lenormand, and Moon cards for situational guidance. Each tool serves a distinct purpose, so I recommend the right approach based on your specific question and context.</p>
           </div></div>
-          <span class="faq-element-tag">水 Water — Wisdom</span>
+          <span class="faq-element-tag">水 Water, Wisdom</span>
         </div>
 
       </div>
@@ -1895,7 +1997,7 @@
     <div class="container">
       <div class="footer-inner">
         <div class="footer-brand">
-          <img src="JS_Ceremonial_Seal_Final.png" alt="Jeff Seah" style="height:32px;width:32px;object-fit:contain;mix-blend-mode:screen;display:inline-block;vertical-align:middle;margin-right:0.75rem;">
+          <img src="/img/seal-128.png" alt="" width="32" height="32" style="height:32px;width:32px;object-fit:contain;mix-blend-mode:screen;display:inline-block;vertical-align:middle;margin-right:0.75rem;">
           <span style="vertical-align:middle;">Strategic <span class="status-dot" style="display:inline-block;vertical-align:middle;margin:0 0.4rem;"></span> Timing <span class="status-dot" style="display:inline-block;vertical-align:middle;margin:0 0.4rem;"></span> Intelligence</span>
         </div>
       </div>
@@ -1950,6 +2052,30 @@
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // ── Mobile menu ──
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.getElementById('navMenu');
+    function setMenu(open) {
+      navMenu.classList.toggle('open', open);
+      nav.classList.toggle('menu-open', open);
+      navToggle.setAttribute('aria-expanded', String(open));
+    }
+    navToggle.addEventListener('click', () => setMenu(!navMenu.classList.contains('open')));
+    navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+    document.addEventListener('click', (e) => {
+      if (navMenu.classList.contains('open') && !nav.contains(e.target) && !navMenu.contains(e.target)) setMenu(false);
+    });
+
+    // ── Unknown birth time ──
+    const tobUnknown = document.getElementById('tobUnknown');
+    const tobInput = document.getElementById('tob');
+    tobUnknown.addEventListener('change', () => {
+      tobInput.value = '';
+      tobInput.disabled = tobUnknown.checked;
+      tobInput.required = !tobUnknown.checked;
     });
 
     // ── Scroll Reveal ──
@@ -2025,9 +2151,9 @@
     const FORM_READY_AT = Date.now();
 
     function fakeSuccess(btn) {
-      // Present a success state without submitting — used to silently drop bots
+      // Present a success state without submitting, used to silently drop bots
       // so they don't retry with a different strategy.
-      btn.textContent = '✓ Received — check your email to confirm';
+      btn.textContent = '✓ Received. Check your email to confirm';
       btn.disabled = true;
       btn.style.opacity = '0.6';
     }
@@ -2041,15 +2167,15 @@
       const name     = document.getElementById('leadName').value.trim();
       const email    = document.getElementById('leadEmail').value.trim();
       const dob      = document.getElementById('dob').value;
-      const tob      = document.getElementById('tob').value;
+      const tob      = tobUnknown.checked ? 'Unknown' : document.getElementById('tob').value;
       const city     = document.getElementById('cob').value.trim();
       const honeypot = document.getElementById('company_website').value;
       const elapsedMs = Date.now() - FORM_READY_AT;
 
-      // 1) Honeypot — invisible to humans. If filled, it's a bot.
+      // 1) Honeypot: invisible to humans. If filled, it's a bot.
       if (honeypot) { fakeSuccess(btn); return; }
 
-      // 2) Time-trap — nobody fills real birth details in under 3 seconds.
+      // 2) Time-trap: nobody fills real birth details in under 3 seconds.
       if (elapsedMs < 3000) { fakeSuccess(btn); return; }
 
       // 3) Human-facing sanity checks (friendly, blocking)
@@ -2069,7 +2195,7 @@
         return;
       }
 
-      // 4) Cloudflare Turnstile — must pass the bot check when a site key is configured
+      // 4) Cloudflare Turnstile: must pass the bot check when a site key is configured
       let turnstileToken = '';
       if (TURNSTILE_SITE_KEY) {
         try { turnstileToken = turnstile.getResponse(); } catch (_) {}
@@ -2088,6 +2214,7 @@
         email:     email,
         birthDate: dob,
         birthTime: tob,
+        birthTimeUnknown: tobUnknown.checked,
         birthCity: city,
         submittedAt: new Date().toISOString(),
         elapsedMs: elapsedMs,       // server re-checks the time-trap
@@ -2102,7 +2229,7 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
-        btn.textContent = '✓ Almost there — check your email to confirm your request';
+        btn.textContent = '✓ Almost there. Check your email to confirm your request';
         btn.style.opacity = '0.6';
       } catch(err) {
         btn.innerHTML = originalHTML;
