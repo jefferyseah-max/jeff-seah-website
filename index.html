@@ -25,8 +25,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400&display=block" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&display=swap" rel="stylesheet" />
-  <!-- Cloudflare Turnstile (free bot protection). Renders the widget marked .cf-turnstile in the form. -->
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <style>
     :root {
@@ -1140,6 +1138,10 @@
       color: var(--text-muted);
       margin-top: 1rem;
     }
+    .lead-offer { list-style: none; margin: 0 auto 1.75rem; padding: 0; display: grid; gap: 0.6rem; max-width: 30rem; text-align: left; }
+    .lead-offer li { position: relative; padding-left: 1.6rem; font-size: 0.95rem; color: var(--text-muted); }
+    .lead-offer li::before { content: "º6"; position: absolute; left: 0; color: var(--gold); }
+    .lead-note a { color: var(--gold); text-decoration: underline; }
     .lead-checkbox { display: flex; align-items: center; gap: 0.6rem; justify-content: flex-start; text-align: left; }
     .lead-checkbox input { width: 18px; height: 18px; accent-color: var(--gold); flex-shrink: 0; }
     .lead-checkbox label { font-size: 0.85rem; color: var(--text-muted); }
@@ -1505,7 +1507,7 @@
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#faq">FAQ</a></li>
     </ul>
-    <a href="#calendar" class="nav-cta">Try Power Calendar</a>
+    <a href="#calendar" class="nav-cta">Get Started</a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menu">
       <svg class="icon-open" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       <svg class="icon-close" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -1519,7 +1521,7 @@
       <li><a href="#process">Process</a></li>
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#faq">FAQ</a></li>
-      <li><a href="#calendar" class="nav-menu-cta">Try Power Calendar</a></li>
+      <li><a href="#calendar" class="nav-menu-cta">Get Started</a></li>
     </ul>
   </div>
 
@@ -1612,7 +1614,7 @@
       <span class="hero-title-drama">Now you can see it.</span>
       <p class="hero-sub">Based on 5,000 years of Chinese metaphysics and your unique birth chart. Personalized timing intelligence for every decision that matters.</p>
       <a href="#calendar" class="hero-cta" onclick="document.getElementById('calendar').scrollIntoView({behavior:'smooth'});return false;">
-        Try Your Power Calendar
+        Start with your 2027 Outlook
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
@@ -1628,48 +1630,19 @@
     <div class="lead-glow"></div>
     <div class="container">
       <div class="lead-inner reveal">
-        <div class="section-label" style="justify-content:center;">Free to Start</div>
-        <h2>Try Your <em>Power Calendar</em></h2>
-        <p>Enter your birth details. We'll calculate your personalized Power Calendar and deliver it to your inbox within 7 days, complimentary for your first month. No credit card required.</p>
-        <form class="lead-form" onsubmit="handleSubmit(event)" autocomplete="off">
-          <!-- Honeypot: hidden from humans; bots fill it and get silently rejected. Do not remove. -->
-          <input class="lead-hp" id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute !important; left:-9999px !important; top:-9999px !important; width:1px; height:1px; opacity:0; pointer-events:none;" />
-          <div class="lead-row">
-            <div class="lead-field">
-              <label class="lead-above-label" for="leadName">Full Name</label>
-              <input class="lead-input" id="leadName" name="name" type="text" autocomplete="name" required />
-            </div>
-            <div class="lead-field">
-              <label class="lead-above-label" for="leadEmail">Email Address</label>
-              <input class="lead-input" id="leadEmail" name="email" type="email" autocomplete="email" inputmode="email" required />
-            </div>
-          </div>
-          <div class="lead-row">
-            <div class="lead-field">
-              <label class="lead-above-label" for="dob">Date of Birth</label>
-              <input class="lead-input" id="dob" name="birthDate" type="date" autocomplete="bday" required />
-            </div>
-            <div class="lead-field">
-              <label class="lead-above-label" for="tob">Time of Birth</label>
-              <input class="lead-input" id="tob" name="birthTime" type="time" required />
-            </div>
-          </div>
-          <div class="lead-checkbox">
-            <input type="checkbox" id="tobUnknown" name="birthTimeUnknown" />
-            <label for="tobUnknown">I do not know my birth time</label>
-          </div>
-          <div class="lead-field">
-            <label class="lead-above-label" for="cob">City of Birth</label>
-            <input class="lead-input" id="cob" name="birthCity" type="text" placeholder="Singapore, London, New York" required />
-          </div>
-          <!-- Cloudflare Turnstile mounts here once TURNSTILE_SITE_KEY is set in the script below. Stays empty (and unenforced) until then, so the form keeps working. -->
-          <div id="turnstile-widget" style="margin:0.25rem 0;"></div>
-          <button type="submit" class="lead-submit" id="submitBtn">
-            Try My Power Calendar
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <p class="lead-note">Complimentary first month. No credit card required.</p>
-        </form>
+        <div class="section-label" style="justify-content:center;">Start Here</div>
+        <h2>Your <em>2027 Outlook</em>, plus a free month of Power Calendar</h2>
+        <p>Get your 2027 Annual Outlook, the year ahead read from your own birth chart. With it, we calculate your Power Calendar for the next full month and deliver it into your Google Calendar, free, so you can feel how daily timing works for you.</p>
+        <ul class="lead-offer">
+          <li>2027 Annual Outlook, written for your chart</li>
+          <li>One month of Power Calendar, free. No card, nothing renews.</li>
+          <li>USD 88 until 31 December, then USD 138</li>
+        </ul>
+        <a href="/2027" class="lead-submit">
+          See the 2027 Outlook
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <p class="lead-note">Want the calendar every month? <a href="#pricing">Start the Power Calendar plan</a> with a 30-day free trial.</p>
       </div>
     </div>
   </section>
@@ -1980,7 +1953,7 @@
             <div class="faq-icon-wrap"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
           </button>
           <div class="faq-a"><div class="faq-a-inner">
-            <p>Nothing... unless you want more. Your first calendar is yours to keep and reference, with no obligation and no automatic charges. If you find value and want ongoing monthly intelligence, paid plans include a shared timing calendar that lives inside your calendar app and syncs automatically each month. You see your Power Calendar right alongside your regular schedule, always there, never in the way. The decision is entirely yours.</p>
+            <p>That depends on how you started. If your free month came with the 2027 Outlook, nothing happens: there is no card on file and nothing renews. If you started the Power Calendar plan's 30-day free trial, it continues at USD 97 a month, billed on the 15th, unless you cancel before then in <a href="https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer">Manage your plan</a>. Either way, your first calendar is yours to keep. If you find value and want ongoing monthly intelligence, paid plans include a shared timing calendar that lives inside your calendar app and syncs automatically each month. You see your Power Calendar right alongside your regular schedule, always there, never in the way. The decision is entirely yours.</p>
           </div></div>
           <span class="faq-element-tag">土 Earth, Stability</span>
         </div>
@@ -2090,15 +2063,6 @@
       if (navMenu.classList.contains('open') && !nav.contains(e.target) && !navMenu.contains(e.target)) setMenu(false);
     });
 
-    // ── Unknown birth time ──
-    const tobUnknown = document.getElementById('tobUnknown');
-    const tobInput = document.getElementById('tob');
-    tobUnknown.addEventListener('change', () => {
-      tobInput.value = '';
-      tobInput.disabled = tobUnknown.checked;
-      tobInput.required = !tobUnknown.checked;
-    });
-
     // ── Scroll Reveal ──
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -2153,113 +2117,6 @@
       setTimeout(() => { calActive.style.transform = 'scale(1.1)'; }, 300);
     }, 2000);
 
-    // ── Cloudflare Turnstile config ──
-    // Paste your Turnstile SITE key here to turn on the invisible bot check.
-    // Leave it empty and the check stays off (the form still works normally).
-    const TURNSTILE_SITE_KEY = '';
-
-    if (TURNSTILE_SITE_KEY) {
-      function renderTurnstile() {
-        try {
-          turnstile.render('#turnstile-widget', { sitekey: TURNSTILE_SITE_KEY, theme: 'dark' });
-        } catch (_) {}
-      }
-      if (window.turnstile) { turnstile.ready(renderTurnstile); }
-      else { window.addEventListener('load', () => { if (window.turnstile) turnstile.ready(renderTurnstile); }); }
-    }
-
-    // ── Anti-spam: record when the form became available to the visitor ──
-    const FORM_READY_AT = Date.now();
-
-    function fakeSuccess(btn) {
-      // Present a success state without submitting, used to silently drop bots
-      // so they don't retry with a different strategy.
-      btn.textContent = '✓ Received. Check your email to confirm';
-      btn.disabled = true;
-      btn.style.opacity = '0.6';
-    }
-
-    // ── Form Submit ──
-    async function handleSubmit(e) {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      const originalHTML = btn.innerHTML;
-
-      const name     = document.getElementById('leadName').value.trim();
-      const email    = document.getElementById('leadEmail').value.trim();
-      const dob      = document.getElementById('dob').value;
-      const tob      = tobUnknown.checked ? 'Unknown' : document.getElementById('tob').value;
-      const city     = document.getElementById('cob').value.trim();
-      const honeypot = document.getElementById('company_website').value;
-      const elapsedMs = Date.now() - FORM_READY_AT;
-
-      // 1) Honeypot: invisible to humans. If filled, it's a bot.
-      if (honeypot) { fakeSuccess(btn); return; }
-
-      // 2) Time-trap: nobody fills real birth details in under 3 seconds.
-      if (elapsedMs < 3000) { fakeSuccess(btn); return; }
-
-      // 3) Human-facing sanity checks (friendly, blocking)
-      if (/\d/.test(city)) {
-        alert('Please enter your city of birth as a place name (e.g. Singapore), not a date or number.');
-        return;
-      }
-      const birth = new Date(dob);
-      const now = new Date();
-      const ageYears = (now - birth) / (365.25 * 24 * 3600 * 1000);
-      if (isNaN(birth.getTime()) || birth > now || ageYears > 120) {
-        alert('Please enter a valid date of birth.');
-        return;
-      }
-      if (name.length < 2 || /https?:|www\.|@/i.test(name)) {
-        alert('Please enter your full name.');
-        return;
-      }
-
-      // 4) Cloudflare Turnstile: must pass the bot check when a site key is configured
-      let turnstileToken = '';
-      if (TURNSTILE_SITE_KEY) {
-        try { turnstileToken = turnstile.getResponse(); } catch (_) {}
-        if (!turnstileToken) {
-          alert('Please complete the verification check below the form, then submit again.');
-          return;
-        }
-      }
-
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
-      btn.style.opacity = '0.7';
-
-      const payload = {
-        name:      name,
-        email:     email,
-        birthDate: dob,
-        birthTime: tob,
-        birthTimeUnknown: tobUnknown.checked,
-        birthCity: city,
-        submittedAt: new Date().toISOString(),
-        elapsedMs: elapsedMs,       // server re-checks the time-trap
-        website: honeypot,          // honeypot echoed for server-side re-check
-        turnstileToken: turnstileToken
-      };
-
-      try {
-        await fetch('https://script.google.com/macros/s/AKfycbwS4IpuJQ6wgmc6Bn53yEapbw2m_tThKuFHLwTNDJCSvfaqyY4YtV4HmQ-Z_FA-ej6Z/exec', {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        btn.textContent = '✓ Almost there. Check your email to confirm your request';
-        btn.style.opacity = '0.6';
-      } catch(err) {
-        btn.innerHTML = originalHTML;
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        try { if (TURNSTILE_SITE_KEY && window.turnstile) turnstile.reset(); } catch (_) {}
-        alert('Something went wrong. Please try again or email jefferyseah@gmail.com directly.');
-      }
-    }
   </script>
 </body>
 </html>

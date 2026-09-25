@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your birth details | 2027 Annual Outlook | Jeff Seah</title>
-  <meta name="description" content="Send Jeff your birth details to begin your 2027 Annual Outlook." />
+  <title>Welcome | Power Calendar | Jeff Seah</title>
+  <meta name="description" content="Send Jeff your birth details to begin your Power Calendar." />
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="canonical" href="https://www.jeffseah.rocks/2027-next" />
+  <link rel="canonical" href="https://www.jeffseah.rocks/welcome" />
   <link rel="icon" type="image/png" sizes="64x64" href="/img/seal-64.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,9 +40,9 @@
   <section class="intake-section">
     <div class="container">
       <div class="intake-inner">
-        <div class="section-label centered">Thank you, one more step</div>
+        <div class="section-label centered">Welcome, one more step</div>
         <h1>Your birth details</h1>
-        <p class="intake-sub">Two minutes. This is what your 2027 Annual Outlook is calculated from, and your free Power Calendar month too. Your private page and PDF follow within 7 days.</p>
+        <p class="intake-sub" id="welcomeSub">Two minutes. This is what your Power Calendar is calculated from. Your first month arrives in your Google Calendar within 7 days.</p>
 
         <form class="lead-form" id="intakeForm" novalidate>
           <!-- Honeypot: hidden from humans; bots fill it and get silently rejected. Do not remove. -->
@@ -52,7 +52,7 @@
             <div class="lead-field">
               <label class="lead-above-label" for="fullName">Full name</label>
               <input class="lead-input" id="fullName" name="name" type="text" autocomplete="name" required />
-              <span class="field-error" id="err-fullName">Please enter the full name of the person the outlook is for.</span>
+              <span class="field-error" id="err-fullName">Please enter the full name of the person the calendar is for.</span>
             </div>
             <div class="lead-field">
               <label class="lead-above-label" for="email">Email for delivery</label>
@@ -97,33 +97,8 @@
               <label class="radio-option"><input type="radio" name="gender" value="female" required /> Female</label>
               <label class="radio-option"><input type="radio" name="gender" value="male" /> Male</label>
             </div>
-            <span class="lead-help">The luck pillar sequence runs in a different direction for each; this is a calculation input, not a preference.</span>
+            <span class="lead-help">This is a calculation input for the chart, not a preference.</span>
             <span class="field-error" id="err-gender">Please choose one.</span>
-          </fieldset>
-
-          <fieldset class="lead-field">
-            <legend class="lead-above-label">Employed or business owner</legend>
-            <div class="radio-group">
-              <label class="radio-option"><input type="radio" name="workType" value="employed" required /> Employed</label>
-              <label class="radio-option"><input type="radio" name="workType" value="business-owner" /> Business owner</label>
-              <label class="radio-option"><input type="radio" name="workType" value="both" /> Both</label>
-            </div>
-            <span class="field-error" id="err-workType">Please choose one.</span>
-          </fieldset>
-
-          <div class="lead-field">
-            <label class="lead-above-label" for="decisions">The two or three decisions on your mind for 2027</label>
-            <textarea class="form-textarea" id="decisions" name="decisions" placeholder="Whether to change jobs. When to launch. Whether to sign the lease." required></textarea>
-            <span class="field-error" id="err-decisions">A line or two is enough; this shapes the When To index.</span>
-          </div>
-
-          <fieldset class="lead-field">
-            <legend class="lead-above-label">Which edition do you want to open first?</legend>
-            <div class="radio-group">
-              <label class="radio-option"><input type="radio" name="edition" value="simplified" required checked /> Simplified, plain English</label>
-              <label class="radio-option"><input type="radio" name="edition" value="advanced" /> Advanced, shows the working</label>
-            </div>
-            <span class="lead-help">Both are on the same page. This only sets which one opens first.</span>
           </fieldset>
 
           <div class="checkbox-row">
@@ -138,7 +113,7 @@
 
         <div class="form-state" id="successState" role="status">
           <h2>Received, thank you</h2>
-          <p>Your 2027 Annual Outlook is on its way. Expect your private page and PDF within 7 days at the email you gave. If you ordered by 15 January it arrives before Li Chun. Your free Power Calendar month follows for the next full month, straight into your Google Calendar. Nothing renews.</p>
+          <p>Your Power Calendar is on its way. Expect your first month in your Google Calendar within 7 days, with an email when it is there. You can manage or cancel your plan anytime in <a href="https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer">Manage your plan</a>.</p>
         </div>
 
         <div class="form-state form-error" id="errorState" role="alert">
@@ -161,6 +136,9 @@
     // Apps Script intake (docs/intake/Code.gs). While empty, submissions show
     // the error state with the email fallback so nobody's details vanish.
     const INTAKE_ENDPOINT = '';
+    const PLANS = { '97': 'Power Calendar', '197': 'Calendar and brief monthly report', '297': 'Calendar and premium monthly report', '397': 'Premium report and coaching' };
+    const PLAN = PLANS[new URLSearchParams(location.search).get('plan')] ? new URLSearchParams(location.search).get('plan') : '';
+    if (PLAN) document.getElementById('welcomeSub').textContent = 'Welcome to ' + PLANS[PLAN] + '. Two minutes: this is what your Power Calendar is calculated from. Your first month arrives in your Google Calendar within 7 days.';
 
     const form = document.getElementById('intakeForm');
     const unknownTimeBox = document.getElementById('unknownTime');
@@ -222,10 +200,7 @@
       const calOk = calEl.value.trim() === '' || calEl.validity.valid;
       showError('calendarEmail', !calOk); markInvalid(calEl, !calOk); ok = ok && calOk;
       const genderOk = !!form.gender.value; showError('gender', !genderOk); ok = ok && genderOk;
-      const workOk = !!form.workType.value; showError('workType', !workOk); ok = ok && workOk;
 
-      const decisions = document.getElementById('decisions').value.trim();
-      const decOk = decisions.length >= 3; showError('decisions', !decOk); ok = ok && decOk;
 
       const consentOk = document.getElementById('consent').checked; showError('consent', !consentOk); ok = ok && consentOk;
 
@@ -237,7 +212,8 @@
 
       const params = new URLSearchParams(location.search);
       const payload = {
-        product: '2027-annual-outlook',
+        product: 'monthly-welcome',
+        plan: PLAN,
         name,
         email: emailEl.value.trim(),
         calendarEmail: calEl.value.trim(),
@@ -246,9 +222,6 @@
         birthTimeUnknown: unknownTimeBox.checked,
         birthCity: city,
         gender: form.gender.value,
-        workType: form.workType.value,
-        decisions,
-        edition: form.edition.value,
         consent: true,
         paid: params.get('paid') === '1',
         stripeSessionId: params.get('session_id') || '',

@@ -420,6 +420,7 @@ fieldset.lead-field { border: none; padding: 0; margin: 0; min-width: 0; }
 fieldset.lead-field legend { padding: 0; margin-bottom: 0.4rem; float: left; width: 100%; }
 .lead-above-label { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); padding-left: 0.25rem; }
 .lead-help { font-size: 0.8rem; color: var(--text-muted-accessible); padding-left: 0.25rem; line-height: 1.5; }
+.lead-optional { text-transform: none; letter-spacing: 0; color: var(--text-muted-accessible); font-weight: 400; }
 .lead-input, .form-textarea {
   background: rgba(255,255,255,0.04); border: 1px solid rgba(201,148,58,0.2); border-radius: 0.75rem;
   padding: 0.875rem 1.25rem; font-family: var(--sans); font-size: 1rem; font-weight: 300; color: var(--text); width: 100%;
