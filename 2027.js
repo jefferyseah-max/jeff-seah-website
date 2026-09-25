@@ -2,10 +2,10 @@
 // Nav scroll state, mobile menu, FAQ accordion, scroll reveal, the price
 // step and the Stripe link injection. The homepage keeps its own inline script.
 
-// [STRIPE LINK PENDING] Paste the Stripe Payment Link for the 2027 Annual
-// Outlook here (success URL: https://www.jeffseah.rocks/2027-next?paid=1).
-// While empty, every order button scrolls to the order block instead.
-const STRIPE_PAYMENT_LINK = '';
+// Stripe Payment Link for the 2027 Annual Outlook, USD 88 (plink_1UJTagRmcvZfydHfw0B40mtH,
+// created 2026-09-25). Success URL: /2027-next?paid=1&session_id={CHECKOUT_SESSION_ID}.
+// Swap for the USD 138 link on 1 January 2027. If emptied, order buttons scroll to #order.
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04';
 
 // Price step (Jeff, 2026-09-25): USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027 SGT.
 // The HTML is written for the 88 window; this only flips the copy once the date passes.

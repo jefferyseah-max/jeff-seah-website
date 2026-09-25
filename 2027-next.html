@@ -241,6 +241,7 @@
         edition: form.edition.value,
         consent: true,
         paid: params.get('paid') === '1',
+        stripeSessionId: params.get('session_id') || '',
         submittedAt: new Date().toISOString(),
         elapsedMs: Date.now() - FORM_READY_AT,
         website: honeypot
