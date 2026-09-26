@@ -264,8 +264,9 @@ alert covers it.
 - **Client birth data**: the Wealth Codex MCP vault on Olares (encrypted, sensitive; ask before writing).
 - **Per-client context**: Obsidian vault on Olares, `wiki/people/<Name>.md` (single source of truth for agents).
 - **Power Calendar delivery**: Google Calendar, shared to the client's `calendarEmail` (or `email`).
-- **Mailboxes**: notifications go to jefferyseah@gmail.com; site also shows jeff@jeffseah.rocks (`/book`)
-  and the forms' fallback text says jefferyseah@gmail.com.
+- **Mailboxes**: notifications go to jefferyseah@gmail.com. Every public contact on the site is
+  coaching@jeffseah.rocks (Namecrane, forwards to Gmail; switched 2026-09-27). jeff@jeffseah.rocks had
+  never received mail, so it is not used.
 
 ---
 

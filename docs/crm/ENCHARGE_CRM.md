@@ -59,7 +59,7 @@ Product detection uses the Checkout Session `success_url`: `/2027-next` is the O
 - Tags: `outlook-2027-buyer`, `monthly-subscriber`, `monthly-97/197/297/397`, `intake-received`,
   `annual-intake`, `monthly-intake`, `report-delivered`.
 - Custom fields (text): `edition`, `reportDue`, `reportUrl`.
-- Sender: Jeff Seah <jeff@jeffseah.rocks>; domain jeffseah.rocks verified (DNS on Cloudflare).
+- Sender: Jeff Seah <coaching@jeffseah.rocks>; domain jeffseah.rocks verified (DNS on Cloudflare).
 - Company mailing address: must be a real postal address (it appears in every footer); change it any
   time in Settings, Your Account.
 - Flows A, B, C as in `docs/crm/emails.md`. Built switched **off**; Jeff approves copy, then on.

@@ -1,7 +1,7 @@
 # Encharge email drafts: 2027 Annual Outlook
 
 Drafted 2026-09-27 by Claude for Jeff's review. **Nothing sends until Jeff approves the copy and the
-flows are switched on.** From: Jeff Seah <jeff@jeffseah.rocks>, reply-to the same.
+flows are switched on.** From: Jeff Seah <coaching@jeffseah.rocks>, reply-to the same.
 
 Merge fields (Encharge syntax): `{{ person.firstName }}`, `{{ person.reportDue }}` (for example
 "Sunday 4 October", set at intake), `{{ person.reportUrl }}` (set at delivery), `{{ person.edition }}`.
