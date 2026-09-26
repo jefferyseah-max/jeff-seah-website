@@ -1,6 +1,6 @@
 # Billing on the 15th: switch-on steps
 
-Built 2026-09-25 on branch `feature/billing-anchor`. Not live until the steps below are done.
+Built 2026-09-25. **Live since 2026-09-25**: steps 1 to 4 below are done and the site copy is updated. Step 5 (a real test signup) is still pending; see `CLAUDE.md`.
 
 ## What it does
 
