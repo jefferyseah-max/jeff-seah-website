@@ -18,7 +18,7 @@ ID, URL and behaviour below was checked live on 2026-09-26/27 unless marked othe
      |                            |                             |                         |
   /  (index.html)          /2027 (2027.html)            /power-calendar            /book (book.html)
   pricing: 4 monthly       2027 Annual Outlook          sample month + plans       Single Session USD 197
-  Stripe links             Stripe link (88, 138)                                   -> CalendarHero (not Stripe)
+  Stripe links             Stripe link (88, 138)                                   -> CalendarHero (paid via its Stripe)
      |                            |
      v                            v
   Stripe Payment Link  ------------------------------  Stripe Payment Link
@@ -74,7 +74,7 @@ their birth details are; Jeff (and his agent pipeline, outside this repo) produc
 | `2027-next.html` | Post-payment intake for Outlook buyers. `noindex`. |
 | `welcome.html` | Post-payment intake for monthly subscribers. `noindex`. |
 | `power-calendar.html` | Power Calendar explainer with a sample month and plan CTA (links to the 97 trial). |
-| `book.html` | Single Session page. **Own inline `<style>`**, does not use `2027.css`. Books via CalendarHero. |
+| `book.html` | Single Session page. **Own inline `<style>`**, does not use `2027.css`. Books and charges via CalendarHero `/singlesession`. |
 | `2027.css` | Shared stylesheet for `2027.html`, `2027-next.html`, `welcome.html`, `power-calendar.html`. |
 | `2027.js` | Shared JS for those four pages: nav scroll state, mobile menu, FAQ accordion, scroll reveal, the 1 Jan 2027 price step, and Stripe link injection into `[data-stripe]` buttons. |
 | `api/stripe-webhook.mjs` | Vercel function: Stripe webhook entry point. |
@@ -131,10 +131,16 @@ Old Feb 2026 products "Essential 150", "Combo 297", "Premium 397", "Single 250":
 
 ### Single Session (USD 197)
 
-`/book` sends people to CalendarHero
-(`https://meeting.calendarhero.com/meeting/new/5f76b7f56d08b80020fec8d3/lifecoaching`); the page says
-payment is collected at booking. **Stripe is not involved, no intake form, no Sheet row, no alert from
-this site.** How CalendarHero collects payment was not reviewed.
+`/book` sends people to the CalendarHero meeting type **SingleSession**
+(`https://meeting.calendarhero.com/singlesession`, created 2026-09-27 as a duplicate of Lifecoaching:
+Mon/Tue/Thu 8pm to 10:30pm SGT, 1 hr, Google Meet, 2-day lead time, 30-min buffers). CalendarHero's
+own "Collect Payments" charges **USD 197 by card at booking** through its Stripe integration
+(connected 2026-02-23 as jefferyseah@gmail.com). Automatic refunds off; guest invites off (CalendarHero
+requires that when payments are on). No intake form, no Sheet row, no alert from this site; Jeff gets
+CalendarHero's booking email and Stripe's payment notification.
+
+Do not point `/book` at `/lifecoaching`: that link is for existing coaching clients, is unpaid, and its
+description still carries the old SGD pricing and PayNow/PayPal details.
 
 ### Customer portal
 

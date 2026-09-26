@@ -19,7 +19,7 @@ If a task needs Stripe or Sheet edits and the session is cloud, say so at the st
 
 ## Offers and payments (as of 2026-09-26)
 - Monthly plans on Stripe Payment Links: 97 Calendar (30-day card trial), 197 Calendar + Brief,
-  297 Calendar + Premium, 397 Coaching. Single Session 197 via `/book`.
+  297 Calendar + Premium, 397 Coaching. Single Session USD 197 via `/book`, paid at booking on CalendarHero `/singlesession`.
 - 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. Both links are in
   `2027.js`, which switches link and copy at 00:00 SGT 1 Jan (homepage flips its own two lines at the same
   moment). The 88 link stays live in Stripe until Jeff deactivates it on 1 Jan (reminder set). Buyers get one free Power Calendar month (next full month, no card).
