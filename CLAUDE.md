@@ -36,7 +36,10 @@ If a task needs Stripe or Sheet edits and the session is cloud, say so at the st
 Script web app bound to the Sheet "jeffseah.rocks Intake" (tabs `annual-2027`, `monthly-welcome`),
 which emails Jeff per submission. Source and setup: `docs/intake/Code.gs`, `docs/intake/INTAKE_SETUP.md`.
 Code changes: Manage deployments, New version (keeps the URL). Submissions take about 9 s.
-Test rows were cleared 2026-09-26; both tabs hold headers only.
+Test rows were cleared 2026-09-26; both tabs hold headers only. `paid` is true when the URL carries a
+Stripe `session_id` (or `paid=1`).
+End-to-end test passed 2026-09-26 (97 trial signup, /welcome intake, Sheet row and email, first invoice
+on the 15th, portal cancel, test row deleted).
 
 ## Key files
 | File | Purpose |
@@ -49,9 +52,6 @@ Test rows were cleared 2026-09-26; both tabs hold headers only.
 | `script.js` / `styles.css`, `FORM_SECURITY_SETUP.md`, `GOOGLE_SHEETS_SETUP.md`, `QUICK_REFERENCE.md` | Dormant, from the retired lead form |
 
 ## Pending
-- End-to-end test: one signup on the 97 free trial, land on `/welcome` with the plan greeting,
-  submit, check the Sheet row and email, confirm the next invoice is on the 15th, cancel in the portal,
-  delete the test row.
 - Publish the 2027 sample at reports.jeffseah.rocks/sample-2027/, then remove `hidden` from `.sample-section` in `2027.html`.
 - Create the USD 138 Outlook link before 1 Jan 2027.
 

@@ -250,7 +250,7 @@
         decisions,
         edition: form.edition.value,
         consent: true,
-        paid: params.get('paid') === '1',
+        paid: params.get('paid') === '1' || (params.get('session_id') || '').startsWith('cs_'),
         stripeSessionId: params.get('session_id') || '',
         submittedAt: new Date().toISOString(),
         elapsedMs: Date.now() - FORM_READY_AT,
