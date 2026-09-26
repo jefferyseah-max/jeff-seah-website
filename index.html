@@ -1609,7 +1609,7 @@
     <div style="position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse 50% 50% at 50% 50%, rgba(201,148,58,0.06) 0%, transparent 70%);pointer-events:none;"></div>
 
     <div class="hero-content">
-      <a href="/2027" class="hero-banner"><span class="hero-banner-tag">New</span><span>2027 Annual Outlook is open. USD 88 until 31 December.</span><span>Read more</span></a>
+      <a href="/2027" class="hero-banner"><span class="hero-banner-tag">New</span><span data-price-home="2027 Annual Outlook is open. USD 138.">2027 Annual Outlook is open. USD 88 until 31 December.</span><span>Read more</span></a>
       <div class="hero-eyebrow">Strategic Timing Intelligence</div>
       <h1 class="hero-title">Timing is not luck.</h1>
       <span class="hero-title-drama">Now you can see it.</span>
@@ -1637,7 +1637,7 @@
         <ul class="lead-offer">
           <li>2027 Annual Outlook, written for your chart</li>
           <li>One month of Power Calendar, free. No card, nothing renews.</li>
-          <li>USD 88 until 31 December, then USD 138</li>
+          <li data-price-home="USD 138">USD 88 until 31 December, then USD 138</li>
         </ul>
         <a href="/2027" class="lead-submit">
           See the 2027 Outlook
@@ -2001,7 +2001,10 @@
   </footer>
 
   <script>
-
+    // ── 2027 Outlook price step: same moment as PRICE_STEP_AT in 2027.js (2027-01-01 00:00 SGT) ──
+    if (Date.now() >= Date.UTC(2026, 11, 31, 16, 0, 0)) {
+      document.querySelectorAll('[data-price-home]').forEach(el => { el.textContent = el.dataset.priceHome; });
+    }
 
     // ── FAQ Bento toggle ──
     function toggleFaq(btn) {

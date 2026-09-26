@@ -2,16 +2,21 @@
 // Nav scroll state, mobile menu, FAQ accordion, scroll reveal, the price
 // step and the Stripe link injection. The homepage keeps its own inline script.
 
-// Stripe Payment Link for the 2027 Annual Outlook, USD 88 (plink_1UJTagRmcvZfydHfw0B40mtH,
-// created 2026-09-25). Success URL: /2027-next?paid=1&session_id={CHECKOUT_SESSION_ID}.
-// Swap for the USD 138 link on 1 January 2027. If emptied, order buttons scroll to #order.
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04';
-
 // Price step (Jeff, 2026-09-25): USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027 SGT.
-// The HTML is written for the 88 window; this only flips the copy once the date passes.
+// The HTML is written for the 88 window; this flips the copy and the Stripe link once the date passes.
+// The homepage (index.html) flips its own two price lines at the same moment.
 const PRICE_STEP_AT = Date.UTC(2026, 11, 31, 16, 0, 0); // 2027-01-01 00:00 Asia/Singapore
 const PRICE_NOW = 88;
 const PRICE_LATER = 138;
+const AFTER_STEP = Date.now() >= PRICE_STEP_AT;
+
+// Stripe Payment Links for the 2027 Annual Outlook. Both have the success URL
+// /2027-next?paid=1&session_id={CHECKOUT_SESSION_ID}. If emptied, order buttons scroll to #order.
+// USD 88: plink_1UJTagRmcvZfydHfw0B40mtH (2026-09-25). USD 138: plink_1UJz1aRmcvZfydHf7Tyqf5c0 (2026-09-27).
+// The 88 link stays live in Stripe until Jeff deactivates it on 1 January 2027.
+const STRIPE_PAYMENT_LINK = AFTER_STEP
+  ? 'https://buy.stripe.com/00w6oJ2Qv8Wy6A2eyBbwk09'
+  : 'https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04';
 
 document.documentElement.classList.add('js');
 
@@ -77,7 +82,7 @@ if (reduceMotion || !('IntersectionObserver' in window)) {
 }
 
 // -- Price step --
-if (Date.now() >= PRICE_STEP_AT) {
+if (AFTER_STEP) {
   document.querySelectorAll('[data-price]').forEach(el => { el.textContent = String(PRICE_LATER); });
   document.querySelectorAll('[data-price-copy]').forEach(el => {
     el.textContent = `USD ${PRICE_LATER} from 1 January 2027. The USD ${PRICE_NOW} launch price closed on 31 December 2026.`;

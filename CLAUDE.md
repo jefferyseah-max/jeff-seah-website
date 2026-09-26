@@ -20,8 +20,9 @@ If a task needs Stripe or Sheet edits and the session is cloud, say so at the st
 ## Offers and payments (as of 2026-09-26)
 - Monthly plans on Stripe Payment Links: 97 Calendar (30-day card trial), 197 Calendar + Brief,
   297 Calendar + Premium, 397 Coaching. Single Session 197 via `/book`.
-- 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027 (the 138 link is still to
-  be created). Link in `2027.js`; buyers get one free Power Calendar month (next full month, no card).
+- 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. Both links are in
+  `2027.js`, which switches link and copy at 00:00 SGT 1 Jan (homepage flips its own two lines at the same
+  moment). The 88 link stays live in Stripe until Jeff deactivates it on 1 Jan (reminder set). Buyers get one free Power Calendar month (next full month, no card).
   `/2027` shows teaser screenshots only (`img/2027/tile-*.webp`); Jeff decided 2026-09-27 not to publish a
   full sample report, so do not link one.
 - Homepage `#calendar` section sells the Outlook plus the free month. The old no-card free-month
@@ -57,7 +58,7 @@ on the 15th, portal cancel, test row deleted).
 | `script.js` / `styles.css`, `FORM_SECURITY_SETUP.md`, `GOOGLE_SHEETS_SETUP.md`, `QUICK_REFERENCE.md` | Dormant, from the retired lead form |
 
 ## Pending
-- Create the USD 138 Outlook link before 1 Jan 2027.
+- 1 Jan 2027: deactivate the USD 88 Outlook link in Stripe (plink_1UJTagRmcvZfydHfw0B40mtH).
 
 ## Tooling (local sessions)
 - GitHub: local pushes use this machine's git creds (`gh auth` as `jefferyseah-max`).
