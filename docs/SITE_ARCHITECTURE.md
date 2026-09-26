@@ -275,7 +275,7 @@ alert covers it.
   are not mirrored anywhere except Stripe (and Stripe's own emails).
 - No analytics or conversion tracking.
 - JSON-LD and meta descriptions on `/2027` are static; see the 1 Jan task in section 3.
-- Stale remote branch `origin/claude/eloquent-cerf-5uju65` (already merged) can be deleted.
+- Only `main` exists on the remote (the merged `claude/eloquent-cerf-5uju65` was deleted 2026-09-27).
 
 ---
 
