@@ -34,6 +34,7 @@ function doGet() {
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
+    if (data.type === 'stripe-subscription') return stripeAlert(data);
     if (data.website && String(data.website).trim() !== '') return json({ result: 'ignored' });
     if (typeof data.elapsedMs === 'number' && data.elapsedMs < MIN_FILL_MS) return json({ result: 'ignored' });
 
@@ -65,6 +66,38 @@ function doPost(e) {
     } catch (_) {}
     return json({ result: 'error', error: String(err) });
   }
+}
+
+// New monthly subscription, posted by /api/stripe-webhook (lib/signup-alert.mjs) once Stripe
+// confirms it. Logged to its own tab and emailed, so a subscriber who never submits /welcome is
+// still noticed. The endpoint is public, so only well-formed Stripe ids are accepted.
+const STRIPE_COLUMNS = ['receivedAt', 'subscription', 'customer', 'plan', 'status', 'firstCharge', 'intakeReceived'];
+
+function stripeAlert(data) {
+  if (!/^sub_\w+$/.test(String(data.subscription)) || !/^cus_\w+$/.test(String(data.customer))) {
+    return json({ result: 'error', error: 'bad ids' });
+  }
+  const row = STRIPE_COLUMNS.map(function (key) {
+    if (key === 'receivedAt') return new Date();
+    if (key === 'intakeReceived') return 'check';
+    return clean(data[key]);
+  });
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    sheetFor('stripe-signups', STRIPE_COLUMNS).appendRow(row);
+  } finally {
+    lock.releaseLock();
+  }
+  MailApp.sendEmail({
+    to: NOTIFY_EMAIL,
+    subject: 'New subscriber: ' + row[3] + ' (' + row[4] + ')',
+    body: STRIPE_COLUMNS.map(function (key, i) { return key + ': ' + row[i]; }).join('\n') +
+      '\n\nCustomer: https://dashboard.stripe.com/customers/' + row[2] +
+      '\nIf no "New intake: Monthly plan welcome" email follows, ask them to fill in https://www.jeffseah.rocks/welcome' +
+      '\n\nSheet tab: stripe-signups',
+  });
+  return json({ result: 'success' });
 }
 
 function sheetFor(tab, columns) {

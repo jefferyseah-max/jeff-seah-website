@@ -38,6 +38,9 @@ which emails Jeff per submission. Source and setup: `docs/intake/Code.gs`, `docs
 Code changes: Manage deployments, New version (keeps the URL). Submissions take about 9 s.
 Test rows were cleared 2026-09-26; both tabs hold headers only. `paid` is true when the URL carries a
 Stripe `session_id` (or `paid=1`).
+New-sale alerts (2026-09-27): every new monthly subscription (trials included) emails Jeff "New subscriber: ..."
+via the webhook (`lib/signup-alert.mjs`) posting to the same Apps Script (Intake v2), logged to tab `stripe-signups`.
+One-off payments (Outlook 88) email via Stripe's "Successful payment receipt" notification (switched on).
 End-to-end test passed 2026-09-26 (97 trial signup, /welcome intake, Sheet row and email, first invoice
 on the 15th, portal cancel, test row deleted).
 
@@ -47,7 +50,7 @@ on the 15th, portal cancel, test row deleted).
 | `index.html` | Homepage; CSS and JS inline |
 | `2027.html`, `2027-next.html`, `welcome.html`, `power-calendar.html` | Outlook sales page, the two intake pages, Power Calendar sample page |
 | `2027.css` / `2027.js` | Shared CSS and JS for the pages above |
-| `api/stripe-webhook.mjs`, `lib/billing-anchor.mjs`, `tests/` | 15th-billing webhook; `node --test tests/*.test.mjs` |
+| `api/stripe-webhook.mjs`, `lib/billing-anchor.mjs`, `lib/signup-alert.mjs`, `tests/` | 15th-billing webhook and new-subscriber alert; `node --test tests/*.test.mjs` |
 | `.vercelignore` | Keeps `tests/`, `docs/` and `*.md` off the public site |
 | `script.js` / `styles.css`, `FORM_SECURITY_SETUP.md`, `GOOGLE_SHEETS_SETUP.md`, `QUICK_REFERENCE.md` | Dormant, from the retired lead form |
 

@@ -39,18 +39,61 @@ test('route rejects a bad signature and never calls Stripe', async () => {
   assert.equal(called, false);
 });
 
+// Answers Stripe with the subscription and the Apps Script with `alertResult`; records every URL called.
+function fakeBackends(alertResult = 'success') {
+  const urls = [];
+  globalThis.fetch = async url => {
+    urls.push(url);
+    return url.startsWith('https://api.stripe.com/')
+      ? new Response('{"id":"sub_9"}', { status: 200 })
+      : Response.json({ result: alertResult });
+  };
+  return urls;
+}
+
 test('route anchors a signed event and returns 500 when Stripe fails, so Stripe retries', async () => {
   const realFetch = globalThis.fetch;
   try {
     await withEnv({ STRIPE_API_KEY: 'rk_test', STRIPE_WEBHOOK_SECRET: secret }, async () => {
       const body = JSON.stringify(event);
-      globalThis.fetch = async () => new Response('{"id":"sub_9"}', { status: 200 });
+      fakeBackends();
       const ok = await POST(request(body, sign(body)));
       assert.equal(ok.status, 200);
       assert.equal((await ok.json()).action, 'anchored');
       globalThis.fetch = async () => new Response('{"error":{"message":"boom"}}', { status: 500 });
       const origError = console.error; console.error = () => {};
       try { assert.equal((await POST(request(body, sign(body)))).status, 500); } finally { console.error = origError; }
+    });
+  } finally { globalThis.fetch = realFetch; }
+});
+
+test('route emails Jeff after anchoring, and returns 500 when the alert fails, so Stripe retries', async () => {
+  const realFetch = globalThis.fetch;
+  try {
+    await withEnv({ STRIPE_API_KEY: 'rk_test', STRIPE_WEBHOOK_SECRET: secret }, async () => {
+      const body = JSON.stringify(event);
+      const urls = fakeBackends();
+      const ok = await POST(request(body, sign(body)));
+      assert.equal(ok.status, 200);
+      assert.equal((await ok.json()).alerted, true);
+      assert.equal(urls.length, 2);
+      assert.match(urls[1], /^https:\/\/script\.google\.com\/macros\//);
+
+      fakeBackends('error');
+      const origError = console.error; console.error = () => {};
+      try { assert.equal((await POST(request(body, sign(body)))).status, 500); } finally { console.error = origError; }
+    });
+  } finally { globalThis.fetch = realFetch; }
+});
+
+test('route sends no alert for events it ignores', async () => {
+  const realFetch = globalThis.fetch;
+  try {
+    await withEnv({ STRIPE_API_KEY: 'rk_test', STRIPE_WEBHOOK_SECRET: secret }, async () => {
+      const body = JSON.stringify({ ...event, type: 'invoice.paid' });
+      const urls = fakeBackends();
+      assert.equal((await POST(request(body, sign(body)))).status, 200);
+      assert.equal(urls.length, 0);
     });
   } finally { globalThis.fetch = realFetch; }
 });

@@ -1,11 +1,14 @@
 // Stripe webhook: https://www.jeffseah.rocks/api/stripe-webhook
-// Listens for customer.subscription.created and moves the subscription's billing day to the 15th.
+// Listens for customer.subscription.created, moves the subscription's billing day to the 15th, then
+// emails Jeff about the new subscriber (lib/signup-alert.mjs).
 // Setup and switch-on steps: BILLING_ANCHOR_SETUP.md. Logic and tests: lib/billing-anchor.mjs.
 //
 // Failure policy: any error returns 500, so Stripe retries for up to three days and emails the
-// account owner if the endpoint keeps failing. Nothing is swallowed.
+// account owner if the endpoint keeps failing. Nothing is swallowed. A retry re-sends the anchor
+// update with the same idempotency key, so it is safe.
 
 import { verifyStripeSignature, handleStripeEvent } from '../lib/billing-anchor.mjs';
+import { sendSignupAlert } from '../lib/signup-alert.mjs';
 
 export async function POST(request) {
   const apiKey = process.env.STRIPE_API_KEY;
@@ -21,7 +24,9 @@ export async function POST(request) {
   }
 
   try {
-    const result = await handleStripeEvent(JSON.parse(raw), { apiKey });
+    const event = JSON.parse(raw);
+    const result = await handleStripeEvent(event, { apiKey });
+    if (result.action === 'anchored') Object.assign(result, await sendSignupAlert(event.data.object, result.anchor));
     console.log('stripe-webhook:', JSON.stringify(result));
     return Response.json(result);
   } catch (err) {
