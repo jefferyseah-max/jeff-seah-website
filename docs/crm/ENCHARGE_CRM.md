@@ -66,6 +66,13 @@ Product detection uses the Checkout Session `success_url`: `/2027-next` is the O
 
 ## Switch-on checklist
 
+Status 2026-09-27 04:15 SGT: steps 1 to 4 done (Apps Script Version 3 "Intake v3: Encharge CRM", webhook
+listening to 2 events). Tested live: intake to Encharge (tags, firstName, edition, reportDue; Encharge typed
+`reportDue` as a date field), watcher job and Telegram, report-delivered (row marked, reportUrl set,
+watcher stopped chasing), unknown-email refusal. Not yet proven live: webhook to Encharge (needs a real
+checkout). Test contact jefferyseah@gmail.com kept in Encharge for flow tests (no buyer tag, so no flow
+fires for it). Steps 5 and 6 pending Jeff's copy approval.
+
 1. Jeff: Encharge write key into Vercel env `ENCHARGE_WRITE_KEY` (Production), redeploy.
 2. Jeff: same key into Apps Script, Project Settings, Script Properties, `ENCHARGE_WRITE_KEY`.
 3. Paste `docs/intake/Code.gs` into the Apps Script, Deploy, Manage deployments, New version
