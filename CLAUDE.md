@@ -48,6 +48,9 @@ End-to-end test passed 2026-09-26 (97 trial signup, /welcome intake, Sheet row a
 on the 15th, portal cancel, test row deleted).
 
 ## Key files
+**Full map of every moving part (Stripe, webhook, Apps Script, Sheet, alerts, design hooks, CRM
+integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design work.**
+
 | File | Purpose |
 |------|---------|
 | `index.html` | Homepage; CSS and JS inline |
