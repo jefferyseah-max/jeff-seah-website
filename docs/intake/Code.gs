@@ -3,7 +3,7 @@
  * Serves /2027-next (2027 Annual Outlook buyers) and /welcome (monthly plan subscribers).
  * Bound to the Google Sheet "jeffseah.rocks Intake". Each product gets its own tab,
  * created with headers on first use. Jeff is emailed on every accepted submission.
- * Setup: docs/intake/INTAKE_SETUP.md.
+ * Setup: docs/intake/INTAKE_SETUP.md. CRM (Encharge) wiring: docs/crm/ENCHARGE_CRM.md.
  */
 
 const NOTIFY_EMAIL = 'jefferyseah@gmail.com';
@@ -35,6 +35,7 @@ function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
     if (data.type === 'stripe-subscription') return stripeAlert(data);
+    if (data.type === 'report-delivered') return reportDelivered(data);
     if (data.website && String(data.website).trim() !== '') return json({ result: 'ignored' });
     if (typeof data.elapsedMs === 'number' && data.elapsedMs < MIN_FILL_MS) return json({ result: 'ignored' });
 
@@ -58,6 +59,7 @@ function doPost(e) {
     }
 
     notify(product, columns, row);
+    enchargeIntake(data, row[0]);
     return json({ result: 'success' });
   } catch (err) {
     // Never fail silently: tell Jeff, and let the page show its email fallback.
@@ -98,6 +100,72 @@ function stripeAlert(data) {
       '\n\nSheet tab: stripe-signups',
   });
   return json({ result: 'success' });
+}
+
+// ---- Encharge (client email flows) ------------------------------------------------------------
+// The form is public, so these events are UNTRUSTED. Every Encharge flow also requires a buyer tag
+// that only the signed Stripe webhook sets (lib/encharge.mjs), so a forged post cannot email a stranger.
+// Only name, email, product and edition are sent; birth details never leave the Sheet.
+// The write key lives in Script Properties as ENCHARGE_WRITE_KEY (Jeff pastes it; never in this file).
+const ENCHARGE_INGEST = 'https://ingest.encharge.io/v1/';
+const REPORT_DAYS = 7;
+
+function enchargeIntake(data, receivedAt) {
+  const name = String(data.name || '').trim();
+  const user = { email: String(data.email).trim(), name: name, firstName: name.split(/\s+/)[0] };
+  const props = { product: data.product };
+  if (data.product === '2027-annual-outlook') {
+    const due = new Date(receivedAt.getTime() + REPORT_DAYS * 86400000);
+    user.tags = 'intake-received,annual-intake';
+    user.edition = String(data.edition || '');
+    user.reportDue = Utilities.formatDate(due, 'Asia/Singapore', 'EEEE d MMMM');
+    props.edition = user.edition;
+  } else {
+    user.tags = 'intake-received,monthly-intake';
+    props.plan = String(data.plan || '');
+  }
+  sendEncharge([{ name: 'identify', user: user }, { name: 'Intake Submitted', user: { email: user.email }, properties: props }]);
+}
+
+// Posted by scripts/report-delivered.mjs once the report is live in Fusebase. Marks the intake row
+// Delivered (the Olares watcher stops chasing it) and starts the after-delivery flow in Encharge.
+function reportDelivered(data) {
+  const email = String(data.email || '').trim().toLowerCase();
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('annual-2027');
+  if (!email || !sheet) return json({ result: 'error', error: 'unknown client' });
+  const values = sheet.getDataRange().getValues();
+  const header = values[0];
+  const emailCol = header.indexOf('email');
+  const statusCol = header.indexOf('status');
+  let rowIndex = -1;
+  for (let i = values.length - 1; i >= 1; i--) {
+    if (String(values[i][emailCol]).trim().toLowerCase() === email) { rowIndex = i; break; }
+  }
+  if (rowIndex < 0) return json({ result: 'error', error: 'unknown client' });
+  const stamp = Utilities.formatDate(new Date(), 'Asia/Singapore', 'yyyy-MM-dd HH:mm');
+  sheet.getRange(rowIndex + 1, statusCol + 1).setValue('Delivered ' + stamp);
+
+  const reportUrl = /^https:\/\//.test(String(data.reportUrl || '')) ? clean(data.reportUrl) : '';
+  const user = { email: String(values[rowIndex][emailCol]).trim(), tags: 'report-delivered' };
+  if (reportUrl) user.reportUrl = reportUrl;
+  sendEncharge([{ name: 'identify', user: user }, { name: 'Report Delivered', user: { email: user.email }, properties: { product: '2027-annual-outlook' } }]);
+  return json({ result: 'success', row: rowIndex + 1 });
+}
+
+function sendEncharge(events) {
+  const key = PropertiesService.getScriptProperties().getProperty('ENCHARGE_WRITE_KEY');
+  if (!key) throw new Error('ENCHARGE_WRITE_KEY is not set in Script Properties; intake saved, Encharge not told');
+  events.forEach(function (event) {
+    const res = UrlFetchApp.fetch(ENCHARGE_INGEST, {
+      method: 'post',
+      contentType: 'application/json',
+      headers: { 'X-Encharge-Token': key },
+      payload: JSON.stringify(event),
+      muteHttpExceptions: true,
+    });
+    const code = res.getResponseCode();
+    if (code < 200 || code >= 300) throw new Error('Encharge ' + code + ' for event "' + event.name + '": ' + res.getContentText().slice(0, 300));
+  });
 }
 
 function sheetFor(tab, columns) {

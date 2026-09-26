@@ -1,0 +1,13 @@
+[Unit]
+Description=jeffseah.rocks intake watcher: new Outlook/monthly intakes to Telegram and agent inbox, 7-day report chase
+After=network-online.target rclone-gdrive.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=olares
+Group=olares
+Environment=TZ=Asia/Singapore
+TimeoutStartSec=600
+ExecStart=/home/olares/.local/bin/uv run --quiet --no-project --with openpyxl python3 /home/olares/coach/jeffseah-intake-watch.py
+# OnFailure= and the heartbeat ExecStopPost= come from cron-scripts/install-dropins.sh (job jeffseah-intake-watch).

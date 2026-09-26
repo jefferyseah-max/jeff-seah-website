@@ -57,7 +57,8 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | `2027.html`, `2027-next.html`, `welcome.html`, `power-calendar.html` | Outlook sales page, the two intake pages, Power Calendar sample page |
 | `2027.css` / `2027.js` | Shared CSS and JS for the pages above |
 | `api/stripe-webhook.mjs`, `lib/billing-anchor.mjs`, `lib/signup-alert.mjs`, `tests/` | 15th-billing webhook and new-subscriber alert; `node --test tests/*.test.mjs` |
-| `.vercelignore` | Keeps `tests/`, `docs/` and `*.md` off the public site |
+| `lib/encharge.mjs`, `scripts/report-delivered.mjs`, `ops/olares/` | CRM: Stripe and intake events to Encharge, delivery trigger, Olares intake watcher. Spec and switch-on: `docs/crm/ENCHARGE_CRM.md` |
+| `.vercelignore` | Keeps `tests/`, `docs/`, `scripts/`, `ops/` and `*.md` off the public site |
 
 ## Pending
 - 1 Jan 2027 (reminder set): Jeff deactivates the USD 88 Outlook link in Stripe (plink_1UJTagRmcvZfydHfw0B40mtH).

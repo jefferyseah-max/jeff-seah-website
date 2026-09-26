@@ -286,6 +286,10 @@ alert covers it.
 
 ## 9. For the CRM project: what exists to integrate with
 
+**Update 2026-09-27:** the CRM is Encharge, built on integration points 1 and 2 below. Current design,
+parts and switch-on checklist: `docs/crm/ENCHARGE_CRM.md`. Joining now uses `checkout.session.completed`
+(it carries email, session and subscription ids), so point 3's extra key is not needed.
+
 Today the "CRM" is the intake Sheet plus Stripe plus Jeff's inbox. Entities and where their data lives:
 
 | Entity | Created by | Stored in | Key |
