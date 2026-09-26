@@ -22,6 +22,8 @@ If a task needs Stripe or Sheet edits and the session is cloud, say so at the st
   297 Calendar + Premium, 397 Coaching. Single Session 197 via `/book`.
 - 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027 (the 138 link is still to
   be created). Link in `2027.js`; buyers get one free Power Calendar month (next full month, no card).
+  `/2027` shows teaser screenshots only (`img/2027/tile-*.webp`); Jeff decided 2026-09-27 not to publish a
+  full sample report, so do not link one.
 - Homepage `#calendar` section sells the Outlook plus the free month. The old no-card free-month
   lead form is retired; its Apps Script and "Power Calendar Leads" Sheet are no longer used by the site.
 - Billing on the 15th: `/api/stripe-webhook` (see `BILLING_ANCHOR_SETUP.md`), live. Vercel env
@@ -55,7 +57,6 @@ on the 15th, portal cancel, test row deleted).
 | `script.js` / `styles.css`, `FORM_SECURITY_SETUP.md`, `GOOGLE_SHEETS_SETUP.md`, `QUICK_REFERENCE.md` | Dormant, from the retired lead form |
 
 ## Pending
-- Publish the 2027 sample at reports.jeffseah.rocks/sample-2027/, then remove `hidden` from `.sample-section` in `2027.html`.
 - Create the USD 138 Outlook link before 1 Jan 2027.
 
 ## Tooling (local sessions)

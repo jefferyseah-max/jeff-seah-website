@@ -285,13 +285,6 @@ table.compare-table th.col-yours { color: var(--gold-light); }
 .editions-shot { border-radius: 1rem; overflow: hidden; border: 1px solid rgba(201,148,58,0.2); background: #f6f1e6; }
 .editions-shot img { display: block; width: 100%; height: auto; }
 
-/* 2.6 Read mine first */
-.sample-section { padding: 5.5rem 0; text-align: center; }
-.sample-inner { max-width: 680px; margin: 0 auto; }
-.sample-inner blockquote { font-family: var(--serif); font-size: clamp(1.4rem, 2.6vw, 1.9rem); font-style: italic; font-weight: 300; line-height: 1.45; color: var(--text); margin: 0 0 1.25rem; }
-.sample-inner .sample-who { font-size: 0.85rem; color: var(--text-muted-accessible); margin-bottom: 2rem; }
-.sample-inner .sample-note { font-size: 0.82rem; color: var(--text-muted-accessible); margin-top: 1.25rem; }
-
 /* 2.7 How it is made */
 .process-2027 { padding: 5.5rem 0; background: var(--deep); }
 .process-2027-steps { display: grid; grid-template-columns: 1fr; gap: 2.25rem; margin-top: 3rem; counter-reset: step; }
