@@ -58,7 +58,6 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | `2027.css` / `2027.js` | Shared CSS and JS for the pages above |
 | `api/stripe-webhook.mjs`, `lib/billing-anchor.mjs`, `lib/signup-alert.mjs`, `tests/` | 15th-billing webhook and new-subscriber alert; `node --test tests/*.test.mjs` |
 | `.vercelignore` | Keeps `tests/`, `docs/` and `*.md` off the public site |
-| `script.js` / `styles.css`, `FORM_SECURITY_SETUP.md`, `GOOGLE_SHEETS_SETUP.md`, `QUICK_REFERENCE.md` | Dormant, from the retired lead form |
 
 ## Pending
 - 1 Jan 2027 (reminder set): Jeff deactivates the USD 88 Outlook link in Stripe (plink_1UJTagRmcvZfydHfw0B40mtH).

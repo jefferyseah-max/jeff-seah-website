@@ -84,7 +84,6 @@ their birth details are; Jeff (and his agent pipeline, outside this repo) produc
 | `docs/intake/INTAKE_SETUP.md` | How the Apps Script was deployed and how to redeploy. |
 | `BILLING_ANCHOR_SETUP.md` | How the 15th-billing webhook was switched on. |
 | `img/2027/` | Hero art, OG image, 9 teaser tiles, editions shot (WebP). `img/seal-*.png` favicon/seal. |
-| `script.js`, `styles.css`, `FORM_SECURITY_SETUP.md`, `GOOGLE_SHEETS_SETUP.md`, `QUICK_REFERENCE.md`, `SETUP_GUIDE.md` | **Dormant**, from the retired homepage lead form. Not referenced by current pages. Safe to delete in a cleanup, but check with Jeff first. |
 
 ---
 
