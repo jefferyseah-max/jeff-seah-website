@@ -58,7 +58,9 @@ on the 15th, portal cancel, test row deleted).
 | `script.js` / `styles.css`, `FORM_SECURITY_SETUP.md`, `GOOGLE_SHEETS_SETUP.md`, `QUICK_REFERENCE.md` | Dormant, from the retired lead form |
 
 ## Pending
-- 1 Jan 2027: deactivate the USD 88 Outlook link in Stripe (plink_1UJTagRmcvZfydHfw0B40mtH).
+- 1 Jan 2027 (reminder set): Jeff deactivates the USD 88 Outlook link in Stripe (plink_1UJTagRmcvZfydHfw0B40mtH).
+  "Price-step metadata" = in `2027.html`, JSON-LD `price` 88 to 138 and drop or move `priceValidUntil`
+  (2026-12-31); `description`, `og:description`, `twitter:description` drop "USD 88 until 31 December 2026".
 
 ## Tooling (local sessions)
 - GitHub: local pushes use this machine's git creds (`gh auth` as `jefferyseah-max`).
