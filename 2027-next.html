@@ -42,7 +42,7 @@
       <div class="intake-inner">
         <div class="section-label centered">Thank you, one more step</div>
         <h1>Your birth details</h1>
-        <p class="intake-sub">Two minutes. This is what your 2027 Annual Outlook is calculated from, and your free Power Calendar month too. Your private page and PDF follow within 7 days.</p>
+        <p class="intake-sub">Two minutes. This is what your 2027 Annual Outlook is calculated from, and your sample Power Calendar month too. Your private page and PDF follow within 7 days.</p>
 
         <form class="lead-form" id="intakeForm" novalidate>
           <!-- Honeypot: hidden from humans; bots fill it and get silently rejected. Do not remove. -->
@@ -82,13 +82,6 @@
             <label class="lead-above-label" for="birthCity">City and country of birth</label>
             <input class="lead-input" id="birthCity" name="birthCity" type="text" placeholder="Singapore; London, UK; Penang, Malaysia" required />
             <span class="field-error" id="err-birthCity">Please enter the place of birth as a place name, not a number.</span>
-          </div>
-
-          <div class="lead-field">
-            <label class="lead-above-label" for="calendarEmail">Google account for your calendar <span class="lead-optional">(if different)</span></label>
-            <input class="lead-input" id="calendarEmail" name="calendarEmail" type="email" autocomplete="off" inputmode="email" placeholder="you@gmail.com" />
-            <span class="lead-help">Your Power Calendar is shared to this Google account. Leave blank to use the email above.</span>
-            <span class="field-error" id="err-calendarEmail">Please enter a valid email address, or leave this blank.</span>
           </div>
 
           <fieldset class="lead-field">
@@ -138,7 +131,7 @@
 
         <div class="form-state" id="successState" role="status">
           <h2>Received, thank you</h2>
-          <p>Your 2027 Annual Outlook is on its way. Expect your private page and PDF within 7 days at the email you gave. If you ordered by 15 January it arrives before Li Chun. Your free Power Calendar month follows for the next full month, straight into your Google Calendar. Nothing renews.</p>
+          <p>Your 2027 Annual Outlook is on its way. Expect your private page and PDF within 7 days at the email you gave. If you ordered by 15 January it arrives before Li Chun. It comes with a sample month of your Power Calendar for the next full month, as a private web page beside your report. Nothing renews.</p>
         </div>
 
         <div class="form-state form-error" id="errorState" role="alert">
@@ -218,9 +211,6 @@
       const cityOk = city.length >= 2 && !/\d/.test(city);
       showError('birthCity', !cityOk); markInvalid(document.getElementById('birthCity'), !cityOk); ok = ok && cityOk;
 
-      const calEl = document.getElementById('calendarEmail');
-      const calOk = calEl.value.trim() === '' || calEl.validity.valid;
-      showError('calendarEmail', !calOk); markInvalid(calEl, !calOk); ok = ok && calOk;
       const genderOk = !!form.gender.value; showError('gender', !genderOk); ok = ok && genderOk;
       const workOk = !!form.workType.value; showError('workType', !workOk); ok = ok && workOk;
 
@@ -240,7 +230,7 @@
         product: '2027-annual-outlook',
         name,
         email: emailEl.value.trim(),
-        calendarEmail: calEl.value.trim(),
+        calendarEmail: '',
         birthDate: dobValue,
         birthTime: unknownTimeBox.checked ? 'Unknown' : birthTimeInput.value,
         birthTimeUnknown: unknownTimeBox.checked,

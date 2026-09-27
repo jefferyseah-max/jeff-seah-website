@@ -22,10 +22,12 @@ If a task needs Stripe or Sheet edits and the session is cloud, say so at the st
   297 Calendar + Premium, 397 Coaching. Single Session USD 197 via `/book`, paid at booking on CalendarHero `/singlesession`.
 - 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. Both links are in
   `2027.js`, which switches link and copy at 00:00 SGT 1 Jan (homepage flips its own two lines at the same
-  moment). The 88 link stays live in Stripe until Jeff deactivates it on 1 Jan (reminder set). Buyers get one free Power Calendar month (next full month, no card).
+  moment). The 88 link stays live in Stripe until Jeff deactivates it on 1 Jan (reminder set). Buyers get a sample Power Calendar month (next full month, no card) as a private HTML page beside the report,
+  NOT a shared Google Calendar; Google Calendar delivery is for monthly subscribers only (Jeff, 2026-09-27).
+  `/2027-next` no longer asks for a calendar Google account; it posts `calendarEmail: ''` so the Sheet columns stay put.
   `/2027` shows teaser screenshots only (`img/2027/tile-*.webp`); Jeff decided 2026-09-27 not to publish a
   full sample report, so do not link one.
-- Homepage `#calendar` section sells the Outlook plus the free month. The old no-card free-month
+- Homepage `#calendar` section sells the Outlook plus the sample month. The old no-card free-month
   lead form is retired; its Apps Script and "Power Calendar Leads" Sheet are no longer used by the site.
 - Billing on the 15th: `/api/stripe-webhook` (see `BILLING_ANCHOR_SETUP.md`), live. Vercel env
   `STRIPE_API_KEY` (restricted, Subscriptions write) and `STRIPE_WEBHOOK_SECRET`. Never type keys.

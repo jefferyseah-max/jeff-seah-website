@@ -186,7 +186,7 @@ failures are therefore surfaced by the script's own error email, not by the page
 | | `/welcome` | `/2027-next` |
 |---|---|---|
 | `product` sent | `monthly-welcome` | `2027-annual-outlook` |
-| Fields | name, email, calendarEmail (optional Google account for calendar sharing), birthDate, birthTime or "Unknown" + birthTimeUnknown, birthCity, gender (female/male), consent | same, plus `workType` (employed / business-owner / both), `decisions` (free text), `edition` (simplified / advanced) |
+| Fields | name, email, calendarEmail (optional Google account for calendar sharing; `/welcome` only, `/2027-next` always sends empty), birthDate, birthTime or "Unknown" + birthTimeUnknown, birthCity, gender (female/male), consent | same, plus `workType` (employed / business-owner / both), `decisions` (free text), `edition` (simplified / advanced) |
 | From URL | `plan` (97/197/297/397; drives the greeting "Welcome to your <plan> plan"), `session_id` | `session_id`, `paid=1` |
 | `paid` | true if `paid=1` **or** `session_id` starts with `cs_` | same |
 | Spam guards | honeypot input `company_website` (sent as `website`), and `elapsedMs` (form open under 3 s is ignored) | same |
@@ -263,7 +263,7 @@ alert covers it.
 - **Client portal**: Fusebase at my.jeffseah.rocks (client report pages, sessions folders).
 - **Client birth data**: the Wealth Codex MCP vault on Olares (encrypted, sensitive; ask before writing).
 - **Per-client context**: Obsidian vault on Olares, `wiki/people/<Name>.md` (single source of truth for agents).
-- **Power Calendar delivery**: Google Calendar, shared to the client's `calendarEmail` (or `email`).
+- **Power Calendar delivery**: subscribers get a Google Calendar shared to their `calendarEmail` (or `email`). Outlook buyers get a sample month as a private HTML page beside the report, never a Google Calendar.
 - **Mailboxes**: notifications go to jefferyseah@gmail.com. Every public contact on the site is
   coaching@jeffseah.rocks (Namecrane, forwards to Gmail; switched 2026-09-27). jeff@jeffseah.rocks had
   never received mail, so it is not used.

@@ -123,8 +123,8 @@ Deadline: {due:%Y-%m-%d %H:%M} SGT (7 days from intake; promised to the client).
 3. Codex releases it to Fusebase per `ANNUAL_REPORT_RELEASE_WORKFLOW.md` and invites the client.
 4. In the jeff-seah-website repo: `node scripts/report-delivered.mjs {row.get('email')} <client share url>`.
    That marks the Sheet row Delivered (this watcher stops chasing) and starts the Encharge upsell flow.
-5. Free Power Calendar month: add {name} to the {nxt:%B %Y} Sifu run and share the calendar to
-   {row.get('calendarEmail') or row.get('email')}. No card is taken.
+5. Sample Power Calendar month ({nxt:%B %Y}): build it as a private HTML page beside the report
+   (plain English, no technical terms). NOT a shared Google Calendar; that is for subscribers only.
 6. Move this file to `inbox/done/` with a **completed:** line.
 """
     tmp = os.path.join(INBOX, f'.{fname}.tmp')

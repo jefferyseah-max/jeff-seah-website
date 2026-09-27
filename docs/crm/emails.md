@@ -61,8 +61,8 @@ Your birth details are in, and your chart is on my desk. Your outlook will be wi
 Here is what happens now. I calculate your four pillars and how 2027 meets each of them, then I read
 it and write your year. You'll get a private page and a PDF.
 
-One more thing is included: **your first Power Calendar month**, free. It is your best and hardest days
-for the month, in your own Google Calendar. It starts on the 1st of next month. No card, nothing to do.
+One more thing is included: **a sample month of your Power Calendar**, free. It is your best and hardest
+days for next month, on a private web page beside your report. No card, nothing to do.
 
 Jeff
 
@@ -131,24 +131,24 @@ After a few days with it, this is what tends to stick:
 Jeff
 
 ### C3. Day 7
-**Subject:** Your free Power Calendar month is on its way
+**Subject:** Your sample Power Calendar month
 
 Hi {{ person.firstName }},
 
 Your outlook gives you the shape of the year. The **Power Calendar** gives you the days.
 
-Your free month starts on the 1st: the strongest and weakest days of the month for your own chart, in
-your Google Calendar, with a short note on each. Put the important things on the good days and see what
-changes.
+Your sample month is on the private page beside your report: the strongest and weakest days of the
+month for your own chart, with a short note on each. Put the important things on the good days and see
+what changes. On a plan, the days arrive every month straight into your own Google Calendar.
 
 Jeff
 
 ### C4. Day 14
-**Subject:** Keep the days coming after your free month
+**Subject:** Keep the days coming after your sample month
 
 Hi {{ person.firstName }},
 
-When your free month ends, you can keep your Power Calendar running every month:
+After your sample month, you can have your Power Calendar every month, in your own Google Calendar:
 
 - **Power Calendar, USD 97 a month.** Your days, every month.
 - **Calendar + Brief, USD 197 a month.** The days, plus a written brief on the month's theme for your chart.
@@ -160,12 +160,12 @@ Cancel any time from the billing link in every receipt.
 Jeff
 
 ### C5. Day 24
-**Subject:** Your free month is nearly over
+**Subject:** Your sample month is nearly over
 
 Hi {{ person.firstName }},
 
-Your complimentary Power Calendar month is nearly done. To keep next month's days coming, pick a plan
-before the 1st:
+Your sample Power Calendar month is nearly done. To have next month's days in your own Google Calendar,
+pick a plan before the 1st:
 
 **[Keep my Power Calendar](https://www.jeffseah.rocks/#pricing)**
 
