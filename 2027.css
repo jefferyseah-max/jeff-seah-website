@@ -268,10 +268,7 @@ footer { position: relative; z-index: 1; background: var(--void); border-top: 1p
   .js .hero-seq > *, .js .hero-art { animation: none; opacity: 1; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .js .faq-list.visible .faq-card { animation: none; opacity: 1; transform: none; }
-  .aurora, .order-section .pricing-card::after, .luopan-lite *, .hero-luopan { animation: none !important; }
-  .luopan-lite .ll-draw circle { stroke-dashoffset: 0; }
-  .luopan-lite .ll-ring, .luopan-lite .ll-core { opacity: 1; }
-  .tile:hover, .tile:hover .tile-frame img, .faq-card:hover, .who-card:hover { transform: none; }
+  .aurora, .order-section .pricing-card::after { animation: none !important; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
@@ -554,4 +551,13 @@ fieldset.lead-field legend { padding: 0; margin-bottom: 0.4rem; float: left; wid
 }
 @media (min-width: 1000px) {
   .tiles-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Reduced motion for rules declared above this point: the Luopan renders as a still drawing,
+   hover lifts are dropped. Kept at the end of the file so it wins the cascade. */
+@media (prefers-reduced-motion: reduce) {
+  .luopan-lite *, .hero-luopan { animation: none !important; }
+  .luopan-lite .ll-draw circle { stroke-dashoffset: 0; }
+  .luopan-lite .ll-ring, .luopan-lite .ll-core { opacity: 1; }
+  .tile:hover, .tile:hover .tile-frame img, .faq-card:hover, .who-card:hover { transform: none; }
 }
