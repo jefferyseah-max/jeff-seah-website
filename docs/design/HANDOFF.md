@@ -76,3 +76,34 @@ errors, no overflow). They inherit the nav underline, button focus states and FA
   element is still the headline text.
 - The hexagram texture on `/2027` reads as dark bars on very wide screens; left as is.
 - Preview: Vercel builds the branch; share link via the Vercel MCP `get_access_to_vercel_url`.
+
+## Round 2 (Jeff's preview feedback)
+
+- **Three-column row rebalanced.** All three panels now share one chrome (`.wx-panel`: border,
+  radius, mono header row with a hint and a Chinese tag, readout at the foot) and stretch to
+  the same height. The stem ring card is unchanged in look; its classes were folded into the
+  shared ones (ids `stemOrbit`, `stemRing`, readout ids kept).
+- **Favorable Days**: a full March 2027 month (Monday start, 31 days in five rows), labelled
+  "March 2027" with 癸卯月 (2027 is 丁未, so the Rabbit month stem is 癸). Mar 4 to 12 is the
+  window (7 and 10 solid-gold peak days), 13, 17, 21 and 25 are pause days in the ember colour.
+  On scroll-in a gold scan crosses the grid and days resolve with a staggered delay. Hover,
+  focus or tap a day for a one-line readout (arrow keys move by day and week); a facts row
+  (peak window, peak days, pause days) fills the space above the readout. Reduced motion:
+  the grid renders resolved, no scan.
+- **Strategic Pauses**: an octagonal Bagua prism (CSS 3D, eight faces at 45 degree steps,
+  side faces masked at the panel edge). Each face shows the trigram drawn in lines, its name,
+  and the action word glowing in its element colour: 乾 Lead, 兌 Close, sign, 離 Launch,
+  震 Initiate, 巽 Strategize, 坎 Pause, 艮 Hold, rest, 坤 Consolidate. Auto-advances every
+  3.2 s, pauses on hover or focus and when offscreen, previous and next buttons, tap to turn,
+  arrow keys when focused, `aria-live` readout. The typewriter beneath cycles the date lines;
+  while 坎 or 艮 is showing it types the matching pause and hold dates (Mar 17 and 21; Mar 13
+  and 25). Reduced motion: no auto-advance, no transitions, static line.
+- **Philosophy hourglass**: fine gold line-art hourglass to the right of the copy (below it on
+  mobile, 180 px wide). Gold dust (12 SVG dots, transform-only) runs from the upper to the
+  lower bulb over about 10 s; the lower sand settles and fades under Hexagram 49 革 Ge,
+  Lake over Fire, lines bottom to top yang, yin, yang, yang, yang, yin; then the glass turns
+  and the cycle repeats (16 s). Caption: 革, "Hexagram 49, Ge. Lake over Fire",
+  君子以治曆明時, "The noble one orders the calendar and makes the seasons clear."
+  Paused offscreen. Reduced motion shows the sand settled with the hexagram visible. The 時
+  watermark moves left on desktop and to the top on mobile so it sits behind the copy.
+- Screenshots: `docs/design/qa/round2-*.png`. Tests: 27 pass. Stripe links unchanged.
