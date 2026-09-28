@@ -737,8 +737,9 @@
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.1rem;
       box-shadow: 0 0 24px rgba(95,154,134,0.18);
     }
-    .stem-core-glyph { font-family: var(--noto); font-size: calc(var(--ring) * 0.0625); line-height: 1; color: var(--gold-light); }
-    .stem-core-tag { font-family: var(--mono); font-size: 0.45rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+    .stem-core { backface-visibility: hidden; }
+    .stem-core-glyph { text-shadow: 0 0 14px rgba(232,188,106,0.45); font-family: var(--noto); font-size: calc(var(--ring) * 0.0625); line-height: 1; color: var(--gold-light); }
+    .stem-core-tag { position: absolute; left: 50%; top: calc(50% + var(--ring) * 0.134 + 3px); transform: translateX(-50%); white-space: nowrap; font-family: var(--mono); font-size: max(0.4rem, calc(var(--ring) * 0.028)); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); pointer-events: none; }
     .stem-buttons { position: absolute; inset: 0; }
     .stem {
       position: absolute; left: 50%; top: 50%; width: var(--chip); height: var(--chip); margin: calc(var(--chip) / -2) 0 0 calc(var(--chip) / -2);
@@ -792,6 +793,9 @@
     .wx-panel-label { font-family: var(--mono); font-size: 0.62rem; color: var(--gold); letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.8; }
     .wx-panel-hint { font-family: var(--mono); font-size: 0.58rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap; }
     .wx-panel-hint .zh { font-family: var(--noto); color: var(--gold); letter-spacing: 0; text-transform: none; margin-left: 0.4rem; }
+    .wx-panel-hint .hint-live::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); margin-right: 0.4rem; vertical-align: middle; animation: blink 2.4s ease-in-out infinite; }
+    .wx-panel-hint .hint-touch { display: none; }
+    @media (max-width: 379px) { .wx-panel-hint { display: none; } }
     .wx-readout { min-height: 3.2rem; margin-top: auto; padding-top: 0.75rem; border-top: 1px solid rgba(201,148,58,0.1); }
     .wx-readout-title { font-size: 0.8rem; color: var(--gold-light); font-weight: 500; display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
     .wx-readout-title .zh { font-family: var(--noto); font-size: 0.95rem; }
@@ -935,23 +939,24 @@
     /* ── Hourglass: a hairline gold frame and a canvas of gold dust. The dust drains, the whole
        glass bursts into grains, and the grains gather into Hexagram 49 革 before dissolving back. ── */
     .manifesto-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3rem 4rem; align-items: center; position: relative; z-index: 1; }
-    .hourglass-wrap { justify-self: center; text-align: center; width: 260px; }
+    .hourglass-wrap { justify-self: center; text-align: center; width: 260px; --slot: 5.5rem; padding-top: var(--slot); }
     .hourglass-stage { position: relative; width: 100%; aspect-ratio: 200 / 340; }
     .hourglass-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transition: opacity 0.5s ease; }
     .hourglass-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .hourglass-wrap.is-burst .hourglass-svg { opacity: 0; }
-    .hourglass-caption { margin-top: 1.25rem; opacity: 0.14; transition: opacity 0.9s ease; }
-    .hourglass-wrap.is-hex .hourglass-caption { opacity: 1; }
-    .hourglass-caption .hg-glyph { font-family: var(--noto); font-size: 1.6rem; color: var(--gold-light); line-height: 1; }
-    .hourglass-caption .hg-name { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-top: 0.4rem; }
-    .hourglass-caption .hg-quote { font-family: var(--noto); font-size: 0.85rem; color: var(--text-muted); margin-top: 0.6rem; }
-    .hourglass-caption .hg-trans { font-family: var(--serif); font-style: italic; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.25rem; }
+    /* The quote lives in a fixed-height slot under the glass (a matching top pad keeps the glass centred
+       against the copy). It is present for screen readers throughout and shown while the hexagram holds. */
+    .hourglass-quote { height: var(--slot); padding-top: 1rem; opacity: 0; transform: translateY(10px); letter-spacing: 0.06em;
+      transition: opacity 0.9s ease, transform 1.1s var(--ease-out), letter-spacing 1.4s var(--ease-out); }
+    .hourglass-wrap.is-hex .hourglass-quote { opacity: 1; transform: translateY(0); letter-spacing: 0; }
+    .hourglass-quote .hg-quote { font-family: var(--noto); font-size: 0.95rem; color: var(--gold-light); }
+    .hourglass-quote .hg-trans { font-family: var(--serif); font-style: italic; font-size: 0.98rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.3rem; }
     @media (min-width: 901px) {
       .manifesto-bg { justify-content: flex-start; padding-left: 2vw; }
     }
     @media (max-width: 900px) {
       .manifesto-grid { grid-template-columns: 1fr; }
-      .hourglass-wrap { width: 200px; margin-top: 1rem; }
+      .hourglass-wrap { width: 200px; margin-top: 0; padding-top: 0; --slot: 6rem; }
       .manifesto-bg { align-items: flex-start; padding-top: 1rem; }
       .manifesto-bg-glyph { font-size: 60vw; }
     }
@@ -1755,12 +1760,14 @@
       html { scroll-behavior: auto; }
       /* Ambient: stars, astrolabe, aurora, every Luopan plate, the needle, the sweep */
       .star, .astrolabe-bg svg, .aurora, .luopan *, .compass-sweep, .status-dot, .scroll-line, .cursor,
-      .stem::after, .pricing-card.featured::after, .cal-scan, .cursor { animation: none !important; }
+      .stem::after, .pricing-card.featured::after, .cal-scan, .cursor, .hint-live::before { animation: none !important; }
+      .wx-panel-hint .hint-live { display: none; }
+      .wx-panel-hint .hint-touch { display: inline; }
       .cal-day { transition: none; opacity: 1; }
       .cal-wrap .cal-scan { display: none; }
       .bagua-prism, .bagua-face { transition: none; }
       .hourglass-svg { opacity: 0; }
-      .hourglass-caption { opacity: 1; }
+      .hourglass-quote { opacity: 1; transform: none; letter-spacing: 0; transition: none; }
       .luopan .lp-ring, .luopan .lp-core, .luopan .lp-cardinal { opacity: 1; }
       .luopan .lp-draw circle { stroke-dashoffset: 0; }
       .compass-tilt { transform: none !important; transition: none; }
@@ -1973,7 +1980,7 @@
           <div class="wx-panel" id="calPanel">
             <div class="wx-panel-head">
               <span class="wx-panel-label">March 2027</span>
-              <span class="wx-panel-hint" aria-hidden="true">Touch a day <span class="zh">癸卯月</span></span>
+              <span class="wx-panel-hint" aria-hidden="true"><span class="hint-live">Live</span><span class="hint-touch">Touch a day</span> <span class="zh">癸卯月</span></span>
             </div>
             <p class="sr-only">A sample Power Calendar month, March 2027, the Gui Mao month. Choose a day to read its note. March 4 to 12 is the peak window, with 7 and 10 as peak days; 13, 17, 21 and 25 are pause days.</p>
             <div class="cal-wrap" id="calWrap">
@@ -1993,7 +2000,7 @@
               <div><dt>Peak days</dt><dd>7, 10<span class="zh">吉</span></dd></div>
               <div><dt>Pause days</dt><dd>13, 17, 21, 25<span class="zh">忌</span></dd></div>
             </dl>
-            <div class="wx-readout" aria-live="polite" aria-atomic="true">
+            <div class="wx-readout" aria-live="off" aria-atomic="true">
               <div class="wx-readout-title" id="calReadoutTitle"><span class="zh">吉</span><span>Mar 7: Peak</span></div>
               <div class="wx-readout-text" id="calReadoutText">Sign, launch. The strongest day of the window: put the decision that matters most here.</div>
             </div>
@@ -2009,7 +2016,7 @@
           <div class="wx-panel" id="baguaPanel">
             <div class="wx-panel-head">
               <span class="wx-panel-label">Eight moves</span>
-              <span class="wx-panel-hint" aria-hidden="true">Tap to turn <span class="zh">八卦</span></span>
+              <span class="wx-panel-hint" aria-hidden="true"><span class="hint-live">Live</span><span class="hint-touch">Tap to turn</span> <span class="zh">八卦</span></span>
             </div>
             <p class="sr-only">The eight trigrams, each with the move it counsels. Use the previous and next buttons or the arrow keys to turn the prism.</p>
             <div class="bagua-prism-stage">
@@ -2029,7 +2036,7 @@
               <div class="bagua-dots" id="baguaDots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i></div>
               <button type="button" id="baguaNext" aria-label="Next trigram"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             </div>
-            <div class="wx-readout" aria-live="polite" aria-atomic="true">
+            <div class="wx-readout" aria-live="off" aria-atomic="true">
               <div class="wx-readout-title" id="baguaReadoutTitle"><span class="zh">坎 Water</span><span>Pause</span></div>
               <div class="wx-readout-text" id="baguaReadoutText">Water, the abyss: depth and patience. When it governs the day, wait, listen, and let the current show its direction.</div>
             </div>
@@ -2050,7 +2057,7 @@
           <div class="stem-orbit wx-panel" id="stemOrbit">
             <div class="wx-panel-head">
               <span class="wx-panel-label">Birth chart analysis</span>
-              <span class="wx-panel-hint" aria-hidden="true">Touch a stem</span>
+              <span class="wx-panel-hint" aria-hidden="true"><span class="hint-live">Live</span><span class="hint-touch">Touch a stem</span></span>
             </div>
             <p class="sr-only">An example chart. The ten Heavenly Stems circle the Day Master 甲, Yang Wood. Choose a stem to hear how it relates to the Day Master: the Ten God it forms, whether it combines with or controls the Day Master, and whether it is the current Luck Pillar or the year's Qi.</p>
             <div class="stem-ring" id="stemRing">
@@ -2060,10 +2067,8 @@
                 <path class="stem-arc stem-arc--a" id="stemArcA" d="" pathLength="1"/>
                 <path class="stem-arc stem-arc--b" id="stemArcB" d="" pathLength="1"/>
               </svg>
-              <div class="stem-core" aria-hidden="true">
-                <span class="stem-core-glyph">甲</span>
-                <span class="stem-core-tag">Day Master</span>
-              </div>
+              <div class="stem-core" aria-hidden="true"><span class="stem-core-glyph">甲</span></div>
+              <span class="stem-core-tag" aria-hidden="true">Day Master</span>
               <div class="stem-buttons" role="group" aria-label="Ten Heavenly Stems around the Day Master">
                 <button type="button" class="stem" data-stem="0" data-wx="wood"  style="--a:0deg;--ed:0s"     aria-pressed="false"><span aria-hidden="true">甲</span><span class="sr-only">Jia, Yang Wood, the Day Master</span></button>
                 <button type="button" class="stem" data-stem="1" data-wx="wood"  style="--a:36deg;--ed:-0.5s" aria-pressed="false"><span aria-hidden="true">乙</span><span class="sr-only">Yi, Yin Wood</span></button>
@@ -2077,7 +2082,7 @@
                 <button type="button" class="stem" data-stem="9" data-wx="water" style="--a:324deg;--ed:-4.5s" aria-pressed="false"><span aria-hidden="true">癸</span><span class="sr-only">Gui, Yin Water</span></button>
               </div>
             </div>
-            <div class="stem-readout wx-readout" aria-live="polite" aria-atomic="true">
+            <div class="stem-readout wx-readout" aria-live="off" aria-atomic="true">
               <div class="wx-readout-title" id="stemReadoutTitle"><span class="zh">庚 七殺</span><span>Seven Killings</span></div>
               <div class="wx-readout-text" id="stemReadoutText">Yang Metal controls Yang Wood: the Day Master's controller, same polarity, so it presses hard. 庚申 is the current Luck Pillar, the weather of this decade.</div>
             </div>
@@ -2107,11 +2112,11 @@
         <h2 class="manifesto-bold">We focus on<br><em>when</em> you act.</h2>
         <p class="manifesto-sub">The same action taken on different days produces vastly different outcomes. Chinese metaphysics has documented this for 5,000 years. Your Power Calendar puts that intelligence in your hands every month.</p>
       </div>
-      <div class="hourglass-wrap" id="hourglassWrap" aria-hidden="true">
+      <div class="hourglass-wrap" id="hourglassWrap">
         <!-- Hairline frame (SVG) under a canvas of gold dust. The script drains the dust, bursts the
              glass into grains and gathers them into Hexagram 49 Ge, Lake over Fire (yang, yin, yang,
              yang, yang, yin from the bottom). Reduced motion draws the hexagram once. -->
-        <div class="hourglass-stage">
+        <div class="hourglass-stage" aria-hidden="true">
           <svg class="hourglass-svg" viewBox="0 0 200 340" xmlns="http://www.w3.org/2000/svg">
             <g fill="none" stroke="rgba(201,148,58,0.8)" stroke-width="0.9" stroke-linecap="round">
               <rect x="30" y="12" width="140" height="8" rx="1.5"/>
@@ -2142,10 +2147,8 @@
           </svg>
           <canvas class="hourglass-canvas" id="hourglassCanvas" width="200" height="340"></canvas>
         </div>
-        <div class="hourglass-caption">
-          <div class="hg-glyph">革</div>
-          <div class="hg-name">Hexagram 49, Ge. Lake over Fire</div>
-          <div class="hg-quote">君子以治曆明時</div>
+        <div class="hourglass-quote">
+          <div class="hg-quote" lang="zh-Hant">君子以治曆明時</div>
           <div class="hg-trans">The noble one orders the calendar and makes the seasons clear.</div>
         </div>
       </div>
@@ -2672,6 +2675,18 @@
         });
       });
       show(LUCK, true);
+      // Tour: random-feeling, never the same stem twice running, with the showcase states weighted up
+      const SHOWCASE = [LUCK, 5, YEAR];
+      let last = -1;
+      autoplay(document.getElementById('stemOrbit'), () => {
+        const pool = [];
+        for (let i = 0; i < 10; i++) {
+          if (i === selected || i === last) continue;
+          for (let w = SHOWCASE.includes(i) ? 3 : 1; w > 0; w--) pool.push(i);
+        }
+        last = selected;
+        show(pool[Math.floor(Math.random() * pool.length)], true);
+      }, 3300);
     })();
 
     // ── Offscreen pause for the feature panels and the hourglass ──
@@ -2680,6 +2695,32 @@
         const el = document.querySelector(sel);
         if (el) new IntersectionObserver((entries) => entries.forEach(x => el.classList.toggle('is-paused', !x.isIntersecting)), { threshold: 0 }).observe(el);
       });
+    }
+
+    // ── Autoplay for the feature panels: steps while in view, yields to the user, resumes 6 s after
+    //    the last interaction, stops offscreen or when the tab is hidden. Readouts stay aria-live off
+    //    until the user touches the panel, so the tour does not chatter through a screen reader. ──
+    function autoplay(panel, step, interval) {
+      const live = panel ? panel.querySelectorAll('[aria-live]') : [];
+      const speak = () => live.forEach(el => el.setAttribute('aria-live', 'polite'));
+      if (!panel || reduceMotion) { speak(); return { touch() {} }; }
+      let timer = null, resume = null, visible = false, hovering = false, held = false;
+      const run = () => { if (timer || !visible || held || document.visibilityState !== 'visible') return; timer = setInterval(step, interval); };
+      const stop = () => { clearInterval(timer); timer = null; };
+      const touch = () => {
+        speak(); held = true; stop(); clearTimeout(resume);
+        resume = setTimeout(() => { if (hovering) { touch(); return; } held = false; run(); }, 6000);
+      };
+      ['pointerdown', 'pointermove', 'keydown', 'click'].forEach(ev => panel.addEventListener(ev, touch, { passive: true }));
+      panel.addEventListener('pointerenter', () => { hovering = true; touch(); });
+      panel.addEventListener('pointerleave', () => { hovering = false; touch(); });
+      panel.addEventListener('focusin', touch);
+      panel.addEventListener('focusout', (e) => { if (!panel.contains(e.relatedTarget)) touch(); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((entries) => { entries.forEach(e => { visible = e.isIntersecting; }); if (visible) run(); else stop(); }, { threshold: 0.3 }).observe(panel);
+      } else { visible = true; run(); }
+      document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') run(); else stop(); });
+      return { touch, stop, run };
     }
 
     // ── Favorable Days: the month resolves under a scan, days read out on hover, focus or tap ──
@@ -2718,6 +2759,15 @@
           if (n) { e.preventDefault(); n.focus(); }
         });
       });
+      // Tour: the meaningful days in date order with a few neutral ones, rescanning each loop
+      const TOUR = [2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 17, 19, 21, 25, 28];
+      let ti = TOUR.indexOf(7);
+      const rescan = () => { wrap.classList.remove('is-scanned'); void wrap.offsetWidth; wrap.classList.add('is-scanned'); };
+      autoplay(document.getElementById('calPanel'), () => {
+        ti = (ti + 1) % TOUR.length;
+        if (ti === 0) rescan();
+        show(days.find(d => d.dataset.day === String(TOUR[ti])), true);
+      }, 2800);
       if (reduceMotion || !('IntersectionObserver' in window)) { wrap.classList.add('is-scanned'); return; }
       const io = new IntersectionObserver((entries) => {
         entries.forEach(x => { if (x.isIntersecting) { wrap.classList.add('is-scanned'); io.disconnect(); } });
@@ -2764,13 +2814,24 @@
       const HEX = [0, 1, 1, 1, 0, 1];
       const BAR_H = 9, GAP = 13, BAR_W = 112, YIN_GAP = 22;
       const hexTop = CY - (6 * BAR_H + 5 * GAP) / 2;
-      function sampleHex() {
-        const k = Math.floor(Math.random() * 6);
-        const y = hexTop + k * (BAR_H + GAP) + rnd(0, BAR_H);
-        let x = rnd(CX - BAR_W / 2, CX + BAR_W / 2);
-        if (!HEX[k] && Math.abs(x - CX) < YIN_GAP / 2) x += (x < CX ? -1 : 1) * YIN_GAP / 2 * 1.0 + (x < CX ? -1 : 1) * rnd(0, 0.5);
-        return [x, y];
+      // Bar rectangles (yin bars are two segments with a clear gap) and a fine grid of cells inside them
+      const BARS = [];
+      for (let k = 0; k < 6; k++) {
+        const y = hexTop + k * (BAR_H + GAP);
+        if (HEX[k]) BARS.push([CX - BAR_W / 2, y, BAR_W, BAR_H]);
+        else { BARS.push([CX - BAR_W / 2, y, BAR_W / 2 - YIN_GAP / 2, BAR_H]); BARS.push([CX + YIN_GAP / 2, y, BAR_W / 2 - YIN_GAP / 2, BAR_H]); }
       }
+      const barArea = BARS.reduce((s, b) => s + b[2] * b[3], 0);
+      const hexCells = [];
+      function buildCells(n) {
+        hexCells.length = 0;
+        const pitch = Math.sqrt(barArea / n) * 0.97;
+        BARS.forEach(([bx, by, bw, bh]) => {
+          for (let x = bx + pitch / 2; x < bx + bw; x += pitch) for (let y = by + pitch / 2; y < by + bh; y += pitch) hexCells.push([x, y]);
+        });
+        for (let i = hexCells.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [hexCells[i], hexCells[j]] = [hexCells[j], hexCells[i]]; }
+      }
+      function sampleHex(i) { const c = hexCells[i % hexCells.length]; return [c[0] + rnd(-0.12, 0.12), c[1] + rnd(-0.12, 0.12)]; }
       // Frame points along the caps, posts and bulb curves
       function sampleFrame() {
         const r = Math.random();
@@ -2801,7 +2862,8 @@
       const byTau = P.slice().sort((a, b) => a.tau - b.tau);
       byTau.forEach((p, i) => { p.lx = lowers[i][0]; p.ly = lowers[i][1]; });
       for (let i = 0; i < N_FRAME; i++) { const [fx, fy] = sampleFrame(); P.push({ sand: false, fx, fy }); }
-      const hexes = []; for (let i = 0; i < P.length; i++) hexes.push(sampleHex());
+      buildCells(P.length);
+      const hexes = []; for (let i = 0; i < P.length; i++) hexes.push(sampleHex(i));
       P.forEach((p, i) => {
         p.hx = hexes[i][0]; p.hy = hexes[i][1];
         const bx = p.sand ? p.lx : p.fx, by = p.sand ? p.ly : p.fy;
@@ -2842,6 +2904,14 @@
           const f = u / PAUSE;
           ctx.globalAlpha = (1 - f) * 0.55; ctx.strokeStyle = '#e8bc6a'; ctx.lineWidth = gs;
           ctx.beginPath(); ctx.arc(CX, CY, 18 + 120 * easeOut(f), 0, Math.PI * 2); ctx.stroke();
+        }
+        // Solid gold bars under the grains: fade in as the dust settles, fade out as it lifts
+        const barA = phase === 4 ? 0.5 * easeOut(clamp01(u / 0.6)) : phase === 5 ? 0.5 * (1 - clamp01(u / 0.4)) : 0;
+        if (barA > 0) {
+          ctx.save();
+          ctx.globalAlpha = barA; ctx.fillStyle = '#c9943a'; ctx.shadowColor = 'rgba(232,188,106,0.9)'; ctx.shadowBlur = 10;
+          BARS.forEach(b => ctx.fillRect(b[0], b[1], b[2], b[3]));
+          ctx.restore();
         }
         let tone = -1;
         for (let i = 0; i < P.length; i++) {
@@ -2971,7 +3041,7 @@
         ['艮 Mountain', 'Hold, rest', 'Mountain, keeping still: the disciplined stop. Hold the position, rest, and let the ground settle before you build.', ['> Mar 13: Hold major decisions', '> Mar 25: Review, don\'t initiate']],
         ['坤 Earth', 'Consolidate', 'Earth, pure yin: receptivity and support. Gather what the push produced; tidy, nourish, consolidate.', null],
       ];
-      let cur = 5, turns = -5, timer = null, held = false;
+      let cur = 5, turns = -5;
       function show(i) {
         cur = (i + 8) % 8;
         prism.style.setProperty('--ry', (turns * 45) + 'deg');
@@ -2984,8 +3054,6 @@
         if (messages !== want) setTypewriter(want);
       }
       const step = (d) => { turns -= d; show(cur + d); };
-      const start = () => { if (reduceMotion || held || timer) return; timer = setInterval(() => step(1), 3200); };
-      const stop = () => { clearInterval(timer); timer = null; };
       prism.addEventListener('click', () => step(1));
       document.getElementById('baguaNext').addEventListener('click', () => step(1));
       document.getElementById('baguaPrev').addEventListener('click', () => step(-1));
@@ -2993,16 +3061,8 @@
         if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); step(1); }
         if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); step(-1); }
       });
-      const panel = document.getElementById('baguaPanel');
-      const hold = (v) => { held = v; if (v) stop(); else start(); };
-      panel.addEventListener('pointerenter', () => hold(true));
-      panel.addEventListener('pointerleave', () => hold(false));
-      panel.addEventListener('focusin', () => hold(true));
-      panel.addEventListener('focusout', (e) => { if (!panel.contains(e.relatedTarget)) hold(false); });
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver((entries) => entries.forEach(x => { if (x.isIntersecting) start(); else stop(); }), { threshold: 0.2 }).observe(panel);
-      } else start();
       show(5);
+      autoplay(document.getElementById('baguaPanel'), () => step(1), 3200);
     })();
   </script>
 </body>

@@ -132,3 +132,36 @@ errors, no overflow). They inherit the nav underline, button focus states and FA
   The loop runs only while the wrap is in view and the tab is visible. Reduced motion draws
   the grain hexagram once with the caption shown.
 - Screenshots: `docs/design/qa/round3-*.png`. Tests: 27 pass. Stripe links unchanged.
+
+## Round 4
+
+- **Philosophy layout.** The 革 glyph and "Hexagram 49, Ge. Lake over Fire" line are removed
+  from the page. The hourglass stage is centred against the copy column (a top pad equal to
+  the quote slot balances the slot below; measured copy midpoint = glass midpoint at 1440).
+  Nothing is shown around the glass during the sand phase. When the hexagram forms, only
+  君子以治曆明時 and "The noble one orders the calendar and makes the seasons clear." rise in
+  beneath it (opacity, 10 px lift, letter-spacing settling from 0.06em to 0) inside a fixed
+  5.5 rem slot, and fade out as the dust lifts. The text is always in the DOM for screen
+  readers; only the canvas stage is `aria-hidden`.
+- **Hexagram density.** Grains snap to a fine grid inside the bar rectangles (pitch derived
+  from bar area over particle count, 0.12 px jitter), and six solid gold bars with a soft glow
+  fade in underneath over 0.6 s as the dust settles (50 percent opacity), fading out over
+  0.4 s as it dissolves. Yin bars keep a 22 px central gap. Lines bottom to top: yang, yin,
+  yang, yang, yang, yin.
+- **Autoplay** via one shared `autoplay(panel, step, interval)` helper: steps while the panel
+  is at least 30 percent in view and the tab is visible; any pointer, key, focus or click
+  hands control to the user and the tour resumes 6 s after the last interaction (never while
+  the pointer is still over the panel). Stem ring: every 3.3 s, a random stem that is never
+  the current or previous one, with 庚 (Luck Pillar, Seven Killings), 己 (甲己合土) and 丙
+  (Annual Qi) weighted three to one. Calendar: every 2.8 s through 2, 4 to 13, 15, 17, 19,
+  21, 25, 28 in date order, re-running the gold scan at the start of each loop. Prism: the
+  existing 3.2 s turn now runs on the same helper. Readouts are `aria-live="off"` until the
+  user interacts, then `polite`, so the tour does not talk over a screen reader. Reduced
+  motion: no autoplay, default states, readouts polite.
+- **Mobile ring.** "Day Master" moved out of the core to sit 3 px beneath it, sized from
+  `--ring`; the core glyph gets a single same-hue gold glow and `backface-visibility: hidden`
+  to force grayscale antialiasing (the colour fringing). Ring clearance inside the panel is
+  now 23 px or more at 360, 390 and 1440. Panel hints read "Live" with a soft pulse dot
+  (or "Touch a stem" / "Touch a day" / "Tap to turn" under reduced motion) and hide under
+  380 px so the header stays on one line.
+- Screenshots: `docs/design/qa/round4-*.png`. Tests: 27 pass. Stripe links unchanged.
