@@ -15,6 +15,8 @@ test('alert names the plan from the price and carries the first charge day', () 
   });
   const odd = { ...sub, items: { data: [{ price: { unit_amount: 12300, currency: 'usd' } }] } };
   assert.equal(signupAlert(odd, '2026-11-15').plan, '123 usd');
+  const coaching = { ...sub, items: { data: [{ price: { unit_amount: 49700, currency: 'usd' } }] } };
+  assert.equal(signupAlert(coaching, '2026-11-15').plan, 'Coaching (497)');
 });
 
 test('alert posts JSON to the Apps Script and throws unless it answers success', async () => {

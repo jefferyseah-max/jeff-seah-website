@@ -29,6 +29,20 @@ test('a monthly checkout (trial included) tags the plan and fires Subscription S
   assert.deepEqual(started.properties, { plan: '97', amount: 0, currency: 'USD', sessionId: 'cs_live_b2', subscription: 'sub_7' });
 });
 
+test('the updated Coaching link tags new buyers as monthly-497', () => {
+  const coaching = {
+    ...trial, id: 'cs_live_c3', payment_status: 'paid', amount_total: 49700,
+    payment_link: 'plink_1UJUQqRmcvZfydHf3B6J2lsW',
+    success_url: 'https://www.jeffseah.rocks/welcome?plan=497&session_id=cs_live_c3',
+  };
+  const [identify, started] = checkoutEvents(coaching);
+  assert.equal(identify.user.tags, 'monthly-subscriber,monthly-497');
+  assert.equal(started.properties.plan, '497');
+  assert.equal(started.properties.amount, 497);
+  assert.equal(checkoutEvents({ ...coaching, success_url: undefined })[0].user.tags, 'monthly-subscriber,monthly-497');
+  assert.equal(checkoutEvents({ ...coaching, success_url: trial.success_url.replace('97', '397') })[0].user.tags, 'monthly-subscriber,monthly-397');
+});
+
 test('unknown products, unpaid or incomplete sessions and missing emails send nothing', () => {
   assert.deepEqual(checkoutEvents({ ...outlook, success_url: 'https://www.jeffseah.rocks/book' }), []);
   assert.deepEqual(checkoutEvents({ ...trial, success_url: 'https://www.jeffseah.rocks/welcome?plan=5' }), []);

@@ -52,17 +52,19 @@ post or a forged report-delivered post can at worst send a buyer the email they 
 | Keys | Vercel env `ENCHARGE_WRITE_KEY`; Apps Script Script Property `ENCHARGE_WRITE_KEY`. Jeff pastes both. Never in code. |
 
 Product detection uses the Checkout Session `success_url`: `/2027-next` is the Outlook,
-`/welcome?plan=<97|197|297|397>` a monthly plan. A new Payment Link must keep that redirect or it is ignored.
+`/welcome?plan=<97|197|297|497>` a monthly plan. Known Payment Link IDs are a fallback when Stripe
+omits `success_url`; a new link must set the redirect and be added to `lib/encharge.mjs`.
 
 ## Encharge setup
 
-- Tags: `outlook-2027-buyer`, `monthly-subscriber`, `monthly-97/197/297/397`, `intake-received`,
+- Tags: `outlook-2027-buyer`, `monthly-subscriber`, `monthly-97/197/297/497`, `intake-received`,
   `annual-intake`, `monthly-intake`, `report-delivered`.
 - Custom fields (text): `edition`, `reportDue`, `reportUrl`.
 - Sender: Jeff Seah <coaching@jeffseah.rocks>; domain jeffseah.rocks verified (DNS on Cloudflare).
 - Company mailing address: must be a real postal address (it appears in every footer); change it any
   time in Settings, Your Account.
-- Flows A, B, C as in `docs/crm/emails.md`. Built switched **off**; Jeff approves copy, then on.
+- Flows A, B, C are drafted in `docs/crm/emails.md`. The Encharge dashboard showed **0 flows** on
+  2026-09-29, so no automated buyer email sequence is active.
 
 ## Switch-on checklist
 

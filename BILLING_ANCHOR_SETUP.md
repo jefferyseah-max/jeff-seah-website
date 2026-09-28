@@ -4,7 +4,7 @@ Built 2026-09-25. **Live since 2026-09-25**: steps 1 to 4 below are done and the
 
 ## What it does
 
-Every new monthly subscription (Calendar 97, Brief 197, Premium 297, Coaching 397) is moved onto the 15th:
+Every new monthly subscription (Calendar 97, Brief 197, Premium 297, Coaching 497) is moved onto the 15th:
 
 - Paid plans: first charge at signup, next charge on the 15th of the following month (Singapore time), then every 15th.
   Signs up 3 Sep: pays 3 Sep, next 15 Oct. Signs up 28 Sep: pays 28 Sep, next 15 Oct.
@@ -21,7 +21,7 @@ How: Stripe Payment Links cannot set a billing day. When Stripe reports a new su
 1. **Restricted key.** Stripe, Developers, API keys, Create restricted key. Name it `billing-anchor`. Give it **Subscriptions: Write** and nothing else. Copy the `rk_live_...` value.
 2. **Webhook.** Stripe, Developers, Webhooks, Add endpoint:
    - URL: `https://www.jeffseah.rocks/api/stripe-webhook`
-   - Event: `customer.subscription.created` only.
+   - Events: `customer.subscription.created` and `checkout.session.completed`.
    - Save, then reveal and copy the signing secret (`whsec_...`).
 3. **Vercel.** Project `jeff-seah-website`, Settings, Environment Variables, Production:
    - `STRIPE_API_KEY` = the `rk_live_...` value
