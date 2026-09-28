@@ -81,6 +81,14 @@ if (reduceMotion || !('IntersectionObserver' in window)) {
   revealEls.forEach(el => observer.observe(el));
 }
 
+// -- Hero Luopan: pause its animation while the hero is offscreen --
+const hero2027 = document.querySelector('.hero-2027');
+if (hero2027 && 'IntersectionObserver' in window) {
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => hero2027.classList.toggle('is-paused', !e.isIntersecting));
+  }, { threshold: 0 }).observe(hero2027);
+}
+
 // -- Price step --
 if (AFTER_STEP) {
   document.querySelectorAll('[data-price]').forEach(el => { el.textContent = String(PRICE_LATER); });
