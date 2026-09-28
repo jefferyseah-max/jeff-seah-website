@@ -74,6 +74,10 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-09-29: October design refresh live (PR #6): Luopan hero, autoplaying Favorable Days / Bagua
+  prism / 10-stem panels, Bagua unfolding in `#calendar`, hourglass that becomes Hexagram 49 in
+  Philosophy, FAQ Wu Xing trace, lighter Luopan on `/2027`. All inline in `index.html` (hourglass
+  grain counts are constants in `hourglass()`). Notes: `docs/design/DIRECTION.md`, `HANDOFF.md`.
 - 2026-09-29: Replaced the stale Encharge setup steps with the current launch-gate pointer after
   domain verification and flow drafting; the pricing highlight moved to Calendar + Premium.
 
