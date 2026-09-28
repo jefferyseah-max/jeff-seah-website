@@ -17,9 +17,9 @@ Open website sessions with this folder as the working directory, not the coachin
   for code changes and checking the Sheet, Gmail and deployments; cannot click in Stripe or edit Sheets.
 If a task needs Stripe or Sheet edits and the session is cloud, say so at the start.
 
-## Offers and payments (as of 2026-09-26)
+## Offers and payments (as of 2026-09-29)
 - Monthly plans on Stripe Payment Links: 97 Calendar (30-day card trial), 197 Calendar + Brief,
-  297 Calendar + Premium, 397 Coaching. Single Session USD 197 via `/book`, paid at booking on CalendarHero `/singlesession`.
+  297 Calendar + Premium, 497 Coaching. Single Session USD 197 via `/book`, paid at booking on CalendarHero `/singlesession`.
 - 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. Both links are in
   `2027.js`, which switches link and copy at 00:00 SGT 1 Jan (homepage flips its own two lines at the same
   moment). The 88 link stays live in Stripe until Jeff deactivates it on 1 Jan (reminder set). Buyers get a sample Power Calendar month (next full month, no card) as a private HTML page beside the report,
@@ -34,10 +34,10 @@ If a task needs Stripe or Sheet edits and the session is cloud, say so at the st
 - Customer portal: https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00 (linked from the pricing note).
 - Stripe account acct_1ScW2gRmcvZfydHf. Webhooks live in Workbench (Developers bar, bottom left).
 - After payment: the 4 monthly links redirect to
-  `/welcome?plan=<97|197|297|397>&session_id={CHECKOUT_SESSION_ID}` (set 2026-09-26).
+  `/welcome?plan=<97|197|297|497>&session_id={CHECKOUT_SESSION_ID}` (Coaching updated 2026-09-29).
 
 ## Intake (post-payment birth details)
-`/2027-next` (Outlook buyers) and `/welcome?plan=<97|197|297|397>` (subscribers) POST to one Apps
+`/2027-next` (Outlook buyers) and `/welcome?plan=<97|197|297|497>` (subscribers) POST to one Apps
 Script web app bound to the Sheet "jeffseah.rocks Intake" (tabs `annual-2027`, `monthly-welcome`),
 which emails Jeff per submission. Source and setup: `docs/intake/Code.gs`, `docs/intake/INTAKE_SETUP.md`.
 Code changes: Manage deployments, New version (keeps the URL). Submissions take about 9 s.

@@ -36,7 +36,7 @@ ID, URL and behaviour below was checked live on 2026-09-26/27 unless marked othe
      "jeffseah.rocks Intake"                  "New intake: <product> - <name>"
 
   In parallel, for every NEW SUBSCRIPTION:
-  Stripe --(webhook customer.subscription.created)--> /api/stripe-webhook (Vercel function)
+  Stripe --(webhook subscription.created + checkout.session.completed)--> /api/stripe-webhook (Vercel function)
       1. moves the subscription's billing day to the 15th (Stripe API)
       2. POSTs {type:'stripe-subscription'} to the same Apps Script
              -> row in tab "stripe-signups" + email "New subscriber: <plan> (<status>)"
@@ -99,10 +99,10 @@ Stripe account `acct_1ScW2gRmcvZfydHf` (live mode), display name "Jeffseah.rocks
 | Power Calendar | 97/mo, **30-day free trial, card required** | `prod_VK8L1DKjxPpeGD` | https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05 | `index.html` `#pricing`, `power-calendar.html` (3 places) |
 | Power Calendar + Brief Monthly Report | 197/mo | `prod_VK8NH11wU878bY` | https://buy.stripe.com/bJebJ30Inc8K4rU3TXbwk06 | `index.html` |
 | Power Calendar + Premium Monthly Report | 297/mo | `prod_VK8fDT2mDGFFBt` | https://buy.stripe.com/4gMfZjcr51u6cYqduxbwk07 | `index.html` |
-| Power Calendar + Premium Report + Coaching | 397/mo | `prod_VK8hEVXNT5TUxy` | https://buy.stripe.com/eVq8wR0In4Gie2u2PTbwk08 | `index.html` (primary button) |
+| Power Calendar + Premium Report + Coaching | 497/mo | `prod_VK8hEVXNT5TUxy` | https://buy.stripe.com/eVq8wR0In4Gie2u2PTbwk08 | `index.html` (primary button) |
 
 All four links redirect after payment to
-`https://www.jeffseah.rocks/welcome?plan=<97|197|297|397>&session_id={CHECKOUT_SESSION_ID}`.
+`https://www.jeffseah.rocks/welcome?plan=<97|197|297|497>&session_id={CHECKOUT_SESSION_ID}`.
 
 ### 2027 Annual Outlook (one-off)
 
@@ -155,7 +155,8 @@ sets "cancel at period end", so a trial cancelled before the 15th is never charg
 Stripe Payment Links cannot set a billing day, so `/api/stripe-webhook` fixes each new subscription.
 
 - **Stripe side:** one webhook endpoint `https://www.jeffseah.rocks/api/stripe-webhook`, event
-  `customer.subscription.created` only. Managed in Stripe Workbench (Developers bar, bottom left).
+  `customer.subscription.created` and `checkout.session.completed`. Managed in Stripe Workbench
+  (Developers bar, bottom left).
 - **Vercel env (Production):** `STRIPE_API_KEY` (restricted key `rk_live_...`, Subscriptions: Write only)
   and `STRIPE_WEBHOOK_SECRET` (`whsec_...`). Jeff pastes secrets; agents never type them.
 - **Logic (`lib/billing-anchor.mjs`):** verifies the Stripe signature (HMAC-SHA256, 5-minute tolerance);
@@ -187,7 +188,7 @@ failures are therefore surfaced by the script's own error email, not by the page
 |---|---|---|
 | `product` sent | `monthly-welcome` | `2027-annual-outlook` |
 | Fields | name, email, calendarEmail (optional Google account for calendar sharing; `/welcome` only, `/2027-next` always sends empty), birthDate, birthTime or "Unknown" + birthTimeUnknown, birthCity, gender (female/male), consent | same, plus `workType` (employed / business-owner / both), `decisions` (free text), `edition` (simplified / advanced) |
-| From URL | `plan` (97/197/297/397; drives the greeting "Welcome to your <plan> plan"), `session_id` | `session_id`, `paid=1` |
+| From URL | `plan` (97/197/297/497; drives the greeting "Welcome to your <plan> plan"), `session_id` | `session_id`, `paid=1` |
 | `paid` | true if `paid=1` **or** `session_id` starts with `cs_` | same |
 | Spam guards | honeypot input `company_website` (sent as `website`), and `elapsedMs` (form open under 3 s is ignored) | same |
 
@@ -244,7 +245,7 @@ are no longer used by the site.
 | Someone submits `/welcome` | "New intake: Monthly plan welcome - <name>" (all fields + Sheet tab) | Apps Script `notify()` | Yes, 2026-09-26 real signup |
 | Someone submits `/2027-next` | "New intake: 2027 Annual Outlook - <name>" | Apps Script `notify()` | Yes, 2026-09-25 |
 | New monthly subscription, trials included | "New subscriber: <plan> (<status>)", with subscription, customer, first charge date, Stripe customer link, and a prompt to chase `/welcome` if no intake follows | Webhook, `lib/signup-alert.mjs`, Apps Script `stripeAlert()` | Alert path verified with a direct test post; first live-Stripe trigger still to be seen |
-| Any successful charge (Outlook purchase, first charge on 197/297/397, renewals) | Stripe "Successful payment receipt" | Stripe notification setting (Settings, Communication preferences, Transactions and Balances), switched on 2026-09-27 | Setting confirmed saved; no charge since |
+| Any successful charge (Outlook purchase, first charge on 197/297/497, renewals) | Stripe "Successful payment receipt" | Stripe notification setting (Settings, Communication preferences, Transactions and Balances), switched on 2026-09-27 | Setting confirmed saved; no charge since |
 | Apps Script throws | "jeffseah.rocks intake ERROR" | Apps Script catch block | Code path only |
 | Webhook keeps failing | Stripe's endpoint-failure email | Stripe retry policy | Not triggered |
 
@@ -277,11 +278,10 @@ alert covers it.
   id-format checks. A shared secret was deliberately not added (it would have to live in page source or
   be typed into Script Properties).
 - `paid` on intake rows is a client-side hint, not a Stripe verification.
-- Webhook listens to `customer.subscription.created` only. Cancellations, failed payments and renewals
+- Webhook listens to `customer.subscription.created` and `checkout.session.completed`. Cancellations, failed payments and renewals
   are not mirrored anywhere except Stripe (and Stripe's own emails).
 - No analytics or conversion tracking.
 - JSON-LD and meta descriptions on `/2027` are static; see the 1 Jan task in section 3.
-- Only `main` exists on the remote (the merged `claude/eloquent-cerf-5uju65` was deleted 2026-09-27).
 
 ---
 
