@@ -69,14 +69,21 @@ omits `success_url`; a new link must set the redirect and be added to `lib/encha
   and `jeff@mmtmc.rocks` sender remain Pending.
 - Company mailing address: a postal address is already set in Encharge's Your Account page. Confirm
   its suitability before activation; it appears in every footer.
-- Flows A, B, C are drafted in `docs/crm/emails.md`. In Encharge, Flow A
-  (`2027 Outlook - Payment to Intake`, ID `405798`) is **deactivated** with the `Outlook Purchased`
-  trigger, `outlook-2027-buyer` gate and the first email saved and connected. Flow C
-  (`2027 Outlook - After Delivery and Calendar Offer`, ID `405802`) is **deactivated** with the
-  `Report Delivered` trigger, a connected `outlook-2027-buyer` yes-path, and C1 -> 3-day wait -> C2
-  connected. C4 and C5 are saved as **disconnected** reply-tracked email drafts, so they cannot send
-  even if the flow were activated. C3, C6, the remaining delays, and subscriber exit gates still need
-  to be built and verified. Flow B is not in Encharge yet.
+- Flows A, B, C are drafted in `docs/crm/emails.md`. All three Encharge flows are **deactivated**.
+  Flow A (`2027 Outlook - Payment to Intake`, ID `405798`) connects `Outlook Purchased` ->
+  `outlook-2027-buyer` Yes -> A1 -> 48-hour wait on A1 delivery -> `intake-received` No -> A2.
+  The buyer-to-A1 link was missing on initial inspection and was added on 2026-09-29.
+- Flow B (`2027 Outlook - Intake to Delivery`, ID `405806`) connects `Intake Submitted` ->
+  `outlook-2027-buyer` Yes -> `annual-intake` Yes -> B1 -> 3-day wait on B1 delivery ->
+  `report-delivered` No -> B2 -> 3-day wait on B2 delivery -> `report-delivered` No -> B3.
+  The delivered-tag checks prevent the later pre-delivery emails after release. Sender, subject,
+  body, and footer were saved and read back for the new drafts.
+- Flow C (`2027 Outlook - After Delivery and Calendar Offer`, ID `405802`) connects
+  `Report Delivered` -> `outlook-2027-buyer` Yes -> C1 -> 3-day wait on C1 delivery -> C2.
+  C3, C4, C5, and C6 are saved as **disconnected** email drafts, so they cannot send even if the flow
+  were activated. C4 and C5 ask buyers to reply and have reply tracking enabled. Later delays
+  and subscriber exit gates are not built yet. Do not activate Flow C until those gates and the
+  buyer-facing content are verified.
 
 ## Calendar promotion, 2026-09-29
 
@@ -102,22 +109,27 @@ omits `success_url`; a new link must set the redirect and be added to `lib/encha
 
 ## Switch-on checklist
 
-Status 2026-09-29: steps 1 to 4 were previously reported done (Apps Script Version 3 "Intake v3: Encharge CRM", webhook
-listening to 2 events). Tested live: intake to Encharge (tags, firstName, edition, reportDue; Encharge typed
+Status 2026-09-29: Vercel shows `ENCHARGE_WRITE_KEY`, `STRIPE_API_KEY`, and
+`STRIPE_WEBHOOK_SECRET` as Production variables. Stripe Workbench shows an active endpoint at
+`https://www.jeffseah.rocks/api/stripe-webhook` listening to `checkout.session.completed` and
+`customer.subscription.created`. Its current-week overview showed two deliveries and zero failures;
+that does not prove a real buyer checkout. Apps Script Version 3 "Intake v3: Encharge CRM" was
+previously deployed. Tested live: intake to Encharge (tags, firstName, edition, reportDue; Encharge typed
 `reportDue` as a date field), watcher job and Telegram, report-delivered (row marked, reportUrl set,
 watcher stopped chasing), unknown-email refusal. Not yet proven live: webhook to Encharge (needs a real
 checkout). Test contact jefferyseah@gmail.com kept in Encharge for flow tests (no buyer tag, so no flow
-fires for it). Two incomplete flows are deactivated. The `jeffseah.rocks` domain and coaching sender
-are verified, but no flow is active.
+fires for it). Three flows are deactivated. The `jeffseah.rocks` domain and coaching sender are
+verified, but no flow is active. No test email or buyer email was sent during this review.
 A real checkout has not yet proven the webhook-to-Encharge path.
 
-1. Jeff: Encharge write key into Vercel env `ENCHARGE_WRITE_KEY` (Production), redeploy.
-2. Jeff: same key into Apps Script, Project Settings, Script Properties, `ENCHARGE_WRITE_KEY`.
-3. Paste `docs/intake/Code.gs` into the Apps Script, Deploy, Manage deployments, New version
-   (keeps the URL). Authorise the new "connect to an external service" scope.
-4. Stripe Workbench: add `checkout.session.completed` to the jeffseah.rocks webhook endpoint.
+1. Vercel Production `ENCHARGE_WRITE_KEY` is present, and the site was redeployed on 2026-09-29.
+2. Apps Script `ENCHARGE_WRITE_KEY` was previously exercised by the live intake and delivery tests;
+   the secret value was not opened during this review.
+3. Apps Script Version 3 was previously deployed and exercised; keep its URL when updating it.
+4. Stripe Workbench endpoint and both required event subscriptions were verified on 2026-09-29.
 5. Sending domain and sender are verified; confirm the existing mailing address.
-6. Finish the three flows, including delays, buyer and subscriber gates, and the reply offer steps.
+6. Flows A and B are staged; finish Flow C delays and subscriber gates. Read back the
+   rendered merge fields and links with a controlled test before activation.
 7. Verify the private sample page and three paid invoice discount path before enabling C3 to C5.
 8. Test with Jeff's own email: 88 purchase (refund after), intake, `report-delivered`, watch each
    flow step land. Then switch flows on after Jeff approves the final email copy.
