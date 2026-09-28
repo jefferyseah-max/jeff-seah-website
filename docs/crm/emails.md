@@ -1,7 +1,8 @@
 # Encharge email drafts: 2027 Annual Outlook
 
-Drafted 2026-09-27 by Claude for Jeff's review. **Nothing sends until Jeff approves the copy and the
-flows are switched on.** From: Jeff Seah <coaching@jeffseah.rocks>, reply-to the same.
+Drafted 2026-09-27 and revised 2026-09-29 with Jeff's Day 7, 14 and 24 notes. **Nothing sends until
+Jeff approves the copy and the flows are switched on.** From: Jeff Seah <coaching@jeffseah.rocks>,
+reply-to the same.
 
 Merge fields (Encharge syntax): `{{ person.firstName }}`, `{{ person.reportDue }}` (for example
 "Sunday 4 October", set at intake), `{{ person.reportUrl }}` (set at delivery), `{{ person.edition }}`.
@@ -110,7 +111,7 @@ Hi {{ person.firstName }},
 Your 2027 Annual Outlook is ready:
 **[Open my 2027 Outlook]({{ person.reportUrl }})**
 
-Read the Annual Compass first, then Before the Year Opens: that's what to do before 4 February.
+Read the Annual Compass first, then Before the Year Opens. That's what to do before 4 February.
 
 You have one follow-up question with the outlook. When something in it makes you stop, reply to this
 email and ask.
@@ -118,15 +119,17 @@ email and ask.
 Jeff
 
 ### C2. Day 3
-**Subject:** Three ways clients actually use their Outlook
+**Subject:** Three ways clients use their Outlook
 
 Hi {{ person.firstName }},
 
-After a few days with it, this is what tends to stick:
+After a few days with your outlook, here are three ways to put it to work:
 
-- **Before a big conversation**, check the month's Do / Avoid / Watch row.
-- **Before you commit money**, look up "review money" and "negotiate" in When To.
-- **When you feel stuck**, sit with your back to your clarity direction and write the decision down.
+1. **Before a big conversation**, check the month's Do / Avoid / Watch row.
+2. **Before you commit money**, look up "review money" and "negotiate" in When To.
+3. **When you feel stuck**, sit with your back to your clarity direction and write the decision down.
+
+Reply if you have a question about your reading.
 
 Jeff
 
@@ -137,39 +140,49 @@ Hi {{ person.firstName }},
 
 Your outlook gives you the shape of the year. The **Power Calendar** gives you the days.
 
-Your sample month is on the private page beside your report: the strongest and weakest days of the
-month for your own chart, with a short note on each. Put the important things on the good days and see
-what changes. On a plan, the days arrive every month straight into your own Google Calendar.
+**[Open your private Outlook and sample calendar]({{ person.reportUrl }})**
+
+Follow the sample calendar link beside your report. This is a temporary private web page showing the
+strongest and weakest days of the next full month for your chart. Try planning around those days and see
+what you notice. The sample does not add anything to your Google Calendar or start a subscription. If
+you join a monthly plan, I will share your ongoing Power Calendar directly with your Google account.
 
 Jeff
 
 ### C4. Day 14
-**Subject:** Keep the days coming after your sample month
+**Subject:** Try three months of Power Calendar at half price
 
 Hi {{ person.firstName }},
 
-After your sample month, you can have your Power Calendar every month, in your own Google Calendar:
+If the sample is useful, I can set you up with three paid months at **50% off**:
 
-- **Power Calendar, USD 97 a month.** Your days, every month.
-- **Calendar + Brief, USD 197 a month.** The days, plus a written brief on the month's theme for your chart.
+- **Power Calendar:** keep the 30-day free trial, then USD 48.50 a month for the first three paid
+  months, then USD 97 a month.
+- **Calendar + Brief:** USD 98.50 a month for three paid months, then USD 197 a month. This adds a
+  written brief on your month's theme.
 
-**[See the plans](https://www.jeffseah.rocks/#pricing)**
+Reply **CALENDAR** or **BRIEF** and I will send the right private offer and explain when your first
+charge falls. Your ongoing Power Calendar will be shared into your Google Calendar. You can cancel
+anytime.
 
-Cancel any time from the billing link in every receipt.
+You can [compare the plans](https://www.jeffseah.rocks/#pricing) before deciding. Please reply to
+claim the discount rather than checking out through the standard pricing page.
 
 Jeff
 
 ### C5. Day 24
-**Subject:** Your sample month is nearly over
+**Subject:** Your Power Calendar invitation
 
 Hi {{ person.firstName }},
 
-Your sample Power Calendar month is nearly done. To have next month's days in your own Google Calendar,
-pick a plan before the 1st:
+The 50% invitation is still available if you want to keep using your personal timing calendar:
 
-**[Keep my Power Calendar](https://www.jeffseah.rocks/#pricing)**
+- Power Calendar: 30-day free trial, then USD 48.50 a month for the first three paid months,
+  then USD 97 a month.
+- Calendar + Brief: USD 98.50 a month for three paid months, then USD 197 a month.
 
-If it's not for you, no action needed; nothing is charged.
+Reply **CALENDAR** or **BRIEF** and I will arrange it and confirm the billing dates before you join.
+Your free sample needs no cancellation and does not charge you.
 
 Jeff
 
