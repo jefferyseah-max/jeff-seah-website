@@ -107,3 +107,28 @@ errors, no overflow). They inherit the nav underline, button focus states and FA
   Paused offscreen. Reduced motion shows the sand settled with the hexagram visible. The 時
   watermark moves left on desktop and to the top on mobile so it sits behind the copy.
 - Screenshots: `docs/design/qa/round2-*.png`. Tests: 27 pass. Stripe links unchanged.
+
+## Round 3
+
+- **Stem ring sizing bug fixed.** `.wx-panel` is now an inline-size container and the ring sizes
+  from it: `--ring: min(240px, 88cqi)`, with the orbit radius, chips, core and glyph sizes all
+  derived from `--ring`. Measured clearance from the panel content box (worst element, the
+  arcs SVG): 12 px at 320, 15 px at 360, 16 px at 375, 16 px at 390, 22 px at 414, 26 px at
+  768. Calendar days and the prism front face also sit inside at every width (pressed days no
+  longer scale, only hover and focus do). Feature cards use 1.5 rem side padding under 900 px.
+- **Hourglass rebuilt as jewellery.** Hairline SVG frame (turned posts with beads and collars,
+  engraved caps, two bulbs with an inner edge highlight and a specular streak, no fills) under
+  a devicePixelRatio-aware canvas. One particle pool (950 sand grains and 250 frame grains on
+  desktop, 560 and 170 on small screens), each 0.6 to 1.4 px in five gold tones with a slow
+  twinkle. Grains drain from the upper bulb in volume order with a funnel dip at the centre,
+  fall as a jittery single-grain stream through the neck, and build a cone in the lower bulb,
+  each grain sliding from the apex to its resting place. One fill takes 9 s.
+- **Transformation.** When the lower bulb is full: a 0.9 s pause with a soft gold pulse ring,
+  then a 1.1 s burst in which every grain and the frame (the SVG fades as frame grains take
+  over) scatter outward, a 1.7 s gather with per-grain delay and a perpendicular curl into a
+  large Hexagram 49 革 (bars bottom to top yang, yin, yang, yang, yang, yin, yin bars with a
+  22 px gap), a 4 s hold with shimmer while the 革 caption and 君子以治曆明時 quote fade in
+  from 14 percent to full, then a 1.8 s dissolve back to the refilled glass. Cycle 18.5 s.
+  The loop runs only while the wrap is in view and the tab is visible. Reduced motion draws
+  the grain hexagram once with the caption shown.
+- Screenshots: `docs/design/qa/round3-*.png`. Tests: 27 pass. Stripe links unchanged.
