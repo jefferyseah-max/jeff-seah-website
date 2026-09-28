@@ -7,6 +7,9 @@ ID, URL and behaviour below was checked live on 2026-09-26/27 unless marked othe
 `CLAUDE.md` in the repo root is the short operating card (rules, pending items). This file is the map.
 `docs/` is excluded from the public site by `.vercelignore`.
 
+Change log: 2026-09-29, Calendar + Premium is the highlighted pricing card; the current Encharge
+launch blockers are tracked at the top of `docs/crm/ENCHARGE_CRM.md`.
+
 ---
 
 ## 1. The whole system on one page
@@ -98,8 +101,8 @@ Stripe account `acct_1ScW2gRmcvZfydHf` (live mode), display name "Jeffseah.rocks
 |---|---|---|---|---|
 | Power Calendar | 97/mo, **30-day free trial, card required** | `prod_VK8L1DKjxPpeGD` | https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05 | `index.html` `#pricing`, `power-calendar.html` (3 places) |
 | Power Calendar + Brief Monthly Report | 197/mo | `prod_VK8NH11wU878bY` | https://buy.stripe.com/bJebJ30Inc8K4rU3TXbwk06 | `index.html` |
-| Power Calendar + Premium Monthly Report | 297/mo | `prod_VK8fDT2mDGFFBt` | https://buy.stripe.com/4gMfZjcr51u6cYqduxbwk07 | `index.html` |
-| Power Calendar + Premium Report + Coaching | 497/mo | `prod_VK8hEVXNT5TUxy` | https://buy.stripe.com/eVq8wR0In4Gie2u2PTbwk08 | `index.html` (primary button) |
+| Power Calendar + Premium Monthly Report | 297/mo | `prod_VK8fDT2mDGFFBt` | https://buy.stripe.com/4gMfZjcr51u6cYqduxbwk07 | `index.html` (Most Popular badge and primary button) |
+| Power Calendar + Premium Report + Coaching | 497/mo | `prod_VK8hEVXNT5TUxy` | https://buy.stripe.com/eVq8wR0In4Gie2u2PTbwk08 | `index.html` |
 
 All four links redirect after payment to
 `https://www.jeffseah.rocks/welcome?plan=<97|197|297|497>&session_id={CHECKOUT_SESSION_ID}`.

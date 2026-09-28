@@ -66,20 +66,16 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 - 1 Jan 2027 (reminder set): Jeff deactivates the USD 88 Outlook link in Stripe (plink_1UJTagRmcvZfydHfw0B40mtH).
   "Price-step metadata" = in `2027.html`, JSON-LD `price` 88 to 138 and drop or move `priceValidUntil`
   (2026-12-31); `description`, `og:description`, `twitter:description` drop "USD 88 until 31 December 2026".
-- **Encharge CRM switch-on still pending** (webhook and intake plumbing deployed; see `docs/crm/ENCHARGE_CRM.md`):
-  1. Jeff reviews `docs/crm/emails.md` (sender coaching@jeffseah.rocks) and gives Encharge a postal
-     mailing address (Settings, Your Account; it shows in every footer, changeable any time).
-  2. Verify sending domain jeffseah.rocks in Encharge; add its DNS records in Cloudflare (Jeff signs in to
-     Cloudflare in Chrome). Mail DNS is Namecrane (MX us1.workspace.org, SPF `-all`): add, never replace.
-  3. Build flows A, B, C in Encharge, switched off. Jeff's Chrome zooms app.encharge.io to about 200%
-     (viewport 834 px); ask him to press Ctrl+0 there, or set `document.documentElement.style.zoom`.
-     `reportDue` arrived as a date field: format it in the emails.
-  4. Test each flow with Jeff's own contact (add the buyer tag by hand), then switch on.
-  5. Stripe public support email: check Settings, Public details (and receipts) show a jeffseah.rocks
-     address, not jefferyseah@gmail.com. Jeff asked for jeff@jeffseah.rocks, but that mailbox has never
-     received mail; the site uses coaching@jeffseah.rocks (proven to reach Gmail). Confirm jeff@ exists
-     and forwards before using it, or use coaching@.
-  6. First real checkout proves the webhook to Encharge path: check the buyer tag and Vercel logs.
+- **Encharge email launch still pending:** `docs/crm/ENCHARGE_CRM.md` opens with the current
+  checkable launch blockers. The sending domain and `coaching@jeffseah.rocks` sender are verified;
+  flows A/B/C are drafted but deactivated. C3 to C6 are disconnected. No real checkout has yet
+  proved Stripe -> webhook -> Encharge -> intake/report delivery -> email. Keep the 30-day Calendar
+  trial, then discount its first three *paid* invoices; use reply-to-claim private offers once the
+  Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
+
+### Change log
+- 2026-09-29: Replaced the stale Encharge setup steps with the current launch-gate pointer after
+  domain verification and flow drafting; the pricing highlight moved to Calendar + Premium.
 
 ## Tooling (local sessions)
 - GitHub: local pushes use this machine's git creds (`gh auth` as `jefferyseah-max`).
