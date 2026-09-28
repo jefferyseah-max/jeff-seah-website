@@ -3,6 +3,37 @@
 Spec and runbook. Written 2026-09-27 (Claude, with Jeff). Start with the 2027 Annual Outlook; the
 monthly plans reuse the same plumbing later.
 
+## Launch status and blockers (2026-09-29)
+
+The pricing page and its Stripe links are live. The Encharge sending domain and sender are verified,
+but **all three email flows remain deactivated**. The Outlook email sequence and 50% Calendar offer
+must not be presented as live until these items are checked off:
+
+- [ ] Create and verify each buyer's private HTML sample Power Calendar page, with its link beside
+  the report in that buyer's Fusebase folder. Check the actual C3 link path from a released report.
+- [ ] Set up and test a private Stripe offer for each reply that keeps Calendar's 30-day trial, discounts
+  its **first three paid invoices** to USD 48.50, then charges USD 97. For Calendar + Brief, charge
+  USD 98.50 for three paid invoices, then USD 197. Confirm invoice dates and totals after the
+  billing-anchor move to the 15th. Do not assume a three-month repeating coupon achieves this.
+- [ ] Finish Flow C's C3/C4/C5/C6 connections and Day 7/14/24/40 timing, with `monthly-subscriber`
+  exit checks. Verify that replies to `coaching@jeffseah.rocks` arrive for Jeff, that reply tracking
+  works, and that accepted buyers stop receiving offer reminders.
+- [ ] Jeff approves the final copy in `docs/crm/emails.md` and confirms the postal address shown in
+  Encharge's unsubscribe footer. Check the Stripe public support email and receipts use a working
+  `jeffseah.rocks` mailbox.
+- [ ] Run a controlled checkout with Jeff's own email through Stripe, the Vercel webhook, Encharge
+  buyer tag/event, intake, report release, and each connected email step. Verify rendered merge fields,
+  links, trial and discounted invoices, reply handling, and suppression before activating flows.
+
+**Offer handling until these gates pass:** Day 14/24 drafts say reply `CALENDAR` or `BRIEF`; Jeff will
+arrange a private discount. There is no public discounted checkout link. C3 to C6 are disconnected
+and A/B/C are deactivated. A new agent should start with this checklist, then use the detail below.
+
+### Change log
+
+- 2026-09-29: Added explicit launch blockers and preserved the reply-to-claim decision so the staged
+  flows cannot be mistaken for a live email sequence.
+
 ## Decisions (Jeff, 2026-09-27)
 
 - **Encharge, not CompanyHub or Skillplate.** CompanyHub is a sales-team pipeline CRM. Skillplate takes a
