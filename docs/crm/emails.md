@@ -40,7 +40,7 @@ A quick nudge: I don't have your birth details yet, so your 2027 Outlook hasn't 
 
 **[Send my birth details](https://www.jeffseah.rocks/2027-next)**
 
-If the form gives you any trouble, just reply with your birth date, time and city.
+If the form gives you any trouble, reply and I will help you complete it.
 
 Jeff
 
