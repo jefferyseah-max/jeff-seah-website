@@ -939,16 +939,18 @@
     /* ── Hourglass: a hairline gold frame and a canvas of gold dust. The dust drains, the whole
        glass bursts into grains, and the grains gather into Hexagram 49 革 before dissolving back. ── */
     .manifesto-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 3rem 4rem; align-items: center; position: relative; z-index: 1; }
-    .hourglass-wrap { justify-self: center; text-align: center; width: 260px; --slot: 5.5rem; padding-top: var(--slot); }
+    .hourglass-wrap { justify-self: center; text-align: center; --w: 260px; width: var(--w); --slot: 5.5rem; padding-top: var(--slot);
+      /* The hexagram's bottom bar sits 120.5 of 200 viewBox units above the stage foot; lift the quote to about 36px under it */
+      --lift: calc(var(--w) * -0.6025 + 20px); }
     .hourglass-stage { position: relative; width: 100%; aspect-ratio: 200 / 340; }
     .hourglass-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; transition: opacity 0.5s ease; }
     .hourglass-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .hourglass-wrap.is-burst .hourglass-svg { opacity: 0; }
     /* The quote lives in a fixed-height slot under the glass (a matching top pad keeps the glass centred
        against the copy). It is present for screen readers throughout and shown while the hexagram holds. */
-    .hourglass-quote { height: var(--slot); padding-top: 1rem; opacity: 0; transform: translateY(10px); letter-spacing: 0.06em;
+    .hourglass-quote { height: var(--slot); padding-top: 1rem; opacity: 0; transform: translateY(calc(var(--lift) + 10px)); letter-spacing: 0.06em;
       transition: opacity 0.9s ease, transform 1.1s var(--ease-out), letter-spacing 1.4s var(--ease-out); }
-    .hourglass-wrap.is-hex .hourglass-quote { opacity: 1; transform: translateY(0); letter-spacing: 0; }
+    .hourglass-wrap.is-hex .hourglass-quote { opacity: 1; transform: translateY(var(--lift)); letter-spacing: 0; }
     .hourglass-quote .hg-quote { font-family: var(--noto); font-size: 0.95rem; color: var(--gold-light); }
     .hourglass-quote .hg-trans { font-family: var(--serif); font-style: italic; font-size: 0.98rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.3rem; }
     @media (min-width: 901px) {
@@ -956,7 +958,7 @@
     }
     @media (max-width: 900px) {
       .manifesto-grid { grid-template-columns: 1fr; }
-      .hourglass-wrap { width: 200px; margin-top: 0; padding-top: 0; --slot: 6rem; }
+      .hourglass-wrap { --w: 200px; margin-top: 0; padding-top: 0; --slot: 6rem; }
       .manifesto-bg { align-items: flex-start; padding-top: 1rem; }
       .manifesto-bg-glyph { font-size: 60vw; }
     }
@@ -1767,7 +1769,7 @@
       .cal-wrap .cal-scan { display: none; }
       .bagua-prism, .bagua-face { transition: none; }
       .hourglass-svg { opacity: 0; }
-      .hourglass-quote { opacity: 1; transform: none; letter-spacing: 0; transition: none; }
+      .hourglass-quote { opacity: 1; transform: translateY(var(--lift)); letter-spacing: 0; transition: none; }
       .luopan .lp-ring, .luopan .lp-core, .luopan .lp-cardinal { opacity: 1; }
       .luopan .lp-draw circle { stroke-dashoffset: 0; }
       .compass-tilt { transform: none !important; transition: none; }
