@@ -18,6 +18,11 @@ must not be presented as live until these items are checked off:
 - [ ] Finish Flow C's C3/C4/C5/C6 connections and Day 7/14/24/40 timing, with `monthly-subscriber`
   exit checks. Verify that replies to `coaching@jeffseah.rocks` arrive for Jeff, that reply tracking
   works, and that accepted buyers stop receiving offer reminders.
+- [ ] Rulings D9 and D10 (2026-09-29): nothing invites a question until Part 4 ships. (a) The Flow C
+  C1 draft inside Encharge probably still says "You have one follow-up question with the outlook...
+  reply to this email and ask." It was removed from `emails.md` on 2026-09-30 but not yet checked or
+  edited in Encharge; delete it there. (b) C2 ends "Reply if you have a question about your reading."
+  Jeff has not ruled on it; ask him whether to keep or drop it, then match Encharge to `emails.md`.
 - [ ] Jeff approves the final copy in `docs/crm/emails.md` and confirms the postal address shown in
   Encharge's unsubscribe footer. Check the Stripe public support email and receipts use a working
   `jeffseah.rocks` mailbox.
@@ -31,6 +36,8 @@ and A/B/C are deactivated. A new agent should start with this checklist, then us
 
 ### Change log
 
+- 2026-09-30: Added the D9/D10 blocker (C1 line still to delete in Encharge, C2 reply line awaiting
+  Jeff's ruling).
 - 2026-09-29: Added explicit launch blockers and preserved the reply-to-claim decision so the staged
   flows cannot be mistaken for a live email sequence.
 
