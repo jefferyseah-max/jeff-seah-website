@@ -73,13 +73,13 @@ their birth details are; Jeff (and his agent pipeline, outside this repo) produc
 | File | Role |
 |---|---|
 | `index.html` (~2100 lines) | Homepage. **All CSS and JS inline.** Sections: nav, hero (with a `/2027` banner), `#calendar` (2027 Outlook + free Power Calendar month offer), `#value`, `#features`, manifesto, `#process`, `#pricing` (4 monthly plans + Single Session), `#faq`, footer. |
-| `2027.html` | 2027 Annual Outlook sales page. Sections: hero, compare, `#inside` (9 teaser screenshot tiles), editions, `#how`, who, `#order`, after, `#faq`, closing. Has JSON-LD Product schema. |
+| `2027.html` | 2027 Annual Outlook sales page (rebuilt 2026-09-30). Sections: hero with the Contact & Clash wheel (`#teaser`), `#when-to` (generated month path, data in the inline `#whenToData` JSON), `#order`, `#faq`, footer, mobile order bar. Self-contained: compiled Tailwind `css/outlook-2027.css` (source config in `scripts/tailwind/`), Alpine.js and GSAP from CDNs, JS inline. Has JSON-LD Product schema. |
 | `2027-next.html` | Post-payment intake for Outlook buyers. `noindex`. |
 | `welcome.html` | Post-payment intake for monthly subscribers. `noindex`. |
 | `power-calendar.html` | Power Calendar explainer with a sample month and plan CTA (links to the 97 trial). |
 | `book.html` | Single Session page. **Own inline `<style>`**, does not use `2027.css`. Books and charges via CalendarHero `/singlesession`. |
-| `2027.css` | Shared stylesheet for `2027.html`, `2027-next.html`, `welcome.html`, `power-calendar.html`. |
-| `2027.js` | Shared JS for those four pages: nav scroll state, mobile menu, FAQ accordion, scroll reveal, the 1 Jan 2027 price step, and Stripe link injection into `[data-stripe]` buttons. |
+| `2027.css` | Shared stylesheet for `2027-next.html`, `welcome.html`, `power-calendar.html` (not `2027.html`). |
+| `2027.js` | Shared JS for those three pages: nav scroll state, mobile menu, FAQ accordion, scroll reveal, the 1 Jan 2027 price step, and Stripe link injection into `[data-stripe]` buttons. |
 | `api/stripe-webhook.mjs` | Vercel function: Stripe webhook entry point. |
 | `lib/billing-anchor.mjs` | Signature check + "move to the 15th" logic. |
 | `lib/signup-alert.mjs` | Posts the new-subscriber alert to the Apps Script. |
@@ -117,8 +117,10 @@ All four links redirect after payment to
 | Both links | Redirect to `https://www.jeffseah.rocks/2027-next?paid=1&session_id={CHECKOUT_SESSION_ID}`. No name/address/phone collection, no promo codes, automatic tax off. |
 | Bonus | Buyers get one free Power Calendar month (the next full month, no card). This is a promise in copy, fulfilled manually; there is no Stripe object for it. |
 
-**The 1 Jan 2027 price step** (`2027.js`, constant `PRICE_STEP_AT` = 2027-01-01 00:00 SGT):
-- `2027.js` swaps the `[data-price]` number, the `[data-price-copy]` sentences, the price-step highlight,
+**The 1 Jan 2027 price step** (constant `PRICE_STEP_AT` = 2027-01-01 00:00 SGT, in two places):
+- `2027.html` has its own copy in its inline script: `Alpine.store('offer')` returns the price, the
+  Stripe link and the days left, and every order button, badge and price reads from it.
+- `2027.js` (other pages) swaps the `[data-price]` number, the `[data-price-copy]` sentences, the price-step highlight,
   and chooses the 138 link instead of the 88 link for every `[data-stripe]` button.
 - `index.html` has its own inline snippet at the top of its `<script>` that swaps the two
   `[data-price-home]` lines (hero banner and offer bullet) at the same moment.
@@ -342,7 +344,8 @@ Integration points a CRM can hook without redesign:
   `birthCity`, `calendarEmail`, `consent`, `submitBtn`, `company_website` honeypot) and the success /
   error state elements.
 - **Hard-coded Stripe links** live in `index.html` (4 plan buttons) and `power-calendar.html` (3 trial
-  buttons); the Outlook links live only in `2027.js`. A redesign must keep them pointing at the same URLs.
+  buttons); the Outlook links live in `2027.js` and, separately, in the inline script of `2027.html`
+  (`LINK_88`, `LINK_138`). A redesign must keep both pointing at the same URLs.
 - **Accessibility work already done**: muted text colours were raised to WCAG AA; FAQ has disclosure
   semantics; reduced-motion users get content without animation. Keep these.
 - **Copy rules**: no em dashes anywhere (Jeff's global rule). The `/2027` tile caption intentionally
@@ -357,8 +360,9 @@ Integration points a CRM can hook without redesign:
 ## 11. How to verify everything still works (about 10 minutes)
 
 1. `node --test tests/*.test.mjs`: 14 pass.
-2. `curl -s https://www.jeffseah.rocks/2027.js | grep 00w6oJ2Qv8Wy6A2eyBbwk09`: the 138 link is present.
-3. Open `/2027` and confirm the `[data-stripe]` buttons point at the correct link for today's date.
+2. `curl -s https://www.jeffseah.rocks/2027.js | grep 00w6oJ2Qv8Wy6A2eyBbwk09` and the same against
+   `https://www.jeffseah.rocks/2027`: the 138 link is present in both.
+3. Open `/2027` and confirm the order buttons (and the mobile order bar) point at the correct link for today's date.
 4. Apps Script health: open the web app URL in a browser; it returns `{"result":"ok"}`.
 5. Full path (costs nothing on the 97 trial): subscribe on the 97 link, land on `/welcome?plan=97`,
    submit test details, expect two emails ("New subscriber" and "New intake"), rows in
