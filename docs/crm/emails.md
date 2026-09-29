@@ -113,9 +113,6 @@ Your 2027 Annual Outlook is ready:
 
 Read the Annual Compass first, then Before the Year Opens. That's what to do before 4 February.
 
-You have one follow-up question with the outlook. When something in it makes you stop, reply to this
-email and ask.
-
 Jeff
 
 ### C2. Day 3
