@@ -20,13 +20,15 @@ If a task needs Stripe or Sheet edits and the session is cloud, say so at the st
 ## Offers and payments (as of 2026-09-29)
 - Monthly plans on Stripe Payment Links: 97 Calendar (30-day card trial), 197 Calendar + Brief,
   297 Calendar + Premium, 497 Coaching. Single Session USD 197 via `/book`, paid at booking on CalendarHero `/singlesession`.
-- 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. Both links are in
-  `2027.js`, which switches link and copy at 00:00 SGT 1 Jan (homepage flips its own two lines at the same
-  moment). The 88 link stays live in Stripe until Jeff deactivates it on 1 Jan (reminder set). Buyers get a sample Power Calendar month (next full month, no card) as a private HTML page beside the report,
+- 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. `/2027` holds both links in
+  its own inline Alpine store (`Alpine.store('offer')` in `2027.html`), which switches link and copy at
+  00:00 SGT 1 Jan; `2027.js` keeps the same constants for the other pages (homepage flips its own two lines
+  at the same moment). The 88 link stays live in Stripe until Jeff deactivates it on 1 Jan (reminder set). Buyers get a sample Power Calendar month (next full month, no card) as a private HTML page beside the report,
   NOT a shared Google Calendar; Google Calendar delivery is for monthly subscribers only (Jeff, 2026-09-27).
   `/2027-next` no longer asks for a calendar Google account; it posts `calendarEmail: ''` so the Sheet columns stay put.
-  `/2027` shows teaser screenshots only (`img/2027/tile-*.webp`); Jeff decided 2026-09-27 not to publish a
-  full sample report, so do not link one.
+  `/2027` shows no report screenshots since the 2026-09-30 rebuild; Jeff decided 2026-09-27 not to publish a
+  full sample report, so do not link one. The page makes no email promises (no check-in emails, no
+  follow-up question; rulings D9 and D10) until Part 4 ships.
 - Homepage `#calendar` section sells the Outlook plus the sample month. The old no-card free-month
   lead form is retired; its Apps Script and "Power Calendar Leads" Sheet are no longer used by the site.
 - Billing on the 15th: `/api/stripe-webhook` (see `BILLING_ANCHOR_SETUP.md`), live. Vercel env
@@ -56,8 +58,9 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | File | Purpose |
 |------|---------|
 | `index.html` | Homepage; CSS and JS inline |
-| `2027.html`, `2027-next.html`, `welcome.html`, `power-calendar.html` | Outlook sales page, the two intake pages, Power Calendar sample page |
-| `2027.css` / `2027.js` | Shared CSS and JS for the pages above |
+| `2027.html` | Outlook sales page, self-contained: Tailwind (compiled to `css/outlook-2027.css`), Alpine.js and GSAP from CDNs, all JS inline. After changing its classes, rebuild the CSS: `npx tailwindcss@3 -c scripts/tailwind/outlook-2027.config.js -i scripts/tailwind/outlook-2027.input.css -o css/outlook-2027.css --minify` |
+| `2027-next.html`, `welcome.html`, `power-calendar.html` | The two intake pages, Power Calendar sample page |
+| `2027.css` / `2027.js` | Shared CSS and JS for the three pages above (no longer used by `2027.html`) |
 | `api/stripe-webhook.mjs`, `lib/billing-anchor.mjs`, `lib/signup-alert.mjs`, `tests/` | 15th-billing webhook and new-subscriber alert; `node --test tests/*.test.mjs` |
 | `lib/encharge.mjs`, `scripts/report-delivered.mjs`, `ops/olares/` | CRM: Stripe and intake events to Encharge, delivery trigger, Olares intake watcher. Spec and switch-on: `docs/crm/ENCHARGE_CRM.md` |
 | `.vercelignore` | Keeps `tests/`, `docs/`, `scripts/`, `ops/` and `*.md` off the public site |
@@ -74,6 +77,10 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-09-30: `/2027` rebuilt (dark editorial): hero with the Contact & Clash wheel, the When-To Index
+  (a month path generated from the 2027 month pillars per goal, tuned by the visitor's animal), order card,
+  Power Calendar line, 5-question FAQ, mobile order bar. Transparent seal layers `img/seal-mark.png`,
+  `seal-ring.png`, `seal-monogram.png` (from `JS_Ceremonial_Seal_Final.png`). Old page is in git history.
 - 2026-09-29: October design refresh live (PR #6): Luopan hero, autoplaying Favorable Days / Bagua
   prism / 10-stem panels, Bagua unfolding in `#calendar`, hourglass that becomes Hexagram 49 in
   Philosophy, FAQ Wu Xing trace, lighter Luopan on `/2027`. All inline in `index.html` (hourglass

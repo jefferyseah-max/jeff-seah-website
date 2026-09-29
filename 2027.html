@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="preload">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>2027 Annual Outlook, calculated from your full birth chart | Jeff Seah</title>
   <meta name="description" content="A personal 2027 outlook for the Fire Goat year, calculated from your four pillars and written for you alone. Twelve months mapped, four movements, five moves, five traps, and a When To decision index. USD 88 until 31 December 2026." />
   <link rel="canonical" href="https://www.jeffseah.rocks/2027" />
@@ -22,11 +22,17 @@
   <meta name="twitter:description" content="Calculated from your full birth chart, then read and written for you alone. USD 88 until 31 December 2026, USD 138 from 1 January 2027." />
   <meta name="twitter:image" content="https://www.jeffseah.rocks/img/2027/og-2027.jpg" />
 
+  <script>
+    // Animated elements start hidden only when motion is allowed. Failsafe: show everything after 2.5 s if GSAP never runs.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.remove('preload');
+    else setTimeout(() => document.documentElement.classList.remove('preload'), 2500);
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400&family=Noto+Serif+TC:wght@400&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="/img/2027/hero-ding-wei-2027-640.webp" media="(max-width: 859px)" />
-  <link rel="stylesheet" href="/2027.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;700;800&family=Space+Mono&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/css/outlook-2027.css" />
 
   <script type="application/ld+json">
   {
@@ -46,379 +52,1460 @@
     }
   }
   </script>
-</head>
-<body class="has-sticky-cta">
-  <a href="#main" class="skip-link">Skip to content</a>
-  <div class="hexagram-bg" aria-hidden="true"></div>
-  <div class="aurora" aria-hidden="true"></div>
 
-  <nav id="nav" aria-label="Primary">
-    <a href="/" class="nav-logo" aria-label="Jeff Seah, home"><img src="/img/seal-128.png" alt="" width="38" height="38"></a>
-    <ul class="nav-links">
-      <li><a href="/2027" aria-current="page">2027 Outlook</a></li>
-      <li><a href="#inside">What's Inside</a></li>
-      <li><a href="#how">How It's Made</a></li>
-      <li><a href="/power-calendar">Power Calendar</a></li>
-      <li><a href="#faq">FAQ</a></li>
-    </ul>
-    <a href="#order" class="nav-cta">Get my 2027 Outlook</a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menu">
-      <svg class="icon-open" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <svg class="icon-close" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-    </button>
-  </nav>
-  <div class="nav-menu" id="navMenu">
-    <ul>
-      <li><a href="/2027">2027 Outlook</a></li>
-      <li><a href="#inside">What's inside</a></li>
-      <li><a href="#how">How it's made</a></li>
-      <li><a href="/power-calendar">Power Calendar</a></li>
-      <li><a href="/">Home</a></li>
-      <li><a href="#order" class="nav-menu-cta">Get my 2027 Outlook</a></li>
-    </ul>
-  </div>
+  <style>
+    :root {
+      --obsidian: #0B0C10;
+      --coal: #13151B;
+      --gold: #D4AF37;
+      --ember: #E06D53;
+      --ivory: #EDE6D6;
+      --ash: #8A8F98;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--obsidian); color: var(--ivory); }
+    [x-cloak] { display: none !important; }
+    .preload [data-anim] { opacity: 0; }
+    section[id], div[id] { scroll-margin-top: 5.5rem; }
+
+    /* Ambient layer: gold dawn top left, Ding Fire ember low right, film grain over both. */
+    .ambient {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(60rem 40rem at 8% -10%, rgba(212, 175, 55, 0.10), transparent 60%),
+        radial-gradient(50rem 36rem at 92% 70%, rgba(224, 109, 83, 0.12), transparent 62%),
+        radial-gradient(30rem 30rem at 70% 20%, rgba(224, 109, 83, 0.05), transparent 70%),
+        var(--obsidian);
+    }
+    .ambient::after {
+      content: ''; position: absolute; inset: 0; opacity: 0.06; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .hairline { border-color: rgba(237, 230, 214, 0.08); }
+    .gold-rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent); }
+
+    /* Tones for the readout: harmony gold, friction ember, open field ash. */
+    .tone-gold { --tone: var(--gold); }
+    .tone-ember { --tone: var(--ember); }
+    .tone-ash { --tone: var(--ash); }
+    /* When-To tags share the tone system. */
+    .tag-flow { --tone: var(--gold); }
+    .tag-steady { --tone: #BDB6A6; }
+    .tag-friction, .tag-trap { --tone: var(--ember); }
+    .tag-vault { --tone: #F3D98B; }
+    .wt-col { fill: transparent; cursor: pointer; outline: none; transition: fill 0.25s var(--ease); }
+    .wt-col:hover, .wt-col:focus-visible, .wt-col.is-active { fill: rgba(212, 175, 55, 0.06); }
+    .tone-text { color: var(--tone); }
+    .chip {
+      border: 1px solid color-mix(in srgb, var(--tone) 45%, transparent);
+      background: color-mix(in srgb, var(--tone) 10%, transparent);
+      color: var(--tone);
+    }
+    .tone-bar { background: var(--tone); box-shadow: 0 0 18px color-mix(in srgb, var(--tone) 60%, transparent); }
+
+    /* Primary CTA: molten gold with an ember undertone on hover. */
+    .btn-ember {
+      background: linear-gradient(135deg, #E9C766 0%, var(--gold) 45%, #C98E3A 100%);
+      color: var(--obsidian);
+      box-shadow: 0 10px 40px -12px rgba(212, 175, 55, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background-position 0.6s var(--ease);
+    }
+    .btn-ember:hover { transform: translateY(-2px); box-shadow: 0 16px 50px -12px rgba(224, 109, 83, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+    .btn-ember:focus-visible, .focus-ring:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+    /* Scarcity badge: live ember dot. */
+    .pulse-dot { position: relative; width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: var(--ember); }
+    .pulse-dot::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 9999px; border: 1px solid var(--ember);
+      animation: ping 2s var(--ease) infinite;
+    }
+    @keyframes ping { 0% { transform: scale(0.6); opacity: 0.9; } 100% { transform: scale(2.2); opacity: 0; } }
+
+    /* Nav seal. Layers stack in one square; only the ring (and its glint) turns. */
+    .seal { position: relative; display: inline-block; flex-shrink: 0; }
+    .seal > * { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .seal-ring, .seal-glint { transition: transform 1.1s cubic-bezier(0.45, 0, 0.2, 1); }
+    .seal-glint, .seal-sheen {
+      -webkit-mask: url(/img/seal-ring.png) center / 100% 100% no-repeat;
+      mask: url(/img/seal-ring.png) center / 100% 100% no-repeat;
+    }
+    /* A single warm glint on the ring, visible only while hovered, so the turn reads. */
+    .seal-glint {
+      background: conic-gradient(from 300deg, transparent 0deg, rgba(255, 240, 205, 0.95) 28deg, transparent 60deg);
+      opacity: 0; transition: transform 1.1s cubic-bezier(0.45, 0, 0.2, 1), opacity 0.5s ease;
+    }
+    /* Load sheen: masked to the whole seal, swept once, then gone. */
+    .seal-sheen {
+      -webkit-mask-image: url(/img/seal-mark.png); mask-image: url(/img/seal-mark.png);
+      background: linear-gradient(115deg, transparent 38%, rgba(255, 243, 212, 0.95) 50%, transparent 62%) 130% 0 / 300% 100% no-repeat;
+    }
+    .seal-sheen.is-sweeping { animation: seal-sheen 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 both; }
+    @keyframes seal-sheen { from { background-position: 130% 0; } to { background-position: -30% 0; } }
+    @media (hover: hover) and (pointer: fine) {
+      .seal-link:hover .seal-ring, .seal-link:hover .seal-glint { transform: rotate(180deg); }
+      .seal-link:hover .seal-glint { opacity: 1; }
+    }
+
+    /* Watermark Luopan, deep in the background. */
+    .watermark { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .watermark svg { aspect-ratio: 1; height: auto; opacity: 0.035; }
+
+    /* Contact wheel. */
+    .panel {
+      background: linear-gradient(180deg, rgba(19, 21, 27, 0.92), rgba(11, 12, 16, 0.92));
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      box-shadow: 0 40px 120px -40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(237, 230, 214, 0.04);
+    }
+    .wheel-spin { transform-origin: 50% 50%; animation: spin 180s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .node {
+      transition: background-color 0.35s var(--ease), border-color 0.35s var(--ease), color 0.35s var(--ease), transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+    }
+    .node:hover { transform: translate(-50%, -50%) scale(1.06); }
+    .node.is-selected { transform: translate(-50%, -50%) scale(1.12); }
+    .node.is-year::before {
+      content: ''; position: absolute; inset: -5px; border-radius: 9999px; border: 1px solid rgba(224, 109, 83, 0.55);
+      animation: ping 3s var(--ease) infinite;
+    }
+    .chords { filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.45)); }
+
+    /* Locked 12-month map shimmer. Deliberately uncoloured: it is a placeholder, not a reading. */
+    .locked-cell {
+      background: linear-gradient(110deg, rgba(237, 230, 214, 0.05) 30%, rgba(212, 175, 55, 0.18) 50%, rgba(237, 230, 214, 0.05) 70%);
+      background-size: 250% 100%;
+      animation: shimmer 2.8s linear infinite;
+    }
+    @keyframes shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .wheel-spin, .pulse-dot::after, .node.is-year::before, .locked-cell, .seal-sheen.is-sweeping { animation: none; }
+      .seal-ring, .seal-glint { transition: none; }
+      .seal-link:hover .seal-ring, .seal-link:hover .seal-glint { transform: none; }
+      .node, .btn-ember { transition: none; }
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+</head>
+
+<body class="font-sans font-light antialiased selection:bg-gold/30">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-obsidian">Skip to content</a>
+  <div class="ambient" aria-hidden="true"></div>
+  <!-- Watermark Luopan: ticks, 12 branches, Later Heaven trigrams (north at top), Taiji. Used at 3.5% opacity. -->
+  <svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false"><symbol id="bagua" viewBox="-500 -500 1000 1000"><circle r="492" fill="none" stroke="#D4AF37" stroke-width="1.2"/><circle r="470" fill="none" stroke="#D4AF37" stroke-width="0.6"/><line x1="0.0" y1="-452.0" x2="0.0" y2="-492.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="41.0" y1="-468.2" x2="42.9" y2="-490.1" stroke="#D4AF37" stroke-width="0.7"/><line x1="81.6" y1="-462.9" x2="85.4" y2="-484.5" stroke="#D4AF37" stroke-width="0.7"/><line x1="117.0" y1="-436.6" x2="127.3" y2="-475.2" stroke="#D4AF37" stroke-width="1.4"/><line x1="160.7" y1="-441.7" x2="168.3" y2="-462.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="198.6" y1="-426.0" x2="207.9" y2="-445.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="226.0" y1="-391.4" x2="246.0" y2="-426.1" stroke="#D4AF37" stroke-width="1.4"/><line x1="269.6" y1="-385.0" x2="282.2" y2="-403.0" stroke="#D4AF37" stroke-width="0.7"/><line x1="302.1" y1="-360.0" x2="316.3" y2="-376.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="319.6" y1="-319.6" x2="347.9" y2="-347.9" stroke="#D4AF37" stroke-width="1.4"/><line x1="360.0" y1="-302.1" x2="376.9" y2="-316.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="385.0" y1="-269.6" x2="403.0" y2="-282.2" stroke="#D4AF37" stroke-width="0.7"/><line x1="391.4" y1="-226.0" x2="426.1" y2="-246.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="426.0" y1="-198.6" x2="445.9" y2="-207.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="441.7" y1="-160.7" x2="462.3" y2="-168.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="436.6" y1="-117.0" x2="475.2" y2="-127.3" stroke="#D4AF37" stroke-width="1.4"/><line x1="462.9" y1="-81.6" x2="484.5" y2="-85.4" stroke="#D4AF37" stroke-width="0.7"/><line x1="468.2" y1="-41.0" x2="490.1" y2="-42.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="452.0" y1="-0.0" x2="492.0" y2="-0.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="468.2" y1="41.0" x2="490.1" y2="42.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="462.9" y1="81.6" x2="484.5" y2="85.4" stroke="#D4AF37" stroke-width="0.7"/><line x1="436.6" y1="117.0" x2="475.2" y2="127.3" stroke="#D4AF37" stroke-width="1.4"/><line x1="441.7" y1="160.7" x2="462.3" y2="168.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="426.0" y1="198.6" x2="445.9" y2="207.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="391.4" y1="226.0" x2="426.1" y2="246.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="385.0" y1="269.6" x2="403.0" y2="282.2" stroke="#D4AF37" stroke-width="0.7"/><line x1="360.0" y1="302.1" x2="376.9" y2="316.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="319.6" y1="319.6" x2="347.9" y2="347.9" stroke="#D4AF37" stroke-width="1.4"/><line x1="302.1" y1="360.0" x2="316.3" y2="376.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="269.6" y1="385.0" x2="282.2" y2="403.0" stroke="#D4AF37" stroke-width="0.7"/><line x1="226.0" y1="391.4" x2="246.0" y2="426.1" stroke="#D4AF37" stroke-width="1.4"/><line x1="198.6" y1="426.0" x2="207.9" y2="445.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="160.7" y1="441.7" x2="168.3" y2="462.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="117.0" y1="436.6" x2="127.3" y2="475.2" stroke="#D4AF37" stroke-width="1.4"/><line x1="81.6" y1="462.9" x2="85.4" y2="484.5" stroke="#D4AF37" stroke-width="0.7"/><line x1="41.0" y1="468.2" x2="42.9" y2="490.1" stroke="#D4AF37" stroke-width="0.7"/><line x1="0.0" y1="452.0" x2="0.0" y2="492.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="-41.0" y1="468.2" x2="-42.9" y2="490.1" stroke="#D4AF37" stroke-width="0.7"/><line x1="-81.6" y1="462.9" x2="-85.4" y2="484.5" stroke="#D4AF37" stroke-width="0.7"/><line x1="-117.0" y1="436.6" x2="-127.3" y2="475.2" stroke="#D4AF37" stroke-width="1.4"/><line x1="-160.7" y1="441.7" x2="-168.3" y2="462.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-198.6" y1="426.0" x2="-207.9" y2="445.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-226.0" y1="391.4" x2="-246.0" y2="426.1" stroke="#D4AF37" stroke-width="1.4"/><line x1="-269.6" y1="385.0" x2="-282.2" y2="403.0" stroke="#D4AF37" stroke-width="0.7"/><line x1="-302.1" y1="360.0" x2="-316.3" y2="376.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-319.6" y1="319.6" x2="-347.9" y2="347.9" stroke="#D4AF37" stroke-width="1.4"/><line x1="-360.0" y1="302.1" x2="-376.9" y2="316.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-385.0" y1="269.6" x2="-403.0" y2="282.2" stroke="#D4AF37" stroke-width="0.7"/><line x1="-391.4" y1="226.0" x2="-426.1" y2="246.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="-426.0" y1="198.6" x2="-445.9" y2="207.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-441.7" y1="160.7" x2="-462.3" y2="168.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-436.6" y1="117.0" x2="-475.2" y2="127.3" stroke="#D4AF37" stroke-width="1.4"/><line x1="-462.9" y1="81.6" x2="-484.5" y2="85.4" stroke="#D4AF37" stroke-width="0.7"/><line x1="-468.2" y1="41.0" x2="-490.1" y2="42.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-452.0" y1="0.0" x2="-492.0" y2="0.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="-468.2" y1="-41.0" x2="-490.1" y2="-42.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-462.9" y1="-81.6" x2="-484.5" y2="-85.4" stroke="#D4AF37" stroke-width="0.7"/><line x1="-436.6" y1="-117.0" x2="-475.2" y2="-127.3" stroke="#D4AF37" stroke-width="1.4"/><line x1="-441.7" y1="-160.7" x2="-462.3" y2="-168.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-426.0" y1="-198.6" x2="-445.9" y2="-207.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-391.4" y1="-226.0" x2="-426.1" y2="-246.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="-385.0" y1="-269.6" x2="-403.0" y2="-282.2" stroke="#D4AF37" stroke-width="0.7"/><line x1="-360.0" y1="-302.1" x2="-376.9" y2="-316.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-319.6" y1="-319.6" x2="-347.9" y2="-347.9" stroke="#D4AF37" stroke-width="1.4"/><line x1="-302.1" y1="-360.0" x2="-316.3" y2="-376.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-269.6" y1="-385.0" x2="-282.2" y2="-403.0" stroke="#D4AF37" stroke-width="0.7"/><line x1="-226.0" y1="-391.4" x2="-246.0" y2="-426.1" stroke="#D4AF37" stroke-width="1.4"/><line x1="-198.6" y1="-426.0" x2="-207.9" y2="-445.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-160.7" y1="-441.7" x2="-168.3" y2="-462.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-117.0" y1="-436.6" x2="-127.3" y2="-475.2" stroke="#D4AF37" stroke-width="1.4"/><line x1="-81.6" y1="-462.9" x2="-85.4" y2="-484.5" stroke="#D4AF37" stroke-width="0.7"/><line x1="-41.0" y1="-468.2" x2="-42.9" y2="-490.1" stroke="#D4AF37" stroke-width="0.7"/><circle r="452" fill="none" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(0)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">子</text><line x1="96.3" y1="-359.3" x2="117.0" y2="-436.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(30)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">丑</text><line x1="263.0" y1="-263.0" x2="319.6" y2="-319.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(60)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">寅</text><line x1="359.3" y1="-96.3" x2="436.6" y2="-117.0" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(90)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">卯</text><line x1="359.3" y1="96.3" x2="436.6" y2="117.0" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(120)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">辰</text><line x1="263.0" y1="263.0" x2="319.6" y2="319.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(150)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">巳</text><line x1="96.3" y1="359.3" x2="117.0" y2="436.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(180)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">午</text><line x1="-96.3" y1="359.3" x2="-117.0" y2="436.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(210)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">未</text><line x1="-263.0" y1="263.0" x2="-319.6" y2="319.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(240)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">申</text><line x1="-359.3" y1="96.3" x2="-436.6" y2="117.0" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(270)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">酉</text><line x1="-359.3" y1="-96.3" x2="-436.6" y2="-117.0" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(300)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">戌</text><line x1="-263.0" y1="-263.0" x2="-319.6" y2="-319.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(330)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">亥</text><line x1="-96.3" y1="-359.3" x2="-117.0" y2="-436.6" stroke="#D4AF37" stroke-width="0.6"/><circle r="372" fill="none" stroke="#D4AF37" stroke-width="0.8"/><g transform="rotate(0)" fill="#D4AF37"><rect x="-40" y="-299" width="34" height="10"/><rect x="6" y="-299" width="34" height="10"/><rect x="-40" y="-319" width="80" height="10"/><rect x="-40" y="-339" width="34" height="10"/><rect x="6" y="-339" width="34" height="10"/></g><g transform="rotate(45)" fill="#D4AF37"><rect x="-40" y="-299" width="34" height="10"/><rect x="6" y="-299" width="34" height="10"/><rect x="-40" y="-319" width="34" height="10"/><rect x="6" y="-319" width="34" height="10"/><rect x="-40" y="-339" width="80" height="10"/></g><g transform="rotate(90)" fill="#D4AF37"><rect x="-40" y="-299" width="80" height="10"/><rect x="-40" y="-319" width="34" height="10"/><rect x="6" y="-319" width="34" height="10"/><rect x="-40" y="-339" width="34" height="10"/><rect x="6" y="-339" width="34" height="10"/></g><g transform="rotate(135)" fill="#D4AF37"><rect x="-40" y="-299" width="34" height="10"/><rect x="6" y="-299" width="34" height="10"/><rect x="-40" y="-319" width="80" height="10"/><rect x="-40" y="-339" width="80" height="10"/></g><g transform="rotate(180)" fill="#D4AF37"><rect x="-40" y="-299" width="80" height="10"/><rect x="-40" y="-319" width="34" height="10"/><rect x="6" y="-319" width="34" height="10"/><rect x="-40" y="-339" width="80" height="10"/></g><g transform="rotate(225)" fill="#D4AF37"><rect x="-40" y="-299" width="34" height="10"/><rect x="6" y="-299" width="34" height="10"/><rect x="-40" y="-319" width="34" height="10"/><rect x="6" y="-319" width="34" height="10"/><rect x="-40" y="-339" width="34" height="10"/><rect x="6" y="-339" width="34" height="10"/></g><g transform="rotate(270)" fill="#D4AF37"><rect x="-40" y="-299" width="80" height="10"/><rect x="-40" y="-319" width="80" height="10"/><rect x="-40" y="-339" width="34" height="10"/><rect x="6" y="-339" width="34" height="10"/></g><g transform="rotate(315)" fill="#D4AF37"><rect x="-40" y="-299" width="80" height="10"/><rect x="-40" y="-319" width="80" height="10"/><rect x="-40" y="-339" width="80" height="10"/></g><circle r="262" fill="none" stroke="#D4AF37" stroke-width="0.6"/><circle r="250" fill="none" stroke="#D4AF37" stroke-width="1.4"/><circle r="120" fill="none" stroke="#D4AF37" stroke-width="1.4"/><path d="M0 -120 A120 120 0 0 1 0 120 A60.0 60.0 0 0 1 0 0 A60.0 60.0 0 0 0 0 -120Z" fill="#D4AF37"/><circle cy="-60.0" r="16" fill="#D4AF37"/><circle cy="60.0" r="16" fill="#0B0C10" stroke="#D4AF37" stroke-width="1.4"/></symbol></svg>
+
+  <!-- Nav -->
+  <header class="fixed inset-x-0 top-0 z-40 border-b hairline bg-obsidian/70 backdrop-blur-md" data-anim="nav">
+    <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-10" aria-label="Primary">
+      <a href="/" class="seal-link focus-ring flex items-center gap-3" aria-label="Jeff Seah, home">
+        <span class="seal h-8 w-8" aria-hidden="true">
+          <img class="seal-ring" src="/img/seal-ring.png" alt="" width="32" height="32" />
+          <span class="seal-glint"></span>
+          <img class="seal-mono" src="/img/seal-monogram.png" alt="" width="32" height="32" />
+          <span class="seal-sheen" data-sheen></span>
+        </span>
+        <span class="font-display text-lg font-semibold tracking-wide text-ivory">Jeff Seah</span>
+      </a>
+      <a href="#order" class="focus-ring rounded-full border border-gold/40 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold/10">
+        Get my Outlook
+      </a>
+    </nav>
+  </header>
 
   <main id="main">
+    <!-- Hero -->
+    <section class="relative mx-auto max-w-7xl px-4 pb-20 pt-28 sm:px-6 lg:px-10 lg:pb-28 lg:pt-36" data-hero>
+      <div class="watermark" aria-hidden="true">
+        <svg class="absolute left-[38%] top-[-5rem] w-[44rem] sm:w-[52rem] lg:left-[-33rem] lg:top-[-9rem] lg:w-[64rem]"><use href="#bagua" /></svg>
+      </div>
+      <div class="grid gap-14 lg:grid-cols-[1.02fr_1fr] lg:gap-16 xl:gap-24">
 
-  <!-- 2.2 Hero -->
-  <section class="hero-2027">
-    <div class="container">
-      <div class="hero-2027-grid">
-        <div class="hero-2027-copy hero-seq">
-          <div class="eyebrow" style="--i:0">2027 Annual Outlook. Ding Wei, the Fire Goat year</div>
-          <h1 class="hero-2027-title" style="--i:1">Same Goat year. <em>Not the same year.</em></h1>
-          <p class="hero-2027-sub" style="--i:2">Every forecast you will read about 2027 is written for one-twelfth of the world. This one is calculated from your full birth chart, then read and written for you alone: twelve months mapped, four movements, five moves, five traps, and a When To table for the decisions you already know are coming.</p>
-          <div class="hero-2027-cta-row" style="--i:3">
-            <a href="#order" class="btn-primary" data-stripe>Get my 2027 Outlook &middot; USD <span data-price>88</span></a>
-            <div class="hero-2027-micro">Private web page and PDF within 7 days. Simplified and Advanced editions included.</div>
+        <!-- Left: the promise -->
+        <div class="lg:sticky lg:top-32 lg:self-start">
+          <p class="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.22em] text-gold/80" data-anim="hero">
+            <span>2027 Annual Outlook</span>
+            <span class="text-ash/50">/</span>
+            <span class="font-han text-sm tracking-normal text-ember">丁未</span>
+            <span class="text-ash/50">/</span>
+            <span>The Fire Goat Year</span>
+          </p>
+
+          <h1 class="font-display text-[3.4rem] font-light leading-[0.92] tracking-[-0.02em] text-ivory sm:text-7xl xl:text-[5.6rem]">
+            <span class="block" data-anim="hero">Don't guess 2027.</span>
+            <span class="block italic text-gold" data-anim="hero">Time it.</span>
+          </h1>
+
+          <p class="mt-7 max-w-xl text-lg leading-relaxed text-ivory/75 sm:text-xl" data-anim="hero">
+            The 2027 Annual Outlook maps the Ding Wei Fire Goat year onto your full birth chart: which months to push, which to hold, and when the decisions you already know are coming should land.
+          </p>
+
+          <!-- Early bird scarcity badge. Hidden once the price steps up on 1 January 2027 SGT. -->
+          <div class="mt-9" data-anim="hero" x-data x-show="!$store.offer.after">
+            <div class="inline-flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl border border-ember/35 bg-ember/[0.07] px-4 py-3 sm:rounded-full sm:py-2.5">
+              <span class="flex items-center gap-2.5">
+                <span class="pulse-dot" aria-hidden="true"></span>
+                <span class="text-sm font-bold text-ivory">USD 88 until Dec 31</span>
+              </span>
+              <span class="text-sm text-ivory/70">Saves $50 <span class="text-ash/60">·</span> Regular <s class="decoration-ember/70">USD 138</s></span>
+              <span class="rounded-full bg-ember/15 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-widest text-ember" x-cloak x-show="$store.offer.daysLeft > 0">
+                <span x-text="$store.offer.daysLeft"></span> days left
+              </span>
+            </div>
           </div>
-          <div class="hero-2027-date" style="--i:4">The Fire Goat year runs 4 February 2027 to 4 February 2028. Order by 15 January to have it before the year opens. <strong data-price-copy>USD 88 until 31 December 2026. USD 138 from 1 January 2027.</strong></div>
+
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center" data-anim="hero">
+            <a href="#order" class="btn-ember inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-[15px] font-extrabold tracking-wide" x-data>
+              Get my 2027 Outlook
+              <span class="opacity-40">·</span>
+              <span>USD <span x-text="$store.offer.price">88</span></span>
+            </a>
+            <a href="#teaser" class="focus-ring inline-flex items-center justify-center gap-2 px-2 py-2 text-sm font-bold text-ivory/70 transition hover:text-gold lg:hidden">
+              Or try the free 2027 check
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2v10m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+
+          <dl class="mt-12 grid max-w-xl grid-cols-[1fr_1.4fr_1fr] gap-4 border-t hairline pt-6" data-anim="hero">
+            <div>
+              <dt class="font-mono text-[10px] uppercase tracking-[0.2em] text-ash">Mapped</dt>
+              <dd class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.6rem]">12 months</dd>
+            </div>
+            <div>
+              <dt class="font-mono text-[10px] uppercase tracking-[0.2em] text-ash">Named</dt>
+              <dd class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.6rem]">5 moves, 5 traps</dd>
+            </div>
+            <div>
+              <dt class="font-mono text-[10px] uppercase tracking-[0.2em] text-ash">Delivery</dt>
+              <dd class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.6rem]">7 days</dd>
+            </div>
+          </dl>
+          <p class="mt-5 max-w-xl text-sm text-ash" data-anim="hero">
+            The Fire Goat year opens on 4 February 2027. Order by 15 January to have your map in hand before it does.
+          </p>
         </div>
-        <div class="hero-art-wrap">
-          <!-- Hairline Luopan behind the cover art. Decorative, generated markup, Later Heaven trigrams, north at top. -->
-          <div class="hero-luopan" aria-hidden="true">
-            <svg class="luopan-lite" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <g class="ll-draw" fill="none" stroke="rgba(201,148,58,0.6)"><circle cx="250" cy="250" r="244" stroke-width="1" pathLength="1" style="--i:0"/><circle cx="250" cy="250" r="216" stroke-width="0.5" pathLength="1" style="--i:1"/><circle cx="250" cy="250" r="196" stroke-width="0.7" pathLength="1" style="--i:2"/><circle cx="250" cy="250" r="150" stroke-width="0.6" pathLength="1" style="--i:3"/><circle cx="250" cy="250" r="112" stroke-width="0.5" pathLength="1" style="--i:4"/></g>
-            <g class="ll-ring ll-ring--outer"><line x1="250" y1="24" x2="250" y2="14" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="270.05" y1="20.88" x2="270.57" y2="14.9" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="289.94" y1="23.49" x2="290.98" y2="17.59" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="308.49" y1="31.7" x2="311.08" y2="22.04" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="328.66" y1="33.87" x2="330.72" y2="28.23" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="347.2" y1="41.55" x2="349.74" y2="36.11" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="363" y1="54.28" x2="368" y2="45.62" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="381.92" y1="61.6" x2="385.36" y2="56.68" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="397.84" y1="73.81" x2="401.7" y2="69.21" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="409.81" y1="90.19" x2="416.88" y2="83.12" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="426.19" y1="102.16" x2="430.79" y2="98.3" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="438.4" y1="118.08" x2="443.32" y2="114.64" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="445.72" y1="137" x2="454.38" y2="132" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="458.45" y1="152.8" x2="463.89" y2="150.26" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="466.13" y1="171.34" x2="471.77" y2="169.28" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="468.3" y1="191.51" x2="477.96" y2="188.92" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="476.51" y1="210.06" x2="482.41" y2="209.02" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="479.12" y1="229.95" x2="485.1" y2="229.43" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="476" y1="250" x2="486" y2="250" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="479.12" y1="270.05" x2="485.1" y2="270.57" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="476.51" y1="289.94" x2="482.41" y2="290.98" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="468.3" y1="308.49" x2="477.96" y2="311.08" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="466.13" y1="328.66" x2="471.77" y2="330.72" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="458.45" y1="347.2" x2="463.89" y2="349.74" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="445.72" y1="363" x2="454.38" y2="368" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="438.4" y1="381.92" x2="443.32" y2="385.36" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="426.19" y1="397.84" x2="430.79" y2="401.7" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="409.81" y1="409.81" x2="416.88" y2="416.88" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="397.84" y1="426.19" x2="401.7" y2="430.79" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="381.92" y1="438.4" x2="385.36" y2="443.32" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="363" y1="445.72" x2="368" y2="454.38" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="347.2" y1="458.45" x2="349.74" y2="463.89" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="328.66" y1="466.13" x2="330.72" y2="471.77" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="308.49" y1="468.3" x2="311.08" y2="477.96" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="289.94" y1="476.51" x2="290.98" y2="482.41" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="270.05" y1="479.12" x2="270.57" y2="485.1" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="250" y1="476" x2="250" y2="486" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="229.95" y1="479.12" x2="229.43" y2="485.1" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="210.06" y1="476.51" x2="209.02" y2="482.41" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="191.51" y1="468.3" x2="188.92" y2="477.96" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="171.34" y1="466.13" x2="169.28" y2="471.77" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="152.8" y1="458.45" x2="150.26" y2="463.89" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="137" y1="445.72" x2="132" y2="454.38" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="118.08" y1="438.4" x2="114.64" y2="443.32" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="102.16" y1="426.19" x2="98.3" y2="430.79" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="90.19" y1="409.81" x2="83.12" y2="416.88" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="73.81" y1="397.84" x2="69.21" y2="401.7" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="61.6" y1="381.92" x2="56.68" y2="385.36" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="54.28" y1="363" x2="45.62" y2="368" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="41.55" y1="347.2" x2="36.11" y2="349.74" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="33.87" y1="328.66" x2="28.23" y2="330.72" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="31.7" y1="308.49" x2="22.04" y2="311.08" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="23.49" y1="289.94" x2="17.59" y2="290.98" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="20.88" y1="270.05" x2="14.9" y2="270.57" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="24" y1="250" x2="14" y2="250" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="20.88" y1="229.95" x2="14.9" y2="229.43" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="23.49" y1="210.06" x2="17.59" y2="209.02" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="31.7" y1="191.51" x2="22.04" y2="188.92" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="33.87" y1="171.34" x2="28.23" y2="169.28" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="41.55" y1="152.8" x2="36.11" y2="150.26" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="54.28" y1="137" x2="45.62" y2="132" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="61.6" y1="118.08" x2="56.68" y2="114.64" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="73.81" y1="102.16" x2="69.21" y2="98.3" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="90.19" y1="90.19" x2="83.12" y2="83.12" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="102.16" y1="73.81" x2="98.3" y2="69.21" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="118.08" y1="61.6" x2="114.64" y2="56.68" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="137" y1="54.28" x2="132" y2="45.62" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="152.8" y1="41.55" x2="150.26" y2="36.11" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="171.34" y1="33.87" x2="169.28" y2="28.23" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="191.51" y1="31.7" x2="188.92" y2="22.04" stroke="rgba(201,148,58,0.55)" stroke-width="0.6"/><line x1="210.06" y1="23.49" x2="209.02" y2="17.59" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/><line x1="229.95" y1="20.88" x2="229.43" y2="14.9" stroke="rgba(201,148,58,0.22)" stroke-width="0.6"/></g>
-            <g class="ll-ring ll-ring--trigrams" fill="rgba(201,148,58,0.8)"><g transform="rotate(0 250 250)"><rect x="240" y="80.4" width="8.35" height="2.8"/><rect x="251.65" y="80.4" width="8.35" height="2.8"/><rect x="240" y="74.6" width="20" height="2.8"/><rect x="240" y="68.8" width="8.35" height="2.8"/><rect x="251.65" y="68.8" width="8.35" height="2.8"/></g><g transform="rotate(45 250 250)"><rect x="240" y="80.4" width="8.35" height="2.8"/><rect x="251.65" y="80.4" width="8.35" height="2.8"/><rect x="240" y="74.6" width="8.35" height="2.8"/><rect x="251.65" y="74.6" width="8.35" height="2.8"/><rect x="240" y="68.8" width="20" height="2.8"/></g><g transform="rotate(90 250 250)"><rect x="240" y="80.4" width="20" height="2.8"/><rect x="240" y="74.6" width="8.35" height="2.8"/><rect x="251.65" y="74.6" width="8.35" height="2.8"/><rect x="240" y="68.8" width="8.35" height="2.8"/><rect x="251.65" y="68.8" width="8.35" height="2.8"/></g><g transform="rotate(135 250 250)"><rect x="240" y="80.4" width="8.35" height="2.8"/><rect x="251.65" y="80.4" width="8.35" height="2.8"/><rect x="240" y="74.6" width="20" height="2.8"/><rect x="240" y="68.8" width="20" height="2.8"/></g><g transform="rotate(180 250 250)"><rect x="240" y="80.4" width="20" height="2.8"/><rect x="240" y="74.6" width="8.35" height="2.8"/><rect x="251.65" y="74.6" width="8.35" height="2.8"/><rect x="240" y="68.8" width="20" height="2.8"/></g><g transform="rotate(225 250 250)"><rect x="240" y="80.4" width="8.35" height="2.8"/><rect x="251.65" y="80.4" width="8.35" height="2.8"/><rect x="240" y="74.6" width="8.35" height="2.8"/><rect x="251.65" y="74.6" width="8.35" height="2.8"/><rect x="240" y="68.8" width="8.35" height="2.8"/><rect x="251.65" y="68.8" width="8.35" height="2.8"/></g><g transform="rotate(270 250 250)"><rect x="240" y="80.4" width="20" height="2.8"/><rect x="240" y="74.6" width="20" height="2.8"/><rect x="240" y="68.8" width="8.35" height="2.8"/><rect x="251.65" y="68.8" width="8.35" height="2.8"/></g><g transform="rotate(315 250 250)"><rect x="240" y="80.4" width="20" height="2.8"/><rect x="240" y="74.6" width="20" height="2.8"/><rect x="240" y="68.8" width="20" height="2.8"/></g></g>
-            <g class="ll-ring ll-ring--branches"><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(0 250 250)">子</text><line x1="279.51" y1="139.88" x2="288.31" y2="107.04" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(30 250 250)">丑</text><line x1="330.61" y1="169.39" x2="354.65" y2="145.35" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(60 250 250)">寅</text><line x1="360.12" y1="220.49" x2="392.96" y2="211.69" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(90 250 250)">卯</text><line x1="360.12" y1="279.51" x2="392.96" y2="288.31" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(120 250 250)">辰</text><line x1="330.61" y1="330.61" x2="354.65" y2="354.65" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(150 250 250)">巳</text><line x1="279.51" y1="360.12" x2="288.31" y2="392.96" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(180 250 250)">午</text><line x1="220.49" y1="360.12" x2="211.69" y2="392.96" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(210 250 250)">未</text><line x1="169.39" y1="330.61" x2="145.35" y2="354.65" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(240 250 250)">申</text><line x1="139.88" y1="279.51" x2="107.04" y2="288.31" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(270 250 250)">酉</text><line x1="139.88" y1="220.49" x2="107.04" y2="211.69" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(300 250 250)">戌</text><line x1="169.39" y1="169.39" x2="145.35" y2="145.35" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/><text x="250" y="118" text-anchor="middle" dominant-baseline="central" font-size="13" fill="rgba(201,148,58,0.7)" transform="rotate(330 250 250)">亥</text><line x1="220.49" y1="139.88" x2="211.69" y2="107.04" stroke="rgba(201,148,58,0.18)" stroke-width="0.5"/></g>
-            <g class="ll-core" fill="none" stroke="rgba(201,148,58,0.5)" stroke-width="0.8"><circle cx="250" cy="250" r="30"/><path d="M 250 220 A 30 30 0 0 1 250 280 A 15 15 0 0 1 250 250 A 15 15 0 0 0 250 220 Z" fill="rgba(201,148,58,0.2)" stroke="none"/><circle cx="250" cy="235" r="4" fill="rgba(201,148,58,0.5)" stroke="none"/><circle cx="250" cy="265" r="4" fill="#05070f"/></g>
+
+        <!-- Right: the 2027 Contact & Clash check -->
+        <div id="teaser" x-data="contactClash" class="panel relative rounded-[28px] p-5 sm:p-8" data-anim="panel">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Free · 30 seconds</p>
+              <h2 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory sm:text-[2.1rem]">The 2027 Contact &amp; Clash check</h2>
+            </div>
+            <button type="button" class="focus-ring mt-1 shrink-0 rounded-full border hairline px-3 py-1.5 text-[11px] font-bold uppercase tracking-widest text-ash transition hover:text-ivory"
+                    x-cloak x-show="animal !== null || season !== null" @click="reset()">Reset</button>
+          </div>
+
+          <!-- Step 1: animal -->
+          <p class="mt-7 flex items-center gap-3 text-sm font-bold text-ivory/90">
+            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[11px] text-gold">1</span>
+            Tap your birth animal
+          </p>
+
+          <div class="relative mx-auto mt-5 aspect-square w-full max-w-[400px]" role="group" aria-label="Birth animal">
+            <!-- Decorative Luopan rings: 72 fine ticks, 12 major, slow drift. -->
+            <svg class="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
+              <g class="wheel-spin" fill="none">
+                <circle cx="50" cy="50" r="49" stroke="rgba(212,175,55,0.35)" stroke-width="1.4" pathLength="360" stroke-dasharray="0.35 4.65" />
+                <circle cx="50" cy="50" r="49" stroke="rgba(212,175,55,0.7)" stroke-width="2.6" pathLength="360" stroke-dasharray="0.6 29.4" />
+              </g>
+              <circle cx="50" cy="50" r="47.2" fill="none" stroke="rgba(212,175,55,0.18)" stroke-width="0.25" />
+              <circle cx="50" cy="50" r="31.5" fill="none" stroke="rgba(237,230,214,0.07)" stroke-width="0.25" />
             </svg>
+
+            <!-- Chords from your animal to the Goat, drawn on selection. -->
+            <svg class="chords pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
+              <g x-ref="chords"></g>
+            </svg>
+
+            <!-- Centre disc -->
+            <div class="absolute left-1/2 top-1/2 grid aspect-square w-[44%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-gold/15 bg-obsidian/85 text-center shadow-[0_0_60px_-10px_rgba(224,109,83,0.35)] backdrop-blur"
+                 :class="year ? 'tone-' + year.tone : ''">
+              <div x-ref="centre" class="px-2">
+                <template x-if="!year">
+                  <div>
+                    <p class="font-han text-3xl text-ember sm:text-4xl">丁未</p>
+                    <p class="mt-1 font-mono text-[9px] uppercase tracking-[0.2em] text-ash sm:text-[10px]">2027 · Fire Goat</p>
+                  </div>
+                </template>
+                <template x-if="year">
+                  <div>
+                    <p class="font-han text-xl tone-text sm:text-2xl" x-text="year.cn"></p>
+                    <p class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-xl" x-text="year.tag"></p>
+                  </div>
+                </template>
+              </div>
+            </div>
+
+            <!-- Twelve branches, Rat at the top, clockwise. -->
+            <template x-for="(a, i) in animals" :key="a.en">
+              <button type="button"
+                      class="node focus-ring absolute flex h-[15%] w-[15%] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full border leading-none"
+                      :class="nodeClass(i)"
+                      :style="`left:${pos(i).x}%;top:${pos(i).y}%`"
+                      :aria-pressed="(animal === i).toString()"
+                      :aria-label="a.en + (i === 7 ? ', the 2027 year animal' : '')"
+                      @click="pick(i)"
+                      data-node>
+                <span class="font-han text-base sm:text-lg" x-text="a.cn"></span>
+                <span class="mt-0.5 text-[9px] font-bold tracking-wide sm:text-[10px]" x-text="a.en"></span>
+              </button>
+            </template>
           </div>
-          <figure class="hero-art">
-            <picture>
-              <source media="(max-width: 859px)" srcset="/img/2027/hero-ding-wei-2027-640.webp" />
-              <img src="/img/2027/hero-ding-wei-2027.webp" alt="Brush-ink Fire Goat with the characters Ding Wei, the cover art of the 2027 Annual Outlook" width="1122" height="1402" fetchpriority="high" />
-            </picture>
-            <figcaption>Report cover art</figcaption>
-          </figure>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- 2.3 Why the animal alone tells you almost nothing -->
-  <section class="compare-section">
-    <div class="container">
-      <div class="compare-grid">
-        <div class="compare-copy reveal">
-          <div class="section-label">The animal is one pillar of four</div>
-          <h2>Why the animal alone tells you almost nothing</h2>
-          <p>Your birth chart has four pillars: year, month, day and hour. The Goat is one of them, and not the most important one. 2027 touches each pillar differently. It can warm one chart and drain another, open a vault in a third and unsettle the day pillar of a fourth. Two people born in the same year can have opposite years in 2027.</p>
-        </div>
-        <div class="compare-table-wrap reveal">
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th scope="col">A generic 2027 forecast</th>
-                <th scope="col" class="col-yours">Your 2027 Outlook</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Reads one animal, one of twelve</td><td class="col-yours">Reads four pillars, one of 518,400 possible charts</td></tr>
-              <tr><td>Same twelve months for everyone</td><td class="col-yours">Your twelve months, each with a pace and a theme</td></tr>
-              <tr><td>Tells you what the year is</td><td class="col-yours">Tells you what to do, and when</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2.4 What is inside -->
-  <section class="tiles-section" id="inside">
-    <div class="container">
-      <div class="tiles-header reveal">
-        <div class="section-label">What is inside</div>
-        <h2>Nine things you will actually use</h2>
-        <p>In the order a reader uses them. The screenshots are from a real outlook, with the client's name cropped out.</p>
-      </div>
-      <div class="tiles-grid">
-        <div class="tile reveal">
-          <div class="tile-frame"><img src="/img/2027/tile-01-annual-compass.webp" alt="Annual Compass section from a sample 2027 Outlook" width="716" height="875" loading="lazy" /></div>
-          <div class="tile-index">1 of 9</div>
-          <h3>Annual Compass</h3>
-          <p>Seven lines that hold the whole year: theme, opening, pressure, strategy, work and money, people, body.</p>
-        </div>
-        <div class="tile reveal">
-          <div class="tile-frame"><img src="/img/2027/tile-02-year-at-a-glance.webp" alt="Year at a Glance table from a sample 2027 Outlook" width="716" height="875" loading="lazy" /></div>
-          <div class="tile-index">2 of 9</div>
-          <h3>Year at a Glance</h3>
-          <p>Twelve months, each with a pace (Push, Build, Steady, Soft) and a theme.</p>
-        </div>
-        <div class="tile reveal">
-          <div class="tile-frame"><img src="/img/2027/tile-03-four-movements.webp" alt="First movement card from Your Year in Four Movements" width="716" height="875" loading="lazy" /></div>
-          <div class="tile-index">3 of 9</div>
-          <h3>Your Year in Four Movements</h3>
-          <p>The year as a story in four acts, each ending with one move.</p>
-        </div>
-        <div class="tile reveal">
-          <div class="tile-frame"><img src="/img/2027/tile-04-work-money.webp" alt="Work, Money and Decisions section from a sample 2027 Outlook" width="716" height="875" loading="lazy" /></div>
-          <div class="tile-index">4 of 9</div>
-          <h3>Work and Money. Relationships. Health.</h3>
-          <p>Work, Money and Decisions. Relationships and Support. Health, Energy and Recovery. The three areas people actually ask about, read from the same chart.</p>
-        </div>
-        <div class="tile reveal">
-          <div class="tile-frame"><img src="/img/2027/tile-05-directions.webp" alt="Your Directions This Year table from a sample outlook" width="724" height="885" loading="lazy" /></div>
-          <div class="tile-index">5 of 9</div>
-          <h3>Your Directions</h3>
-          <p>Three personal compass directions: for clarity, for support, for money. Sit with your back to them when it matters.</p>
-        </div>
-        <div class="tile reveal">
-          <div class="tile-frame"><img src="/img/2027/tile-06-playbook.webp" alt="Practical Playbook section from a sample 2027 Outlook" width="716" height="875" loading="lazy" /></div>
-          <div class="tile-index">6 of 9</div>
-          <h3>Practical Playbook</h3>
-          <p>Five moves and five traps. The list clients keep.</p>
-        </div>
-        <div class="tile reveal">
-          <div class="tile-frame"><img src="/img/2027/tile-07-when-to.webp" alt="When To decision index from a sample outlook" width="724" height="885" loading="lazy" /></div>
-          <div class="tile-index">7 of 9</div>
-          <h3>When To</h3>
-          <p>A decision index: launch, negotiate, ask, reprice, travel, rest, review money. Best window, also good, avoid.</p>
-        </div>
-        <div class="tile reveal">
-          <div class="tile-frame"><img src="/img/2027/tile-08-roadmap-month.webp" alt="One month card from the Twelve-Month Roadmap" width="716" height="724" loading="lazy" /></div>
-          <div class="tile-index">8 of 9</div>
-          <h3>Twelve-Month Roadmap</h3>
-          <p>Every month with a theme and three rows: Do, Avoid, Watch.</p>
-        </div>
-        <div class="tile reveal">
-          <div class="tile-frame"><img src="/img/2027/tile-09-checkins-next-chapter.webp" alt="Three Check-ins from a sample 2027 Outlook" width="724" height="885" loading="lazy" /></div>
-          <div class="tile-index">9 of 9</div>
-          <h3>Before the Year Opens. Three Check-ins. The Next Chapter.</h3>
-          <p>What to do before 4 February, three dated questions to come back to, and the exact date your current ten-year chapter turns.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2.5 Two editions, one price -->
-  <section class="editions-section">
-    <div class="container">
-      <div class="editions-grid">
-        <div class="editions-copy reveal">
-          <div class="section-label">Two editions, one price</div>
-          <h2>Start plain. Switch to the working when you want it.</h2>
-          <p>Simplified reads in plain English with no jargon: no Ten Gods, no stems, no percentages. Advanced shows the working: the annual Ten Gods strengths, the named contacts between 2027 and your chart, the stars riding the year, and a glossary. Both are on the same page, and two buttons switch between them. Start Simplified, switch to Advanced when you want to see why.</p>
-        </div>
-        <div class="editions-shot reveal">
-          <img src="/img/2027/tile-editions.webp" alt="The Simplified and Advanced edition buttons on the report page" width="700" height="346" loading="lazy" />
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2.7 How it is made -->
-  <section class="process-2027" id="how">
-    <div class="container">
-      <div class="reveal">
-        <div class="section-label">How it is made</div>
-        <h2>Three steps, no generic tables</h2>
-      </div>
-      <div class="process-2027-steps">
-        <div class="process-2027-step reveal">
-          <h3>You send your birth details</h3>
-          <p>Date, time and place of birth, two minutes, right after payment. An unknown birth time still works; the directions section takes a shorter form.</p>
-        </div>
-        <div class="process-2027-step reveal">
-          <h3>I calculate the chart</h3>
-          <p>Your four pillars, your current ten-year luck pillar, the year's Ten Gods profile, every contact between 2027 and your chart, and the twelve solar months, all from my own engine. No generic tables.</p>
-        </div>
-        <div class="process-2027-step reveal">
-          <h3>I read it and write your year</h3>
-          <p>The engine reports what is active. I decide what it means for you and write it in plain language. I use AI to improve the sentence structure and phrasing so the report is easier to understand, and for the presentation of the report; the interpretation is my own work, not AI-generated output.</p>
-          <p>Delivered within 7 days as a private page with an unguessable link, plus a PDF.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2.8 Who it is for -->
-  <section class="who-section">
-    <div class="container">
-      <div class="reveal">
-        <div class="section-label">Who it is for</div>
-        <h2>Timing, not fortune-telling</h2>
-      </div>
-      <div class="who-grid">
-        <div class="who-card reveal">
-          <h3>For you if</h3>
-          <p>You have decisions in 2027: a launch, a move, a hire, a negotiation, a rest you keep postponing. You want timing, not fortune-telling. You will read for twenty minutes once and come back to the tables all year.</p>
-        </div>
-        <div class="who-card reveal">
-          <h3>Not for you if</h3>
-          <p>You are looking for winning numbers, medical, legal or financial advice, or a guarantee that events will happen.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 2.9 Order block -->
-  <section class="order-section" id="order">
-    <div class="container">
-      <div class="order-wrap">
-        <div class="section-label centered">Order</div>
-        <div class="pricing-card reveal">
-          <div class="pricing-tier">One-time</div>
-          <div class="pricing-name">2027 Annual Outlook</div>
-          <div class="pricing-amount"><span class="cur">USD</span><span data-price>88</span></div>
-          <div class="pricing-period">one-time, both editions included</div>
-          <div class="price-step" aria-label="Price step">
-            <div class="is-now"><strong>USD 88</strong>until 31 December 2026</div>
-            <div><strong>USD 138</strong>from 1 January 2027</div>
+          <!-- Birth year helper -->
+          <div class="mx-auto mt-5 flex max-w-[400px] flex-wrap items-center justify-center gap-x-3 gap-y-2 text-sm text-ash">
+            <label for="birthYear">Not sure? Enter your birth year</label>
+            <input id="birthYear" type="number" inputmode="numeric" min="1920" max="2026" placeholder="1988"
+                   class="focus-ring w-24 rounded-full border border-gold/25 bg-obsidian px-4 py-1.5 text-center font-mono text-sm text-ivory placeholder:text-ash/50 focus:border-gold"
+                   x-model="birthYear" @input="fromYear()" />
           </div>
-          <div class="pricing-divider"></div>
-          <ul class="pricing-features">
-            <li>Simplified and Advanced editions</li>
-            <li>Private web page and PDF</li>
-            <li>Your three personal directions</li>
-            <li>The twelve-month roadmap</li>
-            <li>The When To decision index</li>
-            <li>A sample month of your own Power Calendar, as a private web page</li>
-          </ul>
-          <a href="#order" class="pricing-btn" data-stripe>Get my 2027 Outlook</a>
-          <div class="order-note">
-            <p>Delivered within 7 days. Before Li Chun if ordered by 15 January.</p>
-            <p><strong>Buying for someone else?</strong> Enter their details on the next page, with their consent.</p>
+          <p class="mx-auto mt-2 max-w-[400px] text-center text-xs text-ash/70">Born 1 January to 3 February? Use the year before. The BaZi year turns at Li Chun, about 4 February.</p>
+
+          <!-- Step 2: season -->
+          <p class="mt-8 flex items-center gap-3 text-sm font-bold text-ivory/90">
+            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[11px] text-gold">2</span>
+            Pick your birth season
+          </p>
+          <div class="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-2" role="group" aria-label="Birth season">
+            <template x-for="s in seasons" :key="s.key">
+              <button type="button"
+                      class="focus-ring rounded-2xl border px-3 py-3 text-left transition duration-300"
+                      :class="season === s.key ? 'border-gold bg-gold/10' : 'hairline bg-white/[0.02] hover:border-gold/40'"
+                      :aria-pressed="(season === s.key).toString()"
+                      @click="pickSeason(s.key)">
+                <span class="flex items-baseline justify-between gap-2">
+                  <span class="text-sm font-bold" :class="season === s.key ? 'text-gold' : 'text-ivory'" x-text="s.label"></span>
+                  <span class="font-han text-xs text-ash" x-text="s.cn"></span>
+                </span>
+                <span class="mt-1 block font-mono text-[10px] uppercase tracking-wider text-ash" x-text="s.el"></span>
+                <span class="mt-0.5 block text-[11px] text-ash/80" x-text="s.dates"></span>
+              </button>
+            </template>
+          </div>
+
+          <!-- Readout -->
+          <div class="mt-8 space-y-4" aria-live="polite">
+            <p class="rounded-2xl border border-dashed hairline px-5 py-4 text-center text-sm text-ash" x-show="animal === null && season === null">
+              Your reading appears here. Tap your animal on the wheel to begin.
+            </p>
+
+            <!-- Year contact -->
+            <article x-ref="yearCard" x-cloak x-show="year" class="relative overflow-hidden rounded-2xl border hairline bg-white/[0.025] p-5 sm:p-6" :class="year ? 'tone-' + year.tone : ''">
+              <span class="tone-bar absolute left-0 top-5 h-10 w-[3px] rounded-r"></span>
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">Year contact · Social &amp; outer world</p>
+                <span class="chip rounded-full px-3 py-1 text-[11px] font-bold">
+                  <span x-text="year?.tag"></span> <span class="font-han font-normal" x-text="year?.cn"></span>
+                </span>
+              </div>
+              <h3 class="mt-3 font-display text-2xl font-semibold leading-snug text-ivory sm:text-[1.7rem]" x-text="year?.head"></h3>
+              <p class="mt-2 text-[15px] leading-relaxed text-ivory/70" x-text="year?.body"></p>
+              <p class="mt-3 text-[15px] leading-relaxed text-ivory/90"><span class="font-bold tone-text">The move: </span><span x-text="year?.move"></span></p>
+            </article>
+
+            <p class="rounded-2xl border border-dashed hairline px-5 py-4 text-center text-sm text-ash" x-cloak x-show="animal !== null && season === null">
+              Now pick your birth season to read the month contact.
+            </p>
+            <p class="rounded-2xl border border-dashed hairline px-5 py-4 text-center text-sm text-ash" x-cloak x-show="animal === null && season !== null">
+              Now tap your birth animal to read the year contact.
+            </p>
+
+            <!-- Month contact -->
+            <article x-ref="monthCard" x-cloak x-show="month" class="relative overflow-hidden rounded-2xl border hairline bg-white/[0.025] p-5 sm:p-6" :class="month ? 'tone-' + month.tone : ''">
+              <span class="tone-bar absolute left-0 top-5 h-10 w-[3px] rounded-r"></span>
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">Month contact · Career &amp; resources</p>
+                <span class="chip rounded-full px-3 py-1 text-[11px] font-bold">
+                  <span x-text="month?.label"></span> <span x-text="month?.el"></span> <span class="font-han font-normal" x-text="month?.cn"></span>
+                </span>
+              </div>
+              <h3 class="mt-3 font-display text-2xl font-semibold leading-snug text-ivory sm:text-[1.7rem]" x-text="month?.head"></h3>
+              <p class="mt-2 text-[15px] leading-relaxed text-ivory/70" x-text="month?.body"></p>
+              <div class="mt-4 grid gap-2.5 sm:grid-cols-2">
+                <div class="rounded-xl border hairline bg-obsidian/60 px-4 py-3">
+                  <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-gold">Career lever</p>
+                  <p class="mt-1 text-sm text-ivory/90" x-text="month?.lever"></p>
+                </div>
+                <div class="rounded-xl border hairline bg-obsidian/60 px-4 py-3">
+                  <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-ember">Resource watch</p>
+                  <p class="mt-1 text-sm text-ivory/90" x-text="month?.watch"></p>
+                </div>
+              </div>
+              <p class="mt-4 border-t hairline pt-3 text-sm leading-relaxed text-ash"><span class="font-bold text-ivory/80">Your exact month sharpens it. </span><span x-text="month?.exact"></span></p>
+            </article>
+
+            <!-- The missing core -->
+            <article x-ref="coreCard" x-cloak x-show="complete" class="relative overflow-hidden rounded-2xl border border-gold/35 bg-gradient-to-br from-gold/[0.09] via-coal to-ember/[0.07] p-5 sm:p-6">
+              <div class="flex items-center gap-3">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-full border border-gold/50 bg-obsidian/70 text-gold" aria-hidden="true">
+                  <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2" stroke="currentColor" stroke-width="1.3"/></svg>
+                </span>
+                <div>
+                  <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">The missing core · Day Pillar</p>
+                  <p class="text-xs text-ash">Two of your eight characters read. Six to go.</p>
+                </div>
+              </div>
+              <p class="mt-4 font-display text-[1.45rem] leading-snug text-ivory sm:text-2xl">
+                <em>Your Day Pillar holds your personal core and relationship timing. See your exact 12-month map in the 2027 Outlook.</em>
+              </p>
+
+              <!-- Locked map: shimmer only, no invented scores. -->
+              <div class="mt-5 grid grid-cols-6 gap-1.5 sm:grid-cols-12" aria-hidden="true">
+                <template x-for="m in months" :key="m">
+                  <div class="text-center" data-month>
+                    <div class="locked-cell h-10 rounded-md"></div>
+                    <p class="mt-1 font-mono text-[9px] uppercase tracking-wider text-ash/80" x-text="m"></p>
+                  </div>
+                </template>
+              </div>
+              <p class="mt-2 text-[11px] text-ash/70">Feb 2027 to Jan 2028, month by month, calculated from your full chart.</p>
+
+              <a href="#order" class="btn-ember mt-5 flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-[15px] font-extrabold tracking-wide">
+                <span class="sm:hidden">Unlock my map</span><span class="hidden sm:inline">Unlock my 12-month map</span>
+                <span class="opacity-40">·</span>
+                <span>USD <span x-text="$store.offer.price">88</span></span>
+              </a>
+            </article>
+
+            <p class="text-center text-[11px] leading-relaxed text-ash/60" x-cloak x-show="animal !== null || season !== null">
+              Animal and season are two of the eight characters in a birth chart. The other six, including your Day Pillar, decide how these contacts actually land for you. Season dates follow the solar terms and shift by a day from year to year.
+            </p>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 2.10 After the outlook -->
-  <section class="after-section">
-    <div class="container">
-      <div class="after-inner reveal">
-        <div class="section-label">After the outlook</div>
-        <h2>The outlook gives you months. If you want days, that is the Power Calendar.</h2>
-        <p style="margin-top:1.25rem;">Hand-picked dates and hours inside your strongest windows, delivered every month straight into your own Google Calendar. Your outlook comes with a sample month of your own days as a private web page, so you can see how it works first. If you want the year walked with you, the higher plans add a monthly report and coaching.</p>
-        <ul class="ladder">
-          <li class="is-first">
-            <span class="ladder-name">Power Calendar</span>
-            <span class="ladder-what">Your month's dates and hours, in your Google Calendar. 30-day free trial.</span>
-            <span class="ladder-price">USD 97<small>per month</small></span>
-          </li>
-          <li>
-            <span class="ladder-name">Calendar and brief monthly report</span>
-            <span class="ladder-what">The calendar plus a short written read of the month for your chart.</span>
-            <span class="ladder-price">USD 197<small>per month</small></span>
-          </li>
-          <li>
-            <span class="ladder-name">Calendar and premium monthly report</span>
-            <span class="ladder-what">A private report folder, full monthly report in two versions, bonus articles and activation dates.</span>
-            <span class="ladder-price">USD 297<small>per month</small></span>
-          </li>
-          <li>
-            <span class="ladder-name">Premium report and coaching</span>
-            <span class="ladder-what">Everything above, monthly coaching, a Year in Review report, a luck pillar protocol and Tongshu app access.</span>
-            <span class="ladder-price">USD 497<small>per month</small></span>
-          </li>
-        </ul>
-        <div class="after-actions">
-          <a href="/power-calendar" class="btn-secondary">See a sample Power Calendar month</a>
+    <div class="gold-rule mx-auto max-w-5xl"></div>
+
+    <!-- The 2027 When-To Index: a path generated from the month pillars for the chosen decision. -->
+    <section id="when-to" class="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-10" x-data="whenTo">
+      <div class="watermark" aria-hidden="true">
+        <svg class="absolute right-[-20rem] top-[-4rem] w-[38rem] sm:w-[46rem] lg:right-[-18rem] lg:top-[-10rem] lg:w-[58rem]"><use href="#bagua" /></svg>
+      </div>
+      <div class="max-w-3xl">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">The 2027 When-To Index</p>
+        <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] tracking-[-0.01em] text-ivory sm:text-6xl">
+          Pick the decision. <em class="text-gold">Watch the year play it out.</em>
+        </h2>
+        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ivory/70">
+          Choose what you are planning for 2027. The path below is generated live from the twelve month pillars of the Fire Goat year: where the current carries you, where it drags, where the traps sit, and when a vault opens.
+        </p>
+      </div>
+
+      <!-- Goal chips -->
+      <div class="mt-9 flex flex-wrap gap-2.5" role="group" aria-label="What are you planning?">
+        <template x-for="g in goals" :key="g.key">
+          <button type="button"
+                  class="focus-ring inline-flex items-center gap-2.5 rounded-full border px-5 py-2.5 text-sm font-bold transition duration-300"
+                  :class="goal === g.key ? 'border-gold bg-gold text-obsidian shadow-[0_8px_30px_-10px_rgba(212,175,55,0.7)]' : 'hairline bg-white/[0.02] text-ivory/80 hover:border-gold/50 hover:text-gold'"
+                  :aria-pressed="(goal === g.key).toString()"
+                  @click="goal = g.key">
+            <span class="h-4 w-4" x-html="g.icon" aria-hidden="true"></span>
+            <span x-text="g.label"></span>
+          </button>
+        </template>
+      </div>
+      <p class="mt-4 text-sm text-ash">
+        <template x-if="animal !== null">
+          <span>Tuned to your <span class="font-bold text-ivory/90" x-text="animalName"></span>. <a href="#teaser" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">Change</a></span>
+        </template>
+        <template x-if="animal === null">
+          <span>Showing the year's climate. <a href="#teaser" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">Pick your animal above</a> to tune it.</span>
+        </template>
+      </p>
+
+      <div class="mt-8 grid gap-6 lg:grid-cols-[1.7fr_1fr]">
+        <!-- Stage -->
+        <div class="panel relative rounded-[28px] p-4 sm:p-6">
+          <div class="flex flex-wrap items-center justify-between gap-3 px-1">
+            <ul class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ash" aria-label="Legend">
+              <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-gold"></span>Flow</li>
+              <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-[#BDB6A6]/70"></span>Steady</li>
+              <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full border border-ember"></span>Friction</li>
+              <li class="flex items-center gap-1.5"><span class="text-ember">&times;</span>Trap</li>
+              <li class="flex items-center gap-1.5"><span class="h-2 w-2 rotate-45 border border-[#F3D98B]"></span>Vault</li>
+            </ul>
+            <div class="flex items-center gap-3">
+              <p class="font-mono text-[10px] uppercase tracking-[0.16em] text-gold/80" x-text="status" aria-live="polite"></p>
+              <button type="button" class="focus-ring rounded-full border hairline px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-ash transition hover:text-ivory"
+                      x-cloak x-show="phase !== 'idle'" @click="phase === 'done' ? run() : skip()" x-text="phase === 'done' ? 'Replay' : 'Skip'"></button>
+            </div>
+          </div>
+
+          <div x-ref="stage" class="relative mt-3">
+            <svg x-ref="svg" class="block h-auto w-full select-none" role="img" :aria-label="`2027 ${goalLabel} path, month by month`"></svg>
+          </div>
+
+          <!-- Month readout: follows the comet, then any month you tap. Sticks to the viewport bottom on small screens. -->
+          <div class="sticky bottom-[5.5rem] z-10 mt-4 lg:static" x-cloak x-show="current">
+            <div class="rounded-2xl border hairline bg-obsidian/90 p-4 backdrop-blur sm:p-5" :class="current ? 'tag-' + current.tag : ''">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <p class="flex items-baseline gap-3">
+                  <span class="font-display text-2xl font-semibold text-ivory" x-text="current ? current.label + ' ' + current.year : ''"></span>
+                  <span class="font-han text-lg tone-text" x-text="current?.pillar"></span>
+                  <span class="text-xs text-ash" x-text="current ? 'from about ' + current.starts : ''"></span>
+                </p>
+                <span class="chip rounded-full px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em]" x-text="current?.tag"></span>
+              </div>
+              <p class="mt-2 text-[15px] text-ivory/90" x-text="current?.line"></p>
+              <div class="mt-3 flex items-center gap-3">
+                <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-ember/35">
+                  <div class="h-full rounded-full bg-gold transition-[width] duration-500" :style="`width:${current ? current.flow : 50}%`"></div>
+                </div>
+                <p class="shrink-0 font-mono text-[10px] uppercase tracking-wider text-ash">
+                  Flow <span class="text-gold" x-text="current?.flow"></span> · Friction <span class="text-ember" x-text="current?.friction"></span>
+                </p>
+              </div>
+              <p class="mt-2 text-xs text-ash" x-text="current ? (current.reasons.join(' · ') || 'No major contact with the year') : ''"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dossier -->
+        <aside class="panel rounded-[28px] p-6 sm:p-7 lg:sticky lg:top-24 lg:self-start">
+          <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">Dossier · <span x-text="stamp"></span></p>
+          <h3 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory">Your 2027 <span class="italic text-gold" x-text="goalLabel"></span> path</h3>
+          <p class="mt-1 text-sm text-ash" x-text="animal !== null ? 'Tuned to your ' + animalName : 'The year’s climate, untuned'"></p>
+
+          <dl class="mt-6 grid grid-cols-4 gap-2 text-center">
+            <template x-for="t in ['flow', 'friction', 'trap', 'vault']" :key="t">
+              <div class="rounded-xl border hairline bg-obsidian/60 px-1 py-3" :class="'tag-' + t">
+                <dd class="font-display text-3xl font-semibold tone-text" x-text="tally[t]"></dd>
+                <dt class="mt-0.5 font-mono text-[9px] uppercase tracking-[0.16em] text-ash" x-text="t"></dt>
+              </div>
+            </template>
+          </dl>
+
+          <div class="mt-6 min-h-[13rem]">
+            <p class="text-sm text-ash" x-show="phase !== 'done'">Reading the year month by month&hellip;</p>
+            <dl class="space-y-4" x-cloak x-show="phase === 'done' && dossier" x-ref="dossierList">
+              <div class="border-l-2 border-gold pl-4">
+                <dt class="font-mono text-[10px] uppercase tracking-[0.2em] text-gold" x-text="'Best window to ' + (dossier?.verb || '')"></dt>
+                <dd class="mt-1 font-display text-2xl font-semibold text-ivory" x-text="dossier?.best"></dd>
+              </div>
+              <div class="border-l-2 border-ember pl-4">
+                <dt class="font-mono text-[10px] uppercase tracking-[0.2em] text-ember">Hold back in</dt>
+                <dd class="mt-1 font-display text-2xl font-semibold text-ivory" x-text="dossier?.hold"></dd>
+              </div>
+              <div class="border-l-2 border-[#F3D98B] pl-4">
+                <dt class="font-mono text-[10px] uppercase tracking-[0.2em] text-[#F3D98B]">Vault opens</dt>
+                <dd class="mt-1 text-[15px] text-ivory/90" x-text="dossier?.vaults"></dd>
+              </div>
+              <div class="border-l-2 border-ember/50 pl-4">
+                <dt class="font-mono text-[10px] uppercase tracking-[0.2em] text-ember/80">Traps</dt>
+                <dd class="mt-1 text-[15px] text-ivory/90" x-text="dossier?.traps"></dd>
+              </div>
+            </dl>
+          </div>
+
+          <a href="#order" class="btn-ember mt-6 flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-[15px] font-extrabold tracking-wide">
+            Time it on my Day Pillar <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
+          </a>
+        </aside>
+      </div>
+
+      <p class="mt-6 max-w-3xl text-xs leading-relaxed text-ash/70">
+        Indicative, not your reading. This path is generated from the twelve month pillars of 2027 against the year's Goat branch, plus your animal if you picked one above. Your Outlook runs the same months against your Day Pillar and luck cycle, which is where your real timing lives. Month start dates follow the solar terms and can shift by a day.
+      </p>
+    </section>
+
+    <div class="gold-rule mx-auto max-w-5xl"></div>
+
+    <!-- ============ STEP 3: offer, Power Calendar bridge, FAQ ============ -->
+
+    <!-- Offer -->
+    <section id="order" class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-10" x-data>
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Order</p>
+        <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] text-ivory sm:text-6xl">
+          Your 2027, <em class="text-gold">mapped before it opens.</em>
+        </h2>
+        <p class="mt-5 text-lg text-ivory/70">One report, calculated from your full birth chart, written for you alone. You read it once in twenty minutes and use the tables all year.</p>
+      </div>
+
+      <div class="relative mt-12 rounded-[32px] bg-gradient-to-br from-gold/60 via-gold/10 to-ember/50 p-px shadow-[0_50px_140px_-50px_rgba(212,175,55,0.45)]">
+        <div class="grid overflow-hidden rounded-[31px] bg-coal lg:grid-cols-[1.25fr_1fr]">
+
+          <!-- Value stack -->
+          <div class="p-7 sm:p-10">
+            <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-ash">One-time · both editions included</p>
+            <h3 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory sm:text-4xl">2027 Annual Outlook <span class="block text-xl font-light italic text-gold sm:text-2xl">Ding Wei, the Fire Goat year</span></h3>
+
+            <ul class="mt-8 space-y-5">
+              <template x-for="item in [
+                ['Simplified and Advanced editions', 'Plain English first. Tap the Advanced button to see the working: Ten Gods, contacts, stars and a glossary.'],
+                ['Twelve-month tactical roadmap', 'Every month paced Push, Build, Steady or Soft, each with Do, Avoid and Watch.'],
+                ['The When-To decision index', 'Best window, also good, and avoid for launching, negotiating, asking, repricing, travel, rest and money reviews.'],
+                ['Your personal power directions', 'Three compass directions: for clarity, for support, for money.'],
+                ['Three dated check-ins', 'Three questions in your report, each with a date to come back to, so it keeps working after you read it.'],
+              ]" :key="item[0]">
+                <li class="flex gap-4">
+                  <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-gold/50 bg-gold/10 text-gold" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.3 2.3 4.7-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                  <div>
+                    <p class="font-bold text-ivory" x-text="item[0]"></p>
+                    <p class="mt-0.5 text-[15px] leading-relaxed text-ivory/65" x-text="item[1]"></p>
+                  </div>
+                </li>
+              </template>
+            </ul>
+
+            <!-- Bonus -->
+            <div class="mt-7 flex gap-4 rounded-2xl border border-dashed border-gold/40 bg-gold/[0.05] p-4 sm:p-5">
+              <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold text-obsidian" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 .8l1.5 3.3 3.6.4-2.7 2.4.8 3.5L6 8.6 2.8 10.4l.8-3.5L.9 4.5l3.6-.4z"/></svg>
+              </span>
+              <div>
+                <p class="font-bold text-ivory"><span class="mr-2 font-mono text-[10px] uppercase tracking-[0.2em] text-gold">Bonus</span>A sample month of your own Power Calendar</p>
+                <p class="mt-0.5 text-[15px] leading-relaxed text-ivory/65">Your best days and hours for one month, calculated from your chart, as a private web page beside your report.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price and action -->
+          <div id="order-price" class="relative flex flex-col justify-center border-t hairline bg-gradient-to-b from-obsidian/40 to-obsidian/90 p-7 sm:p-10 lg:border-l lg:border-t-0">
+            <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(22rem_18rem_at_70%_20%,rgba(224,109,83,0.14),transparent_70%)]" aria-hidden="true"></div>
+            <div class="relative">
+              <div class="inline-flex flex-wrap items-center gap-x-3 gap-y-1 rounded-2xl border border-ember/40 bg-ember/10 px-4 py-2.5" x-show="!$store.offer.after">
+                <span class="pulse-dot" aria-hidden="true"></span>
+                <span class="text-sm font-bold text-ivory">Early Bird: USD 88</span>
+                <span class="text-xs text-ivory/70">Saves $50 · Regular USD 138 after Dec 31</span>
+              </div>
+
+              <div class="mt-7 flex items-end gap-4">
+                <p class="font-display text-8xl font-light leading-none text-ivory">
+                  <span class="align-top font-sans text-lg font-bold text-ash">USD</span><span x-text="$store.offer.price">88</span>
+                </p>
+                <p class="mb-2 text-sm text-ash" x-show="!$store.offer.after"><s class="decoration-ember/70">USD 138</s><br />from 1 January</p>
+              </div>
+              <p class="mt-2 text-sm text-ash">One payment. No subscription.</p>
+
+              <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
+                 class="btn-ember mt-8 flex w-full items-center justify-center gap-3 rounded-full px-6 py-5 text-base font-extrabold tracking-wide">
+                Get My 2027 Outlook <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
+              </a>
+              <p class="mt-3 text-center text-sm text-ivory/70">Delivered within 7 days as a private page + PDF.</p>
+
+              <ul class="mt-7 space-y-2.5 border-t hairline pt-6 text-sm text-ash">
+                <li class="flex gap-2.5"><span class="text-gold" aria-hidden="true">·</span>Order by 15 January to have it before Li Chun, 4 February 2027.</li>
+                <li class="flex gap-2.5"><span class="text-gold" aria-hidden="true">·</span>Birth details are asked for right after payment. Two minutes.</li>
+                <li class="flex gap-2.5"><span class="text-gold" aria-hidden="true">·</span>Buying for someone else? Enter their details on the next page, with their consent.</li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- 2.11 FAQ -->
-  <section class="faq-section" id="faq">
-    <div class="container">
-      <div class="faq-header reveal">
-        <div class="section-label">Questions</div>
-        <h2>Everything you need to decide</h2>
-        <p>Eight questions clients ask before ordering.</p>
-      </div>
-      <div class="faq-list reveal">
-        <div class="faq-card">
-          <button class="faq-q" type="button"><span class="faq-q-text">I do not know my birth time. Can I still order?</span><span class="faq-icon-wrap" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>Yes. The four-pillar reading uses the date; the hour adds the fourth pillar and the directions. Without it, the report says so and the directions section takes a shorter form. Your birth certificate is the best source; a two-hour window is enough.</p></div></div>
+      <!-- Power Calendar bridge: positioned as what comes after, never as a second price table. -->
+      <div class="mt-8 grid items-center gap-6 rounded-[28px] border hairline bg-white/[0.02] p-6 sm:grid-cols-[auto_1fr] sm:gap-8 sm:p-8">
+        <div class="grid w-[9.5rem] grid-cols-7 gap-1.5 justify-self-center" aria-hidden="true">
+          <template x-for="d in 35" :key="d">
+            <span class="aspect-square rounded-[3px]"
+                  :class="[4, 9, 17, 23, 30].includes(d) ? 'bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)]' : [12, 26].includes(d) ? 'bg-ember/60' : 'bg-ivory/10'"></span>
+          </template>
         </div>
-        <div class="faq-card">
-          <button class="faq-q" type="button"><span class="faq-q-text">What if I was born outside Singapore?</span><span class="faq-icon-wrap" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>Fine. Enter the city; the calculation uses the local time of birth.</p></div></div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" type="button"><span class="faq-q-text">How is this different from the Goat forecasts I see every January?</span><span class="faq-icon-wrap" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>Those read one animal for one-twelfth of everyone. This reads your four pillars, your current ten-year luck pillar and the exact contacts between 2027 and your chart. It can, and often does, disagree with the general forecast for your sign.</p></div></div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" type="button"><span class="faq-q-text">Is this written by AI?</span><span class="faq-icon-wrap" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>The interpretation is not. I calculate the chart in my own engine and I decide what it means for you; that layer is my own work, not AI-generated output. I do use AI to improve the sentence structure and phrasing so the report is easier to understand, and for the presentation of the report.</p></div></div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" type="button"><span class="faq-q-text">How private is my report?</span><span class="faq-icon-wrap" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>Your birth details are stored on my own machine, not on the web page. The page lives at an unguessable link that search engines are told not to index. Nothing about you is shared.</p></div></div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" type="button"><span class="faq-q-text">When should I order?</span><span class="faq-icon-wrap" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>The year opens on 4 February 2027, and the report includes three things to do before it. Order by 15 January to have it in hand before then. Ordering later still works; the year is twelve months long. The price is USD 88 until 31 December 2026 and USD 138 from 1 January 2027.</p></div></div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" type="button"><span class="faq-q-text">Can I order one for my partner or child?</span><span class="faq-icon-wrap" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>Yes, with their consent. Enter their details on the intake page and your email for delivery, or theirs.</p></div></div>
-        </div>
-        <div class="faq-card">
-          <button class="faq-q" type="button"><span class="faq-q-text">Does this cover the rest of 2026?</span><span class="faq-icon-wrap" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>No. The outlook covers 4 February 2027 to 4 February 2028. The weeks before belong to the Fire Horse year, which needs its own reading.</p></div></div>
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">The Power Calendar</p>
+          <p class="mt-2 font-display text-2xl leading-snug text-ivory sm:text-3xl">Months in your Outlook. <em class="text-gold">Exact days and hours in your Power Calendar.</em></p>
+          <p class="mt-2 text-[15px] leading-relaxed text-ivory/65">One month of your own days comes complimentary with your report, as a private web page, so you can see how day-level timing works before you ever need it.</p>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 2.12 Closing -->
-  <section class="closing-section">
-    <div class="container">
-      <div class="closing-inner reveal">
-        <h2>Your 2027 is already written in your chart. <em>Read it before the year starts.</em></h2>
-        <a href="#order" class="btn-primary" data-stripe>Get my 2027 Outlook &middot; USD <span data-price>88</span></a>
-        <p class="closing-micro" data-price-copy>USD 88 until 31 December 2026. USD 138 from 1 January 2027.</p>
+    <div class="gold-rule mx-auto max-w-5xl"></div>
+
+    <!-- FAQ: one open at a time. -->
+    <section id="faq" class="mx-auto max-w-3xl px-4 py-24 sm:px-6" x-data="{ open: 0 }">
+      <div class="text-center">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Questions</p>
+        <h2 class="mt-3 font-display text-4xl font-light text-ivory sm:text-5xl">Before you order</h2>
       </div>
-    </div>
-  </section>
 
+      <div class="mt-10 divide-y divide-white/[0.08] border-y hairline">
+        <template x-for="(f, i) in [
+          ['What if I don’t know my exact birth time?', 'You can still order. Your date of birth gives three of the four pillars, including your Day Pillar, which carries most of the reading. The hour adds the fourth pillar and sharpens your directions; without it, the report says so and the directions take a shorter form. A two-hour window from your birth certificate is enough.'],
+          ['How is this different from my zodiac horoscope?', 'A horoscope reads one animal for a twelfth of the world. This reads your four pillars, your current ten-year luck pillar and every contact between 2027 and your chart. It can, and often does, disagree with the general forecast for your sign.'],
+          ['Is this an AI-generated reading?', 'No. Your chart is calculated by my own engine, and what it means for you is my reading, decided chart by chart. AI helps with sentence structure and presentation so the report reads cleanly; the interpretation is mine.'],
+          ['When will I receive my report?', 'Within 7 days, as a private web page at an unguessable link, plus a PDF. The Fire Goat year opens on 4 February 2027, so order by 15 January to have it in hand before then.'],
+          ['Can I gift this to someone else?', 'Yes, with their consent. After payment, enter their birth details on the intake page and choose whether the report goes to your email or theirs.'],
+        ]" :key="i">
+          <div>
+            <h3>
+              <button type="button" class="focus-ring flex w-full items-center justify-between gap-6 py-6 text-left"
+                      :id="'faq-q-' + i" :aria-controls="'faq-a-' + i" :aria-expanded="(open === i).toString()"
+                      @click="open = open === i ? null : i">
+                <span class="font-display text-xl font-semibold text-ivory sm:text-2xl" x-text="f[0]"></span>
+                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full border transition duration-300"
+                      :class="open === i ? 'rotate-45 border-gold bg-gold/10 text-gold' : 'border-white/15 text-ash'" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+              </button>
+            </h3>
+            <div class="grid transition-[grid-template-rows] duration-500 ease-out" :class="open === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+                 :id="'faq-a-' + i" role="region" :aria-labelledby="'faq-q-' + i">
+              <div class="overflow-hidden">
+                <p class="pb-6 pr-10 text-[15px] leading-relaxed text-ivory/70" x-text="f[1]"></p>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <div class="mt-14 text-center" x-data>
+        <p class="font-display text-2xl italic text-ivory/90 sm:text-3xl">Your 2027 is already in your chart. Read it before the year opens.</p>
+        <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
+           class="btn-ember mt-7 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-[15px] font-extrabold tracking-wide">
+          Get My 2027 Outlook <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
+        </a>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand"><img src="/img/seal-128.png" alt="" width="32" height="32"><span>Strategic Timing Intelligence</span></div>
-        <ul class="footer-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/power-calendar">Power Calendar</a></li>
-          <li><a href="/book">Book a session</a></li>
-          <li><a href="mailto:coaching@jeffseah.rocks">Email Jeff</a></li>
+  <!-- Footer -->
+  <footer class="border-t hairline pb-28 pt-12 lg:pb-12">
+    <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 text-center sm:px-6 md:flex-row md:justify-between md:text-left lg:px-10">
+      <a href="/" class="focus-ring flex items-center gap-3" aria-label="Jeff Seah, home">
+        <img src="/img/seal-mark.png" alt="" width="36" height="36" class="h-9 w-9 opacity-90" />
+        <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-ash">Strategic Timing Intelligence</span>
+      </a>
+      <nav aria-label="Footer">
+        <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ash">
+          <li><a class="transition hover:text-gold" href="/">Home</a></li>
+          <li><a class="transition hover:text-gold" href="/#pricing">Power Calendar</a></li>
+          <li><a class="transition hover:text-gold" href="/book">Book a session</a></li>
         </ul>
-      </div>
-      <div class="footer-copy">&copy; 2026 Jeff Seah. All rights reserved.</div>
+      </nav>
     </div>
+    <p class="mx-auto mt-8 max-w-2xl px-4 text-center text-xs leading-relaxed text-ash/60">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
+    <p class="mt-3 text-center text-xs text-ash/60">&copy; 2026 Jeff Seah. All rights reserved.</p>
   </footer>
 
-  <div class="sticky-cta">
-    <a href="#order" data-stripe><span class="sticky-price">USD <span data-price>88</span></span><span>Get my 2027 Outlook</span></a>
+  <!-- Mobile order bar: appears once the hero CTA has scrolled away, hides while the price block is on screen. -->
+  <div class="fixed inset-x-0 bottom-0 z-50 lg:hidden" x-data="orderBar" x-cloak x-show="show"
+       x-transition:enter="transition duration-500 ease-out" x-transition:enter-start="translate-y-full opacity-0" x-transition:enter-end="translate-y-0 opacity-100"
+       x-transition:leave="transition duration-300 ease-in" x-transition:leave-start="translate-y-0 opacity-100" x-transition:leave-end="translate-y-full opacity-0">
+    <div class="border-t border-gold/25 bg-obsidian/90 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-lg">
+      <div class="mx-auto flex max-w-xl items-center justify-between gap-4">
+        <div class="min-w-0">
+          <p class="truncate text-sm font-bold text-ivory">2027 Outlook · USD <span x-text="$store.offer.price">88</span></p>
+          <p class="truncate text-xs text-ash" x-show="!$store.offer.after">Early bird until Dec 31 · <s>USD 138</s></p>
+        </div>
+        <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
+           class="btn-ember shrink-0 rounded-full px-6 py-3 text-sm font-extrabold tracking-wide">Order Now</a>
+      </div>
+    </div>
   </div>
 
-  <script src="/2027.js"></script>
+  <script>
+    // ---- Offer: same price step and Stripe links as 2027.js ----
+    // USD 88 until 31 Dec 2026, USD 138 from 00:00 SGT 1 Jan 2027.
+    const PRICE_STEP_AT = Date.UTC(2026, 11, 31, 16, 0, 0);
+    const LINK_88 = 'https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04';
+    const LINK_138 = 'https://buy.stripe.com/00w6oJ2Qv8Wy6A2eyBbwk09';
+    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---- The twelve branches, Rat first. Index 7 (Goat) is the 2027 year branch. ----
+    const ANIMALS = [
+      { en: 'Rat', cn: '子' }, { en: 'Ox', cn: '丑' }, { en: 'Tiger', cn: '寅' }, { en: 'Rabbit', cn: '卯' },
+      { en: 'Dragon', cn: '辰' }, { en: 'Snake', cn: '巳' }, { en: 'Horse', cn: '午' }, { en: 'Goat', cn: '未' },
+      { en: 'Monkey', cn: '申' }, { en: 'Rooster', cn: '酉' }, { en: 'Dog', cn: '戌' }, { en: 'Pig', cn: '亥' },
+    ];
+    const GOAT = 7;
+
+    // ---- Year contact: each branch against 未. links are the chords drawn on the wheel. ----
+    const YEAR = [
+      { tone: 'ember', tag: 'Six Harm', cn: '子未害', links: [[0, 7]],
+        head: 'Quiet friction, not open conflict.',
+        body: 'The Goat harms the Rat: favours that arrive with strings, allies who drift, small misreadings that compound over months.',
+        move: 'Put agreements in writing and check who benefits before you commit.' },
+      { tone: 'ember', tag: 'Direct Clash', cn: '丑未沖', links: [[1, 7]],
+        head: 'The ground you stand on moves.',
+        body: 'Ox and Goat sit directly opposite each other on the wheel. Role, home or routine is likely to shift in 2027. The shift is not the danger; resisting it is.',
+        move: 'Choose the change early, before it chooses you.' },
+      { tone: 'ash', tag: 'Open Field', cn: '寅 · 未', links: [[2, 7]], dashed: true,
+        head: 'No pact, no clash.',
+        body: 'Your animal makes no major contact with the Goat. Your Wood quietly feeds the year’s Fire: output and visibility rise, and so does the cost of sustaining them.',
+        move: 'Pace yourself. Your Day Pillar decides where the pressure actually lands.' },
+      { tone: 'gold', tag: 'Three Harmony', cn: '亥卯未', links: [[3, 7], [7, 11], [11, 3]],
+        head: 'You are inside the year’s alliance.',
+        body: 'Pig, Rabbit and Goat form the Wood frame. Introductions, collaborators and backing arrive with less effort than usual.',
+        move: 'Say yes to the right rooms, and be specific about what you want from them.' },
+      { tone: 'ash', tag: 'Open Field', cn: '辰 · 未', links: [[4, 7]], dashed: true,
+        head: 'Earth meets earth.',
+        body: 'Dragon and Goat are both storehouse branches, with no direct pact or clash. A steady year on the surface; its real direction is set deeper in your chart.',
+        move: 'Use the calm to build. Watch your Day Pillar for the turn.' },
+      { tone: 'gold', tag: 'Seasonal Alliance', cn: '巳午未', links: [[5, 6], [6, 7]],
+        head: 'You run with the summer Fire.',
+        body: 'Snake, Horse and Goat form the southern Fire quarter. Momentum, visibility and heat all build together.',
+        move: 'Launch while the heat is with you, and schedule recovery before you need it.' },
+      { tone: 'gold', tag: 'Six Harmony', cn: '午未合', links: [[6, 7]],
+        head: 'The year’s closest ally.',
+        body: 'Horse and Goat are the classic pair. Partnerships, contracts and support move toward you this year.',
+        move: 'The risk is committing too fast because it feels easy. Read the terms twice.' },
+      { tone: 'ember', tag: 'Tai Sui Year', cn: '本命年', links: [],
+        head: 'The year meets itself.',
+        body: '2027 is your Ben Ming Nian, the return of your own animal. It is an identity-level review: what you have outgrown becomes hard to ignore.',
+        move: 'Move deliberately. Big changes land better when they are chosen, not reacted to.' },
+      { tone: 'ash', tag: 'Open Field', cn: '申 · 未', links: [[8, 7]], dashed: true,
+        head: 'Support arrives indirectly.',
+        body: 'The Goat’s Earth feeds your Metal while the year’s Ding Fire tests it. Help is there, but you will have to ask for it.',
+        move: 'Name what you need, early and out loud.' },
+      { tone: 'ash', tag: 'Open Field', cn: '酉 · 未', links: [[9, 7]], dashed: true,
+        head: 'Standards rise.',
+        body: 'Ding Fire refines Metal. Expect sharper scrutiny and higher bars rather than open conflict.',
+        move: 'Let your work be inspected. Precision is rewarded this year.' },
+      { tone: 'ember', tag: 'Punishment & Break', cn: '戌未刑破', links: [[10, 7]],
+        head: 'Loyalty gets tested.',
+        body: 'Dog and Goat share the “ungrateful” punishment set: effort given and not returned, rules tightening, commitments that fray.',
+        move: 'Audit who and what you carry. Put limits on unpaid favours.' },
+      { tone: 'gold', tag: 'Three Harmony', cn: '亥卯未', links: [[11, 7], [7, 3], [3, 11]],
+        head: 'You are inside the year’s alliance.',
+        body: 'Pig, Rabbit and Goat form the Wood frame. Your network works harder for you, and good people are easier to reach.',
+        move: 'Widen the circle, then choose carefully who stays in it.' },
+    ];
+
+    // ---- Month contact: the season (month branch) against Ding Wei. ----
+    const SEASONS = [
+      { key: 'spring', label: 'Spring', el: 'Wood', cn: '寅卯辰', dates: '4 Feb to 5 May', tone: 'gold',
+        head: 'Your season feeds the year.',
+        body: 'Wood fuels Ding Fire, so 2027 draws on what you produce. Your work gets seen, and it gets spent.',
+        lever: 'Publish, pitch, ship.',
+        watch: 'Energy leaks when output never pauses.',
+        exact: 'Born in the Rabbit month (about 6 March to 4 April)? You sit inside the Goat’s Three Harmony, the strongest spring contact.' },
+      { key: 'summer', label: 'Summer', el: 'Fire', cn: '巳午未', dates: '6 May to 7 Aug', tone: 'gold',
+        head: 'The year amplifies your season.',
+        body: 'Fire meets Fire. Momentum, competition and visibility all rise at once, for you and for everyone chasing the same prize.',
+        lever: 'Lead from the front.',
+        watch: 'Peers compete for the same resources.',
+        exact: 'Born in the Horse month (about 6 June to 6 July)? Your month combines with the Goat directly. Born in the Goat month? The year repeats your month branch.' },
+      { key: 'autumn', label: 'Autumn', el: 'Metal', cn: '申酉戌', dates: '8 Aug to 6 Nov', tone: 'ember',
+        head: 'The year tests your season.',
+        body: 'Ding Fire refines Metal. Deadlines, authority and standards press in, and that pressure is where this year’s recognition comes from.',
+        lever: 'Take the formal role.',
+        watch: 'Overcommitment disguised as opportunity.',
+        exact: 'Born in the Dog month (about 8 October to 6 November)? Your month sits in the Goat’s punishment set, and career friction runs higher.' },
+      { key: 'winter', label: 'Winter', el: 'Water', cn: '亥子丑', dates: '7 Nov to 3 Feb', tone: 'ember',
+        head: 'Your season meets its opposite.',
+        body: 'Water and Fire trade blows. This is the sharpest contact the year makes with your career pillar: resources move, sometimes through disruption.',
+        lever: 'Negotiate from data, not mood.',
+        watch: 'Sudden shifts in role or income.',
+        exact: 'Pig month (from about 7 November) allies with the Goat, Rat month (December) is harmed by it, and Ox month (January) clashes it head on.' },
+    ];
+
+    const TONE_HEX = { gold: '#D4AF37', ember: '#E06D53', ash: '#8A8F98' };
+
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('reader', { animal: null });
+
+      Alpine.store('offer', {
+        after: Date.now() >= PRICE_STEP_AT,
+        get price() { return this.after ? 138 : 88; },
+        get link() { return this.after ? LINK_138 : LINK_88; },
+        get daysLeft() { return Math.max(0, Math.ceil((PRICE_STEP_AT - Date.now()) / 864e5)); },
+      });
+
+      Alpine.data('contactClash', () => ({
+        animals: ANIMALS,
+        seasons: SEASONS,
+        months: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+        animal: null,
+        season: null,
+        birthYear: '',
+
+        get year() { return this.animal === null ? null : YEAR[this.animal]; },
+        get month() { return SEASONS.find(s => s.key === this.season) || null; },
+        get complete() { return this.animal !== null && this.season !== null; },
+
+        init() {
+          this.$watch('animal', (v) => {
+            Alpine.store('reader').animal = v; // shared with the When-To Index
+            this.$nextTick(() => { this.drawChords(); this.enter(this.$refs.yearCard); this.enter(this.$refs.centre, 0.5); });
+          });
+          this.$watch('season', () => this.$nextTick(() => this.enter(this.$refs.monthCard)));
+          this.$watch('complete', (now) => { if (now) this.$nextTick(() => this.revealCore()); });
+        },
+
+        // Node centre on a circle of radius 40 (percent of the wheel), Rat at 12 o'clock, clockwise.
+        pos(i) {
+          const t = (i * 30 * Math.PI) / 180;
+          return { x: +(50 + 40 * Math.sin(t)).toFixed(3), y: +(50 - 40 * Math.cos(t)).toFixed(3) };
+        },
+
+        nodeClass(i) {
+          if (this.animal === i) return 'is-selected border-gold bg-gold text-obsidian shadow-[0_0_30px_-4px_rgba(212,175,55,0.8)] z-10';
+          const linked = this.year && this.year.links.some(l => l.includes(i));
+          if (i === GOAT) return 'is-year border-ember/70 bg-ember/10 text-ember';
+          if (linked) return 'border-gold/60 bg-gold/10 text-gold';
+          return 'border-white/10 bg-obsidian/80 text-ivory/80 hover:border-gold/60 hover:text-gold';
+        },
+
+        pick(i) { this.animal = i; this.birthYear = ''; },
+        pickSeason(k) { this.season = k; },
+        fromYear() {
+          const y = parseInt(this.birthYear, 10);
+          if (y >= 1900 && y <= 2100) this.animal = (((y - 4) % 12) + 12) % 12;
+        },
+        reset() { this.animal = null; this.season = null; this.birthYear = ''; },
+
+        drawChords() {
+          const g = this.$refs.chords;
+          g.innerHTML = '';
+          const y = this.year;
+          if (!y) return;
+          const ns = 'http://www.w3.org/2000/svg';
+          const colour = TONE_HEX[y.tone];
+          const shapes = [];
+
+          if (!y.links.length) {
+            // Own year: a ring closes around the Goat.
+            const p = this.pos(GOAT);
+            const c = document.createElementNS(ns, 'circle');
+            Object.entries({ cx: p.x, cy: p.y, r: 10, fill: 'none', stroke: colour, 'stroke-width': 0.6, pathLength: 1, 'stroke-dasharray': 1 })
+              .forEach(([k, v]) => c.setAttribute(k, v));
+            g.appendChild(c); shapes.push(c);
+          }
+
+          y.links.forEach(([a, b]) => {
+            const A = this.pos(a), B = this.pos(b);
+            const dx = B.x - A.x, dy = B.y - A.y, t = 8 / Math.hypot(dx, dy);
+            const path = document.createElementNS(ns, 'path');
+            const d = `M${A.x + dx * t} ${A.y + dy * t} L${B.x - dx * t} ${B.y - dy * t}`;
+            Object.entries({ d, fill: 'none', stroke: colour, 'stroke-width': y.dashed ? 0.4 : 0.6, 'stroke-linecap': 'round', pathLength: 1,
+              'stroke-dasharray': y.dashed ? '0.02 0.025' : 1 }).forEach(([k, v]) => path.setAttribute(k, v));
+            g.appendChild(path); shapes.push(path);
+          });
+
+          if (REDUCED || !window.gsap) return;
+          if (y.dashed) gsap.fromTo(shapes, { opacity: 0 }, { opacity: 0.9, duration: 0.8, ease: 'power2.out' });
+          else gsap.fromTo(shapes, { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.9, ease: 'power3.inOut', stagger: 0.12 });
+        },
+
+        enter(el, dur = 0.7) {
+          if (!el || REDUCED || !window.gsap) return;
+          gsap.fromTo(el, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: dur, ease: 'power3.out', clearProps: 'transform' });
+        },
+
+        revealCore() {
+          const card = this.$refs.coreCard;
+          if (!card || REDUCED || !window.gsap) return;
+          gsap.timeline()
+            .fromTo(card, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.15 })
+            .fromTo(card.querySelectorAll('[data-month]'), { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.04, ease: 'power2.out' }, '-=0.4');
+        },
+      }));
+    });
+
+    // ---- Seal sheen: one sweep after the page (fonts, images) has finished loading. ----
+    if (!REDUCED) {
+      const sweep = () => setTimeout(() => document.querySelector('[data-sheen]')?.classList.add('is-sweeping'), 900);
+      if (document.readyState === 'complete') sweep(); else window.addEventListener('load', sweep, { once: true });
+    }
+
+    // ---- Page-load choreography, once Alpine has rendered the wheel. ----
+    document.addEventListener('alpine:initialized', () => {
+      const root = document.documentElement;
+      if (REDUCED || !window.gsap) { root.classList.remove('preload'); return; }
+      const hero = gsap.utils.toArray('[data-anim="hero"]');
+      const nodes = gsap.utils.toArray('[data-node]');
+      gsap.set(['[data-anim]', ...nodes], { autoAlpha: 0 });
+      root.classList.remove('preload');
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .to('[data-anim="nav"]', { autoAlpha: 1, duration: 0.6 })
+        .fromTo(hero, { y: 28 }, { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.09 }, '-=0.3')
+        .fromTo('[data-anim="panel"]', { y: 40, scale: 0.98 }, { autoAlpha: 1, y: 0, scale: 1, duration: 1.1, clearProps: 'transform' }, 0.35)
+        .fromTo(nodes, { scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.045, ease: 'back.out(1.8)', clearProps: 'transform' }, 0.8);
+    });
+  </script>
+
+  <!-- When-To data model. Month pillars are the 2027 Ding Wei sequence (壬寅 to 癸丑).
+       Weights score each contact per goal; positive is flow, negative is friction. -->
+  <script type="application/json" id="whenToData">
+  {
+    "year": { "pillar": "丁未", "stem": "丁", "branch": 7 },
+    "animalFactor": 0.7,
+    "stemContacts": { "壬": "stemCombine", "癸": "stemClash" },
+    "months": [
+      { "label": "Feb", "year": 2027, "starts": "4 Feb", "pillar": "壬寅", "stem": "壬", "branch": 2,  "el": ["Water", "Wood"] },
+      { "label": "Mar", "year": 2027, "starts": "6 Mar", "pillar": "癸卯", "stem": "癸", "branch": 3,  "el": ["Water", "Wood"] },
+      { "label": "Apr", "year": 2027, "starts": "5 Apr", "pillar": "甲辰", "stem": "甲", "branch": 4,  "el": ["Wood", "Earth"] },
+      { "label": "May", "year": 2027, "starts": "6 May", "pillar": "乙巳", "stem": "乙", "branch": 5,  "el": ["Wood", "Fire"] },
+      { "label": "Jun", "year": 2027, "starts": "6 Jun", "pillar": "丙午", "stem": "丙", "branch": 6,  "el": ["Fire", "Fire"] },
+      { "label": "Jul", "year": 2027, "starts": "7 Jul", "pillar": "丁未", "stem": "丁", "branch": 7,  "el": ["Fire", "Earth"] },
+      { "label": "Aug", "year": 2027, "starts": "8 Aug", "pillar": "戊申", "stem": "戊", "branch": 8,  "el": ["Earth", "Metal"] },
+      { "label": "Sep", "year": 2027, "starts": "8 Sep", "pillar": "己酉", "stem": "己", "branch": 9,  "el": ["Earth", "Metal"] },
+      { "label": "Oct", "year": 2027, "starts": "8 Oct", "pillar": "庚戌", "stem": "庚", "branch": 10, "el": ["Metal", "Earth"] },
+      { "label": "Nov", "year": 2027, "starts": "7 Nov", "pillar": "辛亥", "stem": "辛", "branch": 11, "el": ["Metal", "Water"] },
+      { "label": "Dec", "year": 2027, "starts": "7 Dec", "pillar": "壬子", "stem": "壬", "branch": 0,  "el": ["Water", "Water"] },
+      { "label": "Jan", "year": 2028, "starts": "6 Jan", "pillar": "癸丑", "stem": "癸", "branch": 1,  "el": ["Water", "Earth"] }
+    ],
+    "goals": {
+      "launch": {
+        "label": "Launching", "verb": "launch",
+        "weights": { "harmony": 0.35, "sixHarmony": 0.3, "seasonal": 0.35, "echo": 0.1, "clash": -0.55, "harm": -0.35, "punish": -0.4, "stemCombine": 0.1, "stemClash": -0.3,
+                     "el": { "Fire": 0.25, "Wood": 0.2, "Earth": 0, "Metal": -0.1, "Water": -0.15 } },
+        "lines": {
+          "flow": "Go public. Visibility is cheap this month.",
+          "steady": "Build and test quietly. Announce later.",
+          "friction": "Soft-launch only. Expect resistance to anything new.",
+          "trap": "Do not sign the headline deal here. Terms turn on you.",
+          "vault": "Stored value surfaces. Collect it; do not spend it yet."
+        }
+      },
+      "career": {
+        "label": "Career Move", "verb": "move",
+        "weights": { "harmony": 0.2, "sixHarmony": 0.2, "seasonal": 0.15, "echo": 0.2, "clash": 0.25, "harm": -0.35, "punish": -0.45, "stemCombine": 0.1, "stemClash": -0.15,
+                     "el": { "Fire": 0.1, "Wood": 0.05, "Earth": 0.05, "Metal": 0.2, "Water": -0.05 } },
+        "lines": {
+          "flow": "Apply, ask, accept. Doors open with less pushing.",
+          "steady": "Sharpen the case. Network before you need it.",
+          "friction": "Movement is forced rather than chosen. Stay alert.",
+          "trap": "Office politics bite. Keep promises in writing.",
+          "vault": "A hidden option opens. Look sideways, not up."
+        }
+      },
+      "negotiation": {
+        "label": "Negotiation", "verb": "negotiate",
+        "weights": { "harmony": 0.3, "sixHarmony": 0.5, "seasonal": 0.1, "echo": -0.1, "clash": -0.6, "harm": -0.45, "punish": -0.35, "stemCombine": 0.35, "stemClash": -0.3,
+                     "el": { "Fire": -0.05, "Wood": 0, "Earth": 0.1, "Metal": 0.1, "Water": 0.05 } },
+        "lines": {
+          "flow": "Table the offer. Terms land and both sides sign.",
+          "steady": "Gather data. Do not anchor a number yet.",
+          "friction": "Positions harden. Delay the close if you can.",
+          "trap": "Read the fine print and the side promises twice.",
+          "vault": "Leverage you forgot you had comes back into play."
+        }
+      },
+      "rest": {
+        "label": "Rest & Reset", "verb": "rest",
+        "weights": { "harmony": 0.15, "sixHarmony": 0.2, "seasonal": -0.2, "echo": -0.25, "clash": -0.5, "harm": -0.3, "punish": -0.35, "stemCombine": 0.05, "stemClash": -0.2,
+                     "el": { "Fire": -0.3, "Wood": 0, "Earth": 0.15, "Metal": 0.1, "Water": 0.3 } },
+        "lines": {
+          "flow": "Recover deeply. Rest compounds this month.",
+          "steady": "Keep the routines. Protect your sleep.",
+          "friction": "Overload risk. Cut one commitment now.",
+          "trap": "Obligations arrive disguised as favours.",
+          "vault": "Old reserves refill. Stop, and store what returns."
+        }
+      }
+    }
+  }
+  </script>
+
+  <script>
+    // ---- When-To engine: data in, path out. Everything on the stage is generated from computePath(). ----
+    const WT = JSON.parse(document.getElementById('whenToData').textContent);
+    const BR = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const VAULTS = [1, 4, 7, 10];                    // 丑 辰 未 戌, the four storehouse branches
+    const PUNISH = [[2, 5, 8], [1, 10, 7], [0, 3]];  // 寅巳申, 丑戌未, 子卯
+    const REL_NAME = { echo: 'Echo', clash: 'Clash', sixHarmony: 'Six Harmony', harm: 'Harm', harmony: 'Three Harmony', seasonal: 'Seasonal alliance', punish: 'Punishment' };
+    const TAG_COLOUR = { flow: '#D4AF37', steady: 'rgba(189,182,166,0.75)', friction: '#E06D53', trap: '#E06D53', vault: '#F3D98B' };
+    const GOAL_ICON = {
+      launch: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13L13 3M6 3h7v7"/></svg>',
+      career: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><rect x="2" y="5" width="12" height="8" rx="1.5"/><path d="M6 5V3.5h4V5M2 9h12"/></svg>',
+      negotiation: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="8" r="4"/><circle cx="10" cy="8" r="4"/></svg>',
+      rest: '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M13 10.5A5.5 5.5 0 015.5 3a5.5 5.5 0 107.5 7.5z"/></svg>',
+    };
+
+    // Branch contacts between any two branches (a and b are 0 to 11, Rat first).
+    function relations(a, b) {
+      if (a === b) return ['echo'];
+      const r = [];
+      if ((a - b + 12) % 12 === 6) r.push('clash');
+      if ((a + b) % 12 === 1) r.push('sixHarmony');
+      if ((a + b) % 12 === 7) r.push('harm');
+      if (a % 4 === b % 4) r.push('harmony');
+      if (Math.floor(((a + 10) % 12) / 3) === Math.floor(((b + 10) % 12) / 3)) r.push('seasonal');
+      if (PUNISH.some(set => set.includes(a) && set.includes(b))) r.push('punish');
+      return r;
+    }
+
+    // Score every month for one goal. Returns the path the stage draws and the dossier reads.
+    function computePath(goalKey, animal) {
+      const g = WT.goals[goalKey];
+      const w = g.weights;
+      return WT.months.map((m, k) => {
+        let raw = (w.el[m.el[0]] + w.el[m.el[1]]) / 2;
+        let vault = false;
+        const reasons = [];
+        const seen = new Set();
+        const layer = (other, factor, suffix) => relations(m.branch, other).forEach(rel => {
+          raw += (w[rel] || 0) * factor;
+          seen.add(rel);
+          reasons.push(`${BR[m.branch]}${BR[other]} ${REL_NAME[rel]} ${suffix}`);
+          if (rel === 'clash' && VAULTS.includes(m.branch)) vault = true;
+        });
+        layer(WT.year.branch, 1, 'with the year');
+        if (animal !== null) layer(animal, WT.animalFactor, `with your ${ANIMALS[animal].en}`);
+        const sc = WT.stemContacts[m.stem];
+        if (sc) {
+          raw += w[sc];
+          reasons.push(sc === 'stemCombine' ? `${m.stem}${WT.year.stem} stems combine` : `${m.stem}${WT.year.stem} stems clash`);
+        }
+        const s = Math.tanh(raw * 1.3);
+        let tag = 'steady';
+        if (vault) tag = 'vault';
+        else if ((seen.has('harm') || seen.has('punish')) && s < 0.1) tag = 'trap';
+        else if (s <= -0.2) tag = 'friction';
+        else if (s >= 0.25) tag = 'flow';
+        const flow = Math.round(50 + 50 * s);
+        return { ...m, k, s, flow, friction: 100 - flow, tag, reasons, line: g.lines[tag] };
+      });
+    }
+
+    function buildDossier(path, goalKey) {
+      const name = m => m.label + (m.year === 2028 ? ' 2028' : '');
+      const list = t => path.filter(m => m.tag === t).map(name).join(', ');
+      // Best window: the strongest pair of adjacent months, neither of them a trap or a vault.
+      const clear = m => m.tag !== 'trap' && m.tag !== 'vault';
+      let best = -1;
+      for (let k = 0; k < path.length - 1; k++) {
+        if (!clear(path[k]) || !clear(path[k + 1])) continue;
+        if (best < 0 || path[k].s + path[k + 1].s > path[best].s + path[best + 1].s) best = k;
+      }
+      const calm = path.filter(m => m.tag !== 'vault');
+      const hold = calm.reduce((lo, m) => (m.s < lo.s ? m : lo), calm[0]);
+      return {
+        verb: WT.goals[goalKey].verb,
+        best: `${name(path[best])} to ${name(path[best + 1])}`,
+        hold: name(hold),
+        vaults: list('vault') || 'No vault opens on this path.',
+        traps: list('trap') || 'No trap months on this path.',
+      };
+    }
+
+    function quarterTitle(months) {
+      const avg = months.reduce((t, m) => t + m.s, 0) / months.length;
+      if (months.some(m => m.tag === 'vault')) return 'Vault';
+      if (avg >= 0.25) return 'Tailwinds';
+      if (avg <= -0.15) return 'Conflict';
+      if (months.some(m => m.tag === 'trap')) return 'Traps';
+      return 'Build';
+    }
+
+    // ---- Stage: draws the finished path. sequence() then hides it and plays it back. ----
+    const NS = 'http://www.w3.org/2000/svg';
+    function el(tag, attrs, parent) {
+      const e = document.createElementNS(NS, tag);
+      Object.entries(attrs || {}).forEach(([k, v]) => e.setAttribute(k, v));
+      if (parent) parent.appendChild(e);
+      return e;
+    }
+    function txt(parent, x, y, str, attrs) {
+      const t = el('text', { x, y, ...attrs }, parent);
+      t.textContent = str;
+      return t;
+    }
+
+    function geometry(vertical) {
+      if (!vertical) {
+        const W = 1000, H = 420, L = 20, R = 20, y0 = 205, A = 120, col = (W - L - R) / 12;
+        return {
+          vertical, W, H,
+          pt: (k, s) => ({ x: L + (k + 0.5) * col, y: y0 - s * A }),
+          start: { x: L, y: y0 },
+          band: q => ({ x: L + q * 3 * col, y: 12, w: 3 * col, h: 396 }),
+          colRect: k => ({ x: L + k * col, y: 12, w: col, h: 396 }),
+          label: k => ({ x: L + (k + 0.5) * col, y: 372, anchor: 'middle', dy: 18 }),
+          quarter: q => ({ x: L + q * 3 * col + 12, y: 36, anchor: 'start' }),
+          base: [L, y0, W - R, y0],
+          hints: [[W - R - 8, 64, 'FLOW'], [W - R - 8, 352, 'FRICTION']],
+          branch: (p) => ({ x: p.x + 24, y: Math.min(p.y + 44, 340) }),
+          tagAt: (p) => ({ x: p.x, y: p.y - 21, anchor: 'middle' }),
+          seg: (a, b) => `M${a.x} ${a.y} C${(a.x + b.x) / 2} ${a.y} ${(a.x + b.x) / 2} ${b.y} ${b.x} ${b.y}`,
+        };
+      }
+      const W = 360, H = 760, top = 56, x0 = 222, A = 100, row = (H - top - 16) / 12;
+      return {
+        vertical, W, H,
+        pt: (k, s) => ({ x: x0 + s * A, y: top + (k + 0.5) * row }),
+        start: { x: x0, y: top - 14 },
+        band: q => ({ x: 4, y: top + q * 3 * row, w: W - 8, h: 3 * row }),
+        colRect: k => ({ x: 4, y: top + k * row, w: W - 8, h: row }),
+        label: k => ({ x: 16, y: top + (k + 0.5) * row + 6, anchor: 'start', dy: 16 }),
+        quarter: q => ({ x: 16, y: top + q * 3 * row + 15, anchor: 'start' }),
+        base: [x0, top - 14, x0, H - 16],
+        hints: [[x0 - A, 28, 'FRICTION'], [x0 + A, 28, 'FLOW']],
+        branch: (p) => ({ x: Math.max(p.x - 46, 96), y: p.y + 20 }),
+        tagAt: (p) => (p.x > W - 90 ? { x: p.x - 21, y: p.y + 4, anchor: 'end' } : { x: p.x + 21, y: p.y + 4, anchor: 'start' }),
+        seg: (a, b) => `M${a.x} ${a.y} C${a.x} ${(a.y + b.y) / 2} ${b.x} ${(a.y + b.y) / 2} ${b.x} ${b.y}`,
+      };
+    }
+
+    function renderStage(svg, path, vertical, onPick) {
+      const G = geometry(vertical);
+      svg.innerHTML = '';
+      svg.setAttribute('viewBox', `0 0 ${G.W} ${G.H}`);
+      const defs = el('defs', {}, svg);
+      const glow = el('filter', { id: 'wtGlow', x: '-50%', y: '-50%', width: '200%', height: '200%' }, defs);
+      el('feGaussianBlur', { stdDeviation: 3, result: 'b' }, glow);
+      const merge = el('feMerge', {}, glow);
+      el('feMergeNode', { in: 'b' }, merge);
+      el('feMergeNode', { in: 'SourceGraphic' }, merge);
+
+      const refs = { bands: [], labels: [], segs: [], nodes: [], cols: [] };
+      const layer = name => el('g', { 'data-layer': name }, svg);
+      const bandsG = layer('bands'), axisG = layer('axis'), ghostG = layer('ghost'), segG = layer('path'), nodeG = layer('nodes'), colG = layer('cols');
+
+      // Quarter bands with data-driven headlines.
+      for (let q = 0; q < 4; q++) {
+        const b = G.band(q);
+        const g = el('g', {}, bandsG);
+        el('rect', { x: b.x, y: b.y, width: b.w, height: b.h, rx: 14, fill: q % 2 ? 'rgba(237,230,214,0.018)' : 'rgba(237,230,214,0.035)' }, g);
+        const qp = G.quarter(q);
+        const title = quarterTitle(path.slice(q * 3, q * 3 + 3));
+        txt(g, qp.x, qp.y, `Q${q + 1} · ${title}`, { 'text-anchor': qp.anchor, fill: title === 'Tailwinds' || title === 'Vault' ? '#D4AF37' : title === 'Build' ? '#8A8F98' : '#E06D53', 'font-family': 'Space Mono, monospace', 'font-size': 11, 'letter-spacing': '0.12em' });
+        refs.bands.push(g);
+      }
+
+      // Neutral axis and direction hints.
+      const [x1, y1, x2, y2] = G.base;
+      el('line', { x1, y1, x2, y2, stroke: 'rgba(237,230,214,0.12)', 'stroke-dasharray': '2 6' }, axisG);
+      G.hints.forEach(([x, y, s]) => txt(axisG, x, y, s, { 'text-anchor': G.vertical ? 'middle' : 'end', fill: s === 'FLOW' ? 'rgba(212,175,55,0.45)' : 'rgba(224,109,83,0.45)', 'font-family': 'Space Mono, monospace', 'font-size': 10, 'letter-spacing': '0.2em' }));
+
+      // Month labels.
+      path.forEach((m, k) => {
+        const p = G.label(k);
+        const g = el('g', {}, axisG);
+        txt(g, p.x, p.y, m.label.toUpperCase(), { 'text-anchor': p.anchor, fill: '#BDB6A6', 'font-family': 'Plus Jakarta Sans, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': '0.08em' });
+        txt(g, p.x, p.y + p.dy, m.pillar, { 'text-anchor': p.anchor, fill: 'rgba(212,175,55,0.7)', 'font-family': 'Noto Serif TC, serif', 'font-size': 13 });
+        refs.labels.push(g);
+      });
+
+      // Path: one segment per month, coloured by that month's tag. A faint ghost of the whole route sits beneath.
+      let prev = G.start;
+      const pts = path.map((m, k) => G.pt(k, m.s));
+      const ghostD = pts.reduce((d, p, k) => d + ' ' + G.seg(k ? pts[k - 1] : G.start, p).replace(/^M[^C]+/, ''), `M${G.start.x} ${G.start.y}`);
+      refs.ghost = el('path', { d: ghostD, fill: 'none', stroke: 'rgba(237,230,214,0.07)', 'stroke-width': 10, 'stroke-linecap': 'round' }, ghostG);
+      path.forEach((m, k) => {
+        const p = pts[k];
+        const seg = el('path', { d: G.seg(prev, p), fill: 'none', stroke: TAG_COLOUR[m.tag], 'stroke-width': m.tag === 'flow' || m.tag === 'vault' ? 3.2 : 2.4, 'stroke-linecap': 'round' }, segG);
+        refs.segs.push(seg);
+        prev = p;
+
+        // Node glyph: outer group positions, inner "core" is centred on the node so it scales in place.
+        const outer = el('g', { transform: `translate(${p.x} ${p.y})` }, nodeG);
+        const node = { outer, tag: m.tag };
+        if (m.tag === 'trap') {
+          const e = G.branch(p);
+          const bx = e.x - p.x, by = e.y - p.y;
+          node.branch = el('path', { d: `M0 0 Q${bx * 0.2} ${by * 0.8} ${bx} ${by}`, fill: 'none', stroke: '#E06D53', 'stroke-width': 1.6, 'stroke-dasharray': '3 4', opacity: 0.85 }, outer);
+          node.x = el('g', { transform: `translate(${bx} ${by})` }, outer);
+          const xi = el('g', {}, node.x);
+          el('path', { d: 'M-5 -5L5 5M5 -5L-5 5', stroke: '#E06D53', 'stroke-width': 2, 'stroke-linecap': 'round' }, xi);
+          node.xInner = xi;
+        }
+        const core = el('g', {}, outer);
+        node.core = core;
+        if (m.tag === 'flow') {
+          node.rays = [];
+          for (let r = 0; r < 8; r++) {
+            const a = (r * Math.PI) / 4;
+            node.rays.push(el('line', { x1: Math.cos(a) * 10, y1: Math.sin(a) * 10, x2: Math.cos(a) * 15, y2: Math.sin(a) * 15, stroke: '#D4AF37', 'stroke-width': 1.4, 'stroke-linecap': 'round', opacity: 0.7 }, core));
+          }
+          el('circle', { r: 6, fill: '#D4AF37', filter: 'url(#wtGlow)' }, core);
+        } else if (m.tag === 'vault') {
+          node.ring = el('circle', { r: 16, fill: 'none', stroke: '#F3D98B', 'stroke-width': 1, opacity: 0.5 }, core);
+          node.gem = el('circle', { r: 4.5, fill: '#FFF3C4', filter: 'url(#wtGlow)' }, core);
+          node.top = el('path', { d: 'M-9 -2L0 -12L9 -2Z', fill: 'none', stroke: '#F3D98B', 'stroke-width': 1.6, 'stroke-linejoin': 'round', transform: 'translate(0 -3)' }, core);
+          node.bottom = el('path', { d: 'M-9 2L0 12L9 2Z', fill: 'none', stroke: '#F3D98B', 'stroke-width': 1.6, 'stroke-linejoin': 'round', transform: 'translate(0 3)' }, core);
+        } else if (m.tag === 'steady') {
+          el('circle', { r: 4.5, fill: '#BDB6A6', opacity: 0.8 }, core);
+        } else {
+          node.ring = el('circle', { r: 12, fill: 'none', stroke: '#E06D53', 'stroke-width': 1, opacity: 0.35 }, core);
+          el('circle', { r: 6, fill: '#0B0C10', stroke: '#E06D53', 'stroke-width': 2 }, core);
+        }
+        if (m.tag !== 'steady') {
+          const t = G.tagAt(p);
+          node.label = txt(nodeG, t.x, t.y, m.tag.toUpperCase(), { 'text-anchor': t.anchor, fill: TAG_COLOUR[m.tag], 'font-family': 'Space Mono, monospace', 'font-size': 9, 'letter-spacing': '0.16em' });
+        }
+        refs.nodes.push(node);
+      });
+
+      // Comet and its halo ride the path during playback.
+      refs.halo = el('circle', { r: 13, fill: 'rgba(212,175,55,0.22)', opacity: 0 }, svg);
+      refs.comet = el('circle', { r: 5, fill: '#FFF3C4', filter: 'url(#wtGlow)', opacity: 0 }, svg);
+
+      // Tap targets, one per month, on top of everything.
+      path.forEach((m, k) => {
+        const c = G.colRect(k);
+        const r = el('rect', { x: c.x, y: c.y, width: c.w, height: c.h, class: 'wt-col', tabindex: 0, role: 'button', 'aria-label': `${m.label} ${m.year}, ${m.pillar}, ${m.tag}` }, colG);
+        r.addEventListener('click', () => onPick(k));
+        r.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPick(k); } });
+        refs.cols.push(r);
+      });
+      return refs;
+    }
+
+    // Parameter-based sequencing: the timeline is assembled from the path, so every goal and animal plays differently.
+    // Friction and traps make the comet drag; flow lets it run; a vault pauses to open.
+    function sequence(refs, path, hooks) {
+      const lengths = refs.segs.map(s => s.getTotalLength());
+      refs.segs.forEach((s, i) => gsap.set(s, { strokeDasharray: lengths[i], strokeDashoffset: lengths[i] }));
+      refs.nodes.forEach(n => {
+        gsap.set(n.core, { scale: 0, transformOrigin: '50% 50%' });
+        if (n.label) gsap.set(n.label, { opacity: 0 });
+        if (n.branch) { const L = n.branch.getTotalLength(); gsap.set(n.branch, { strokeDasharray: `${L} ${L}`, strokeDashoffset: L + 1 }); } // explicit gap, or GSAP merges it with the 3 4 dotting
+        if (n.xInner) gsap.set(n.xInner, { scale: 0, transformOrigin: '50% 50%' });
+      });
+
+      const tl = gsap.timeline({ onComplete: hooks.onDone });
+      tl.from(refs.bands, { opacity: 0, duration: 0.5, stagger: 0.08 })
+        .from(refs.labels, { opacity: 0, y: 6, duration: 0.35, stagger: 0.03 }, '<0.1')
+        .from(refs.ghost, { opacity: 0, duration: 0.6 }, '<')
+        .to([refs.comet, refs.halo], { opacity: 1, duration: 0.3 });
+
+      path.forEach((m, k) => {
+        const seg = refs.segs[k], len = lengths[k], n = refs.nodes[k];
+        const drag = m.tag === 'friction' || m.tag === 'trap';
+        const dur = 0.36 + (drag ? 0.4 : 0) + (m.tag === 'vault' ? 0.25 : 0) - (m.tag === 'flow' ? 0.08 : 0);
+        const ease = drag ? 'power3.in' : m.tag === 'flow' ? 'sine.inOut' : 'power1.inOut';
+        const proxy = { t: 0 };
+        tl.call(() => hooks.onMonth(k, 'enter'));
+        tl.to(seg, { strokeDashoffset: 0, duration: dur, ease });
+        tl.to(proxy, {
+          t: 1, duration: dur, ease,
+          onUpdate: () => {
+            const p = seg.getPointAtLength(proxy.t * len);
+            refs.comet.setAttribute('cx', p.x); refs.comet.setAttribute('cy', p.y);
+            refs.halo.setAttribute('cx', p.x); refs.halo.setAttribute('cy', p.y);
+          },
+        }, '<');
+        tl.call(() => hooks.onMonth(k, 'arrive'));
+
+        if (m.tag === 'flow') {
+          tl.to(n.core, { scale: 1, duration: 0.45, ease: 'back.out(2.2)' })
+            .fromTo(n.rays, { opacity: 0 }, { opacity: 0.9, duration: 0.3, stagger: 0.02 }, '<');
+        } else if (m.tag === 'vault') {
+          tl.to(refs.halo, { attr: { r: 26 }, duration: 0.3, yoyo: true, repeat: 1 })
+            .to(n.core, { scale: 1, duration: 0.35, ease: 'back.out(1.6)' }, '<')
+            .fromTo(n.top, { y: 3 }, { y: -4, duration: 0.5, ease: 'power2.out' })
+            .fromTo(n.bottom, { y: -3 }, { y: 4, duration: 0.5, ease: 'power2.out' }, '<')
+            .fromTo(n.gem, { scale: 0.2, transformOrigin: '50% 50%' }, { scale: 1.3, duration: 0.5, ease: 'elastic.out(1, 0.5)' }, '<')
+            .fromTo(n.ring, { scale: 0.4, opacity: 1, transformOrigin: '50% 50%' }, { scale: 1.2, opacity: 0.5, duration: 0.7 }, '<');
+        } else if (m.tag === 'trap') {
+          tl.to(n.core, { scale: 1, duration: 0.25, ease: 'power2.out' })
+            .to(n.branch, { strokeDashoffset: 0, duration: 0.4, ease: 'power2.out', onComplete: () => gsap.set(n.branch, { clearProps: 'strokeDasharray,strokeDashoffset' }) })
+            .to(n.xInner, { scale: 1, duration: 0.3, ease: 'back.out(3)' })
+            .fromTo(n.core, { x: -3 }, { x: 0, duration: 0.35, ease: 'elastic.out(1, 0.3)' }, '<');
+        } else if (m.tag === 'friction') {
+          tl.to(n.core, { scale: 1, duration: 0.3, ease: 'power2.out' })
+            .fromTo(n.ring, { scale: 0.5, opacity: 0.9, transformOrigin: '50% 50%' }, { scale: 1.4, opacity: 0.35, duration: 0.6 }, '<');
+        } else {
+          tl.to(n.core, { scale: 1, duration: 0.2, ease: 'power1.out' });
+        }
+        if (n.label) tl.to(n.label, { opacity: 1, duration: 0.25 }, '<');
+      });
+
+      tl.to([refs.comet, refs.halo], { opacity: 0, duration: 0.4 });
+      return tl;
+    }
+
+    document.addEventListener('alpine:init', () => {
+      // Mobile order bar: visible after the hero fold, hidden while the price block (with its own button) is on screen.
+      Alpine.data('orderBar', () => ({
+        pastHero: false,
+        atOrder: false,
+        get show() { return this.pastHero && !this.atOrder; },
+        init() {
+          const watch = (el, fn, opts) => el && new IntersectionObserver(([e]) => fn(e), opts).observe(el);
+          watch(document.querySelector('[data-hero] .btn-ember'), e => { this.pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; }, { threshold: 0 });
+          watch(document.getElementById('order-price'), e => { this.atOrder = e.isIntersecting; }, { threshold: 0.2 });
+        },
+      }));
+
+      Alpine.data('whenTo', () => {
+        let tl = null;   // kept out of Alpine's reactive proxy
+        let refs = null;
+        return {
+          goals: Object.entries(WT.goals).map(([key, g]) => ({ key, label: g.label, icon: GOAL_ICON[key] })),
+          goal: 'launch',
+          phase: 'idle',   // idle -> generating -> playing -> done
+          path: [],
+          current: null,
+          dossier: null,
+          tally: { flow: 0, friction: 0, trap: 0, vault: 0 },
+          stamp: '',
+          vertical: false,
+
+          get goalLabel() { return WT.goals[this.goal].label; },
+          get animal() { return Alpine.store('reader').animal; },
+          get animalName() { return this.animal === null ? '' : `${ANIMALS[this.animal].en} ${ANIMALS[this.animal].cn}`; },
+          get status() {
+            if (this.phase === 'generating') return `Compiling 12 month pillars`;
+            if (this.phase === 'playing') return this.current ? `Reading ${this.current.label}` : 'Reading';
+            if (this.phase === 'done') return 'Tap any month';
+            return '';
+          },
+
+          init() {
+            this.$watch('goal', () => this.run());
+            this.$watch('animal', () => { if (this.phase !== 'idle') this.run(); });
+            const io = new IntersectionObserver(entries => {
+              if (entries.some(e => e.isIntersecting)) { io.disconnect(); this.run(); }
+            }, { threshold: 0.3 });
+            io.observe(this.$refs.stage);
+            let t;
+            window.addEventListener('resize', () => {
+              clearTimeout(t);
+              t = setTimeout(() => { if (this.phase !== 'idle' && this.isVertical() !== this.vertical) this.run(false); }, 200);
+            });
+          },
+
+          isVertical() { return this.$refs.stage.clientWidth < 640; },
+
+          skip() { if (tl) tl.progress(1); },
+
+          pick(k) {
+            if (this.phase !== 'done') return;
+            this.current = this.path[k];
+            refs.cols.forEach((c, i) => c.classList.toggle('is-active', i === k));
+          },
+
+          run(animate = true) {
+            if (tl) { tl.kill(); tl = null; }
+            const path = computePath(this.goal, this.animal);
+            this.path = path;
+            this.dossier = buildDossier(path, this.goal);
+            this.vertical = this.isVertical();
+            this.stamp = new Date().toLocaleString('en-SG', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+            this.current = null;
+            refs = renderStage(this.$refs.svg, path, this.vertical, k => this.pick(k));
+
+            const counts = { flow: 0, friction: 0, trap: 0, vault: 0 };
+            path.forEach(m => { if (m.tag in counts) counts[m.tag]++; });
+
+            if (!animate || REDUCED || !window.gsap) {
+              this.tally = counts;
+              this.phase = 'done';
+              this.pick(path.reduce((b, m) => (m.s > b.s ? m : b), path[0]).k);
+              return;
+            }
+            this.tally = { flow: 0, friction: 0, trap: 0, vault: 0 };
+            this.phase = 'generating';
+            tl = sequence(refs, path, {
+              onMonth: (k, stage) => {
+                if (stage === 'enter') { this.phase = 'playing'; return; }
+                const m = path[k];
+                this.current = m;
+                if (m.tag in this.tally) this.tally[m.tag]++;
+              },
+              onDone: () => {
+                this.phase = 'done';
+                this.$nextTick(() => {
+                  const list = this.$refs.dossierList;
+                  if (list) gsap.fromTo(list.children, { autoAlpha: 0, x: -10 }, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' });
+                });
+              },
+            });
+          },
+        };
+      });
+    });
+  </script>
 </body>
 </html>
