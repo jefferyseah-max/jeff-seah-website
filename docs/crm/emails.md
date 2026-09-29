@@ -100,6 +100,11 @@ Jeff
 
 ## Flow C: after delivery (warm, then the Calendar plans)
 
+> **Open before activation (2026-09-30, rulings D9/D10):** the C1 draft inside Encharge probably still
+> carries the follow-up question line already removed from this file; delete it there. C2's closing "Reply if you have
+> a question about your reading." awaits Jeff's keep-or-drop ruling. See the launch blockers in
+> `ENCHARGE_CRM.md`.
+
 Trigger: event **Report Delivered**. Filter: tag `outlook-2027-buyer`.
 Exit: tag `monthly-subscriber` (they bought a plan) or unsubscribed.
 
