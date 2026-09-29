@@ -168,6 +168,8 @@ A real checkout has not yet proven the webhook-to-Encharge path.
 ## Not built yet (next)
 
 - Monthly subscriber onboarding flow (events and tags already arrive).
-- The three dated check-in emails and the one follow-up question promised on `/2027`.
+- The three dated check-in emails and the one follow-up question. Both promises were removed from
+  `/2027` on 2026-09-29 (Jeff's rulings D9 and D10) and are restored when Part 4 ships. Brief:
+  `F:\My Drive\COACHING\Client Monthly Workflow\docs\superpowers\specs\2026-09-29-annual-outlook-improvements-brief.md`, Part 4.
 - Cancellation/failed-payment events (`customer.subscription.deleted`, `invoice.payment_failed`).
 - Adding the free-month client to the Sifu roster is a step in the agent job note, not automatic.
