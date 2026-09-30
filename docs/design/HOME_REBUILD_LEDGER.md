@@ -55,6 +55,14 @@ example stem ring) are illustrative rather than computed for the visitor.
 4. **Offer:** one lead card and a short ladder (see question 1), the Outlook with its price switch,
    one bridge line to `/book`, 5-question FAQ, mobile order bar, `/2027` footer with the disclaimer.
 
-## Questions for Jeff
+## Jeff's rulings at gate 1 (2026-09-30)
 
-Recorded in the session; answers go here once given.
+1. Lead offer: the 2027 Outlook until 31 Jan 2027, then the page switches itself to lead with the
+   Power Calendar trial (date switch, like the 88/138 price step).
+2. Badge: keep "Most Popular" on Calendar + Premium.
+3. Set pieces: Jeff wants to see the Luopan hero, the Bagua prism and the hourglass to Hexagram 49
+   re-toned before deciding. Comparison page: `home-setpieces.html` (noindex, review only, deleted
+   before ship). The stem ring is not in the running.
+4. Pricing: one lead Power Calendar card plus a compact ladder for 197/297/497; Single Session as one
+   line to `/book`. All four Payment Links kept.
+5. Features copy stops calling the 97 plan a report; the /2027 disclaimer is added.
