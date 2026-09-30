@@ -66,3 +66,21 @@ example stem ring) are illustrative rather than computed for the visitor.
 4. Pricing: one lead Power Calendar card plus a compact ladder for 197/297/497; Single Session as one
    line to `/book`. All four Payment Links kept.
 5. Features copy stops calling the 97 plan a report; the /2027 disclaimer is added.
+6. Set pieces (after the comparison page): keep all three. Luopan is the hero; the Bagua prism gets its own
+   "Eight moves" section; the hourglass to Hexagram 49 stays in Philosophy. The stem ring and the invented
+   March 2027 sample month go.
+
+## Phase 1 to 3 build notes
+
+- Prototype `home-rebuild.html` (noindex); CSS `css/home.css` from `scripts/tailwind/home.config.js`.
+  The Luopan, prism and hourglass markup, CSS and JS are ported verbatim from the October refresh and
+  re-toned to BRAND.md.
+- Teaser: next 30 days, three best days and one to avoid. Signature: this month until the 20th, then next
+  month; each day's real pillar (60-day cycle) against the month pillar (a clash is a month break) and the
+  visitor's animal. Summary shows Best days, Pause days, Hold days. A "peak window" was dropped: day
+  branches change daily, so consecutive favourable runs are rare and the old window was invented.
+- The prism's typewriter now types the visitor's own days from the month (pause days on 坎, hold days on
+  艮), instead of the invented March dates.
+- Lead-offer flip at 2027-02-01 00:00 SGT (`LEAD_FLIP_AT`): hero and nav CTA, mobile bar and the Outlook
+  section's position switch to the Power Calendar trial. Tested with a simulated 2 Feb 2027.
+- FAQ keeps five of Jeff's six answers; "Do you use I-Ching, Tarot..." is out (Jeff to confirm).
