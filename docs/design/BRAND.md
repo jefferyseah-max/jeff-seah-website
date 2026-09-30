@@ -1,8 +1,9 @@
 # jeffseah.rocks house style: obsidian and gold
 
 Decided by Jeff on 2026-09-30. Applies to every page as it is rebuilt. `/2027` is the reference build;
-`/book` and the homepage follow it (both rebuilt 2026-09-30). `/2027-next`, `/welcome` and
-`/power-calendar` still use the older navy and gold in `2027.css`. This file supersedes the colour tokens in
+`/book` and the homepage follow it (both rebuilt 2026-09-30). `/power-calendar`, `/welcome` and
+`/2027-next` use it through the shared `2027.css` (re-tokened 2026-09-30); every page is now in the house
+style. This file supersedes the colour tokens in
 `REFRESH_BRIEF.md` and `DIRECTION.md`.
 
 Jeff's direction: obsidian and gold at the core, with other complementary tones welcome when they are

@@ -78,7 +78,7 @@ their birth details are; Jeff (and his agent pipeline, outside this repo) produc
 | `welcome.html` | Post-payment intake for monthly subscribers. `noindex`. |
 | `power-calendar.html` | Power Calendar explainer with a sample month and plan CTA (links to the 97 trial). |
 | `book.html` | Single Session page, rebuilt 2026-09-30 in the house style: compiled Tailwind `css/book.css` (config `scripts/tailwind/book.config.js`), Alpine.js and GSAP from CDNs, all JS inline. Decision Dial, Decision Window, session evenings in the visitor's zone, order card, FAQ. Every Book button goes to CalendarHero `/singlesession`. No visible email address. OG image `img/book/og-book.jpg`. |
-| `2027.css` | Shared stylesheet for `2027-next.html`, `welcome.html`, `power-calendar.html` (not `2027.html`). |
+| `2027.css` | Shared stylesheet for `2027-next.html`, `welcome.html`, `power-calendar.html` (not `2027.html`), in the obsidian and gold house style. Hand-written CSS, no build step. |
 | `2027.js` | Shared JS for those three pages: nav scroll state, mobile menu, FAQ accordion, scroll reveal, the 1 Jan 2027 price step, and Stripe link injection into `[data-stripe]` buttons. |
 | `api/stripe-webhook.mjs` | Vercel function: Stripe webhook entry point. |
 | `lib/billing-anchor.mjs` | Signature check + "move to the 15th" logic. |
@@ -327,22 +327,33 @@ Integration points a CRM can hook without redesign:
 
 ## 10. For the design project: what to know before touching the pages
 
-- **House style from 2026-09-30:** obsidian and gold, in `docs/design/BRAND.md`; `/2027`, `/book` and the
-  homepage use it. The navy tokens below describe the pages not yet rebuilt (`2027.css`: `/2027-next`,
-  `/welcome`, `/power-calendar`).
-- **Old navy tokens** (`2027.css`): `--void #05070f`,
-  `--deep #080c1a`, `--midnight #0d1225`, `--gold #c9943a`, `--gold-light #e8bc6a`, `--gold-dim`,
-  `--jade #4a7c6f`, `--crimson #8b1a1a`, `--text #ede8df`, `--text-muted #8f887a` (AA on navy),
-  `--text-dim #3a3830` (decorative only). `2027.css` adds `--text-muted-accessible #a39c8e`,
-  `--ember #b8401c` (hero glow only), `--ease-out`, `--ease-site`.
-- **Fonts** (Google Fonts): Cormorant Garamond (`--serif`, headings), DM Sans (`--sans`, body),
-  Space Mono (`--mono`, labels), Noto Serif TC (`--noto`, Chinese characters).
+- **House style from 2026-09-30:** obsidian and gold, in `docs/design/BRAND.md`. Every page uses it:
+  `/2027`, `/book` and the homepage through their compiled Tailwind builds, and `/power-calendar`,
+  `/welcome` and `/2027-next` through `2027.css` (re-tokened 2026-09-30; the old navy tokens are in git
+  history only).
+- **`2027.css` tokens** mirror BRAND.md: `--obsidian`, `--coal`, `--gold` (plus `--gold-hi` and
+  `--gold-lo` for the button gradient), `--champagne`, `--ivory`, `--ivory-body` (body copy at about 70 %),
+  `--ash`, the Wu Xing accents `--jade`, `--ember`, `--ochre`, `--pearl`, `--ink`, and `--hair` /
+  `--gold-line` hairlines. On `/power-calendar`, gold marks favorable and peak days, ember caution days,
+  champagne the "personal to your chart" dot. Form errors use ember. `.hexagram-bg` is the ambient layer
+  (gold glow top left, ember bottom right, hexagram watermark at 3 %).
+- **Fonts** (Google Fonts): Cormorant Garamond (`--display`, headings), Plus Jakarta Sans (`--sans`,
+  body), Space Mono (`--mono`, labels), Noto Serif TC (`--noto`, Chinese characters; not loaded by the
+  `2027.css` pages, which have none).
+- **Logo**: the nav on every page stacks the transparent seal layers (`seal-ring.png`,
+  `seal-monogram.png`, a `[data-sheen]` sweep once after load, ring turns on hover); footers use
+  `seal-mark.png`. `seal-128.png` is only the touch icon. Every footer carries the disclaimer "For timing
+  and planning. Not medical, legal or financial advice, and not a guarantee that events will happen."
+- **No visible email address** on any page (Jeff, 2026-09-30: bots scrape it). The intake pages'
+  "Email Jeff" fallbacks are `[data-mail]` links: `2027.js` assembles `coaching@jeffseah.rocks` on click,
+  opens the mail client and shows the address for copying.
 - **Separate style systems**: `2027.css` (three pages) and the compiled Tailwind builds
   `css/outlook-2027.css` (`/2027`), `css/book.css` (`/book`) and `css/home.css` (homepage), each from its
   own config in `scripts/tailwind/`. A token change must be made in each config and page `:root`.
 - **Hooks that JavaScript depends on; do not rename or remove without updating the JS:**
   `[data-stripe]` (order buttons; `2027.js` injects the Stripe URL), `[data-price]`,
-  `[data-price-copy]`, `.price-step div` / `.is-now` (pages on `2027.js`); on the homepage the ported
+  `[data-price-copy]`, `.price-step div` / `.is-now`, `[data-sheen]`, `[data-mail]` (pages on `2027.js`),
+  and on `/power-calendar` `#pcGrid`, `#pcEntry`, `#pcKicker`, `#pcTitle`, `#pcBody`; on the homepage the ported
   set pieces (`.compass-*`, `#baguaPrism`, `#baguaPanel`, `#typewriterText`, `#hourglassWrap`,
   `#hourglassCanvas`) and `#outlook-price` / `#pricing-lead` (mobile order bar); and on the intake pages the form ids (`fullName`, `email`, `birthDate`, `birthTime`, `unknownTime`,
   `birthCity`, `calendarEmail`, `consent`, `submitBtn`, `company_website` honeypot) and the success /

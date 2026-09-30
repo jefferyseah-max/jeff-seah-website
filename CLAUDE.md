@@ -62,7 +62,7 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | `2027.html` | Outlook sales page, self-contained: Tailwind (compiled to `css/outlook-2027.css`), Alpine.js and GSAP from CDNs, all JS inline. After changing its classes, rebuild the CSS: `npx tailwindcss@3 -c scripts/tailwind/outlook-2027.config.js -i scripts/tailwind/outlook-2027.input.css -o css/outlook-2027.css --minify` |
 | `book.html` | Single Session sales page (USD 197, books and pays on CalendarHero `/singlesession`), self-contained like `2027.html`: Decision Dial teaser, Decision Window (six months from today, pillars generated from the solar-term dates in `#windowData`; extend those dates before mid-2028), session evenings in the visitor's time zone. CSS: `npx tailwindcss@3 -c scripts/tailwind/book.config.js -i scripts/tailwind/outlook-2027.input.css -o css/book.css --minify`. No visible email address on the page (Jeff, 2026-09-30) |
 | `2027-next.html`, `welcome.html`, `power-calendar.html` | The two intake pages, Power Calendar sample page |
-| `2027.css` / `2027.js` | Shared CSS and JS for the three pages above (no longer used by `2027.html`) |
+| `2027.css` / `2027.js` | Shared CSS and JS for the three pages above (no longer used by `2027.html`). House style since 2026-09-30, hand-written, no build step. `[data-mail]` links build the contact address on click |
 | `api/stripe-webhook.mjs`, `lib/billing-anchor.mjs`, `lib/signup-alert.mjs`, `tests/` | 15th-billing webhook and new-subscriber alert; `node --test tests/*.test.mjs` |
 | `lib/encharge.mjs`, `scripts/report-delivered.mjs`, `ops/olares/` | CRM: Stripe and intake events to Encharge, delivery trigger, Olares intake watcher. Spec and switch-on: `docs/crm/ENCHARGE_CRM.md` |
 | `.vercelignore` | Keeps `tests/`, `docs/`, `scripts/`, `ops/` and `*.md` off the public site |
@@ -79,6 +79,10 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-09-30: `/power-calendar`, `/welcome` and `/2027-next` restyled to the house style through
+  `2027.css` (dead rules for the old `/2027` dropped), seal layers in the nav, disclaimer in the footers.
+  No email address is printed on any page: the power-calendar "Ask Jeff a question" button and footer
+  "Email Jeff" link are gone (D9, D10), and the intake fallbacks assemble the address in JS on click.
 - 2026-09-30: Homepage rebuilt in the obsidian and gold house style (ledger and rulings:
   `docs/design/HOME_REBUILD_LEDGER.md`). Kept from the October refresh: Luopan hero, Bagua prism (own
   section), hourglass to Hexagram 49 (solid gold frame now); dropped: stem ring, invented March 2027
