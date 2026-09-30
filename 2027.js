@@ -1,6 +1,7 @@
-// 2027.js : shared behaviour for /2027, /2027-next and /power-calendar.
-// Nav scroll state, mobile menu, FAQ accordion, scroll reveal, the price
-// step and the Stripe link injection. The homepage keeps its own inline script.
+// 2027.js : shared behaviour for /power-calendar, /welcome and /2027-next.
+// Nav scroll state, mobile menu, seal sheen, the contact link, FAQ accordion,
+// scroll reveal, the price step and the Stripe link injection. /2027, /book and
+// the homepage keep their own inline scripts.
 
 // Price step (Jeff, 2026-09-25): USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027 SGT.
 // The HTML is written for the 88 window; this flips the copy and the Stripe link once the date passes.
@@ -44,6 +45,26 @@ if (navToggle && navMenu) {
     if (navMenu.classList.contains('open') && !nav.contains(e.target) && !navMenu.contains(e.target)) setMenu(false);
   });
 }
+
+// -- Seal sheen: one sweep after the page has finished loading --
+const sheen = document.querySelector('[data-sheen]');
+if (sheen) {
+  const sweep = () => setTimeout(() => sheen.classList.add('is-sweeping'), 900);
+  if (document.readyState === 'complete') sweep(); else window.addEventListener('load', sweep, { once: true });
+}
+
+// -- Contact link: the address is never in the HTML (Jeff, 2026-09-30: bots scrape it).
+// A [data-mail] link builds the mailto on click and shows the address for copying.
+document.querySelectorAll('[data-mail]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const addr = ['coaching', 'jeffseah.rocks'].join('@');
+    const subject = a.dataset.mailSubject ? '?subject=' + encodeURIComponent(a.dataset.mailSubject) : '';
+    a.href = 'mailto:' + addr + subject;
+    a.textContent = addr;
+    window.location.href = a.href;
+  });
+});
 
 // -- FAQ accordion (one open at a time, with disclosure semantics) --
 document.querySelectorAll('.faq-card').forEach((card, i) => {
