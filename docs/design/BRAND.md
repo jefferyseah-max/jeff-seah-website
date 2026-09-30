@@ -1,8 +1,8 @@
 # jeffseah.rocks house style: obsidian and gold
 
-Decided by Jeff on 2026-09-30. Applies to every page as it is rebuilt. `/2027` is the reference build;
-the homepage and `/book` still use the older navy and gold until their rebuilds (planned for a cloud
-session with the `tactile-page-rebuild` skill). This file supersedes the colour tokens in
+Decided by Jeff on 2026-09-30. Applies to every page as it is rebuilt. `/2027` is the reference build and
+`/book` follows it (2026-09-30); the homepage still uses the older navy and gold until its rebuild
+(planned for a cloud session with the `tactile-page-rebuild` skill). This file supersedes the colour tokens in
 `REFRESH_BRIEF.md` and `DIRECTION.md`.
 
 Jeff's direction: obsidian and gold at the core, with other complementary tones welcome when they are

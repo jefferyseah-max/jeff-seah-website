@@ -1,7 +1,7 @@
-// Tailwind build for /book. Rebuild after changing classes in the page:
+// Tailwind build for /book (book.html). Rebuild after changing classes in book.html:
 //   npx tailwindcss@3 -c scripts/tailwind/book.config.js -i scripts/tailwind/outlook-2027.input.css -o css/book.css --minify
 module.exports = {
-  content: ['./book-rebuild.html'],
+  content: ['./book.html'],
   theme: {
     extend: {
       colors: {
