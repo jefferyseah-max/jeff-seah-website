@@ -271,9 +271,11 @@ alert covers it.
 - **Client birth data**: the Wealth Codex MCP vault on Olares (encrypted, sensitive; ask before writing).
 - **Per-client context**: Obsidian vault on Olares, `wiki/people/<Name>.md` (single source of truth for agents).
 - **Power Calendar delivery**: subscribers get a Google Calendar shared to their `calendarEmail` (or `email`). Outlook buyers get a sample month as a private HTML page beside the report, never a Google Calendar.
-- **Mailboxes**: notifications go to jefferyseah@gmail.com. Every public contact on the site is
+- **Mailboxes**: notifications go to jefferyseah@gmail.com. The site's contact address is
   coaching@jeffseah.rocks (Namecrane, forwards to Gmail; switched 2026-09-27). jeff@jeffseah.rocks had
-  never received mail, so it is not used.
+  never received mail, so it is not used. Since 2026-09-30 (Jeff's ruling, anti-spam) the address is
+  never printed in page HTML: the intake pages' fallback links carry `data-mail="<subject>"` and
+  `2027.js` assembles the mailto on click. Public pages carry no email link at all.
 
 ---
 

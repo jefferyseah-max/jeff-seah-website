@@ -1,6 +1,6 @@
-// 2027.js : shared behaviour for /2027, /2027-next and /power-calendar.
+// 2027.js : shared behaviour for /2027-next, /welcome and /power-calendar.
 // Nav scroll state, mobile menu, FAQ accordion, scroll reveal, the price
-// step and the Stripe link injection. The homepage keeps its own inline script.
+// step, the Stripe link injection and the email link. The homepage keeps its own inline script.
 
 // Price step (Jeff, 2026-09-25): USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027 SGT.
 // The HTML is written for the 88 window; this flips the copy and the Stripe link once the date passes.
@@ -107,4 +107,15 @@ document.querySelectorAll('[data-stripe]').forEach(a => {
     a.dataset.stripePlaceholder = 'true';
     if (a.getAttribute('href') === '#') a.href = '#order';
   }
+});
+
+// -- Email link (Jeff, 2026-09-30): the address is never printed in the HTML, because bots scrape it.
+// Links marked data-mail open a mailto assembled here on click; the attribute value is the subject.
+document.querySelectorAll('[data-mail]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const to = ['coaching', ['jeffseah', 'rocks'].join('.')].join('@');
+    const subject = a.dataset.mail ? `?subject=${encodeURIComponent(a.dataset.mail)}` : '';
+    window.location.href = `mailto:${to}${subject}`;
+  });
 });

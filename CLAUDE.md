@@ -110,4 +110,6 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 
 ## Style
 - No em dashes in any output.
+- Never print Jeff's email address (or a `mailto:`) in page HTML (Jeff, 2026-09-30: bots scrape it).
+  Where a buyer genuinely needs it, use a `data-mail="<subject>"` link; `2027.js` builds the mailto on click.
 - Verify your own work (read the Sheet / Gmail / live site) rather than assuming success.
