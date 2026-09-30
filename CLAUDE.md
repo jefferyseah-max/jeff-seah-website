@@ -61,8 +61,9 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | `index.html` | Homepage, rebuilt 2026-09-30 like `2027.html`: compiled Tailwind `css/home.css`, Alpine.js and GSAP from CDNs, JS inline. Luopan hero with a next-good-days teaser, Outlook card, a real day-by-day month map (day pillars from a 60-day cycle, month pillars from `#calData`; extend its dates before mid-2028), Bagua prism fed by the visitor's days, hourglass to Hexagram 49, pricing lead card plus ladder. CSS: `npx tailwindcss@3 -c scripts/tailwind/home.config.js -i scripts/tailwind/outlook-2027.input.css -o css/home.css --minify` |
 | `2027.html` | Outlook sales page, self-contained: Tailwind (compiled to `css/outlook-2027.css`), Alpine.js and GSAP from CDNs, all JS inline. After changing its classes, rebuild the CSS: `npx tailwindcss@3 -c scripts/tailwind/outlook-2027.config.js -i scripts/tailwind/outlook-2027.input.css -o css/outlook-2027.css --minify` |
 | `book.html` | Single Session sales page (USD 197, books and pays on CalendarHero `/singlesession`), self-contained like `2027.html`: Decision Dial teaser, Decision Window (six months from today, pillars generated from the solar-term dates in `#windowData`; extend those dates before mid-2028), session evenings in the visitor's time zone. CSS: `npx tailwindcss@3 -c scripts/tailwind/book.config.js -i scripts/tailwind/outlook-2027.input.css -o css/book.css --minify`. No visible email address on the page (Jeff, 2026-09-30) |
-| `2027-next.html`, `welcome.html`, `power-calendar.html` | The two intake pages, Power Calendar sample page |
-| `2027.css` / `2027.js` | Shared CSS and JS for the three pages above (no longer used by `2027.html`). House style since 2026-09-30, hand-written, no build step. `[data-mail]` links build the contact address on click |
+| `power-calendar.html` | Power Calendar sales page (USD 97, 30-day trial), rebuilt 2026-09-30 like `/book`: next-good-days teaser, the real month shown as calendar entries with an entry card and locked best hours (same day engine as the homepage `#month`; its own copy of `#calData`, extend both before mid-2028), one plan card, a line to `/#pricing`. CSS: `npx tailwindcss@3 -c scripts/tailwind/power-calendar.config.js -i scripts/tailwind/outlook-2027.input.css -o css/power-calendar.css --minify` |
+| `2027-next.html`, `welcome.html` | The two intake pages |
+| `2027.css` / `2027.js` | Shared CSS and JS for the two intake pages only. House style since 2026-09-30, hand-written, no build step. `[data-mail]` links build the contact address on click |
 | `api/stripe-webhook.mjs`, `lib/billing-anchor.mjs`, `lib/signup-alert.mjs`, `tests/` | 15th-billing webhook and new-subscriber alert; `node --test tests/*.test.mjs` |
 | `lib/encharge.mjs`, `scripts/report-delivered.mjs`, `ops/olares/` | CRM: Stripe and intake events to Encharge, delivery trigger, Olares intake watcher. Spec and switch-on: `docs/crm/ENCHARGE_CRM.md` |
 | `.vercelignore` | Keeps `tests/`, `docs/`, `scripts/`, `ops/` and `*.md` off the public site |
@@ -79,6 +80,10 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-09-30: `/power-calendar` rebuilt in the house style (ledger and rulings:
+  `docs/design/POWER_CALENDAR_REBUILD_LEDGER.md`). The invented sample month is replaced by the real month
+  as calendar entries; "30-day free trial, card required" replaces "First month complimentary"; one plan
+  card plus a line to `/#pricing` replaces the four-tier ladder; no question invite (D9, D10).
 - 2026-09-30: `/power-calendar`, `/welcome` and `/2027-next` restyled to the house style through
   `2027.css` (dead rules for the old `/2027` dropped), seal layers in the nav, disclaimer in the footers.
   No email address is printed on any page: the power-calendar "Ask Jeff a question" button and footer

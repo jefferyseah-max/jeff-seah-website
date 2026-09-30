@@ -1,264 +1,760 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="preload">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Power Calendar: your month's dates and hours, in your Google Calendar | Jeff Seah</title>
-  <meta name="description" content="A sample Power Calendar month you can click through. Hand-picked favorable days, caution days and hours calculated from your own birth chart, delivered every month into your personal Google Calendar. First month complimentary." />
+  <meta name="description" content="A sample Power Calendar month you can click through. Hand-picked favorable days, caution days and hours calculated from your own birth chart, delivered every month into your personal Google Calendar. 30-day free trial, card required." />
   <link rel="canonical" href="https://www.jeffseah.rocks/power-calendar" />
   <link rel="icon" type="image/png" sizes="64x64" href="/img/seal-64.png" />
   <link rel="apple-touch-icon" href="/img/seal-128.png" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Jeff Seah" />
   <meta property="og:title" content="Power Calendar | Jeff Seah" />
-  <meta property="og:description" content="Your month's favorable days, caution days and hours, calculated from your birth chart and delivered into your Google Calendar. First month complimentary." />
+  <meta property="og:description" content="Your month's favorable days, caution days and hours, calculated from your birth chart and delivered into your Google Calendar. 30-day free trial, card required." />
   <meta property="og:url" content="https://www.jeffseah.rocks/power-calendar" />
   <meta property="og:image" content="https://www.jeffseah.rocks/img/2027/og-2027.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Power Calendar | Jeff Seah" />
-  <meta name="twitter:description" content="A sample month you can click through. First month complimentary." />
+  <meta name="twitter:description" content="A sample month you can click through. 30-day free trial, card required." />
   <meta name="twitter:image" content="https://www.jeffseah.rocks/img/2027/og-2027.jpg" />
+
+  <script>
+    // Animated elements start hidden only when motion is allowed. Failsafe: show everything after 2.5 s if GSAP never runs.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.remove('preload');
+    else setTimeout(() => document.documentElement.classList.remove('preload'), 2500);
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;700&family=Space+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/2027.css" />
-</head>
-<body>
-  <a href="#main" class="skip-link">Skip to content</a>
-  <div class="hexagram-bg" aria-hidden="true"></div>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;700;800&family=Space+Mono&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/power-calendar.css" />
 
-  <nav id="nav" aria-label="Primary">
-    <a href="/" class="nav-logo" aria-label="Jeff Seah, home">
-      <span class="seal" aria-hidden="true">
-        <img class="seal-ring" src="/img/seal-ring.png" alt="" width="32" height="32">
-        <span class="seal-glint"></span>
-        <img class="seal-mono" src="/img/seal-monogram.png" alt="" width="32" height="32">
-        <span class="seal-sheen" data-sheen></span>
-      </span>
-      <span class="nav-wordmark">Jeff Seah</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="/2027">2027 Outlook</a></li>
-      <li><a href="/power-calendar" aria-current="page">Power Calendar</a></li>
-      <li><a href="#how">How it arrives</a></li>
-      <li><a href="#plans">Plans</a></li>
-    </ul>
-    <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer" class="nav-cta">Start free trial</a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="navMenu" aria-label="Menu">
-      <svg class="icon-open" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 5h14M2 9h14M2 13h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      <svg class="icon-close" width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-    </button>
-  </nav>
-  <div class="nav-menu" id="navMenu">
-    <ul>
-      <li><a href="/2027">2027 Outlook</a></li>
-      <li><a href="/power-calendar">Power Calendar</a></li>
-      <li><a href="#how">How it arrives</a></li>
-      <li><a href="#plans">Plans</a></li>
-      <li><a href="/">Home</a></li>
-      <li><a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer" class="nav-menu-cta">Start free trial</a></li>
-    </ul>
-  </div>
+  <style>
+    :root {
+      --obsidian: #0B0C10;
+      --coal: #13151B;
+      --gold: #D4AF37;
+      --champagne: #F3D98B;
+      --ember: #E06D53;
+      --ochre: #C99A55;
+      --ink: #7F9BD1;
+      --ivory: #EDE6D6;
+      --ash: #8A8F98;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--obsidian); color: var(--ivory); }
+    [x-cloak] { display: none !important; }
+    .preload [data-anim] { opacity: 0; }
+    section[id], div[id] { scroll-margin-top: 5.5rem; }
+
+    /* Ambient layer: gold dawn top left, ember low right, film grain over both. */
+    .ambient {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none;
+      background:
+        radial-gradient(60rem 40rem at 8% -10%, rgba(212, 175, 55, 0.10), transparent 60%),
+        radial-gradient(50rem 36rem at 92% 75%, rgba(224, 109, 83, 0.11), transparent 62%),
+        var(--obsidian);
+    }
+    .ambient::after {
+      content: ''; position: absolute; inset: 0; opacity: 0.06; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .hairline { border-color: rgba(237, 230, 214, 0.08); }
+    .gold-rule { height: 1px; background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent); }
+    .panel {
+      background: linear-gradient(180deg, rgba(19, 21, 27, 0.92), rgba(11, 12, 16, 0.92));
+      border: 1px solid rgba(212, 175, 55, 0.16);
+      box-shadow: 0 40px 120px -40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(237, 230, 214, 0.04);
+    }
+
+    /* Primary CTA: molten gold with an ember undertone on hover. */
+    .btn-ember {
+      background: linear-gradient(135deg, #E9C766 0%, var(--gold) 45%, #C98E3A 100%);
+      color: var(--obsidian);
+      box-shadow: 0 10px 40px -12px rgba(212, 175, 55, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+    }
+    .btn-ember:hover { transform: translateY(-2px); box-shadow: 0 16px 50px -12px rgba(224, 109, 83, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+    .btn-ember svg { transition: transform 0.35s var(--ease); }
+    .btn-ember:hover svg { transform: translateX(3px); }
+    .btn-ember:focus-visible, .focus-ring:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+    /* Nav seal (same as /2027, /book and the homepage). */
+    .seal { position: relative; display: inline-block; flex-shrink: 0; }
+    .seal > * { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .seal-ring, .seal-glint { transition: transform 1.1s cubic-bezier(0.45, 0, 0.2, 1); }
+    .seal-glint, .seal-sheen { -webkit-mask: url(/img/seal-ring.png) center / 100% 100% no-repeat; mask: url(/img/seal-ring.png) center / 100% 100% no-repeat; }
+    .seal-glint { background: conic-gradient(from 300deg, transparent 0deg, rgba(255, 240, 205, 0.95) 28deg, transparent 60deg); opacity: 0; transition: transform 1.1s cubic-bezier(0.45, 0, 0.2, 1), opacity 0.5s ease; }
+    .seal-sheen { -webkit-mask-image: url(/img/seal-mark.png); mask-image: url(/img/seal-mark.png); background: linear-gradient(115deg, transparent 38%, rgba(255, 243, 212, 0.95) 50%, transparent 62%) 130% 0 / 300% 100% no-repeat; }
+    .seal-sheen.is-sweeping { animation: seal-sheen 1.2s cubic-bezier(0.4, 0, 0.2, 1) 1 both; }
+    @keyframes seal-sheen { from { background-position: 130% 0; } to { background-position: -30% 0; } }
+    @media (hover: hover) and (pointer: fine) {
+      .seal-link:hover .seal-ring, .seal-link:hover .seal-glint { transform: rotate(180deg); }
+      .seal-link:hover .seal-glint { opacity: 1; }
+    }
+
+    /* Tone system (fixed site meanings: gold flow, ochre hold, ember friction). */
+    .tag-peak { --tone: var(--gold); }
+    .tag-good { --tone: #E2C56B; }
+    .tag-neutral { --tone: #8A8F98; }
+    .tag-hold { --tone: var(--ochre); }
+    .tag-pause { --tone: var(--ember); }
+    .tone-text { color: var(--tone); }
+    .tone-bg { background: var(--tone); }
+    .chip { border: 1px solid color-mix(in srgb, var(--tone) 45%, transparent); background: color-mix(in srgb, var(--tone) 10%, transparent); color: var(--tone); }
+
+    /* Calendar view: a month grid with all-day event chips, like the calendar it arrives in. */
+    .cal-cell { position: relative; border-color: rgba(237, 230, 214, 0.06); transition: background-color 0.25s var(--ease); }
+    .cal-cell:hover { background: rgba(237, 230, 214, 0.025); }
+    .cal-cell.is-out { background: transparent; }
+    .cal-cell.is-today .cal-num { background: var(--gold); color: var(--obsidian); }
+    .cal-cell.is-active { background: rgba(212, 175, 55, 0.05); box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.55); }
+    .evt { width: 100%; text-align: left; border-radius: 6px; line-height: 1.15; transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+    .evt.tag-peak { background: linear-gradient(135deg, #E9C766, var(--gold) 55%, #C98E3A); color: var(--obsidian); box-shadow: 0 6px 20px -8px rgba(212, 175, 55, 0.8); }
+    .evt.tag-good { background: rgba(212, 175, 55, 0.12); color: #E2C56B; box-shadow: inset 3px 0 0 #E2C56B; }
+    .evt.tag-hold { background: repeating-linear-gradient(135deg, rgba(201, 154, 85, 0.16) 0 4px, rgba(201, 154, 85, 0.06) 4px 8px); color: var(--ochre); box-shadow: inset 3px 0 0 var(--ochre); }
+    .evt.tag-pause { background: rgba(224, 109, 83, 0.14); color: var(--ember); box-shadow: inset 3px 0 0 var(--ember); }
+    .evt-month { color: var(--ink); border: 1px dashed rgba(127, 155, 209, 0.45); background: rgba(127, 155, 209, 0.06); }
+    @media (hover: hover) { .evt:hover { transform: translateY(-1px); } }
+    .scan { position: absolute; top: 0; bottom: 0; width: 22%; left: -25%; pointer-events: none;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.18), transparent); }
+
+    /* Locked hours: neutral shimmer, never invented times. */
+    .lock-bar { background: linear-gradient(90deg, rgba(237, 230, 214, 0.05) 0%, rgba(237, 230, 214, 0.12) 50%, rgba(237, 230, 214, 0.05) 100%) 0 0 / 200% 100%; animation: shimmer 2.4s linear infinite; }
+    @keyframes shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+
+    /* Watermark Luopan, deep in the background (3 %). */
+    .watermark { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .watermark svg { aspect-ratio: 1; height: auto; opacity: 0.03; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .seal-sheen.is-sweeping, .lock-bar { animation: none; }
+      .seal-ring, .seal-glint, .evt { transition: none; }
+      .seal-link:hover .seal-ring, .seal-link:hover .seal-glint { transform: none; }
+    }
+  </style>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+</head>
+<body class="font-sans antialiased">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-obsidian">Skip to content</a>
+  <div class="ambient" aria-hidden="true"></div>
+
+  <!-- Watermark Luopan (same symbol as /2027, /book and the homepage). Used at 3.5% opacity. -->
+  <svg width="0" height="0" class="absolute" aria-hidden="true" focusable="false"><symbol id="bagua" viewBox="-500 -500 1000 1000"><circle r="492" fill="none" stroke="#D4AF37" stroke-width="1.2"/><circle r="470" fill="none" stroke="#D4AF37" stroke-width="0.6"/><line x1="0.0" y1="-452.0" x2="0.0" y2="-492.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="41.0" y1="-468.2" x2="42.9" y2="-490.1" stroke="#D4AF37" stroke-width="0.7"/><line x1="81.6" y1="-462.9" x2="85.4" y2="-484.5" stroke="#D4AF37" stroke-width="0.7"/><line x1="117.0" y1="-436.6" x2="127.3" y2="-475.2" stroke="#D4AF37" stroke-width="1.4"/><line x1="160.7" y1="-441.7" x2="168.3" y2="-462.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="198.6" y1="-426.0" x2="207.9" y2="-445.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="226.0" y1="-391.4" x2="246.0" y2="-426.1" stroke="#D4AF37" stroke-width="1.4"/><line x1="269.6" y1="-385.0" x2="282.2" y2="-403.0" stroke="#D4AF37" stroke-width="0.7"/><line x1="302.1" y1="-360.0" x2="316.3" y2="-376.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="319.6" y1="-319.6" x2="347.9" y2="-347.9" stroke="#D4AF37" stroke-width="1.4"/><line x1="360.0" y1="-302.1" x2="376.9" y2="-316.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="385.0" y1="-269.6" x2="403.0" y2="-282.2" stroke="#D4AF37" stroke-width="0.7"/><line x1="391.4" y1="-226.0" x2="426.1" y2="-246.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="426.0" y1="-198.6" x2="445.9" y2="-207.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="441.7" y1="-160.7" x2="462.3" y2="-168.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="436.6" y1="-117.0" x2="475.2" y2="-127.3" stroke="#D4AF37" stroke-width="1.4"/><line x1="462.9" y1="-81.6" x2="484.5" y2="-85.4" stroke="#D4AF37" stroke-width="0.7"/><line x1="468.2" y1="-41.0" x2="490.1" y2="-42.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="452.0" y1="-0.0" x2="492.0" y2="-0.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="468.2" y1="41.0" x2="490.1" y2="42.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="462.9" y1="81.6" x2="484.5" y2="85.4" stroke="#D4AF37" stroke-width="0.7"/><line x1="436.6" y1="117.0" x2="475.2" y2="127.3" stroke="#D4AF37" stroke-width="1.4"/><line x1="441.7" y1="160.7" x2="462.3" y2="168.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="426.0" y1="198.6" x2="445.9" y2="207.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="391.4" y1="226.0" x2="426.1" y2="246.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="385.0" y1="269.6" x2="403.0" y2="282.2" stroke="#D4AF37" stroke-width="0.7"/><line x1="360.0" y1="302.1" x2="376.9" y2="316.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="319.6" y1="319.6" x2="347.9" y2="347.9" stroke="#D4AF37" stroke-width="1.4"/><line x1="302.1" y1="360.0" x2="316.3" y2="376.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="269.6" y1="385.0" x2="282.2" y2="403.0" stroke="#D4AF37" stroke-width="0.7"/><line x1="226.0" y1="391.4" x2="246.0" y2="426.1" stroke="#D4AF37" stroke-width="1.4"/><line x1="198.6" y1="426.0" x2="207.9" y2="445.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="160.7" y1="441.7" x2="168.3" y2="462.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="117.0" y1="436.6" x2="127.3" y2="475.2" stroke="#D4AF37" stroke-width="1.4"/><line x1="81.6" y1="462.9" x2="85.4" y2="484.5" stroke="#D4AF37" stroke-width="0.7"/><line x1="41.0" y1="468.2" x2="42.9" y2="490.1" stroke="#D4AF37" stroke-width="0.7"/><line x1="0.0" y1="452.0" x2="0.0" y2="492.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="-41.0" y1="468.2" x2="-42.9" y2="490.1" stroke="#D4AF37" stroke-width="0.7"/><line x1="-81.6" y1="462.9" x2="-85.4" y2="484.5" stroke="#D4AF37" stroke-width="0.7"/><line x1="-117.0" y1="436.6" x2="-127.3" y2="475.2" stroke="#D4AF37" stroke-width="1.4"/><line x1="-160.7" y1="441.7" x2="-168.3" y2="462.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-198.6" y1="426.0" x2="-207.9" y2="445.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-226.0" y1="391.4" x2="-246.0" y2="426.1" stroke="#D4AF37" stroke-width="1.4"/><line x1="-269.6" y1="385.0" x2="-282.2" y2="403.0" stroke="#D4AF37" stroke-width="0.7"/><line x1="-302.1" y1="360.0" x2="-316.3" y2="376.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-319.6" y1="319.6" x2="-347.9" y2="347.9" stroke="#D4AF37" stroke-width="1.4"/><line x1="-360.0" y1="302.1" x2="-376.9" y2="316.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-385.0" y1="269.6" x2="-403.0" y2="282.2" stroke="#D4AF37" stroke-width="0.7"/><line x1="-391.4" y1="226.0" x2="-426.1" y2="246.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="-426.0" y1="198.6" x2="-445.9" y2="207.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-441.7" y1="160.7" x2="-462.3" y2="168.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-436.6" y1="117.0" x2="-475.2" y2="127.3" stroke="#D4AF37" stroke-width="1.4"/><line x1="-462.9" y1="81.6" x2="-484.5" y2="85.4" stroke="#D4AF37" stroke-width="0.7"/><line x1="-468.2" y1="41.0" x2="-490.1" y2="42.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-452.0" y1="0.0" x2="-492.0" y2="0.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="-468.2" y1="-41.0" x2="-490.1" y2="-42.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-462.9" y1="-81.6" x2="-484.5" y2="-85.4" stroke="#D4AF37" stroke-width="0.7"/><line x1="-436.6" y1="-117.0" x2="-475.2" y2="-127.3" stroke="#D4AF37" stroke-width="1.4"/><line x1="-441.7" y1="-160.7" x2="-462.3" y2="-168.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-426.0" y1="-198.6" x2="-445.9" y2="-207.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-391.4" y1="-226.0" x2="-426.1" y2="-246.0" stroke="#D4AF37" stroke-width="1.4"/><line x1="-385.0" y1="-269.6" x2="-403.0" y2="-282.2" stroke="#D4AF37" stroke-width="0.7"/><line x1="-360.0" y1="-302.1" x2="-376.9" y2="-316.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-319.6" y1="-319.6" x2="-347.9" y2="-347.9" stroke="#D4AF37" stroke-width="1.4"/><line x1="-302.1" y1="-360.0" x2="-316.3" y2="-376.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-269.6" y1="-385.0" x2="-282.2" y2="-403.0" stroke="#D4AF37" stroke-width="0.7"/><line x1="-226.0" y1="-391.4" x2="-246.0" y2="-426.1" stroke="#D4AF37" stroke-width="1.4"/><line x1="-198.6" y1="-426.0" x2="-207.9" y2="-445.9" stroke="#D4AF37" stroke-width="0.7"/><line x1="-160.7" y1="-441.7" x2="-168.3" y2="-462.3" stroke="#D4AF37" stroke-width="0.7"/><line x1="-117.0" y1="-436.6" x2="-127.3" y2="-475.2" stroke="#D4AF37" stroke-width="1.4"/><line x1="-81.6" y1="-462.9" x2="-85.4" y2="-484.5" stroke="#D4AF37" stroke-width="0.7"/><line x1="-41.0" y1="-468.2" x2="-42.9" y2="-490.1" stroke="#D4AF37" stroke-width="0.7"/><circle r="452" fill="none" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(0)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">子</text><line x1="96.3" y1="-359.3" x2="117.0" y2="-436.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(30)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">丑</text><line x1="263.0" y1="-263.0" x2="319.6" y2="-319.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(60)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">寅</text><line x1="359.3" y1="-96.3" x2="436.6" y2="-117.0" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(90)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">卯</text><line x1="359.3" y1="96.3" x2="436.6" y2="117.0" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(120)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">辰</text><line x1="263.0" y1="263.0" x2="319.6" y2="319.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(150)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">巳</text><line x1="96.3" y1="359.3" x2="117.0" y2="436.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(180)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">午</text><line x1="-96.3" y1="359.3" x2="-117.0" y2="436.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(210)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">未</text><line x1="-263.0" y1="263.0" x2="-319.6" y2="319.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(240)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">申</text><line x1="-359.3" y1="96.3" x2="-436.6" y2="117.0" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(270)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">酉</text><line x1="-359.3" y1="-96.3" x2="-436.6" y2="-117.0" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(300)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">戌</text><line x1="-263.0" y1="-263.0" x2="-319.6" y2="-319.6" stroke="#D4AF37" stroke-width="0.6"/><text transform="rotate(330)" y="-402" text-anchor="middle" dominant-baseline="central" font-family="Noto Serif TC, serif" font-size="36" fill="#D4AF37">亥</text><line x1="-96.3" y1="-359.3" x2="-117.0" y2="-436.6" stroke="#D4AF37" stroke-width="0.6"/><circle r="372" fill="none" stroke="#D4AF37" stroke-width="0.8"/><g transform="rotate(0)" fill="#D4AF37"><rect x="-40" y="-299" width="34" height="10"/><rect x="6" y="-299" width="34" height="10"/><rect x="-40" y="-319" width="80" height="10"/><rect x="-40" y="-339" width="34" height="10"/><rect x="6" y="-339" width="34" height="10"/></g><g transform="rotate(45)" fill="#D4AF37"><rect x="-40" y="-299" width="34" height="10"/><rect x="6" y="-299" width="34" height="10"/><rect x="-40" y="-319" width="34" height="10"/><rect x="6" y="-319" width="34" height="10"/><rect x="-40" y="-339" width="80" height="10"/></g><g transform="rotate(90)" fill="#D4AF37"><rect x="-40" y="-299" width="80" height="10"/><rect x="-40" y="-319" width="34" height="10"/><rect x="6" y="-319" width="34" height="10"/><rect x="-40" y="-339" width="34" height="10"/><rect x="6" y="-339" width="34" height="10"/></g><g transform="rotate(135)" fill="#D4AF37"><rect x="-40" y="-299" width="34" height="10"/><rect x="6" y="-299" width="34" height="10"/><rect x="-40" y="-319" width="80" height="10"/><rect x="-40" y="-339" width="80" height="10"/></g><g transform="rotate(180)" fill="#D4AF37"><rect x="-40" y="-299" width="80" height="10"/><rect x="-40" y="-319" width="34" height="10"/><rect x="6" y="-319" width="34" height="10"/><rect x="-40" y="-339" width="80" height="10"/></g><g transform="rotate(225)" fill="#D4AF37"><rect x="-40" y="-299" width="34" height="10"/><rect x="6" y="-299" width="34" height="10"/><rect x="-40" y="-319" width="34" height="10"/><rect x="6" y="-319" width="34" height="10"/><rect x="-40" y="-339" width="34" height="10"/><rect x="6" y="-339" width="34" height="10"/></g><g transform="rotate(270)" fill="#D4AF37"><rect x="-40" y="-299" width="80" height="10"/><rect x="-40" y="-319" width="80" height="10"/><rect x="-40" y="-339" width="34" height="10"/><rect x="6" y="-339" width="34" height="10"/></g><g transform="rotate(315)" fill="#D4AF37"><rect x="-40" y="-299" width="80" height="10"/><rect x="-40" y="-319" width="80" height="10"/><rect x="-40" y="-339" width="80" height="10"/></g><circle r="262" fill="none" stroke="#D4AF37" stroke-width="0.6"/><circle r="250" fill="none" stroke="#D4AF37" stroke-width="1.4"/><circle r="120" fill="none" stroke="#D4AF37" stroke-width="1.4"/><path d="M0 -120 A120 120 0 0 1 0 120 A60.0 60.0 0 0 1 0 0 A60.0 60.0 0 0 0 0 -120Z" fill="#D4AF37"/><circle cy="-60.0" r="16" fill="#D4AF37"/><circle cy="60.0" r="16" fill="#0B0C10" stroke="#D4AF37" stroke-width="1.4"/></symbol></svg>
+
+  <!-- Nav -->
+  <header class="fixed inset-x-0 top-0 z-40 border-b hairline bg-obsidian/70 backdrop-blur-md" data-anim="nav">
+    <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-10" aria-label="Primary">
+      <a href="/" class="seal-link focus-ring flex items-center gap-3" aria-label="Jeff Seah, home">
+        <span class="seal h-8 w-8" aria-hidden="true">
+          <img class="seal-ring" src="/img/seal-ring.png" alt="" width="32" height="32" />
+          <span class="seal-glint"></span>
+          <img class="seal-mono" src="/img/seal-monogram.png" alt="" width="32" height="32" />
+          <span class="seal-sheen" data-sheen></span>
+        </span>
+        <span class="font-display text-lg font-semibold tracking-wide text-ivory">Jeff Seah</span>
+      </a>
+      <ul class="hidden items-center gap-7 text-sm text-ivory/75 lg:flex">
+        <li><a class="transition hover:text-gold" href="#month">Your month</a></li>
+        <li><a class="transition hover:text-gold" href="#how">How it arrives</a></li>
+        <li><a class="transition hover:text-gold" href="#faq">FAQ</a></li>
+        <li><a class="transition hover:text-gold" href="/2027">2027 Outlook</a></li>
+      </ul>
+      <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer"
+         class="focus-ring shrink-0 rounded-full border border-gold/40 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold/10">Start free trial</a>
+    </nav>
+  </header>
 
   <main id="main">
 
-  <section class="pc-hero">
-    <div class="container">
-      <div class="pc-hero-inner hero-seq">
-        <div class="eyebrow" style="--i:0">Power Calendar</div>
-        <h1 style="--i:1">The outlook gives you months. <em>This gives you days.</em></h1>
-        <p style="--i:2">Every month I read the coming month against your chart and pick the days and hours that matter: when to push, when to sign, when to hold. Each one lands as an entry in your own Google Calendar, beside your real schedule.</p>
-        <div class="pc-hint" style="--i:3">Tap a marked day below to read a sample entry</div>
+    <!-- ============ Hero with the teaser ============ -->
+    <section class="relative mx-auto max-w-7xl px-4 pb-16 pt-28 sm:px-6 sm:pt-32 lg:px-10 lg:pb-24" data-hero>
+      <div class="watermark" aria-hidden="true">
+        <svg class="absolute left-[-30rem] top-[-10rem] w-[44rem] sm:w-[56rem] lg:left-[-44rem] lg:w-[64rem]"><use href="#bagua" /></svg>
       </div>
-    </div>
-  </section>
-
-  <section class="pc-sample" aria-labelledby="sampleTitle">
-    <div class="container">
-      <div class="pc-layout">
-        <div class="pc-cal reveal">
-          <div class="pc-cal-head">
-            <h2 id="sampleTitle">A sample month</h2>
-            <span>Illustrative, not a real client</span>
-          </div>
-          <div class="pc-grid" id="pcGrid" role="group" aria-label="Sample calendar month. Marked days open a sample entry.">
-            <div class="pc-dow">Mon</div><div class="pc-dow">Tue</div><div class="pc-dow">Wed</div><div class="pc-dow">Thu</div><div class="pc-dow">Fri</div><div class="pc-dow">Sat</div><div class="pc-dow">Sun</div>
-          </div>
-          <div class="pc-legend" aria-hidden="true">
-            <span><i class="l-fav"></i>Favorable day</span>
-            <span><i class="l-peak"></i>The month's best day</span>
-            <span><i class="l-caut"></i>Caution day</span>
-            <span><i class="l-pers"></i>Personal to your chart</span>
+      <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+        <div>
+          <p class="font-mono text-[10px] uppercase tracking-[0.26em] text-gold" data-anim="hero">Power Calendar</p>
+          <h1 class="mt-4 font-display text-[3rem] font-light leading-[0.98] tracking-[-0.015em] text-ivory sm:text-7xl" data-anim="hero">
+            The outlook gives you months. <em class="block text-gold">This gives you days.</em>
+          </h1>
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-ivory/70" data-anim="hero">
+            Every month I read the coming month against your chart and pick the days and hours that matter: when to push, when to sign, when to hold. Each one lands as an entry in your own Google Calendar, beside your real schedule.
+          </p>
+          <div class="mt-8 flex flex-col items-start gap-3" data-anim="hero">
+            <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer"
+               class="btn-ember focus-ring inline-flex items-center gap-3 rounded-full px-7 py-4 text-[15px] font-extrabold tracking-wide">
+              Start my 30-day free trial
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <p class="text-sm text-ash">Then USD 97 a month. Card required, cancel anytime.</p>
           </div>
         </div>
 
-        <div class="pc-entry reveal" id="pcEntry" aria-live="polite">
-          <div class="pc-entry-kicker" id="pcKicker">Sample entry</div>
-          <h3 id="pcTitle">Pick a day to read its entry</h3>
-          <div id="pcBody">
-            <p>Not every day gets an entry. Most days are ordinary and the calendar leaves them alone. The days that carry a note are the ones worth planning around.</p>
-            <p>Your own calendar is calculated from your date, time and place of birth, so the marked days and the hours inside them will not be the same as this sample.</p>
+        <!-- Teaser: the three best days and the one to avoid in the next 30 days -->
+        <div id="teaser" class="panel rounded-[24px] p-5 sm:p-6" x-data="teaser" data-anim="hero">
+          <p class="flex items-center justify-between gap-3">
+            <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">Your next good days</span>
+            <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-ash">Next 30 days</span>
+          </p>
+          <p class="mt-3 text-sm text-ivory/80">Tap your birth-year animal.</p>
+          <div class="mt-3 grid grid-cols-6 gap-1.5" role="group" aria-label="Birth-year animal">
+            <template x-for="(a, i) in animals" :key="a.en">
+              <button type="button" class="focus-ring flex h-11 flex-col items-center justify-center rounded-xl border leading-none transition duration-300"
+                      :class="animal === i ? 'border-gold bg-gold text-obsidian shadow-[0_0_24px_-6px_rgba(212,175,55,0.8)]' : 'border-white/10 bg-obsidian/60 text-ivory/80 hover:border-gold/60 hover:text-gold'"
+                      :aria-pressed="(animal === i).toString()" :aria-label="a.en" @click="pick(i)">
+                <span class="font-han text-sm" x-text="a.cn"></span>
+                <span class="mt-0.5 text-[8px] font-bold tracking-wide" x-text="a.en"></span>
+              </button>
+            </template>
           </div>
-          <span class="pc-entry-tag">Sample month, illustrative only</span>
+          <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ash">
+            <label for="birthYear">Or your birth year</label>
+            <input id="birthYear" type="number" inputmode="numeric" min="1920" max="2026" placeholder="1988"
+                   class="focus-ring w-20 rounded-full border border-gold/25 bg-obsidian px-3 py-1 text-center font-mono text-xs text-ivory placeholder:text-ash/50 focus:border-gold"
+                   x-model="birthYear" @input="fromYear()" />
+            <span class="text-ash/70">Born before about 4 February? Use the year before.</span>
+          </div>
+          <div class="mt-4 min-h-[5.5rem]" aria-live="polite">
+            <template x-if="!read">
+              <p class="rounded-2xl border border-dashed hairline px-4 py-4 text-center text-xs text-ash">Your three best days and the one to avoid appear here, read from each day's pillar.</p>
+            </template>
+            <template x-if="read">
+              <div>
+                <ul class="flex flex-wrap gap-2">
+                  <template x-for="d in read.best" :key="d.key">
+                    <li class="rounded-full border border-gold/60 bg-gold/10 px-3 py-1.5 text-xs font-bold text-gold"><span x-text="d.short"></span> <span class="font-han font-normal text-gold/70" x-text="d.pillar"></span></li>
+                  </template>
+                  <template x-if="read.avoid">
+                    <li class="rounded-full border border-ember/60 bg-ember/10 px-3 py-1.5 text-xs font-bold text-ember">Avoid <span x-text="read.avoid.short"></span></li>
+                  </template>
+                </ul>
+                <p class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-ash">
+                  <span>Indicative: your animal against each day's pillar.</span>
+                  <a href="#month" class="font-bold uppercase tracking-[0.14em] text-gold hover:text-champagne">See it as a calendar &darr;</a>
+                </p>
+              </div>
+            </template>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="pc-how" id="how">
-    <div class="container">
-      <div class="reveal">
-        <div class="section-label">How it arrives</div>
-        <h2>In your Google Calendar, not in another app</h2>
+    <!-- ============ Signature: the month as it lands in your calendar ============ -->
+    <section id="month" class="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-10" x-data="calView">
+      <div class="watermark" aria-hidden="true">
+        <svg class="absolute right-[-20rem] top-[-4rem] w-[38rem] sm:w-[46rem] lg:right-[-18rem] lg:top-[-10rem] lg:w-[58rem]"><use href="#bagua" /></svg>
       </div>
-      <div class="pc-how-grid">
-        <div class="pc-how-card reveal">
-          <h3>Delivered into your own calendar</h3>
-          <p>Each month's entries are written directly into your personal Google Calendar. Open the day, read the note, plan around it. Nothing to download, nothing to log in to.</p>
-          <div class="pc-gcal"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><rect x="2" y="3" width="14" height="13" rx="2" stroke="currentColor" stroke-width="1.3"/><path d="M2 7h14M6 1.5v3M12 1.5v3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>Works with the Google Calendar you already use</div>
-        </div>
-        <div class="pc-how-card reveal">
-          <h3>Read from your chart, every month</h3>
-          <p>The month's energy meets your four pillars differently from anyone else's. I read that meeting and mark the days that matter for you: favorable days for the things you want to start or sign, caution days for the things you should not.</p>
-        </div>
-        <div class="pc-how-card reveal">
-          <h3>Hours, not just days</h3>
-          <p>On the days that matter, the entry names the best hours and the usable ones, so a meeting or a signing can sit in the right window. The rest of the day is yours.</p>
-        </div>
+      <div class="max-w-3xl">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Your month, as it lands</p>
+        <h2 class="mt-3 font-display text-[2.6rem] font-light leading-[1.02] tracking-[-0.01em] text-ivory sm:text-6xl">
+          <span x-text="monthName">October 2026</span>, <em class="text-gold">in your calendar.</em>
+        </h2>
+        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ivory/70">
+          This is the real month, every day read from its own pillar against the month and your birth-year animal. Marked days arrive as entries; ordinary days stay empty. Tap an entry to open it.
+        </p>
       </div>
-    </div>
-  </section>
 
-  <section class="pc-offer" id="plans">
-    <div class="container">
-      <div class="pc-offer-inner reveal">
-        <div class="section-label">Plans</div>
-        <h2>Two ways to start free</h2>
-        <p>Start the Power Calendar plan with a 30-day free trial. Or get the 2027 Annual Outlook, and a sample month of your own Power Calendar comes with it as a private web page, no card needed. The calendar itself is USD 97 per month, and the higher plans add a monthly report and coaching.</p>
-        <ul class="ladder">
-          <li class="is-first">
-            <span class="ladder-name">Power Calendar</span>
-            <span class="ladder-what">Your month's dates and hours, in your Google Calendar. 30-day free trial.</span>
-            <span class="ladder-price">USD 97<small>per month</small></span>
-          </li>
-          <li>
-            <span class="ladder-name">Calendar and brief monthly report</span>
-            <span class="ladder-what">The calendar plus a short written read of the month for your chart.</span>
-            <span class="ladder-price">USD 197<small>per month</small></span>
-          </li>
-          <li>
-            <span class="ladder-name">Calendar and premium monthly report</span>
-            <span class="ladder-what">A private report folder, full monthly report in two versions, bonus articles and activation dates.</span>
-            <span class="ladder-price">USD 297<small>per month</small></span>
-          </li>
-          <li>
-            <span class="ladder-name">Premium report and coaching</span>
-            <span class="ladder-what">Everything above, monthly coaching, a Year in Review report, a luck pillar protocol and Tongshu app access.</span>
-            <span class="ladder-price">USD 497<small>per month</small></span>
-          </li>
-        </ul>
-        <div class="pc-offer-actions">
-          <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer" class="btn-primary">Start my 30-day free trial</a>
+      <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3 text-sm text-ash">
+          <label for="calAnimal">Read for</label>
+          <select id="calAnimal" class="focus-ring rounded-full border border-gold/30 bg-obsidian px-4 py-2 text-sm text-ivory focus:border-gold"
+                  :value="animal === null ? '' : String(animal)" @change="setAnimal($event.target.value)">
+            <option value="">Month breaks only</option>
+            <template x-for="(a, i) in animals" :key="a.en"><option :value="String(i)" x-text="a.en + ' ' + a.cn"></option></template>
+          </select>
         </div>
-        <p class="pc-offer-note">The free trial takes a card and continues at USD 97 per month unless you cancel. For the other plans, see the <a href="/#pricing">pricing section</a>. Monthly plans are billed on the 15th of each month. Cancel before the 15th and you will not be charged for the next month. Cancel anytime in <a href="https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer">Manage your plan</a>.</p>
-        <p class="pc-offer-note">Want the year first? <a href="/2027">The 2027 Annual Outlook</a> maps your twelve months, and includes a sample month of your own days.</p>
+        <div class="flex rounded-full border border-gold/25 p-1" role="group" aria-label="Month">
+          <template x-for="(t, i) in targets" :key="t.label">
+            <button type="button" class="focus-ring rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition"
+                    :class="which === i ? 'bg-gold text-obsidian' : 'text-ash hover:text-gold'" :aria-pressed="(which === i).toString()" @click="show(i)" x-text="t.label"></button>
+          </template>
+        </div>
       </div>
-    </div>
-  </section>
 
+      <div class="mt-5 grid gap-6 lg:grid-cols-[1.75fr_1fr]">
+        <!-- Month view -->
+        <div class="panel relative overflow-hidden rounded-[24px]">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b hairline px-4 py-3 sm:px-5">
+            <p class="flex items-center gap-2 text-sm text-ivory/85">
+              <span class="h-2.5 w-2.5 rounded-sm bg-gold" aria-hidden="true"></span>Power Calendar
+              <span class="font-han text-xs text-gold/80" x-text="monthPillars"></span>
+            </p>
+            <ul class="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ash" aria-label="Legend">
+              <li class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-gold"></span>Peak</li>
+              <li class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm border-l-[3px] border-[#E2C56B] bg-gold/15"></span>Favourable</li>
+              <li class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm border-l-[3px] border-[#C99A55] bg-[#C99A55]/20"></span>Hold</li>
+              <li class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm border-l-[3px] border-ember bg-ember/20"></span>Pause</li>
+            </ul>
+          </div>
+          <div class="relative" x-ref="gridWrap">
+            <div class="grid grid-cols-7 border-b hairline text-center font-mono text-[10px] uppercase tracking-[0.14em] text-ash">
+              <template x-for="w in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="w"><span class="py-2" x-text="w"></span></template>
+            </div>
+            <div class="grid grid-cols-7" x-ref="grid" role="group" :aria-label="monthName + ' calendar'">
+              <template x-for="c in cells" :key="c.key">
+                <div class="cal-cell flex min-h-[4.25rem] flex-col gap-1 border-b border-r p-1 sm:min-h-[6.5rem] sm:p-1.5"
+                     :class="[c.out ? 'is-out' : 'cursor-pointer', c.today ? 'is-today' : '', current && current.key === c.key ? 'is-active' : '']" @click="pick(c)">
+                  <template x-if="!c.out">
+                    <button type="button" class="focus-ring flex w-full items-center justify-between gap-1 rounded-md text-left"
+                            :aria-label="c.label" :aria-pressed="(current && current.key === c.key) ? 'true' : 'false'">
+                      <span class="cal-num grid h-6 min-w-[1.5rem] place-items-center rounded-full px-1 text-xs font-bold text-ivory/85" x-text="c.d"></span>
+                      <span class="hidden font-han text-[10px] text-ivory/35 sm:inline" x-text="c.pillar"></span>
+                    </button>
+                  </template>
+                  <template x-if="!c.out && c.monthStart">
+                    <span class="evt evt-month hidden px-1.5 py-0.5 text-[10px] sm:block" x-text="c.monthStart"></span>
+                  </template>
+                  <template x-if="!c.out && c.tag !== 'neutral'">
+                    <span class="evt block px-1 py-1 text-[10px] font-bold sm:px-1.5 sm:text-[11px]" :class="'tag-' + c.tag" data-evt aria-hidden="true">
+                      <span class="hidden truncate sm:block" x-text="c.chip"></span>
+                      <span class="block h-1 sm:hidden"></span>
+                    </span>
+                  </template>
+                </div>
+              </template>
+            </div>
+            <div class="scan" x-ref="scan" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <!-- Entry card, as the subscriber opens it -->
+        <aside class="lg:sticky lg:top-24 lg:self-start">
+          <div class="panel rounded-[24px] p-5 sm:p-6" :class="current ? 'tag-' + current.tag : ''" aria-live="polite" x-ref="entry">
+            <template x-if="current">
+              <div>
+                <div class="flex items-start gap-3">
+                  <span class="mt-2 h-3.5 w-3.5 shrink-0 rounded tone-bg" aria-hidden="true"></span>
+                  <div class="min-w-0">
+                    <h3 class="font-display text-[1.75rem] font-semibold leading-tight text-ivory" x-text="current.title"></h3>
+                    <p class="mt-1 text-sm text-ash"><span x-text="current.long"></span> · All day</p>
+                  </div>
+                </div>
+                <dl class="mt-5 space-y-4 text-[15px]">
+                  <div class="flex gap-3">
+                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ash">Pillar</dt>
+                    <dd class="font-han text-lg tone-text" x-text="current.pillar + ' day'"></dd>
+                  </div>
+                  <div class="flex gap-3">
+                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ash">The day</dt>
+                    <dd class="text-ivory/90" x-text="current.line"></dd>
+                  </div>
+                  <div class="flex gap-3">
+                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ash">Why</dt>
+                    <dd class="text-sm text-ivory/70">
+                      <template x-if="current.reasons.length">
+                        <ul class="space-y-1"><template x-for="r in current.reasons" :key="r"><li x-text="r"></li></template></ul>
+                      </template>
+                      <template x-if="!current.reasons.length"><span>No major contact with the month or your animal.</span></template>
+                    </dd>
+                  </div>
+                  <div class="flex gap-3">
+                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ash">Best hours</dt>
+                    <dd class="flex-1">
+                      <div class="space-y-1.5" aria-hidden="true">
+                        <div class="lock-bar h-3 w-4/5 rounded-full"></div>
+                        <div class="lock-bar h-3 w-3/5 rounded-full"></div>
+                      </div>
+                      <p class="mt-2 text-xs text-ash">In your Power Calendar, read from your full chart.</p>
+                    </dd>
+                  </div>
+                </dl>
+                <div class="gold-rule mt-6"></div>
+                <p class="mt-4 text-xs leading-relaxed text-ash">
+                  Indicative: built from <span x-text="animal === null ? 'the month alone' : 'your birth-year animal'"></span>. Your Power Calendar reads every day against your full chart and adds the hours.
+                </p>
+              </div>
+            </template>
+          </div>
+          <div class="panel mt-4 rounded-[24px] p-5 sm:p-6">
+            <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-gold" x-text="monthName + ' at a glance'"></p>
+            <dl class="mt-4 grid grid-cols-4 gap-2 text-center">
+              <template x-for="t in ['peak', 'good', 'hold', 'pause']" :key="t">
+                <div class="rounded-xl border hairline bg-obsidian/60 px-1 py-3" :class="'tag-' + t">
+                  <dd class="font-display text-3xl font-semibold tone-text" x-text="tally[t]"></dd>
+                  <dt class="mt-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-ash" x-text="t === 'good' ? 'favour' : t"></dt>
+                </div>
+              </template>
+            </dl>
+            <a href="#order" class="btn-ember focus-ring mt-5 flex w-full items-center justify-center gap-3 rounded-full px-6 py-3.5 text-[15px] font-extrabold tracking-wide">
+              Get your own every month
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ What the full calendar adds ============ -->
+    <section class="border-y hairline bg-coal/60">
+      <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-10">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">What your calendar adds</p>
+        <h2 class="mt-3 max-w-2xl font-display text-[2.4rem] font-light leading-[1.05] text-ivory sm:text-5xl">The map above is one layer. <em class="text-gold">Yours has three more.</em></h2>
+        <div class="mt-10 grid gap-8 md:grid-cols-3">
+          <div class="border-t border-gold/25 pt-5">
+            <h3 class="font-display text-2xl font-semibold text-ivory">The hours</h3>
+            <p class="mt-2 leading-relaxed text-ivory/70">On the days that matter, the entry names the hours to use, so a meeting, a signing or a launch can sit in the right window. The rest of the day is yours.</p>
+          </div>
+          <div class="border-t border-gold/25 pt-5">
+            <h3 class="font-display text-2xl font-semibold text-ivory">Your whole chart</h3>
+            <p class="mt-2 leading-relaxed text-ivory/70">The map reads your birth-year animal. Your calendar reads your date, time and place of birth, so it marks your personal power days and the days that drain you.</p>
+          </div>
+          <div class="border-t border-gold/25 pt-5">
+            <h3 class="font-display text-2xl font-semibold text-ivory">The month's rare markers</h3>
+            <p class="mt-2 leading-relaxed text-ivory/70">New and full moons, keep-your-guard-up days and the month's few manifesting windows, written in plain English.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ How it arrives ============ -->
+    <section id="how" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-10">
+      <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">How it arrives</p>
+      <h2 class="mt-3 max-w-2xl font-display text-[2.4rem] font-light leading-[1.05] text-ivory sm:text-5xl">In your Google Calendar, <em class="text-gold">not in another app.</em></h2>
+      <ol class="mt-10 grid gap-8 md:grid-cols-3">
+        <li class="border-t hairline pt-5">
+          <span class="font-display text-4xl font-light text-gold">01</span>
+          <h3 class="mt-2 font-display text-2xl font-semibold text-ivory">Start the trial</h3>
+          <p class="mt-2 leading-relaxed text-ivory/70">Thirty days free, then USD 97 a month. A card is taken at checkout; cancel anytime.</p>
+        </li>
+        <li class="border-t hairline pt-5">
+          <span class="font-display text-4xl font-light text-gold">02</span>
+          <h3 class="mt-2 font-display text-2xl font-semibold text-ivory">Send your birth details</h3>
+          <p class="mt-2 leading-relaxed text-ivory/70">A two-minute form right after checkout: date, time and place of birth, and the Google account to share the calendar with.</p>
+        </li>
+        <li class="border-t hairline pt-5">
+          <span class="font-display text-4xl font-light text-gold">03</span>
+          <h3 class="mt-2 font-display text-2xl font-semibold text-ivory">Plan around it</h3>
+          <p class="mt-2 leading-relaxed text-ivory/70">Your first month lands in your Google Calendar within 7 days, then each month after. Open the day, read the note, plan around it. Nothing to download.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============ Offer ============ -->
+    <section id="order" class="relative mx-auto max-w-3xl px-4 py-20 sm:px-6">
+      <div class="text-center">
+        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Start free</p>
+        <h2 class="mt-3 font-display text-[2.4rem] font-light leading-[1.05] text-ivory sm:text-5xl">Your days, <em class="text-gold">every month.</em></h2>
+      </div>
+      <div id="order-price" class="panel relative mt-10 overflow-hidden rounded-[28px] p-6 sm:p-9">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(22rem_18rem_at_80%_0%,rgba(212,175,55,0.12),transparent_70%)]" aria-hidden="true"></div>
+        <div class="relative">
+          <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">Monthly · 30-day free trial</p>
+          <h3 class="mt-2 font-display text-4xl font-semibold text-ivory">Power Calendar</h3>
+          <p class="mt-4 flex items-baseline gap-2 font-display text-6xl font-semibold text-gold"><span class="font-sans text-base font-bold tracking-[0.12em] text-gold/80">USD</span>97<span class="font-sans text-base font-normal text-ash">/ month</span></p>
+          <ul class="mt-6 space-y-3 text-[15px] text-ivory/85">
+            <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span>Your month's favorable days and pause days, read from your full chart</li>
+            <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span>The best hours on the days that matter</li>
+            <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span>Delivered into your own Google Calendar, every month</li>
+            <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span>First month within 7 days of your birth details</li>
+          </ul>
+          <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer"
+             class="btn-ember focus-ring mt-8 flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-base font-extrabold tracking-wide">
+            Start my 30-day free trial
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <p class="mt-3 text-center text-sm text-ivory/70">Card required. Continues at USD 97 a month unless you cancel.</p>
+        </div>
+      </div>
+      <div class="mt-8 space-y-3 text-center text-sm leading-relaxed text-ash">
+        <p>Monthly plans are billed on the 15th of each month. Cancel before the 15th and you will not be charged for the next month. Cancel anytime in <a href="https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">Manage your plan</a>.</p>
+        <p>Want a written read of each month as well? The report and coaching plans are on the <a href="/#pricing" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">homepage</a>.</p>
+        <p>Want the year first? <a href="/2027" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">The 2027 Annual Outlook</a> maps your twelve months, and includes a sample month of your own days.</p>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section id="faq" class="mx-auto max-w-3xl px-4 pb-24 pt-8 sm:px-6" x-data="{ open: 0 }">
+      <p class="text-center font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Before you start</p>
+      <h2 class="mt-3 text-center font-display text-[2.4rem] font-light leading-[1.05] text-ivory sm:text-5xl">Questions, answered</h2>
+      <div class="mt-10 divide-y divide-white/[0.08] border-y hairline">
+        <template x-for="(f, i) in [
+          { q: 'Do I need a card for the free trial?', a: 'Yes. The trial is 30 days free, then USD 97 a month unless you cancel. You can cancel anytime in Manage your plan, linked below the price on this page.' },
+          { q: 'When am I billed?', a: 'Monthly plans are billed on the 15th of each month. Cancel before the 15th and you will not be charged for the next month.' },
+          { q: 'When does my first month arrive?', a: 'Within 7 days of sending your birth details, straight into your Google Calendar. After that, a new month arrives every month.' },
+          { q: 'What if I do not know my birth time?', a: 'You can still send your details: tick the box on the form. A two-hour window is enough if you have one.' },
+          { q: 'Is my calendar the same as the map above?', a: 'No. The map reads each day against your birth-year animal only. Your Power Calendar reads every day against your full chart, from your date, time and place of birth, and adds the hours.' },
+        ]" :key="i">
+          <div>
+            <h3>
+              <button type="button" class="focus-ring flex w-full items-center justify-between gap-4 py-5 text-left" :aria-expanded="(open === i).toString()" :aria-controls="'faq-' + i" @click="open = open === i ? null : i">
+                <span class="font-display text-xl font-semibold text-ivory sm:text-2xl" x-text="f.q"></span>
+                <span class="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-gold/30 text-gold transition duration-300" :class="open === i ? 'rotate-45 bg-gold/10' : ''" aria-hidden="true">+</span>
+              </button>
+            </h3>
+            <div :id="'faq-' + i" class="grid transition-[grid-template-rows] duration-500" :class="open === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'">
+              <div class="overflow-hidden"><p class="pb-6 pr-10 leading-relaxed text-ivory/70" x-text="f.a"></p></div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <a href="/" class="footer-brand" aria-label="Jeff Seah, home"><img src="/img/seal-mark.png" alt="" width="36" height="36"><span>Strategic Timing Intelligence</span></a>
-        <ul class="footer-links">
-          <li><a href="/">Home</a></li>
-          <li><a href="/2027">2027 Outlook</a></li>
-          <li><a href="/book">Book a session</a></li>
+  <!-- Footer -->
+  <footer class="border-t hairline pb-28 pt-12 lg:pb-12">
+    <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 text-center sm:px-6 md:flex-row md:justify-between md:text-left lg:px-10">
+      <a href="/" class="focus-ring flex items-center gap-3" aria-label="Jeff Seah, home">
+        <img src="/img/seal-mark.png" alt="" width="36" height="36" class="h-9 w-9 opacity-90" />
+        <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-ash">Strategic Timing Intelligence</span>
+      </a>
+      <nav aria-label="Footer">
+        <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ash">
+          <li><a class="transition hover:text-gold" href="/">Home</a></li>
+          <li><a class="transition hover:text-gold" href="/2027">2027 Outlook</a></li>
+          <li><a class="transition hover:text-gold" href="/book">Book a session</a></li>
         </ul>
-      </div>
-      <p class="footer-disclaimer">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
-      <p class="footer-copy">&copy; 2026 Jeff Seah. All rights reserved.</p>
+      </nav>
     </div>
+    <p class="mx-auto mt-8 max-w-2xl px-4 text-center text-xs leading-relaxed text-ash/60">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
+    <p class="mt-3 text-center text-xs text-ash/60">&copy; 2026 Jeff Seah. All rights reserved.</p>
   </footer>
 
-  <script src="/2027.js"></script>
+  <!-- Mobile order bar: appears once the hero CTA has scrolled away, hides while the price block is on screen. -->
+  <div class="fixed inset-x-0 bottom-0 z-50 lg:hidden" x-data="orderBar" x-cloak x-show="show"
+       x-transition:enter="transition duration-500 ease-out" x-transition:enter-start="translate-y-full opacity-0" x-transition:enter-end="translate-y-0 opacity-100"
+       x-transition:leave="transition duration-300 ease-in" x-transition:leave-start="translate-y-0 opacity-100" x-transition:leave-end="translate-y-full opacity-0">
+    <div class="border-t border-gold/25 bg-obsidian/90 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-lg">
+      <div class="mx-auto flex max-w-xl items-center justify-between gap-4">
+        <div class="min-w-0">
+          <p class="truncate text-sm font-bold text-ivory">Power Calendar · USD 97/mo</p>
+          <p class="truncate text-xs text-ash">30-day free trial</p>
+        </div>
+        <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer" class="btn-ember focus-ring shrink-0 rounded-full px-5 py-3 text-sm font-extrabold">Start free</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Month pillars: the Singapore date each solar month starts. The first entry is 丁酉 (stem 3, branch 9).
+       Same data as the homepage #calData. Extend before mid-2028. -->
+  <script type="application/json" id="calData">
+  {
+    "first": { "stem": 3, "branch": 9 },
+    "starts": [
+      "2026-09-07", "2026-10-08", "2026-11-07", "2026-12-07",
+      "2027-01-05", "2027-02-04", "2027-03-06", "2027-04-05", "2027-05-06", "2027-06-06",
+      "2027-07-07", "2027-08-08", "2027-09-08", "2027-10-08", "2027-11-07", "2027-12-07",
+      "2028-01-06", "2028-02-04", "2028-03-05", "2028-04-04", "2028-05-05", "2028-06-05",
+      "2028-07-06", "2028-08-07", "2028-09-07", "2028-10-08", "2028-11-07", "2028-12-06",
+      "2029-01-05"
+    ]
+  }
+  </script>
+
   <script>
-    // Sample month: 30 days, starting on a Wednesday. Generic entries, no real client, no real dates.
-    const START_OFFSET = 2; // Mon=0
-    const DAYS = 30;
-    const ENTRIES = {
-      3:  { kind: 'favorable', kicker: 'Favorable day', title: 'A good day to open things',
-            body: ['A clear, forward-moving day. Use it for the first move on something you have been holding: the first call, the first draft sent, the meeting that starts a conversation.'],
-            facts: [['Good for', 'starting, meeting, asking'], ['Best hours', '9 to 11 am, 1 to 3 pm'], ['Usable', 'the rest of the working day']] },
-      6:  { kind: 'favorable personal', kicker: 'Favorable day, personal to your chart', title: 'Your chart likes this one',
-            body: ['This day is not on everyone\'s list; it is marked because of how it meets your own chart. Days like this are where a personal calendar earns its keep.'],
-            facts: [['Good for', 'negotiating, presenting, being seen'], ['Best hours', '11 am to 1 pm'], ['Usable', '3 to 5 pm']] },
-      9:  { kind: 'caution', kicker: 'Caution day', title: 'Hold back, observe',
-            body: ['Not a bad day, a careful one. Keep commitments small and reversible. A good day for tidying, reviewing and listening, a poor one for signing.'],
-            facts: [['Avoid', 'signing, launching, confrontations'], ['Fine for', 'routine work, review, rest']] },
-      11: { kind: 'favorable', kicker: 'Favorable day', title: 'Steady ground for agreements',
-            body: ['A settled day that favours things meant to last. If a contract, a lease or a hire is close, this is the kind of day to land it.'],
-            facts: [['Good for', 'signing, agreements, long-term steps'], ['Best hours', '9 to 11 am'], ['Usable', '1 to 5 pm']] },
-      14: { kind: 'peak personal', kicker: 'The month\'s best day for you', title: 'The month\'s peak window',
-            body: ['The one day this month I would move a meeting for. General timing and your own chart line up, so what you start here has both the wind and your own energy behind it.', 'If there is one decision waiting on the right moment, this is the entry to plan it around.'],
-            facts: [['Good for', 'the month\'s most important move'], ['Best hours', '9 to 11 am, 1 to 3 pm'], ['Usable', '7 to 9 am, 3 to 5 pm']] },
-      17: { kind: 'caution personal', kicker: 'Caution day, personal to your chart', title: 'A clash with your own chart',
-            body: ['This day pushes against your chart specifically. It recurs in a pattern, so once you know it you can plan around it every month: no big asks, no big commitments, keep the diary light.'],
-            facts: [['Avoid', 'major decisions, travel you can move'], ['Fine for', 'quiet work, preparation']] },
-      22: { kind: 'favorable', kicker: 'Favorable day', title: 'Momentum for outreach',
-            body: ['An outward-facing day. Reach out, follow up, send the proposal you polished last week.'],
-            facts: [['Good for', 'outreach, follow-ups, travel'], ['Best hours', '1 to 3 pm'], ['Usable', '9 am to 12 pm']] },
-      25: { kind: 'caution', kicker: 'Caution day', title: 'Keep the day simple',
-            body: ['A day for finishing rather than starting. Clear the desk, close loops, and let the bigger moves wait for the window that follows.'],
-            facts: [['Avoid', 'new commitments'], ['Fine for', 'finishing, admin, recovery']] },
-      28: { kind: 'favorable', kicker: 'Favorable day', title: 'Close the month well',
-            body: ['A warm, supportive day near the month\'s end. Good for conversations that need goodwill on both sides, and for the money review you keep postponing.'],
-            facts: [['Good for', 'reviews, reconciliations, thank-yous'], ['Best hours', '11 am to 1 pm'], ['Usable', '3 to 5 pm']] }
+    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---- Calendar primitives (same engine as the homepage #month) ----
+    const CAL = JSON.parse(document.getElementById('calData').textContent);
+    const STEMS = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+    const BR = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+    const ANIMALS = [
+      { en: 'Rat', cn: '子' }, { en: 'Ox', cn: '丑' }, { en: 'Tiger', cn: '寅' }, { en: 'Rabbit', cn: '卯' },
+      { en: 'Dragon', cn: '辰' }, { en: 'Snake', cn: '巳' }, { en: 'Horse', cn: '午' }, { en: 'Goat', cn: '未' },
+      { en: 'Monkey', cn: '申' }, { en: 'Rooster', cn: '酉' }, { en: 'Dog', cn: '戌' }, { en: 'Pig', cn: '亥' },
+    ];
+    const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const MONTH_LONG = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const WD_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const SGT = 8 * 3600e3, DAY = 864e5;
+    const PUNISH = [[2, 5, 8], [1, 10, 7], [0, 3]];
+    const SELF_PUNISH = [4, 6, 9, 11];                 // 辰 午 酉 亥
+    const REL_NAME = { echo: 'Echo', clash: 'Clash', sixHarmony: 'Six Harmony', harm: 'Harm', harmony: 'Three Harmony', seasonal: 'Seasonal alliance', punish: 'Punishment' };
+
+    const sgtMidnight = s => { const [y, m, d] = s.split('-').map(Number); return Date.UTC(y, m - 1, d) - SGT; };
+    const todaySgt = () => { const d = new Date(Date.now() + SGT); return { y: d.getUTCFullYear(), m: d.getUTCMonth(), d: d.getUTCDate() }; };
+
+    // Month pillars with their Singapore start and end instants.
+    const MONTHS = CAL.starts.slice(0, -1).map((s, n) => ({
+      start: sgtMidnight(s), end: sgtMidnight(CAL.starts[n + 1]),
+      stem: (CAL.first.stem + n) % 10, branch: (CAL.first.branch + n) % 12,
+      from: s,
+    })).map(m => ({ ...m, pillar: STEMS[m.stem] + BR[m.branch] }));
+    const monthAt = t => MONTHS.find(m => t >= m.start && t < m.end) || null;
+
+    // Day pillar of a calendar date: 60-day cycle anchored on 戊午 for 1 Jan 2000.
+    const dayIndex = (y, m, d) => ((54 + Math.round((Date.UTC(y, m, d) - Date.UTC(2000, 0, 1)) / DAY)) % 60 + 60) % 60;
+
+    function relations(a, b) {
+      if (a === b) return ['echo'];
+      const r = [];
+      if ((a - b + 12) % 12 === 6) r.push('clash');
+      if ((a + b) % 12 === 1) r.push('sixHarmony');
+      if ((a + b) % 12 === 7) r.push('harm');
+      if (a % 4 === b % 4) r.push('harmony');
+      if (Math.floor(((a + 10) % 12) / 3) === Math.floor(((b + 10) % 12) / 3)) r.push('seasonal');
+      if (PUNISH.some(set => set.includes(a) && set.includes(b))) r.push('punish');
+      return r;
+    }
+
+    // One day, read against the month in force and (if chosen) the visitor's animal.
+    const ANIMAL_W = { clash: -0.8, harm: -0.35, punish: -0.35, sixHarmony: 0.6, harmony: 0.45, seasonal: 0.15, echo: 0 };
+    const TAG = {
+      peak:    { name: 'Peak',       title: 'Peak day: close, sign',       line: 'One of your strongest days. Put the decision that matters most here.' },
+      good:    { name: 'Favourable', title: 'Favourable day: initiate',    line: 'A supportive day to start, meet and ask.' },
+      neutral: { name: 'Ordinary',   title: 'An ordinary day, no entry',   line: 'Nothing to plan around. Most days are like this; the calendar stays quiet so the marked days mean something.' },
+      hold:    { name: 'Hold',       title: 'Hold day: keep it small',     line: 'Keep commitments small and reversible. Good for review and routine work.' },
+      pause:   { name: 'Pause',      title: 'Pause day: avoid signing',    line: 'The day clashes your animal. Avoid signing, big asks and moves you cannot undo.' },
     };
-
-    const grid = document.getElementById('pcGrid');
-    const entry = document.getElementById('pcEntry');
-    const kickerEl = document.getElementById('pcKicker');
-    const titleEl = document.getElementById('pcTitle');
-    const bodyEl = document.getElementById('pcBody');
-    const buttons = [];
-
-    for (let i = 0; i < START_OFFSET; i++) { const b = document.createElement('div'); b.className = 'pc-day blank'; b.setAttribute('aria-hidden', 'true'); grid.appendChild(b); }
-    for (let d = 1; d <= DAYS; d++) {
-      const e = ENTRIES[d];
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'pc-day' + (e ? ' ' + e.kind : '');
-      b.textContent = d;
-      b.setAttribute('aria-pressed', 'false');
-      b.setAttribute('aria-label', e ? `Day ${d}, ${e.kicker}` : `Day ${d}, no entry`);
-      b.addEventListener('click', () => show(d, b));
-      grid.appendChild(b);
-      buttons.push(b);
-    }
-
-    function show(d, b) {
-      buttons.forEach(x => x.setAttribute('aria-pressed', 'false'));
-      b.setAttribute('aria-pressed', 'true');
-      const e = ENTRIES[d];
-      entry.classList.remove('is-caution', 'is-peak');
-      if (!e) {
-        kickerEl.textContent = `Day ${d}`;
-        titleEl.textContent = 'An ordinary day, no entry';
-        bodyEl.innerHTML = '<p>Nothing to plan around here. Most days are like this. The calendar stays quiet so that the marked days mean something when they come.</p>';
-        return;
+    function readDay(y, m, d, animal) {
+      const di = dayIndex(y, m, d), stem = di % 10, br = di % 12;
+      const t = Date.UTC(y, m, d) - SGT + 12 * 3600e3;   // midday Singapore
+      const mp = monthAt(t);
+      let s = 0; const flags = new Set(); const reasons = [];
+      if (mp) {
+        if ((br - mp.branch + 12) % 12 === 6) { s -= 0.6; flags.add('break'); reasons.push(`${BR[br]}${BR[mp.branch]} Clash with the ${mp.pillar} month: a month break`); }
+        else {
+          const sup = relations(br, mp.branch).find(r => r === 'sixHarmony' || r === 'harmony');
+          if (sup) { s += 0.15; reasons.push(`${BR[br]}${BR[mp.branch]} ${REL_NAME[sup]} with the month`); }
+        }
       }
-      if (e.kind.includes('caution')) entry.classList.add('is-caution');
-      if (e.kind.includes('peak')) entry.classList.add('is-peak');
-      kickerEl.textContent = `Day ${d}. ${e.kicker}`;
-      titleEl.textContent = e.title;
-      const paras = e.body.map(p => `<p>${p}</p>`).join('');
-      const facts = e.facts ? `<dl>${e.facts.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>` : '';
-      bodyEl.innerHTML = paras + facts;
-      if (window.innerWidth < 860) entry.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      if (animal !== null) {
+        relations(br, animal).forEach(rel => {
+          let w = ANIMAL_W[rel];
+          let label = REL_NAME[rel];
+          if (rel === 'echo' && SELF_PUNISH.includes(animal)) { w = -0.2; label = 'Self-punishment'; }
+          if (rel === 'echo' && w === 0) return;
+          s += w; flags.add(rel);
+          reasons.push(`${BR[br]}${BR[animal]} ${label} with your ${ANIMALS[animal].en}`);
+        });
+      }
+      let tag = 'neutral';
+      if (flags.has('clash')) tag = 'pause';
+      else if (flags.has('break') || s <= -0.3) tag = 'hold';
+      else if (s >= 0.6) tag = 'peak';
+      else if (s >= 0.3) tag = 'good';
+      const date = new Date(Date.UTC(y, m, d));
+      return {
+        key: `${y}-${m}-${d}`, y, m, d, s, tag, reasons,
+        pillar: STEMS[stem] + BR[br],
+        short: `${WD[date.getUTCDay()]} ${d} ${MON[m]}`,
+        long: `${WD_LONG[date.getUTCDay()]} ${d} ${MONTH_LONG[m]}`,
+        chip: TAG[tag].name, title: TAG[tag].title, line: TAG[tag].line,
+        label: `${d} ${MONTH_LONG[m]}, ${STEMS[stem] + BR[br]} day, ${TAG[tag].name}`,
+      };
     }
+    const addDays = ({ y, m, d }, n) => { const x = new Date(Date.UTC(y, m, d + n)); return { y: x.getUTCFullYear(), m: x.getUTCMonth(), d: x.getUTCDate() }; };
+
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('reader', { animal: null });
+
+      Alpine.data('orderBar', () => ({
+        pastHero: false, atPrice: false,
+        get show() { return this.pastHero && !this.atPrice; },
+        init() {
+          const watch = (el, fn, opts) => el && new IntersectionObserver(([e]) => fn(e), opts).observe(el);
+          watch(document.querySelector('[data-hero] .btn-ember'), e => { this.pastHero = !e.isIntersecting && e.boundingClientRect.top < 0; }, { threshold: 0 });
+          watch(document.getElementById('order-price'), e => { this.atPrice = e.isIntersecting; }, { threshold: 0.2 });
+        },
+      }));
+
+      // ---- Teaser: the three best days and the one to avoid in the next 30 days ----
+      Alpine.data('teaser', () => ({
+        animals: ANIMALS,
+        birthYear: '',
+        read: null,
+        get animal() { return Alpine.store('reader').animal; },
+        init() { this.$watch('animal', () => this.compute()); },
+        pick(i) { Alpine.store('reader').animal = i; this.birthYear = ''; },
+        fromYear() {
+          const y = parseInt(this.birthYear, 10);
+          if (y >= 1900 && y <= 2100) Alpine.store('reader').animal = (((y - 4) % 12) + 12) % 12;
+        },
+        compute() {
+          if (this.animal === null) { this.read = null; return; }
+          const start = todaySgt();
+          const days = Array.from({ length: 30 }, (_, i) => { const c = addDays(start, i + 1); return readDay(c.y, c.m, c.d, this.animal); });
+          const best = days.filter(x => x.tag === 'peak' || x.tag === 'good').sort((a, b) => b.s - a.s).slice(0, 3)
+            .sort((a, b) => Date.UTC(a.y, a.m, a.d) - Date.UTC(b.y, b.m, b.d));
+          const avoid = days.find(x => x.tag === 'pause') || days.find(x => x.tag === 'hold') || null;
+          this.read = { best, avoid };
+        },
+      }));
+
+      // ---- Signature: the month as calendar entries ----
+      Alpine.data('calView', () => ({
+        animals: ANIMALS,
+        cells: [], current: null, monthName: '', monthPillars: '',
+        tally: { peak: 0, good: 0, hold: 0, pause: 0 },
+        targets: [], which: 0,
+        get animal() { return Alpine.store('reader').animal; },
+        init() {
+          // Two months: this month until the 20th, then next month (as on the homepage), and the one after.
+          const t = todaySgt();
+          const a = t.d >= 21 ? addDays({ y: t.y, m: t.m, d: 1 }, 32) : { y: t.y, m: t.m, d: 1 };
+          const b = addDays({ y: a.y, m: a.m, d: 1 }, 32);
+          this.targets = [a, b].map(x => ({ y: x.y, m: x.m, label: `${MON[x.m]} ${x.y}` }));
+          this.which = 0;
+          this.build(false);
+          this.$watch('animal', () => this.build(true));
+          const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); this.play(); } }, { threshold: 0.25 });
+          io.observe(this.$refs.grid);
+        },
+        setAnimal(v) { Alpine.store('reader').animal = v === '' ? null : Number(v); },
+        show(i) { if (i !== this.which) { this.which = i; this.build(true); } },
+        build(animate) {
+          const { y, m } = this.targets[this.which];
+          const first = new Date(Date.UTC(y, m, 1)), days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+          const lead = (first.getUTCDay() + 6) % 7;   // Monday start
+          const today = todaySgt();
+          const cells = [];
+          for (let i = 0; i < lead; i++) cells.push({ key: 'b' + i, out: true });
+          const read = [];
+          for (let d = 1; d <= days; d++) {
+            const r = readDay(y, m, d, this.animal);
+            const iso = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            const ms = MONTHS.find(p => p.from === iso);
+            read.push(r);
+            cells.push({ ...r, out: false, today: today.y === y && today.m === m && today.d === d, monthStart: ms ? `${ms.pillar} month begins` : '' });
+          }
+          while (cells.length % 7) cells.push({ key: 'a' + cells.length, out: true });
+          this.cells = cells;
+          this.monthName = `${MONTH_LONG[m]} ${y}`;
+          const a = Date.UTC(y, m, 1) - SGT, b = Date.UTC(y, m + 1, 1) - SGT;
+          this.monthPillars = MONTHS.filter(p => p.start < b && p.end > a).map(p => p.pillar).join(' · ');
+          const tally = { peak: 0, good: 0, hold: 0, pause: 0 };
+          read.forEach(r => { if (r.tag in tally) tally[r.tag]++; });
+          this.tally = tally;
+          this.current = read.find(r => r.tag === 'peak') || read.find(r => r.tag === 'good') || read.find(r => r.tag === 'hold') || read[0];
+          if (animate) this.$nextTick(() => this.play());
+        },
+        pick(c) {
+          if (c.out) return;
+          this.current = c;
+          if (!REDUCED && window.gsap) gsap.fromTo(this.$refs.entry, { opacity: 0.4, y: 6 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', clearProps: 'transform,opacity' });
+          if (window.innerWidth < 1024) this.$refs.entry.scrollIntoView({ block: 'nearest', behavior: REDUCED ? 'auto' : 'smooth' });
+        },
+        play() {
+          if (REDUCED || !window.gsap) return;
+          const evts = this.$refs.grid.querySelectorAll('[data-evt]');
+          gsap.fromTo(evts, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.45, stagger: 0.03, ease: 'power3.out', clearProps: 'transform,opacity' });
+          gsap.fromTo(this.$refs.scan, { left: '-25%' }, { left: '110%', duration: 1.1, ease: 'power2.inOut' });
+        },
+      }));
+    });
+
+    // ---- Seal sheen: one sweep after load ----
+    if (!REDUCED) {
+      const sweep = () => setTimeout(() => document.querySelector('[data-sheen]')?.classList.add('is-sweeping'), 900);
+      if (document.readyState === 'complete') sweep(); else window.addEventListener('load', sweep, { once: true });
+    }
+
+    // ---- Hero entrance ----
+    document.addEventListener('alpine:initialized', () => {
+      const root = document.documentElement;
+      if (REDUCED || !window.gsap) { root.classList.remove('preload'); return; }
+      const hero = document.querySelectorAll('[data-anim="hero"]');
+      gsap.set(hero, { opacity: 0, y: 24 });
+      root.classList.remove('preload');
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .fromTo('[data-anim="nav"]', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.6 })
+        .to(hero, { opacity: 1, y: 0, duration: 0.8, stagger: 0.09, clearProps: 'transform' }, 0.1);
+    });
   </script>
 </body>
 </html>

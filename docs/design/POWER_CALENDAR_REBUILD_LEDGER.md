@@ -72,3 +72,17 @@ Today it is diluted by:
 4. Signature is the calendar-style view: days as event chips, a tapped day opens the entry card with a
    locked "Best hours" row.
 5. House colours on this page (gold favourable and peak, ochre hold, ember pause), as on the homepage.
+
+## Gate 2 (2026-09-30): approved as built
+
+Built as `power-calendar-rebuild.html` and reviewed on the branch preview. Checks at 1440 and 390: no console
+errors, no horizontal scroll, teaser and calendar agree for several animals, birth year 1988 reads as Dragon,
+whole-cell taps on phones, mobile order bar hidden at the top and over the plan card. Two FAQ lines were cut
+because no doc confirms them (the portal link in the Stripe receipt; months arriving before they begin).
+
+## Ship (phase 5)
+
+`power-calendar.html` replaced with the prototype, `noindex` removed, meta copied from the live page with the
+gate 1 trial wording. Tailwind compiled to `css/power-calendar.css` from `scripts/tailwind/power-calendar.config.js`.
+The page no longer loads `2027.css` or `2027.js`; their `/power-calendar` rules were removed. Its copy of
+`#calData` matches the homepage's: extend both before mid-2028.

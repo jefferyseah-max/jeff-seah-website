@@ -1,7 +1,7 @@
 // Tailwind build for /power-calendar (power-calendar.html). Rebuild after changing classes in the page:
 //   npx tailwindcss@3 -c scripts/tailwind/power-calendar.config.js -i scripts/tailwind/outlook-2027.input.css -o css/power-calendar.css --minify
 module.exports = {
-  content: ['./power-calendar.html', './power-calendar-rebuild.html'],
+  content: ['./power-calendar.html'],
   theme: {
     extend: {
       colors: {

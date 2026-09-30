@@ -1,7 +1,7 @@
-// 2027.js : shared behaviour for /power-calendar, /welcome and /2027-next.
+// 2027.js : shared behaviour for /welcome and /2027-next (the intake pages).
 // Nav scroll state, mobile menu, seal sheen, the contact link, FAQ accordion,
-// scroll reveal, the price step and the Stripe link injection. /2027, /book and
-// the homepage keep their own inline scripts.
+// scroll reveal, the price step and the Stripe link injection. Every other page
+// keeps its own inline script.
 
 // Price step (Jeff, 2026-09-25): USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027 SGT.
 // The HTML is written for the 88 window; this flips the copy and the Stripe link once the date passes.
