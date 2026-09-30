@@ -76,10 +76,10 @@ their birth details are; Jeff (and his agent pipeline, outside this repo) produc
 | `2027.html` | 2027 Annual Outlook sales page (rebuilt 2026-09-30). Sections: hero with the Contact & Clash wheel (`#teaser`), `#when-to` (generated month path, data in the inline `#whenToData` JSON), `#order`, `#faq`, footer, mobile order bar. Self-contained: compiled Tailwind `css/outlook-2027.css` (source config in `scripts/tailwind/`), Alpine.js and GSAP from CDNs, JS inline. Has JSON-LD Product schema. |
 | `2027-next.html` | Post-payment intake for Outlook buyers. `noindex`. |
 | `welcome.html` | Post-payment intake for monthly subscribers. `noindex`. |
-| `power-calendar.html` | Power Calendar explainer with a sample month and plan CTA (links to the 97 trial). |
+| `power-calendar.html` | Power Calendar sales page (rebuilt 2026-09-30). Sections: hero with the next-good-days teaser (`#teaser`), `#month` (the real month as calendar entries: day pillars from the 60-day cycle, month pillars from its inline `#calData`, read against the visitor's animal; entry card with a locked best-hours row), what the calendar adds, `#how`, `#order` (one plan card, `#order-price` for the mobile bar), `#faq`, footer, mobile order bar. Self-contained: compiled Tailwind `css/power-calendar.css` (config `scripts/tailwind/power-calendar.config.js`), Alpine.js and GSAP from CDNs, JS inline. |
 | `book.html` | Single Session page, rebuilt 2026-09-30 in the house style: compiled Tailwind `css/book.css` (config `scripts/tailwind/book.config.js`), Alpine.js and GSAP from CDNs, all JS inline. Decision Dial, Decision Window, session evenings in the visitor's zone, order card, FAQ. Every Book button goes to CalendarHero `/singlesession`. No visible email address. OG image `img/book/og-book.jpg`. |
-| `2027.css` | Shared stylesheet for `2027-next.html`, `welcome.html`, `power-calendar.html` (not `2027.html`), in the obsidian and gold house style. Hand-written CSS, no build step. |
-| `2027.js` | Shared JS for those three pages: nav scroll state, mobile menu, FAQ accordion, scroll reveal, the 1 Jan 2027 price step, and Stripe link injection into `[data-stripe]` buttons. |
+| `2027.css` | Shared stylesheet for `2027-next.html` and `welcome.html` only, in the obsidian and gold house style. Hand-written CSS, no build step. |
+| `2027.js` | Shared JS for those two pages: seal sheen, `[data-mail]` contact link, nav scroll state, mobile menu, FAQ accordion, scroll reveal, the 1 Jan 2027 price step, and Stripe link injection into `[data-stripe]` buttons. |
 | `api/stripe-webhook.mjs` | Vercel function: Stripe webhook entry point. |
 | `lib/billing-anchor.mjs` | Signature check + "move to the 15th" logic. |
 | `lib/signup-alert.mjs` | Posts the new-subscriber alert to the Apps Script. |
@@ -99,7 +99,7 @@ Stripe account `acct_1ScW2gRmcvZfydHf` (live mode), display name "Jeffseah.rocks
 
 | Plan | Price | Product ID | Payment Link | Linked from |
 |---|---|---|---|---|
-| Power Calendar | 97/mo, **30-day free trial, card required** | `prod_VK8L1DKjxPpeGD` | https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05 | `index.html` `#pricing`, `power-calendar.html` (3 places) |
+| Power Calendar | 97/mo, **30-day free trial, card required** | `prod_VK8L1DKjxPpeGD` | https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05 | `index.html` `#pricing`, `power-calendar.html` (4 places: nav, hero, plan card, mobile bar) |
 | Power Calendar + Brief Monthly Report | 197/mo | `prod_VK8NH11wU878bY` | https://buy.stripe.com/bJebJ30Inc8K4rU3TXbwk06 | `index.html` |
 | Power Calendar + Premium Monthly Report | 297/mo | `prod_VK8fDT2mDGFFBt` | https://buy.stripe.com/4gMfZjcr51u6cYqduxbwk07 | `index.html` (Most Popular badge and primary button) |
 | Power Calendar + Premium Report + Coaching | 497/mo | `prod_VK8hEVXNT5TUxy` | https://buy.stripe.com/eVq8wR0In4Gie2u2PTbwk08 | `index.html` |
@@ -328,14 +328,14 @@ Integration points a CRM can hook without redesign:
 ## 10. For the design project: what to know before touching the pages
 
 - **House style from 2026-09-30:** obsidian and gold, in `docs/design/BRAND.md`. Every page uses it:
-  `/2027`, `/book` and the homepage through their compiled Tailwind builds, and `/power-calendar`,
+  `/2027`, `/book`, `/power-calendar` and the homepage through their compiled Tailwind builds, and
   `/welcome` and `/2027-next` through `2027.css` (re-tokened 2026-09-30; the old navy tokens are in git
   history only).
 - **`2027.css` tokens** mirror BRAND.md: `--obsidian`, `--coal`, `--gold` (plus `--gold-hi` and
   `--gold-lo` for the button gradient), `--champagne`, `--ivory`, `--ivory-body` (body copy at about 70 %),
   `--ash`, the Wu Xing accents `--jade`, `--ember`, `--ochre`, `--pearl`, `--ink`, and `--hair` /
-  `--gold-line` hairlines. On `/power-calendar`, gold marks favorable and peak days, ember caution days,
-  champagne the "personal to your chart" dot. Form errors use ember. `.hexagram-bg` is the ambient layer
+  `--gold-line` hairlines. Form errors use ember. On `/power-calendar` (Tailwind), gold marks peak and
+  favourable days, ochre hold days, ember pause days, ink the day a new month pillar begins. `.hexagram-bg` is the ambient layer
   (gold glow top left, ember bottom right, hexagram watermark at 3 %).
 - **Fonts** (Google Fonts): Cormorant Garamond (`--display`, headings), Plus Jakarta Sans (`--sans`,
   body), Space Mono (`--mono`, labels), Noto Serif TC (`--noto`, Chinese characters; not loaded by the
@@ -347,18 +347,19 @@ Integration points a CRM can hook without redesign:
 - **No visible email address** on any page (Jeff, 2026-09-30: bots scrape it). The intake pages'
   "Email Jeff" fallbacks are `[data-mail]` links: `2027.js` assembles `coaching@jeffseah.rocks` on click,
   opens the mail client and shows the address for copying.
-- **Separate style systems**: `2027.css` (three pages) and the compiled Tailwind builds
-  `css/outlook-2027.css` (`/2027`), `css/book.css` (`/book`) and `css/home.css` (homepage), each from its
+- **Separate style systems**: `2027.css` (the two intake pages) and the compiled Tailwind builds
+  `css/outlook-2027.css` (`/2027`), `css/book.css` (`/book`), `css/power-calendar.css` (`/power-calendar`)
+  and `css/home.css` (homepage), each from its
   own config in `scripts/tailwind/`. A token change must be made in each config and page `:root`.
 - **Hooks that JavaScript depends on; do not rename or remove without updating the JS:**
   `[data-stripe]` (order buttons; `2027.js` injects the Stripe URL), `[data-price]`,
   `[data-price-copy]`, `.price-step div` / `.is-now`, `[data-sheen]`, `[data-mail]` (pages on `2027.js`),
-  and on `/power-calendar` `#pcGrid`, `#pcEntry`, `#pcKicker`, `#pcTitle`, `#pcBody`; on the homepage the ported
+  on `/power-calendar` `#teaser`, `#month` (Alpine `calView`), `#order-price` (mobile order bar); on the homepage the ported
   set pieces (`.compass-*`, `#baguaPrism`, `#baguaPanel`, `#typewriterText`, `#hourglassWrap`,
   `#hourglassCanvas`) and `#outlook-price` / `#pricing-lead` (mobile order bar); and on the intake pages the form ids (`fullName`, `email`, `birthDate`, `birthTime`, `unknownTime`,
   `birthCity`, `calendarEmail`, `consent`, `submitBtn`, `company_website` honeypot) and the success /
   error state elements.
-- **Hard-coded Stripe links** live in `index.html` (4 plan buttons) and `power-calendar.html` (3 trial
+- **Hard-coded Stripe links** live in `index.html` (4 plan buttons) and `power-calendar.html` (4 trial
   buttons); the Outlook links live in `2027.js` and, separately, in the inline script of `2027.html`
   (`LINK_88`, `LINK_138`). A redesign must keep both pointing at the same URLs.
 - **Accessibility work already done**: muted text colours were raised to WCAG AA; FAQ has disclosure

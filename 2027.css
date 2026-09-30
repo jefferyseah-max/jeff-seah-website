@@ -1,8 +1,7 @@
 /* ===================================================================
-   2027.css : shared stylesheet for /power-calendar, /welcome and /2027-next.
+   2027.css : shared stylesheet for /welcome and /2027-next (the intake pages).
    House style: obsidian and gold (docs/design/BRAND.md), the same tokens as
-   /2027, /book and the homepage, which carry their own compiled Tailwind.
-   /2027 itself no longer loads this file.
+   the other pages, which carry their own compiled Tailwind.
    =================================================================== */
 
 /* ---------- Tokens (BRAND.md) ---------- */
@@ -200,86 +199,6 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--hair); padd
 /* Scroll reveal, visible by default; the js class enables the hidden state. */
 .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out); }
 .js .reveal.visible { opacity: 1; transform: translateY(0); }
-.js .pc-how-grid .reveal:nth-child(2) { transition-delay: 0.12s; }
-.js .pc-how-grid .reveal:nth-child(3) { transition-delay: 0.24s; }
-
-/* =================================================================
-   /power-calendar
-   ================================================================= */
-.pc-hero { padding: 9rem 0 3.5rem; text-align: center; }
-.pc-hero-inner { max-width: 720px; margin: 0 auto; }
-.pc-hero h1 { font-size: clamp(2.5rem, 5.8vw, 4.2rem); line-height: 1.02; letter-spacing: -0.015em; margin: 1rem 0 1.25rem; }
-.pc-hero h1 em { display: block; }
-.pc-hero p { font-size: 1.05rem; color: var(--ivory-body); line-height: 1.7; }
-.pc-hero .pc-hint { margin-top: 1.5rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); }
-
-.pc-sample { padding: 1rem 0 5.5rem; }
-.pc-layout { display: grid; grid-template-columns: 1fr; gap: 1.5rem; align-items: start; }
-.pc-cal, .pc-entry { border: 1px solid var(--hair); border-radius: 1.25rem; background: rgba(19,21,27,0.85); box-shadow: 0 30px 80px -40px rgba(0,0,0,0.8); }
-.pc-cal { padding: 1.25rem; position: relative; overflow: hidden; }
-.pc-cal::before { content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent); }
-.pc-cal-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-.pc-cal-head h2 { font-size: 1.6rem; }
-.pc-cal-head span { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ash); }
-.pc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-.pc-dow { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-align: center; color: var(--ash); padding: 0.4rem 0 0.6rem; }
-.pc-day {
-  position: relative; aspect-ratio: 1; border-radius: 0.6rem; border: 1px solid var(--hair);
-  background: rgba(237,230,214,0.02); color: var(--ash); font-family: var(--display); font-size: 1.15rem; font-variant-numeric: lining-nums;
-  display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.2s;
-}
-.pc-day:hover { border-color: rgba(212,175,55,0.4); }
-.pc-day.blank { border: none; background: transparent; cursor: default; }
-.pc-day.favorable { color: var(--ivory); border-color: rgba(212,175,55,0.38); background: rgba(212,175,55,0.1); }
-.pc-day.peak { color: var(--obsidian); background: linear-gradient(135deg, var(--gold-hi), var(--gold) 55%, var(--gold-lo)); border-color: var(--gold); font-weight: 600; box-shadow: 0 0 24px -4px rgba(212,175,55,0.55); }
-.pc-day.caution { color: var(--ivory); border-color: rgba(224,109,83,0.55); background: rgba(224,109,83,0.12); }
-.pc-day.personal::after { content: ''; position: absolute; right: 5px; top: 5px; width: 5px; height: 5px; border-radius: 50%; background: var(--champagne); }
-.pc-day.peak.personal::after { background: var(--obsidian); }
-.pc-day[aria-pressed="true"] { transform: scale(1.06); box-shadow: 0 0 0 2px var(--champagne); z-index: 1; }
-.pc-legend { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; margin-top: 1rem; font-size: 0.78rem; color: var(--ash); }
-.pc-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
-.pc-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-.pc-legend .l-fav { background: rgba(212,175,55,0.3); border: 1px solid rgba(212,175,55,0.6); }
-.pc-legend .l-peak { background: var(--gold); }
-.pc-legend .l-caut { background: rgba(224,109,83,0.3); border: 1px solid rgba(224,109,83,0.75); }
-.pc-legend .l-pers { width: 6px; height: 6px; border-radius: 50%; background: var(--champagne); margin: 0 3px; }
-
-.pc-entry { padding: 1.5rem; min-height: 16rem; }
-.pc-entry-kicker { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
-.pc-entry h3 { font-size: 1.6rem; font-weight: 400; margin-bottom: 0.9rem; line-height: 1.2; }
-.pc-entry p { font-size: 0.93rem; color: var(--ivory-body); line-height: 1.7; }
-.pc-entry p + p { margin-top: 0.7rem; }
-.pc-entry dl { display: grid; grid-template-columns: auto 1fr; gap: 0.45rem 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--hair); font-size: 0.88rem; }
-.pc-entry dt { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); white-space: nowrap; padding-top: 0.15rem; }
-.pc-entry dd { color: var(--ivory-body); line-height: 1.5; }
-.pc-entry .pc-entry-tag { display: inline-block; margin-top: 1.25rem; font-size: 0.72rem; color: var(--ash); border: 1px solid var(--hair); border-radius: 100px; padding: 0.3rem 0.7rem; }
-.pc-entry.is-caution .pc-entry-kicker, .pc-entry.is-caution dt { color: var(--ember); }
-.pc-entry.is-caution h3 { color: var(--ember); }
-.pc-entry.is-peak h3 { color: var(--gold); }
-
-.pc-how { padding: 5.5rem 0; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); background: rgba(19,21,27,0.55); }
-.pc-how h2 { max-width: 40rem; }
-.pc-how-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 2.5rem; }
-.pc-how-card { padding-top: 1.25rem; border-top: 1px solid var(--gold-line); }
-.pc-how-card h3 { font-size: 1.45rem; font-weight: 400; margin-bottom: 0.6rem; }
-.pc-how-card p { font-size: 0.95rem; color: var(--ivory-body); line-height: 1.7; }
-.pc-gcal { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 1rem; padding: 0.55rem 0.9rem; border: 1px solid var(--hair); border-radius: 0.75rem; font-size: 0.82rem; color: var(--ivory); }
-.pc-gcal svg { flex-shrink: 0; color: var(--gold); }
-
-.pc-offer { padding: 5.5rem 0; }
-.pc-offer-inner { max-width: 760px; margin: 0 auto; }
-.pc-offer-inner > p { font-size: 1.02rem; color: var(--ivory-body); line-height: 1.8; margin-top: 1rem; }
-.pc-offer-actions { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 1.75rem; }
-.pc-offer-note { margin-top: 1rem; font-size: 0.85rem; color: var(--ash); line-height: 1.6; }
-
-/* Plan ladder */
-.ladder { list-style: none; margin: 2rem 0 1.5rem; border-top: 1px solid var(--gold-line); }
-.ladder li { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem 1.5rem; padding: 1rem 0; border-bottom: 1px solid var(--hair); align-items: baseline; }
-.ladder .ladder-name { font-family: var(--display); font-size: 1.3rem; color: var(--ivory); }
-.ladder .ladder-what { grid-column: 1; font-size: 0.86rem; color: var(--ivory-body); line-height: 1.5; }
-.ladder .ladder-price { grid-column: 2; grid-row: 1 / span 2; font-family: var(--display); font-size: 1.35rem; font-weight: 600; color: var(--gold); white-space: nowrap; font-variant-numeric: lining-nums; }
-.ladder .ladder-price small { display: block; font-family: var(--mono); font-size: 0.6rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ash); text-align: right; }
-.ladder li.is-first .ladder-name { color: var(--gold); }
 
 /* =================================================================
    /2027-next and /welcome intake
@@ -354,13 +273,6 @@ fieldset.lead-field legend { padding: 0; margin-bottom: 0.4rem; float: left; wid
 }
 @media (min-width: 640px) {
   .lead-row.two { grid-template-columns: 1fr 1fr; }
-}
-@media (min-width: 700px) {
-  .pc-how-grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (min-width: 860px) {
-  .pc-layout { grid-template-columns: 1.1fr 0.9fr; gap: 2rem; }
-  .pc-entry { position: sticky; top: 6rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
