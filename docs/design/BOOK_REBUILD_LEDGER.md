@@ -63,6 +63,11 @@ time zone until they reach CalendarHero.
 4. Upsell bridge: one sentence linking to the homepage pricing tiers (`/#pricing`) for now.
 5. Canonical, OG, Twitter and Service JSON-LD (price 197) tags: add them.
 
+## Jeff at gate 2 (2026-09-30)
+
+- CalendarHero's booking confirmation carries a reschedule link; the FAQ says so instead of pointing to email.
+- No visible email address or `mailto:` link on the page (scraping and spam). The footer drops it.
+
 ## Phase 1 to 3 build notes
 
 - Prototype `book-rebuild.html` (noindex), CSS `css/book.css` compiled from
