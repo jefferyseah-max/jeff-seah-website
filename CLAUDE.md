@@ -96,6 +96,8 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 - Git Bash strips backslashes in inline `node -e` and heredoc edits (a CSS `"\2726"` became garbage); use the Edit tool.
 - Page rebuilds (homepage, `/book`, any sales page): use the `tactile-page-rebuild` skill in
   `.claude/skills/` (the method behind the 2026-09-30 `/2027` rebuild). Works in cloud sessions.
+- House style (Jeff, 2026-09-30): obsidian and gold with muted Wu Xing accents, in `docs/design/BRAND.md`.
+  `/2027` uses it; the homepage and `/book` adopt it in their rebuilds.
 
 ## Style
 - No em dashes in any output.

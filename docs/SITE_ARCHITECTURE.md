@@ -326,6 +326,8 @@ Integration points a CRM can hook without redesign:
 
 ## 10. For the design project: what to know before touching the pages
 
+- **House style from 2026-09-30:** obsidian and gold, in `docs/design/BRAND.md`; `/2027` already uses it and the
+  homepage and `/book` move to it when rebuilt. The navy tokens below describe the pages not yet rebuilt.
 - **Brand tokens** (identical in `index.html` inline `:root` and `2027.css`): `--void #05070f`,
   `--deep #080c1a`, `--midnight #0d1225`, `--gold #c9943a`, `--gold-light #e8bc6a`, `--gold-dim`,
   `--jade #4a7c6f`, `--crimson #8b1a1a`, `--text #ede8df`, `--text-muted #8f887a` (AA on navy),
