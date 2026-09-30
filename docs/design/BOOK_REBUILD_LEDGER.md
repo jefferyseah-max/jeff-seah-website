@@ -54,6 +54,19 @@ time zone until they reach CalendarHero.
 4. **Conversion:** offer card (price, what is covered, before/during/after), one bridge sentence,
    5-question FAQ, mobile Book bar, /2027 footer with the disclaimer.
 
-## Questions for Jeff
+## Jeff's rulings at gate 1 (2026-09-30)
 
-See the gate 1 message in the session; answers are recorded here once given.
+1. After-session deliverable: "Session summary within 48 hours" everywhere (rows 5 and 6; no PDF, no key-dates promise).
+2. "48-hour reschedule policy": keep as is.
+3. Birth details: Jeff emails the client for them if the question needs a BaZi reading. The page does
+   not ask for them at booking and does not claim the chart is read before the call.
+4. Upsell bridge: one sentence linking to the homepage pricing tiers (`/#pricing`) for now.
+5. Canonical, OG, Twitter and Service JSON-LD (price 197) tags: add them.
+
+## Phase 1 to 3 build notes
+
+- Prototype `book-rebuild.html` (noindex), CSS `css/book.css` compiled from
+  `scripts/tailwind/book.config.js`. Screenshots: `docs/design/qa/book-*.png`.
+- Decision Window data: solar-term start dates from 白露 2026 to 小寒 2029 in `#windowData`; pillars are
+  generated from them. Extend the dates before mid-2028.
+- Session evenings: next four Mon/Tue/Thu evenings at least two days out, shown in the visitor's zone.
