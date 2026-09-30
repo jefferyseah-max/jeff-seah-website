@@ -18,6 +18,8 @@ Add tasteful motion so the pages feel crafted, not templated. This is a visual p
 
 ## Brand (keep and extend, do not replace)
 
+> **Superseded for colour (2026-09-30):** the house style is now obsidian and gold; see `docs/design/BRAND.md`. The navy tokens below describe pages not yet rebuilt.
+
 Tokens live in `index.html` `:root` and at the top of `2027.css`.
 
 - Colour: `--void #05070f`, `--deep #080c1a`, `--midnight #0d1225` backgrounds; `--gold #c9943a`,

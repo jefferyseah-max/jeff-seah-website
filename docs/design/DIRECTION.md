@@ -32,6 +32,8 @@ labels stay tiny and tracked wide.
 
 ## New tokens (both `index.html` and `2027.css`)
 
+> Superseded 2026-09-30 by `docs/design/BRAND.md` (obsidian and gold; the Wu Xing accents are retuned there for obsidian).
+
 - Wu Xing accents for the stem ring and the FAQ trace, muted so they sit inside navy and gold:
   `--wx-wood #5f9a86`, `--wx-fire #c4573a`, `--wx-earth #b8863f`, `--wx-metal #e6d3a3`,
   `--wx-water #6f86c2`.
