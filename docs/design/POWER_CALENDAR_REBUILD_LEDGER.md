@@ -63,3 +63,12 @@ Today it is diluted by:
 4. Signature: the Google-Calendar-style view above, or the homepage's month map as it is?
 5. Colours: the paid calendar uses Google colours (green power days, grey caution). Keep the site's
    house colours (gold favourable, ember pause) on this page, as the homepage does?
+
+## Jeff's rulings at gate 1 (2026-09-30): yes to all
+
+1. Meta and copy say "30-day free trial, card required", not "First month complimentary".
+2. "Two ways to start free" goes; the Outlook is one line.
+3. One Power Calendar card plus one line to `/#pricing`; no second price table.
+4. Signature is the calendar-style view: days as event chips, a tapped day opens the entry card with a
+   locked "Best hours" row.
+5. House colours on this page (gold favourable and peak, ochre hold, ember pause), as on the homepage.
