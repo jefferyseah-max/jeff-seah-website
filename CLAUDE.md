@@ -59,6 +59,7 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 |------|---------|
 | `index.html` | Homepage; CSS and JS inline |
 | `2027.html` | Outlook sales page, self-contained: Tailwind (compiled to `css/outlook-2027.css`), Alpine.js and GSAP from CDNs, all JS inline. After changing its classes, rebuild the CSS: `npx tailwindcss@3 -c scripts/tailwind/outlook-2027.config.js -i scripts/tailwind/outlook-2027.input.css -o css/outlook-2027.css --minify` |
+| `book.html` | Single Session sales page (USD 197, books and pays on CalendarHero `/singlesession`), self-contained like `2027.html`: Decision Dial teaser, Decision Window (six months from today, pillars generated from the solar-term dates in `#windowData`; extend those dates before mid-2028), session evenings in the visitor's time zone. CSS: `npx tailwindcss@3 -c scripts/tailwind/book.config.js -i scripts/tailwind/outlook-2027.input.css -o css/book.css --minify`. No visible email address on the page (Jeff, 2026-09-30) |
 | `2027-next.html`, `welcome.html`, `power-calendar.html` | The two intake pages, Power Calendar sample page |
 | `2027.css` / `2027.js` | Shared CSS and JS for the three pages above (no longer used by `2027.html`) |
 | `api/stripe-webhook.mjs`, `lib/billing-anchor.mjs`, `lib/signup-alert.mjs`, `tests/` | 15th-billing webhook and new-subscriber alert; `node --test tests/*.test.mjs` |
@@ -77,6 +78,9 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-09-30: `/book` rebuilt in the obsidian and gold house style (ledger and rulings:
+  `docs/design/BOOK_REBUILD_LEDGER.md`). After-session promise is "Session summary within 48 hours";
+  rescheduling is via the link in the CalendarHero confirmation; upsell is one line to `/#pricing`.
 - 2026-09-30: `/2027` rebuilt (dark editorial): hero with the Contact & Clash wheel, the When-To Index
   (a month path generated from the 2027 month pillars per goal, tuned by the visitor's animal), order card,
   Power Calendar line, 5-question FAQ, mobile order bar. Transparent seal layers `img/seal-mark.png`,
@@ -97,7 +101,7 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 - Page rebuilds (homepage, `/book`, any sales page): use the `tactile-page-rebuild` skill in
   `.claude/skills/` (the method behind the 2026-09-30 `/2027` rebuild). Works in cloud sessions.
 - House style (Jeff, 2026-09-30): obsidian and gold with muted Wu Xing accents, in `docs/design/BRAND.md`.
-  `/2027` uses it; the homepage and `/book` adopt it in their rebuilds.
+  `/2027` and `/book` use it; the homepage adopts it in its rebuild.
 
 ## Style
 - No em dashes in any output.
