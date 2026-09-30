@@ -72,7 +72,7 @@ their birth details are; Jeff (and his agent pipeline, outside this repo) produc
 
 | File | Role |
 |---|---|
-| `index.html` (~2100 lines) | Homepage. **All CSS and JS inline.** Sections: nav, hero (with a `/2027` banner), `#calendar` (2027 Outlook + free Power Calendar month offer), `#value`, `#features`, manifesto, `#process`, `#pricing` (4 monthly plans + Single Session), `#faq`, footer. |
+| `index.html` | Homepage, rebuilt 2026-09-30 (house style, compiled Tailwind `css/home.css`, Alpine and GSAP from CDNs, JS inline). Sections: nav, hero (Luopan, `/2027` banner, next-good-days teaser), `#outlook`, problem, `#month` (day-by-day map), `#moves` (Bagua prism), Philosophy (hourglass to Hexagram 49), how it works, `#pricing` (Power Calendar lead card plus 197/297/497 ladder, Single Session line to `/book`), `#faq`, footer with disclaimer, mobile order bar. |
 | `2027.html` | 2027 Annual Outlook sales page (rebuilt 2026-09-30). Sections: hero with the Contact & Clash wheel (`#teaser`), `#when-to` (generated month path, data in the inline `#whenToData` JSON), `#order`, `#faq`, footer, mobile order bar. Self-contained: compiled Tailwind `css/outlook-2027.css` (source config in `scripts/tailwind/`), Alpine.js and GSAP from CDNs, JS inline. Has JSON-LD Product schema. |
 | `2027-next.html` | Post-payment intake for Outlook buyers. `noindex`. |
 | `welcome.html` | Post-payment intake for monthly subscribers. `noindex`. |
@@ -122,8 +122,9 @@ All four links redirect after payment to
   Stripe link and the days left, and every order button, badge and price reads from it.
 - `2027.js` (other pages) swaps the `[data-price]` number, the `[data-price-copy]` sentences, the price-step highlight,
   and chooses the 138 link instead of the 88 link for every `[data-stripe]` button.
-- `index.html` has its own inline snippet at the top of its `<script>` that swaps the two
-  `[data-price-home]` lines (hero banner and offer bullet) at the same moment.
+- `index.html` has its own `Alpine.store('offer')` (`PRICE_STEP_AT`, same moment) for the hero banner and
+  the Outlook card price; it links to `/2027`, not to Stripe. A second constant, `LEAD_FLIP_AT`
+  (2027-02-01 00:00 SGT), switches the page's lead offer from the Outlook to the Power Calendar trial.
 - **Not automatic (reminder set for 1 Jan 09:00 SGT, Calendar + Telegram):** Jeff deactivates the 88
   link in Stripe; an agent updates `2027.html` JSON-LD `price` 88 to 138 and drops/moves
   `priceValidUntil` (2026-12-31), and removes "USD 88 until 31 December 2026" from the `description`,
@@ -326,23 +327,24 @@ Integration points a CRM can hook without redesign:
 
 ## 10. For the design project: what to know before touching the pages
 
-- **House style from 2026-09-30:** obsidian and gold, in `docs/design/BRAND.md`; `/2027` and `/book` use it and the
-  homepage moves to it when rebuilt. The navy tokens below describe the pages not yet rebuilt.
-- **Brand tokens** (identical in `index.html` inline `:root` and `2027.css`): `--void #05070f`,
+- **House style from 2026-09-30:** obsidian and gold, in `docs/design/BRAND.md`; `/2027`, `/book` and the
+  homepage use it. The navy tokens below describe the pages not yet rebuilt (`2027.css`: `/2027-next`,
+  `/welcome`, `/power-calendar`).
+- **Old navy tokens** (`2027.css`): `--void #05070f`,
   `--deep #080c1a`, `--midnight #0d1225`, `--gold #c9943a`, `--gold-light #e8bc6a`, `--gold-dim`,
   `--jade #4a7c6f`, `--crimson #8b1a1a`, `--text #ede8df`, `--text-muted #8f887a` (AA on navy),
   `--text-dim #3a3830` (decorative only). `2027.css` adds `--text-muted-accessible #a39c8e`,
   `--ember #b8401c` (hero glow only), `--ease-out`, `--ease-site`.
 - **Fonts** (Google Fonts): Cormorant Garamond (`--serif`, headings), DM Sans (`--sans`, body),
   Space Mono (`--mono`, labels), Noto Serif TC (`--noto`, Chinese characters).
-- **Separate style systems**: `index.html` (inline CSS), `2027.css` (three pages), and the compiled
-  Tailwind builds `css/outlook-2027.css` (`/2027`) and `css/book.css` (`/book`). A token change must be made in all three, or extracted into a shared stylesheet first.
+- **Separate style systems**: `2027.css` (three pages) and the compiled Tailwind builds
+  `css/outlook-2027.css` (`/2027`), `css/book.css` (`/book`) and `css/home.css` (homepage), each from its
+  own config in `scripts/tailwind/`. A token change must be made in each config and page `:root`.
 - **Hooks that JavaScript depends on; do not rename or remove without updating the JS:**
   `[data-stripe]` (order buttons; `2027.js` injects the Stripe URL), `[data-price]`,
-  `[data-price-copy]`, `.price-step div` / `.is-now`, `[data-price-home]` (homepage),
-  `#nav`, `.nav-toggle`, `#navMenu`, `.faq-card` / `.faq-q` / `.faq-a`, `.reveal` / `.visible`
-  (scroll reveal; content is visible without JS, `html.js` enables the hidden state),
-  and on the intake pages the form ids (`fullName`, `email`, `birthDate`, `birthTime`, `unknownTime`,
+  `[data-price-copy]`, `.price-step div` / `.is-now` (pages on `2027.js`); on the homepage the ported
+  set pieces (`.compass-*`, `#baguaPrism`, `#baguaPanel`, `#typewriterText`, `#hourglassWrap`,
+  `#hourglassCanvas`) and `#outlook-price` / `#pricing-lead` (mobile order bar); and on the intake pages the form ids (`fullName`, `email`, `birthDate`, `birthTime`, `unknownTime`,
   `birthCity`, `calendarEmail`, `consent`, `submitBtn`, `company_website` honeypot) and the success /
   error state elements.
 - **Hard-coded Stripe links** live in `index.html` (4 plan buttons) and `power-calendar.html` (3 trial

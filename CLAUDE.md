@@ -22,14 +22,15 @@ If a task needs Stripe or Sheet edits and the session is cloud, say so at the st
   297 Calendar + Premium, 497 Coaching. Single Session USD 197 via `/book`, paid at booking on CalendarHero `/singlesession`.
 - 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. `/2027` holds both links in
   its own inline Alpine store (`Alpine.store('offer')` in `2027.html`), which switches link and copy at
-  00:00 SGT 1 Jan; `2027.js` keeps the same constants for the other pages (homepage flips its own two lines
-  at the same moment). The 88 link stays live in Stripe until Jeff deactivates it on 1 Jan (reminder set). Buyers get a sample Power Calendar month (next full month, no card) as a private HTML page beside the report,
+  00:00 SGT 1 Jan; `2027.js` keeps the same constants for the other pages (the homepage has its own
+  `Alpine.store('offer')` and flips at the same moment). The 88 link stays live in Stripe until Jeff deactivates it on 1 Jan (reminder set). Buyers get a sample Power Calendar month (next full month, no card) as a private HTML page beside the report,
   NOT a shared Google Calendar; Google Calendar delivery is for monthly subscribers only (Jeff, 2026-09-27).
   `/2027-next` no longer asks for a calendar Google account; it posts `calendarEmail: ''` so the Sheet columns stay put.
   `/2027` shows no report screenshots since the 2026-09-30 rebuild; Jeff decided 2026-09-27 not to publish a
   full sample report, so do not link one. The page makes no email promises (no check-in emails, no
   follow-up question; rulings D9 and D10) until Part 4 ships.
-- Homepage `#calendar` section sells the Outlook plus the sample month. The old no-card free-month
+- Homepage leads with the Outlook plus the sample month (`#outlook`) until 00:00 SGT 1 Feb 2027, then
+  switches itself to lead with the Power Calendar trial (`LEAD_FLIP_AT`, `Alpine.store('season')`). The old no-card free-month
   lead form is retired; its Apps Script and "Power Calendar Leads" Sheet are no longer used by the site.
 - Billing on the 15th: `/api/stripe-webhook` (see `BILLING_ANCHOR_SETUP.md`), live. Vercel env
   `STRIPE_API_KEY` (restricted, Subscriptions write) and `STRIPE_WEBHOOK_SECRET`. Never type keys.
@@ -57,7 +58,7 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 
 | File | Purpose |
 |------|---------|
-| `index.html` | Homepage; CSS and JS inline |
+| `index.html` | Homepage, rebuilt 2026-09-30 like `2027.html`: compiled Tailwind `css/home.css`, Alpine.js and GSAP from CDNs, JS inline. Luopan hero with a next-good-days teaser, Outlook card, a real day-by-day month map (day pillars from a 60-day cycle, month pillars from `#calData`; extend its dates before mid-2028), Bagua prism fed by the visitor's days, hourglass to Hexagram 49, pricing lead card plus ladder. CSS: `npx tailwindcss@3 -c scripts/tailwind/home.config.js -i scripts/tailwind/outlook-2027.input.css -o css/home.css --minify` |
 | `2027.html` | Outlook sales page, self-contained: Tailwind (compiled to `css/outlook-2027.css`), Alpine.js and GSAP from CDNs, all JS inline. After changing its classes, rebuild the CSS: `npx tailwindcss@3 -c scripts/tailwind/outlook-2027.config.js -i scripts/tailwind/outlook-2027.input.css -o css/outlook-2027.css --minify` |
 | `book.html` | Single Session sales page (USD 197, books and pays on CalendarHero `/singlesession`), self-contained like `2027.html`: Decision Dial teaser, Decision Window (six months from today, pillars generated from the solar-term dates in `#windowData`; extend those dates before mid-2028), session evenings in the visitor's time zone. CSS: `npx tailwindcss@3 -c scripts/tailwind/book.config.js -i scripts/tailwind/outlook-2027.input.css -o css/book.css --minify`. No visible email address on the page (Jeff, 2026-09-30) |
 | `2027-next.html`, `welcome.html`, `power-calendar.html` | The two intake pages, Power Calendar sample page |
@@ -78,6 +79,10 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-09-30: Homepage rebuilt in the obsidian and gold house style (ledger and rulings:
+  `docs/design/HOME_REBUILD_LEDGER.md`). Kept from the October refresh: Luopan hero, Bagua prism (own
+  section), hourglass to Hexagram 49 (solid gold frame now); dropped: stem ring, invented March 2027
+  sample, Bagua unfolding, stars, astrolabe, aurora. 丁未 on the Outlook card is Ma Shan Zheng brush script.
 - 2026-09-30: `/book` rebuilt in the obsidian and gold house style (ledger and rulings:
   `docs/design/BOOK_REBUILD_LEDGER.md`). After-session promise is "Session summary within 48 hours";
   rescheduling is via the link in the CalendarHero confirmation; upsell is one line to `/#pricing`.
@@ -101,7 +106,7 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 - Page rebuilds (homepage, `/book`, any sales page): use the `tactile-page-rebuild` skill in
   `.claude/skills/` (the method behind the 2026-09-30 `/2027` rebuild). Works in cloud sessions.
 - House style (Jeff, 2026-09-30): obsidian and gold with muted Wu Xing accents, in `docs/design/BRAND.md`.
-  `/2027` and `/book` use it; the homepage adopts it in its rebuild.
+  `/2027`, `/book` and the homepage use it.
 
 ## Style
 - No em dashes in any output.

@@ -1,7 +1,7 @@
-// Tailwind build for the homepage. Rebuild after changing classes in the page:
+// Tailwind build for the homepage (index.html). Rebuild after changing classes in index.html:
 //   npx tailwindcss@3 -c scripts/tailwind/home.config.js -i scripts/tailwind/outlook-2027.input.css -o css/home.css --minify
 module.exports = {
-  content: ['./home-rebuild.html'],
+  content: ['./index.html'],
   theme: {
     extend: {
       colors: {
