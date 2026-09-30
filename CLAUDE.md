@@ -94,6 +94,8 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   at `/home/olares/vault/` and the Drive mount at `/home/olares/gdrive/`.
 - Stripe and Google changes go through Jeff's Chrome (Claude in Chrome); Jeff signs in and clicks any OAuth Allow.
 - Git Bash strips backslashes in inline `node -e` and heredoc edits (a CSS `"\2726"` became garbage); use the Edit tool.
+- Page rebuilds (homepage, `/book`, any sales page): use the `tactile-page-rebuild` skill in
+  `.claude/skills/` (the method behind the 2026-09-30 `/2027` rebuild). Works in cloud sessions.
 
 ## Style
 - No em dashes in any output.
