@@ -84,3 +84,12 @@ example stem ring) are illustrative rather than computed for the visitor.
 - Lead-offer flip at 2027-02-01 00:00 SGT (`LEAD_FLIP_AT`): hero and nav CTA, mobile bar and the Outlook
   section's position switch to the Power Calendar trial. Tested with a simulated 2 Feb 2027.
 - FAQ keeps five of Jeff's six answers; "Do you use I-Ching, Tarot..." is out (Jeff to confirm).
+
+## Jeff at gate 2, round 1 (2026-09-30)
+
+- 丁未 in the Outlook card now uses Ma Shan Zheng (brush regular script, Google Fonts, loaded with a
+  two-glyph `text=` subset), cream with an ember glow, to match the calligraphy on the 2027 cover art.
+- Hourglass rebuilt as solid gold: gradient caps with a stepped moulding, turned posts with beads and
+  collars, a neck collar, a 1.7 px glass line with a soft glow, brighter highlights. Dust tones are
+  brighter and grains larger (0.85 to 1.75 px, opacity 0.78 to 1). Glass is 290 px wide on desktop,
+  230 px on phones. Frame coordinates are unchanged, so the burst into Hexagram 49 still traces the frame.
