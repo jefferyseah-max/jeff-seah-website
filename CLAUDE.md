@@ -80,6 +80,13 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-10-01 (branch `claude/hopeful-faraday-l3jxme`): `/2027` kinetic pass. Below-the-fold blocks reveal on scroll
+  (`data-reveal`, `data-reveal="stagger"` for children, `data-reveal-delay`); the Contact & Clash panel and its wheel
+  cascade (gold clock hand, `cascadeWheel()`) now wait until on screen, so phones see them. Picking an animal sends a
+  resonance pulse (`pulse()`); the locked month grid lights Feb to Jan 0.1 s apart; When-To month labels flare as the
+  comet arrives; the Power Calendar bridge days fill in. `.btn-ember`: 3px lift with a warmer shadow, light sweep on
+  hover and once on scroll-in for price buttons (`.is-charged`), press state, magnetic pull on fine pointers. All of it
+  is skipped under reduced motion. No new Tailwind classes, so no CSS rebuild.
 - 2026-10-01: Readability pass on `/`, `/2027`, `/book` (Jeff's audience is 35 to 55, mostly on phones): paragraphs 17px,
   fine print 15 to 16px, labels 12 to 13px, nothing under 12px, grey token `ash` now `#A8ADB6`, no dimmed grey text.
   Keep these floors when adding copy. Applied the same day to `/welcome`, `/2027-next` (shared `2027.css`) and `/power-calendar`.
