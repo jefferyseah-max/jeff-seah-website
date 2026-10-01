@@ -10,7 +10,7 @@ module.exports = {
         gold: '#D4AF37',
         ember: '#E06D53',
         ivory: '#EDE6D6',
-        ash: '#8A8F98',
+        ash: '#A8ADB6',
       },
       fontFamily: {
         display: ['"Cormorant Garamond"', 'serif'],
