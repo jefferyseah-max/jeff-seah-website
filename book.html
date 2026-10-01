@@ -213,7 +213,7 @@
 
         <!-- Left: the promise -->
         <div class="lg:sticky lg:top-32 lg:self-start">
-          <p class="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[12px] uppercase tracking-[0.22em] text-gold/80" data-anim="hero">
+          <p class="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[13px] uppercase tracking-[0.22em] text-gold/80" data-anim="hero">
             <span>One-on-One Session</span>
             <span class="text-ash">/</span>
             <span class="font-han text-[15px] tracking-normal text-gold">策</span>
@@ -236,9 +236,9 @@
             </a>
             <a href="#window" class="focus-ring text-[15px] font-bold text-ivory/80 underline decoration-gold/40 underline-offset-[6px] transition hover:text-gold hover:decoration-gold">Try the Decision Window first</a>
           </div>
-          <p class="mt-4 text-[15px] text-ash" data-anim="hero">Pay USD 197 by card when you pick your time. 48-hour reschedule policy.</p>
+          <p class="mt-4 text-base text-ash" data-anim="hero">Pay USD 197 by card when you pick your time. 48-hour reschedule policy.</p>
 
-          <ul class="mt-9 flex flex-wrap gap-2.5 text-[15px] text-ivory/85" data-anim="hero" aria-label="Session details">
+          <ul class="mt-9 flex flex-wrap gap-2.5 text-base text-ivory/85" data-anim="hero" aria-label="Session details">
             <li class="flex items-center gap-2 rounded-full border hairline bg-white/[0.02] px-3.5 py-2"><span class="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true"></span>Google Meet</li>
             <li class="flex items-center gap-2 rounded-full border hairline bg-white/[0.02] px-3.5 py-2"><span class="evening-dot !h-1.5 !w-1.5" aria-hidden="true"></span>Mon, Tue and Thu evenings, Singapore time</li>
             <li class="flex items-center gap-2 rounded-full border hairline bg-white/[0.02] px-3.5 py-2"><span class="h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true"></span>Session summary within 48 hours</li>
@@ -248,13 +248,13 @@
         <!-- Right: Decision Dial -->
         <div id="dial" class="panel relative rounded-[32px] p-5 sm:p-8" x-data="dial" data-anim="panel">
           <div class="flex items-baseline justify-between gap-3">
-            <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-gold">The Decision Dial</p>
-            <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-ash" x-text="rangeLabel"></p>
+            <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-gold">The Decision Dial</p>
+            <p class="font-mono text-[13px] uppercase tracking-[0.16em] text-ash" x-text="rangeLabel"></p>
           </div>
 
           <!-- Step 1: decision -->
-          <p class="mt-5 flex items-center gap-3 text-[15px] font-bold text-ivory/90">
-            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[12px] text-gold">1</span>
+          <p class="mt-5 flex items-center gap-3 text-base font-bold text-ivory/90">
+            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[13px] text-gold">1</span>
             What are you deciding?
           </p>
           <div class="mt-3 grid grid-cols-2 gap-2" role="group" aria-label="What are you deciding?">
@@ -271,8 +271,8 @@
           </div>
 
           <!-- Step 2: animal -->
-          <p class="mt-7 flex items-center gap-3 text-[15px] font-bold text-ivory/90">
-            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[12px] text-gold">2</span>
+          <p class="mt-7 flex items-center gap-3 text-base font-bold text-ivory/90">
+            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[13px] text-gold">2</span>
             Tap your birth-year animal
           </p>
 
@@ -294,15 +294,15 @@
                 <template x-if="animal === null">
                   <div>
                     <p class="font-han text-2xl text-gold sm:text-3xl" x-text="nowPillar"></p>
-                    <p class="mt-1 font-mono text-[12px] uppercase tracking-[0.18em] text-ash sm:text-[12px]">This month</p>
-                    <p class="mt-2 text-[12px] leading-snug text-ivory/85 sm:text-[15px]">Pick your animal</p>
+                    <p class="mt-1 font-mono text-[13px] uppercase tracking-[0.18em] text-ash sm:text-[13px]">This month</p>
+                    <p class="mt-2 text-[13px] leading-snug text-ivory/85 sm:text-[15px]">Pick your animal</p>
                   </div>
                 </template>
                 <template x-if="animal !== null && brief">
                   <div>
-                    <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-gold sm:text-[12px]" x-text="'Best window to ' + brief.verb"></p>
+                    <p class="font-mono text-[13px] uppercase tracking-[0.16em] text-gold sm:text-[13px]" x-text="'Best window to ' + brief.verb"></p>
                     <p class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.35rem]" x-text="brief.best"></p>
-                    <p class="mt-1.5 font-mono text-[12px] uppercase tracking-[0.16em] text-ember sm:text-[12px]">Hold in</p>
+                    <p class="mt-1.5 font-mono text-[13px] uppercase tracking-[0.16em] text-ember sm:text-[13px]">Hold in</p>
                     <p class="font-display text-base font-semibold leading-tight text-ivory/90 sm:text-lg" x-text="brief.hold"></p>
                   </div>
                 </template>
@@ -320,7 +320,7 @@
                       @click="pick(i)"
                       data-node>
                 <span class="font-han text-[15px] sm:text-base" x-text="a.cn"></span>
-                <span class="mt-0.5 text-[12px] font-bold tracking-wide sm:text-[12px]" x-text="a.en"></span>
+                <span class="mt-0.5 text-[12px] font-bold sm:text-[13px]" x-text="a.en"></span>
               </button>
             </template>
           </div>
@@ -332,13 +332,13 @@
                    class="focus-ring w-24 rounded-full border border-gold/25 bg-obsidian px-4 py-1.5 text-center font-mono text-[15px] text-ivory placeholder:text-ash focus:border-gold"
                    x-model="birthYear" @input="fromYear()" />
           </div>
-          <p class="mx-auto mt-2 max-w-[400px] text-center text-[15px] text-ash">Born 1 January to 3 February? Use the year before. The BaZi year turns at Li Chun, about 4 February.</p>
+          <p class="mx-auto mt-2 max-w-[400px] text-center text-base text-ash">Born 1 January to 3 February? Use the year before. The BaZi year turns at Li Chun, about 4 February.</p>
 
           <div class="mt-6 rounded-2xl border border-dashed hairline px-4 py-3 text-center text-[15px] leading-relaxed text-ash" x-show="animal === null">
             The six arcs around the dial are the next six months. Pick your animal to read them.
           </div>
           <div class="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-gold/20 bg-gold/[0.04] px-4 py-3" x-cloak x-show="animal !== null">
-            <p class="text-[15px] leading-relaxed text-ivory/85">Indicative: your animal against the next six month pillars. The session reads your full chart.</p>
+            <p class="text-base leading-relaxed text-ivory/85">Indicative: your animal against the next six month pillars. The session reads your full chart.</p>
             <a href="#window" class="focus-ring shrink-0 text-[15px] font-bold uppercase tracking-[0.14em] text-gold hover:text-champagne">See the path &darr;</a>
           </div>
         </div>
@@ -353,7 +353,7 @@
         <svg class="absolute right-[-20rem] top-[-4rem] w-[38rem] sm:w-[46rem] lg:right-[-18rem] lg:top-[-10rem] lg:w-[58rem]"><use href="#bagua" /></svg>
       </div>
       <div class="max-w-3xl">
-        <p class="font-mono text-[12px] uppercase tracking-[0.24em] text-gold">The Decision Window</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">The Decision Window</p>
         <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] tracking-[-0.01em] text-ivory sm:text-6xl">
           Your next six months, <em class="text-gold">played out for one decision.</em>
         </h2>
@@ -375,7 +375,7 @@
           </button>
         </template>
       </div>
-      <p class="mt-4 text-[15px] text-ash">
+      <p class="mt-4 text-base text-ash">
         <template x-if="animal !== null">
           <span>Tuned to your <span class="font-bold text-ivory/90" x-text="animalName"></span>. <a href="#dial" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">Change</a></span>
         </template>
@@ -388,7 +388,7 @@
         <!-- Stage -->
         <div class="panel relative rounded-[28px] p-4 sm:p-6">
           <div class="flex flex-wrap items-center justify-between gap-3 px-1">
-            <ul class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[12px] uppercase tracking-[0.16em] text-ash" aria-label="Legend">
+            <ul class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[13px] uppercase tracking-[0.16em] text-ash" aria-label="Legend">
               <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-gold"></span>Flow</li>
               <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-[#BDB6A6]/70"></span>Steady</li>
               <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full border border-ember"></span>Friction</li>
@@ -396,8 +396,8 @@
               <li class="flex items-center gap-1.5"><span class="h-2 w-2 rotate-45 border border-champagne"></span>Vault</li>
             </ul>
             <div class="flex items-center gap-3">
-              <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-gold/80" x-text="status" aria-live="polite"></p>
-              <button type="button" class="focus-ring rounded-full border hairline px-3 py-1 text-[12px] font-bold uppercase tracking-widest text-ash transition hover:text-ivory"
+              <p class="font-mono text-[13px] uppercase tracking-[0.16em] text-gold/80" x-text="status" aria-live="polite"></p>
+              <button type="button" class="focus-ring rounded-full border hairline px-3 py-1 text-[13px] font-bold uppercase tracking-widest text-ash transition hover:text-ivory"
                       x-cloak x-show="phase !== 'idle'" @click="phase === 'done' ? run() : skip()" x-text="phase === 'done' ? 'Replay' : 'Skip'"></button>
             </div>
           </div>
@@ -416,54 +416,54 @@
                   <span class="font-han text-lg tone-text" x-text="current?.pillar"></span>
                   <span class="hidden text-[15px] text-ash sm:inline" x-text="current ? current.span : ''"></span>
                 </p>
-                <span class="chip rounded-full px-3 py-1 font-mono text-[12px] font-bold uppercase tracking-[0.18em]" x-text="current?.tag"></span>
+                <span class="chip rounded-full px-3 py-1 font-mono text-[13px] font-bold uppercase tracking-[0.18em]" x-text="current?.tag"></span>
               </div>
-              <p class="mt-1.5 text-[15px] text-ivory/90 sm:mt-2 sm:text-base" x-text="current?.line"></p>
+              <p class="mt-1.5 text-base text-ivory/90 sm:mt-2 sm:text-base" x-text="current?.line"></p>
               <div class="mt-2.5 flex items-center gap-3 sm:mt-3">
                 <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-ember/35">
                   <div class="h-full rounded-full bg-gold transition-[width] duration-500" :style="`width:${current ? current.flow : 50}%`"></div>
                 </div>
-                <p class="shrink-0 font-mono text-[12px] uppercase tracking-wider text-ash">
+                <p class="shrink-0 font-mono text-[13px] uppercase tracking-wider text-ash">
                   Flow <span class="text-gold" x-text="current?.flow"></span> · Friction <span class="text-ember" x-text="current?.friction"></span>
                 </p>
               </div>
-              <p class="mt-2 text-[15px] text-ash" :class="phase === 'done' ? 'block' : 'hidden sm:block'" x-text="current ? (current.reasons.join(' · ') || 'No major contact with the year') : ''"></p>
+              <p class="mt-2 text-base text-ash" :class="phase === 'done' ? 'block' : 'hidden sm:block'" x-text="current ? (current.reasons.join(' · ') || 'No major contact with the year') : ''"></p>
             </div>
           </div>
         </div>
 
         <!-- Dossier -->
         <aside class="panel rounded-[28px] p-6 sm:p-7 lg:sticky lg:top-24 lg:self-start">
-          <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-gold">Window · <span x-text="stamp"></span></p>
+          <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-gold">Window · <span x-text="stamp"></span></p>
           <h3 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory">Your <span class="italic text-gold" x-text="goalLabel"></span> window</h3>
-          <p class="mt-1 text-[15px] text-ash" x-text="animal !== null ? 'Tuned to your ' + animalName : 'The season’s climate, untuned'"></p>
+          <p class="mt-1 text-base text-ash" x-text="animal !== null ? 'Tuned to your ' + animalName : 'The season’s climate, untuned'"></p>
 
-          <dl class="mt-6 grid grid-cols-4 gap-2 text-center">
+          <dl class="mt-6 grid grid-cols-4 gap-1.5 text-center">
             <template x-for="t in ['flow', 'friction', 'trap', 'vault']" :key="t">
-              <div class="rounded-xl border hairline bg-obsidian/60 px-1 py-3" :class="'tag-' + t">
+              <div class="rounded-xl border hairline bg-obsidian/60 px-0 py-3" :class="'tag-' + t">
                 <dd class="font-display text-3xl font-semibold tone-text" x-text="tally[t]"></dd>
-                <dt class="mt-0.5 font-mono text-[12px] uppercase tracking-[0.16em] text-ash" x-text="t"></dt>
+                <dt class="mt-0.5 font-mono text-[12px] uppercase tracking-normal text-ash" x-text="t"></dt>
               </div>
             </template>
           </dl>
 
           <div class="mt-6 min-h-[13rem]">
-            <p class="text-[15px] text-ash" x-show="phase !== 'done'">Reading the months one by one&hellip;</p>
+            <p class="text-base text-ash" x-show="phase !== 'done'">Reading the months one by one&hellip;</p>
             <dl class="space-y-4" x-cloak x-show="phase === 'done' && dossier" x-ref="dossierList">
               <div class="border-l-2 border-gold pl-4">
-                <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-gold" x-text="'Best window to ' + (dossier?.verb || '')"></dt>
+                <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-gold" x-text="'Best window to ' + (dossier?.verb || '')"></dt>
                 <dd class="mt-1 font-display text-2xl font-semibold text-ivory" x-text="dossier?.best"></dd>
               </div>
               <div class="border-l-2 border-ember pl-4">
-                <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-ember">Hold back in</dt>
+                <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ember">Hold back in</dt>
                 <dd class="mt-1 font-display text-2xl font-semibold text-ivory" x-text="dossier?.hold"></dd>
               </div>
               <div class="border-l-2 border-champagne pl-4">
-                <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-champagne">Vault opens</dt>
+                <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-champagne">Vault opens</dt>
                 <dd class="mt-1 text-base text-ivory/90" x-text="dossier?.vaults"></dd>
               </div>
               <div class="border-l-2 border-ember/50 pl-4">
-                <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-ember/80">Traps</dt>
+                <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ember/80">Traps</dt>
                 <dd class="mt-1 text-base text-ivory/90" x-text="dossier?.traps"></dd>
               </div>
             </dl>
@@ -475,7 +475,7 @@
         </aside>
       </div>
 
-      <p class="mt-6 max-w-3xl text-[15px] leading-relaxed text-ash">
+      <p class="mt-6 max-w-3xl text-base leading-relaxed text-ash">
         Indicative, not your reading. This path is built from the next six month pillars against the branch of the year each one falls in, plus your animal if you picked one. With your birth details, the session reads the same months against your full four pillars and your current 10-year luck pillar, down to the dates inside the window. Month start dates follow the solar terms and can shift by a day.
       </p>
     </section>
@@ -485,7 +485,7 @@
     <!-- ============ How it works, with session evenings in the visitor's own time ============ -->
     <section id="how" class="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-10">
       <div class="max-w-3xl">
-        <p class="font-mono text-[12px] uppercase tracking-[0.24em] text-gold">How it works</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">How it works</p>
         <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] text-ivory sm:text-6xl">
           Three steps, <em class="text-gold">one hour.</em>
         </h2>
@@ -496,29 +496,29 @@
           <li class="flex gap-5 bg-coal p-6 sm:p-8">
             <span class="font-display text-4xl font-light leading-none text-gold/80">01</span>
             <div>
-              <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-ivory">Book and pay</p>
-              <p class="mt-2 text-base leading-relaxed text-ivory/85">Select a time that works for you and pay USD 197 by card to confirm it. A Google Meet link is sent automatically once confirmed.</p>
+              <p class="font-mono text-[13px] uppercase tracking-[0.2em] text-ivory">Book and pay</p>
+              <p class="mt-2 text-[17px] leading-[1.65] text-ivory/85">Select a time that works for you and pay USD 197 by card to confirm it. A Google Meet link is sent automatically once confirmed.</p>
             </div>
           </li>
           <li class="flex gap-5 bg-coal p-6 sm:p-8">
             <span class="font-display text-4xl font-light leading-none text-gold/80">02</span>
             <div>
-              <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-ivory">Before the call</p>
-              <p class="mt-2 text-base leading-relaxed text-ivory/85">Think about one to three decisions or areas of life you want to focus on. If your questions need a BaZi reading, I will email you for your date, time and place of birth.</p>
+              <p class="font-mono text-[13px] uppercase tracking-[0.2em] text-ivory">Before the call</p>
+              <p class="mt-2 text-[17px] leading-[1.65] text-ivory/85">Think about one to three decisions or areas of life you want to focus on. If your questions need a BaZi reading, I will email you for your date, time and place of birth.</p>
             </div>
           </li>
           <li class="flex gap-5 bg-coal p-6 sm:p-8">
             <span class="font-display text-4xl font-light leading-none text-gold/80">03</span>
             <div>
-              <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-ivory">The session, then the summary</p>
-              <p class="mt-2 text-base leading-relaxed text-ivory/85">Sixty minutes of focused analysis: your current timing cycle, favourable windows and specific guidance for your questions. Your session summary follows within 48 hours.</p>
+              <p class="font-mono text-[13px] uppercase tracking-[0.2em] text-ivory">The session, then the summary</p>
+              <p class="mt-2 text-[17px] leading-[1.65] text-ivory/85">Sixty minutes of focused analysis: your current timing cycle, favourable windows and specific guidance for your questions. Your session summary follows within 48 hours.</p>
             </div>
           </li>
         </ol>
 
         <!-- Session evenings in your time -->
         <div class="panel rounded-[28px] p-6 sm:p-8" x-data="sessionClock">
-          <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-ink">Session evenings in your time</p>
+          <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-ink">Session evenings in your time</p>
           <p class="mt-3 font-display text-2xl font-semibold leading-snug text-ivory sm:text-[1.75rem]">
             Monday, Tuesday and Thursday, 8:00 to 10:30 pm in Singapore
           </p>
@@ -541,12 +541,12 @@
                 </span>
                 <span class="text-right text-[15px] text-ivory/80">
                   <span x-text="e.time"></span>
-                  <span class="block text-[12px] text-ash" x-text="e.sgt"></span>
+                  <span class="block text-[13px] text-ash" x-text="e.sgt"></span>
                 </span>
               </li>
             </template>
           </ul>
-          <p class="mt-4 text-[15px] leading-relaxed text-ash">The next evenings you can book, allowing about two days' notice. Open slots show in the booking calendar.</p>
+          <p class="mt-4 text-base leading-relaxed text-ash">The next evenings you can book, allowing about two days' notice. Open slots show in the booking calendar.</p>
         </div>
       </div>
     </section>
@@ -559,7 +559,7 @@
         <svg class="absolute left-[-24rem] top-[6rem] w-[40rem] sm:w-[50rem] lg:left-[-30rem] lg:w-[62rem]"><use href="#bagua" /></svg>
       </div>
       <div class="mx-auto max-w-2xl text-center">
-        <p class="font-mono text-[12px] uppercase tracking-[0.24em] text-gold">Book</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Book</p>
         <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] text-ivory sm:text-6xl">
           One hour on <em class="text-gold">the decision in front of you.</em>
         </h2>
@@ -571,7 +571,7 @@
 
           <!-- What the session covers -->
           <div class="p-7 sm:p-10">
-            <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-ash">One-on-one · 60 minutes · Google Meet</p>
+            <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-ash">One-on-one · 60 minutes · Google Meet</p>
             <h3 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory sm:text-4xl">Single Session <span class="block text-xl font-light italic text-gold sm:text-2xl">What we cover</span></h3>
 
             <ul class="mt-8 space-y-5">
@@ -579,28 +579,28 @@
                 <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-gold/50 bg-gold/10 font-han text-[15px] text-gold" aria-hidden="true">命</span>
                 <div>
                   <p class="font-bold text-ivory">Your current cycle</p>
-                  <p class="mt-0.5 text-base leading-relaxed text-ivory/85">Where you are in your 10-year luck pillar and what that means for the decisions in front of you right now.</p>
+                  <p class="mt-0.5 text-[17px] leading-[1.65] text-ivory/85">Where you are in your 10-year luck pillar and what that means for the decisions in front of you right now.</p>
                 </div>
               </li>
               <li class="flex gap-4">
                 <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-gold/50 bg-gold/10 font-han text-[15px] text-gold" aria-hidden="true">時</span>
                 <div>
                   <p class="font-bold text-ivory">Favourable windows</p>
-                  <p class="mt-0.5 text-base leading-relaxed text-ivory/85">The specific dates and periods in the coming months when your timing is aligned for launches, negotiations or major moves.</p>
+                  <p class="mt-0.5 text-[17px] leading-[1.65] text-ivory/85">The specific dates and periods in the coming months when your timing is aligned for launches, negotiations or major moves.</p>
                 </div>
               </li>
               <li class="flex gap-4">
                 <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-ember/50 bg-ember/10 font-han text-[15px] text-ember" aria-hidden="true">運</span>
                 <div>
                   <p class="font-bold text-ivory">Caution periods</p>
-                  <p class="mt-0.5 text-base leading-relaxed text-ivory/85">When to hold back, observe and avoid committing. Knowing when not to move is just as valuable as knowing when to act.</p>
+                  <p class="mt-0.5 text-[17px] leading-[1.65] text-ivory/85">When to hold back, observe and avoid committing. Knowing when not to move is just as valuable as knowing when to act.</p>
                 </div>
               </li>
               <li class="flex gap-4">
                 <span class="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-gold/50 bg-gold/10 font-han text-[15px] text-gold" aria-hidden="true">策</span>
                 <div>
                   <p class="font-bold text-ivory">Your specific questions</p>
-                  <p class="mt-0.5 text-base leading-relaxed text-ivory/85">Focused on your most pressing decision, with clear next steps you can act on immediately.</p>
+                  <p class="mt-0.5 text-[17px] leading-[1.65] text-ivory/85">Focused on your most pressing decision, with clear next steps you can act on immediately.</p>
                 </div>
               </li>
             </ul>
@@ -613,16 +613,16 @@
               <p class="font-display text-8xl font-light leading-none text-ivory lining-nums">
                 <span class="mr-1 align-top font-sans text-lg font-bold text-ash">USD</span>197
               </p>
-              <p class="mt-2 text-[15px] text-ash">One session. One payment. No subscription.</p>
+              <p class="mt-2 text-base text-ash">One session. One payment. No subscription.</p>
 
               <a href="https://meeting.calendarhero.com/singlesession" target="_blank" rel="noopener noreferrer"
                  class="btn-ember mt-8 flex w-full items-center justify-center gap-2.5 whitespace-nowrap rounded-full px-5 py-5 text-base font-extrabold tracking-wide sm:gap-3 sm:text-base">
                 Book my session <span class="opacity-40">·</span> USD 197
                 <svg class="hidden sm:block" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </a>
-              <p class="mt-3 text-center text-[15px] text-ivory/85">Pay by card when you pick your time.</p>
+              <p class="mt-3 text-center text-base text-ivory/85">Pay by card when you pick your time.</p>
 
-              <ul class="mt-7 space-y-2.5 border-t hairline pt-6 text-[15px] text-ash">
+              <ul class="mt-7 space-y-2.5 border-t hairline pt-6 text-base text-ash">
                 <li class="flex gap-2.5"><span class="text-gold" aria-hidden="true">·</span>Monday, Tuesday and Thursday evenings, 8:00 to 10:30 pm Singapore time.</li>
                 <li class="flex gap-2.5"><span class="text-gold" aria-hidden="true">·</span>A Google Meet link is sent automatically once confirmed.</li>
                 <li class="flex gap-2.5"><span class="text-gold" aria-hidden="true">·</span>Session summary within 48 hours.</li>
@@ -641,7 +641,7 @@
     <!-- ============ FAQ ============ -->
     <section id="faq" class="mx-auto max-w-3xl px-4 py-24 sm:px-6" x-data="{ open: 0 }">
       <div class="text-center">
-        <p class="font-mono text-[12px] uppercase tracking-[0.24em] text-gold">Questions</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Questions</p>
         <h2 class="mt-3 font-display text-4xl font-light text-ivory sm:text-5xl">Before you book</h2>
       </div>
 
@@ -668,7 +668,7 @@
             <div class="grid transition-[grid-template-rows] duration-500 ease-out" :class="open === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
                  :id="'faq-a-' + i" role="region" :aria-labelledby="'faq-q-' + i">
               <div class="overflow-hidden">
-                <p class="pb-6 pr-10 text-base leading-relaxed text-ivory/85" x-text="f[1]"></p>
+                <p class="pb-6 pr-10 text-[17px] leading-[1.65] text-ivory/85" x-text="f[1]"></p>
               </div>
             </div>
           </div>
@@ -690,18 +690,18 @@
     <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 text-center sm:px-6 md:flex-row md:justify-between md:text-left lg:px-10">
       <a href="/" class="focus-ring flex items-center gap-3" aria-label="Jeff Seah, home">
         <img src="/img/seal-mark.png" alt="" width="36" height="36" class="h-9 w-9 opacity-90" />
-        <span class="font-mono text-[12px] uppercase tracking-[0.2em] text-ash">Strategic Timing Intelligence</span>
+        <span class="font-mono text-[13px] uppercase tracking-[0.2em] text-ash">Strategic Timing Intelligence</span>
       </a>
       <nav aria-label="Footer">
-        <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[15px] text-ash">
+        <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-base text-ash">
           <li><a class="transition hover:text-gold" href="/">Home</a></li>
           <li><a class="transition hover:text-gold" href="/#pricing">Power Calendar</a></li>
           <li><a class="transition hover:text-gold" href="/2027">2027 Outlook</a></li>
         </ul>
       </nav>
     </div>
-    <p class="mx-auto mt-8 max-w-2xl px-4 text-center text-[15px] leading-relaxed text-ash">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
-    <p class="mt-3 text-center text-[15px] text-ash">&copy; 2026 Jeff Seah. All rights reserved.</p>
+    <p class="mx-auto mt-8 max-w-2xl px-4 text-center text-base leading-relaxed text-ash">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
+    <p class="mt-3 text-center text-base text-ash">&copy; 2026 Jeff Seah. All rights reserved.</p>
   </footer>
 
   <!-- Mobile order bar: appears once the hero CTA has scrolled away, hides while the price block is on screen. -->
@@ -711,8 +711,8 @@
     <div class="border-t border-gold/25 bg-obsidian/90 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-lg">
       <div class="mx-auto flex max-w-xl items-center justify-between gap-4">
         <div class="min-w-0">
-          <p class="truncate text-[15px] font-bold text-ivory">Single Session · USD 197</p>
-          <p class="truncate text-[15px] text-ash">60 minutes · Google Meet</p>
+          <p class="truncate text-base font-bold text-ivory">Single Session · USD 197</p>
+          <p class="truncate text-base text-ash">60 minutes · Google Meet</p>
         </div>
         <a href="https://meeting.calendarhero.com/singlesession" target="_blank" rel="noopener noreferrer"
            class="btn-ember shrink-0 rounded-full px-6 py-3 text-[15px] font-extrabold tracking-wide">Book now</a>

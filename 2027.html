@@ -227,7 +227,7 @@
 
         <!-- Left: the promise -->
         <div class="lg:sticky lg:top-32 lg:self-start">
-          <p class="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[12px] uppercase tracking-[0.22em] text-gold/80" data-anim="hero">
+          <p class="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[13px] uppercase tracking-[0.22em] text-gold/80" data-anim="hero">
             <span>2027 Annual Outlook</span>
             <span class="text-ash">/</span>
             <span class="font-han text-[15px] tracking-normal text-ember">丁未</span>
@@ -252,7 +252,7 @@
                 <span class="text-[15px] font-bold text-ivory">USD 88 until Dec 31</span>
               </span>
               <span class="text-[15px] text-ivory/85">Saves $50 <span class="text-ash">·</span> Regular <s class="decoration-ember/70">USD 138</s></span>
-              <span class="rounded-full bg-ember/15 px-2.5 py-0.5 font-mono text-[12px] uppercase tracking-widest text-ember" x-cloak x-show="$store.offer.daysLeft > 0">
+              <span class="rounded-full bg-ember/15 px-2.5 py-0.5 font-mono text-[13px] uppercase tracking-widest text-ember" x-cloak x-show="$store.offer.daysLeft > 0">
                 <span x-text="$store.offer.daysLeft"></span> days left
               </span>
             </div>
@@ -272,19 +272,19 @@
 
           <dl class="mt-12 grid max-w-xl grid-cols-[1fr_1.4fr_1fr] gap-4 border-t hairline pt-6" data-anim="hero">
             <div>
-              <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-ash">Mapped</dt>
+              <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ash">Mapped</dt>
               <dd class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.6rem]">12 months</dd>
             </div>
             <div>
-              <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-ash">Named</dt>
+              <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ash">Named</dt>
               <dd class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.6rem]">5 moves, 5 traps</dd>
             </div>
             <div>
-              <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-ash">Delivery</dt>
+              <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ash">Delivery</dt>
               <dd class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.6rem]">7 days</dd>
             </div>
           </dl>
-          <p class="mt-5 max-w-xl text-[15px] text-ash" data-anim="hero">
+          <p class="mt-5 max-w-xl text-base text-ash" data-anim="hero">
             The Fire Goat year opens on 4 February 2027. Order by 15 January to have your map in hand before it does.
           </p>
         </div>
@@ -293,16 +293,16 @@
         <div id="teaser" x-data="contactClash" class="panel relative rounded-[28px] p-5 sm:p-8" data-anim="panel">
           <div class="flex items-start justify-between gap-4">
             <div>
-              <p class="font-mono text-[12px] uppercase tracking-[0.24em] text-gold">Free · 30 seconds</p>
+              <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Free · 30 seconds</p>
               <h2 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory sm:text-[2.1rem]">The 2027 Contact &amp; Clash check</h2>
             </div>
-            <button type="button" class="focus-ring mt-1 shrink-0 rounded-full border hairline px-3 py-1.5 text-[12px] font-bold uppercase tracking-widest text-ash transition hover:text-ivory"
+            <button type="button" class="focus-ring mt-1 shrink-0 rounded-full border hairline px-3 py-1.5 text-[13px] font-bold uppercase tracking-widest text-ash transition hover:text-ivory"
                     x-cloak x-show="animal !== null || season !== null" @click="reset()">Reset</button>
           </div>
 
           <!-- Step 1: animal -->
-          <p class="mt-7 flex items-center gap-3 text-[15px] font-bold text-ivory/90">
-            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[12px] text-gold">1</span>
+          <p class="mt-7 flex items-center gap-3 text-base font-bold text-ivory/90">
+            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[13px] text-gold">1</span>
             Tap your birth animal
           </p>
 
@@ -329,7 +329,7 @@
                 <template x-if="!year">
                   <div>
                     <p class="font-han text-3xl text-ember sm:text-4xl">丁未</p>
-                    <p class="mt-1 font-mono text-[12px] uppercase tracking-[0.2em] text-ash sm:text-[12px]">2027 · Fire Goat</p>
+                    <p class="mt-1 font-mono text-[13px] uppercase tracking-[0.2em] text-ash sm:text-[13px]">2027 · Fire Goat</p>
                   </div>
                 </template>
                 <template x-if="year">
@@ -352,7 +352,7 @@
                       @click="pick(i)"
                       data-node>
                 <span class="font-han text-base sm:text-lg" x-text="a.cn"></span>
-                <span class="mt-0.5 text-[12px] font-bold tracking-wide sm:text-[12px]" x-text="a.en"></span>
+                <span class="mt-0.5 text-[12px] font-bold sm:text-[13px]" x-text="a.en"></span>
               </button>
             </template>
           </div>
@@ -364,11 +364,11 @@
                    class="focus-ring w-24 rounded-full border border-gold/25 bg-obsidian px-4 py-1.5 text-center font-mono text-[15px] text-ivory placeholder:text-ash focus:border-gold"
                    x-model="birthYear" @input="fromYear()" />
           </div>
-          <p class="mx-auto mt-2 max-w-[400px] text-center text-[15px] text-ash">Born 1 January to 3 February? Use the year before. The BaZi year turns at Li Chun, about 4 February.</p>
+          <p class="mx-auto mt-2 max-w-[400px] text-center text-base text-ash">Born 1 January to 3 February? Use the year before. The BaZi year turns at Li Chun, about 4 February.</p>
 
           <!-- Step 2: season -->
-          <p class="mt-8 flex items-center gap-3 text-[15px] font-bold text-ivory/90">
-            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[12px] text-gold">2</span>
+          <p class="mt-8 flex items-center gap-3 text-base font-bold text-ivory/90">
+            <span class="grid h-6 w-6 place-items-center rounded-full border border-gold/50 font-mono text-[13px] text-gold">2</span>
             Pick your birth season
           </p>
           <div class="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4 lg:grid-cols-2" role="group" aria-label="Birth season">
@@ -382,15 +382,15 @@
                   <span class="text-[15px] font-bold" :class="season === s.key ? 'text-gold' : 'text-ivory'" x-text="s.label"></span>
                   <span class="font-han text-[15px] text-ash" x-text="s.cn"></span>
                 </span>
-                <span class="mt-1 block font-mono text-[12px] uppercase tracking-wider text-ash" x-text="s.el"></span>
-                <span class="mt-0.5 block text-[12px] text-ash" x-text="s.dates"></span>
+                <span class="mt-1 block font-mono text-[13px] uppercase tracking-wider text-ash" x-text="s.el"></span>
+                <span class="mt-0.5 block text-[13px] text-ash" x-text="s.dates"></span>
               </button>
             </template>
           </div>
 
           <!-- Readout -->
           <div class="mt-8 space-y-4" aria-live="polite">
-            <p class="rounded-2xl border border-dashed hairline px-5 py-4 text-center text-[15px] text-ash" x-show="animal === null && season === null">
+            <p class="rounded-2xl border border-dashed hairline px-5 py-4 text-center text-base text-ash" x-show="animal === null && season === null">
               Your reading appears here. Tap your animal on the wheel to begin.
             </p>
 
@@ -398,20 +398,20 @@
             <article x-ref="yearCard" x-cloak x-show="year" class="relative overflow-hidden rounded-2xl border hairline bg-white/[0.025] p-5 sm:p-6" :class="year ? 'tone-' + year.tone : ''">
               <span class="tone-bar absolute left-0 top-5 h-10 w-[3px] rounded-r"></span>
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-ash">Year contact · Social &amp; outer world</p>
-                <span class="chip rounded-full px-3 py-1 text-[12px] font-bold">
+                <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-ash">Year contact · Social &amp; outer world</p>
+                <span class="chip rounded-full px-3 py-1 text-[13px] font-bold">
                   <span x-text="year?.tag"></span> <span class="font-han font-normal" x-text="year?.cn"></span>
                 </span>
               </div>
               <h3 class="mt-3 font-display text-2xl font-semibold leading-snug text-ivory sm:text-[1.7rem]" x-text="year?.head"></h3>
-              <p class="mt-2 text-base leading-relaxed text-ivory/85" x-text="year?.body"></p>
-              <p class="mt-3 text-base leading-relaxed text-ivory/90"><span class="font-bold tone-text">The move: </span><span x-text="year?.move"></span></p>
+              <p class="mt-2 text-[17px] leading-[1.65] text-ivory/85" x-text="year?.body"></p>
+              <p class="mt-3 text-[17px] leading-[1.65] text-ivory/90"><span class="font-bold tone-text">The move: </span><span x-text="year?.move"></span></p>
             </article>
 
-            <p class="rounded-2xl border border-dashed hairline px-5 py-4 text-center text-[15px] text-ash" x-cloak x-show="animal !== null && season === null">
+            <p class="rounded-2xl border border-dashed hairline px-5 py-4 text-center text-base text-ash" x-cloak x-show="animal !== null && season === null">
               Now pick your birth season to read the month contact.
             </p>
-            <p class="rounded-2xl border border-dashed hairline px-5 py-4 text-center text-[15px] text-ash" x-cloak x-show="animal === null && season !== null">
+            <p class="rounded-2xl border border-dashed hairline px-5 py-4 text-center text-base text-ash" x-cloak x-show="animal === null && season !== null">
               Now tap your birth animal to read the year contact.
             </p>
 
@@ -419,24 +419,24 @@
             <article x-ref="monthCard" x-cloak x-show="month" class="relative overflow-hidden rounded-2xl border hairline bg-white/[0.025] p-5 sm:p-6" :class="month ? 'tone-' + month.tone : ''">
               <span class="tone-bar absolute left-0 top-5 h-10 w-[3px] rounded-r"></span>
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-ash">Month contact · Career &amp; resources</p>
-                <span class="chip rounded-full px-3 py-1 text-[12px] font-bold">
+                <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-ash">Month contact · Career &amp; resources</p>
+                <span class="chip rounded-full px-3 py-1 text-[13px] font-bold">
                   <span x-text="month?.label"></span> <span x-text="month?.el"></span> <span class="font-han font-normal" x-text="month?.cn"></span>
                 </span>
               </div>
               <h3 class="mt-3 font-display text-2xl font-semibold leading-snug text-ivory sm:text-[1.7rem]" x-text="month?.head"></h3>
-              <p class="mt-2 text-base leading-relaxed text-ivory/85" x-text="month?.body"></p>
+              <p class="mt-2 text-[17px] leading-[1.65] text-ivory/85" x-text="month?.body"></p>
               <div class="mt-4 grid gap-2.5 sm:grid-cols-2">
                 <div class="rounded-xl border hairline bg-obsidian/60 px-4 py-3">
-                  <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-gold">Career lever</p>
-                  <p class="mt-1 text-[15px] text-ivory/90" x-text="month?.lever"></p>
+                  <p class="font-mono text-[13px] uppercase tracking-[0.2em] text-gold">Career lever</p>
+                  <p class="mt-1 text-base text-ivory/90" x-text="month?.lever"></p>
                 </div>
                 <div class="rounded-xl border hairline bg-obsidian/60 px-4 py-3">
-                  <p class="font-mono text-[12px] uppercase tracking-[0.2em] text-ember">Resource watch</p>
-                  <p class="mt-1 text-[15px] text-ivory/90" x-text="month?.watch"></p>
+                  <p class="font-mono text-[13px] uppercase tracking-[0.2em] text-ember">Resource watch</p>
+                  <p class="mt-1 text-base text-ivory/90" x-text="month?.watch"></p>
                 </div>
               </div>
-              <p class="mt-4 border-t hairline pt-3 text-[15px] leading-relaxed text-ash"><span class="font-bold text-ivory/80">Your exact month sharpens it. </span><span x-text="month?.exact"></span></p>
+              <p class="mt-4 border-t hairline pt-3 text-base leading-relaxed text-ash"><span class="font-bold text-ivory/80">Your exact month sharpens it. </span><span x-text="month?.exact"></span></p>
             </article>
 
             <!-- The missing core -->
@@ -446,8 +446,8 @@
                   <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2" stroke="currentColor" stroke-width="1.3"/></svg>
                 </span>
                 <div>
-                  <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-gold">The missing core · Day Pillar</p>
-                  <p class="text-[15px] text-ash">Two of your eight characters read. Six to go.</p>
+                  <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-gold">The missing core · Day Pillar</p>
+                  <p class="text-base text-ash">Two of your eight characters read. Six to go.</p>
                 </div>
               </div>
               <p class="mt-4 font-display text-[1.45rem] leading-snug text-ivory sm:text-2xl">
@@ -459,11 +459,11 @@
                 <template x-for="m in months" :key="m">
                   <div class="text-center" data-month>
                     <div class="locked-cell h-10 rounded-md"></div>
-                    <p class="mt-1 font-mono text-[12px] uppercase tracking-wider text-ash" x-text="m"></p>
+                    <p class="mt-1 font-mono text-[13px] uppercase tracking-wider text-ash" x-text="m"></p>
                   </div>
                 </template>
               </div>
-              <p class="mt-2 text-[12px] text-ash">Feb 2027 to Jan 2028, month by month, calculated from your full chart.</p>
+              <p class="mt-2 text-[13px] text-ash">Feb 2027 to Jan 2028, month by month, calculated from your full chart.</p>
 
               <a href="#order" class="btn-ember mt-5 flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-base font-extrabold tracking-wide">
                 <span class="sm:hidden">Unlock my map</span><span class="hidden sm:inline">Unlock my 12-month map</span>
@@ -472,7 +472,7 @@
               </a>
             </article>
 
-            <p class="text-center text-[12px] leading-relaxed text-ash" x-cloak x-show="animal !== null || season !== null">
+            <p class="text-center text-[15px] leading-relaxed text-ash" x-cloak x-show="animal !== null || season !== null">
               Animal and season are two of the eight characters in a birth chart. The other six, including your Day Pillar, decide how these contacts actually land for you. Season dates follow the solar terms and shift by a day from year to year.
             </p>
           </div>
@@ -488,7 +488,7 @@
         <svg class="absolute right-[-20rem] top-[-4rem] w-[38rem] sm:w-[46rem] lg:right-[-18rem] lg:top-[-10rem] lg:w-[58rem]"><use href="#bagua" /></svg>
       </div>
       <div class="max-w-3xl">
-        <p class="font-mono text-[12px] uppercase tracking-[0.24em] text-gold">The 2027 When-To Index</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">The 2027 When-To Index</p>
         <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] tracking-[-0.01em] text-ivory sm:text-6xl">
           Pick the decision. <em class="text-gold">Watch the year play it out.</em>
         </h2>
@@ -510,7 +510,7 @@
           </button>
         </template>
       </div>
-      <p class="mt-4 text-[15px] text-ash">
+      <p class="mt-4 text-base text-ash">
         <template x-if="animal !== null">
           <span>Tuned to your <span class="font-bold text-ivory/90" x-text="animalName"></span>. <a href="#teaser" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">Change</a></span>
         </template>
@@ -523,7 +523,7 @@
         <!-- Stage -->
         <div class="panel relative rounded-[28px] p-4 sm:p-6">
           <div class="flex flex-wrap items-center justify-between gap-3 px-1">
-            <ul class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[12px] uppercase tracking-[0.16em] text-ash" aria-label="Legend">
+            <ul class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[13px] uppercase tracking-[0.16em] text-ash" aria-label="Legend">
               <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-gold"></span>Flow</li>
               <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-[#BDB6A6]/70"></span>Steady</li>
               <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full border border-ember"></span>Friction</li>
@@ -531,8 +531,8 @@
               <li class="flex items-center gap-1.5"><span class="h-2 w-2 rotate-45 border border-[#F3D98B]"></span>Vault</li>
             </ul>
             <div class="flex items-center gap-3">
-              <p class="font-mono text-[12px] uppercase tracking-[0.16em] text-gold/80" x-text="status" aria-live="polite"></p>
-              <button type="button" class="focus-ring rounded-full border hairline px-3 py-1 text-[12px] font-bold uppercase tracking-widest text-ash transition hover:text-ivory"
+              <p class="font-mono text-[13px] uppercase tracking-[0.16em] text-gold/80" x-text="status" aria-live="polite"></p>
+              <button type="button" class="focus-ring rounded-full border hairline px-3 py-1 text-[13px] font-bold uppercase tracking-widest text-ash transition hover:text-ivory"
                       x-cloak x-show="phase !== 'idle'" @click="phase === 'done' ? run() : skip()" x-text="phase === 'done' ? 'Replay' : 'Skip'"></button>
             </div>
           </div>
@@ -544,7 +544,7 @@
           <!-- Month readout: follows the comet, then any month you tap. Sticks to the viewport bottom on small screens. -->
           <div class="sticky bottom-[5.5rem] z-10 mt-4 lg:static" x-cloak x-show="current">
             <div class="rounded-2xl border hairline bg-obsidian/90 p-4 backdrop-blur sm:p-5" :class="current ? 'tag-' + current.tag : ''">
-              <p class="mb-3 font-mono text-[12px] uppercase tracking-[0.16em] text-gold/80" x-cloak x-show="phase === 'done' && !picked"
+              <p class="mb-3 font-mono text-[13px] uppercase tracking-[0.16em] text-gold/80" x-cloak x-show="phase === 'done' && !picked"
                x-transition.opacity.duration.400ms>Tap or click any month to read what it means for your decision</p>
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <p class="flex items-baseline gap-3">
@@ -552,54 +552,54 @@
                   <span class="font-han text-lg tone-text" x-text="current?.pillar"></span>
                   <span class="text-[15px] text-ash" x-text="current ? 'from about ' + current.starts : ''"></span>
                 </p>
-                <span class="chip rounded-full px-3 py-1 font-mono text-[12px] font-bold uppercase tracking-[0.18em]" x-text="current?.tag"></span>
+                <span class="chip rounded-full px-3 py-1 font-mono text-[13px] font-bold uppercase tracking-[0.18em]" x-text="current?.tag"></span>
               </div>
               <p class="mt-2 text-base text-ivory/90" x-text="current?.line"></p>
               <div class="mt-3 flex items-center gap-3">
                 <div class="h-1.5 flex-1 overflow-hidden rounded-full bg-ember/35">
                   <div class="h-full rounded-full bg-gold transition-[width] duration-500" :style="`width:${current ? current.flow : 50}%`"></div>
                 </div>
-                <p class="shrink-0 font-mono text-[12px] uppercase tracking-wider text-ash">
+                <p class="shrink-0 font-mono text-[13px] uppercase tracking-wider text-ash">
                   Flow <span class="text-gold" x-text="current?.flow"></span> · Friction <span class="text-ember" x-text="current?.friction"></span>
                 </p>
               </div>
-              <p class="mt-2 text-[15px] text-ash" x-text="current ? (current.reasons.join(' · ') || 'No major contact with the year') : ''"></p>
+              <p class="mt-2 text-base text-ash" x-text="current ? (current.reasons.join(' · ') || 'No major contact with the year') : ''"></p>
             </div>
           </div>
         </div>
 
         <!-- Summary -->
         <aside class="panel rounded-[28px] p-6 sm:p-7 lg:sticky lg:top-24 lg:self-start">
-          <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-gold">Summary ·<span x-text="stamp"></span></p>
+          <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-gold">Summary ·<span x-text="stamp"></span></p>
           <h3 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory">Your 2027 <span class="italic text-gold" x-text="goalLabel"></span> path</h3>
-          <p class="mt-1 text-[15px] text-ash" x-text="animal !== null ? 'Tuned to your ' + animalName : 'The year’s climate, untuned'"></p>
+          <p class="mt-1 text-base text-ash" x-text="animal !== null ? 'Tuned to your ' + animalName : 'The year’s climate, untuned'"></p>
 
-          <dl class="mt-6 grid grid-cols-4 gap-2 text-center">
+          <dl class="mt-6 grid grid-cols-4 gap-1.5 text-center">
             <template x-for="t in ['flow', 'friction', 'trap', 'vault']" :key="t">
-              <div class="rounded-xl border hairline bg-obsidian/60 px-1 py-3" :class="'tag-' + t">
+              <div class="rounded-xl border hairline bg-obsidian/60 px-0 py-3" :class="'tag-' + t">
                 <dd class="font-display text-3xl font-semibold tone-text" x-text="tally[t]"></dd>
-                <dt class="mt-0.5 font-mono text-[12px] uppercase tracking-[0.16em] text-ash" x-text="t"></dt>
+                <dt class="mt-0.5 font-mono text-[12px] uppercase tracking-normal text-ash" x-text="t"></dt>
               </div>
             </template>
           </dl>
 
           <div class="mt-6 min-h-[13rem]">
-            <p class="text-[15px] text-ash" x-show="phase !== 'done'">Reading the year month by month&hellip;</p>
+            <p class="text-base text-ash" x-show="phase !== 'done'">Reading the year month by month&hellip;</p>
             <dl class="space-y-4" x-cloak x-show="phase === 'done' && dossier" x-ref="dossierList">
               <div class="border-l-2 border-gold pl-4">
-                <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-gold" x-text="'Best window to ' + (dossier?.verb || '')"></dt>
+                <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-gold" x-text="'Best window to ' + (dossier?.verb || '')"></dt>
                 <dd class="mt-1 font-display text-2xl font-semibold text-ivory" x-text="dossier?.best"></dd>
               </div>
               <div class="border-l-2 border-ember pl-4">
-                <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-ember">Hold back in</dt>
+                <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ember">Hold back in</dt>
                 <dd class="mt-1 font-display text-2xl font-semibold text-ivory" x-text="dossier?.hold"></dd>
               </div>
               <div class="border-l-2 border-[#F3D98B] pl-4">
-                <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-[#F3D98B]">Vault opens</dt>
+                <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-[#F3D98B]">Vault opens</dt>
                 <dd class="mt-1 text-base text-ivory/90" x-text="dossier?.vaults"></dd>
               </div>
               <div class="border-l-2 border-ember/50 pl-4">
-                <dt class="font-mono text-[12px] uppercase tracking-[0.2em] text-ember/80">Traps</dt>
+                <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ember/80">Traps</dt>
                 <dd class="mt-1 text-base text-ivory/90" x-text="dossier?.traps"></dd>
               </div>
             </dl>
@@ -623,7 +623,7 @@
     <!-- Offer -->
     <section id="order" class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-10" x-data>
       <div class="mx-auto max-w-2xl text-center">
-        <p class="font-mono text-[12px] uppercase tracking-[0.24em] text-gold">Order</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Order</p>
         <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] text-ivory sm:text-6xl">
           Your 2027, <em class="text-gold">mapped before it opens.</em>
         </h2>
@@ -635,7 +635,7 @@
 
           <!-- Value stack -->
           <div class="p-7 sm:p-10">
-            <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-ash">One-time · both editions included</p>
+            <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-ash">One-time · both editions included</p>
             <h3 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory sm:text-4xl">2027 Annual Outlook <span class="block text-xl font-light italic text-gold sm:text-2xl">Ding Wei, the Fire Goat year</span></h3>
 
             <ul class="mt-8 space-y-5">
@@ -652,7 +652,7 @@
                   </span>
                   <div>
                     <p class="font-bold text-ivory" x-text="item[0]"></p>
-                    <p class="mt-0.5 text-base leading-relaxed text-ivory/85" x-text="item[1]"></p>
+                    <p class="mt-0.5 text-[17px] leading-[1.65] text-ivory/85" x-text="item[1]"></p>
                   </div>
                 </li>
               </template>
@@ -664,8 +664,8 @@
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 .8l1.5 3.3 3.6.4-2.7 2.4.8 3.5L6 8.6 2.8 10.4l.8-3.5L.9 4.5l3.6-.4z"/></svg>
               </span>
               <div>
-                <p class="font-bold text-ivory"><span class="mr-2 font-mono text-[12px] uppercase tracking-[0.2em] text-gold">Bonus</span>A sample month of your own Power Calendar</p>
-                <p class="mt-0.5 text-base leading-relaxed text-ivory/85">Your best days and hours for one month, calculated from your chart, as a private web page beside your report.</p>
+                <p class="font-bold text-ivory"><span class="mr-2 font-mono text-[13px] uppercase tracking-[0.2em] text-gold">Bonus</span>A sample month of your own Power Calendar</p>
+                <p class="mt-0.5 text-[17px] leading-[1.65] text-ivory/85">Your best days and hours for one month, calculated from your chart, as a private web page beside your report.</p>
               </div>
             </div>
           </div>
@@ -684,17 +684,17 @@
                 <p class="font-display text-8xl font-light leading-none text-ivory">
                   <span class="align-top font-sans text-lg font-bold text-ash">USD</span><span x-text="$store.offer.price">88</span>
                 </p>
-                <p class="mb-2 text-[15px] text-ash" x-show="!$store.offer.after"><s class="decoration-ember/70">USD 138</s><br />from 1 January</p>
+                <p class="mb-2 text-base text-ash" x-show="!$store.offer.after"><s class="decoration-ember/70">USD 138</s><br />from 1 January</p>
               </div>
-              <p class="mt-2 text-[15px] text-ash">One payment. No subscription.</p>
+              <p class="mt-2 text-base text-ash">One payment. No subscription.</p>
 
               <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
                  class="btn-ember mt-8 flex w-full items-center justify-center gap-3 rounded-full px-6 py-5 text-base font-extrabold tracking-wide">
                 Get My 2027 Outlook <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
               </a>
-              <p class="mt-3 text-center text-[15px] text-ivory/85">Delivered within 7 days as a private page + PDF.</p>
+              <p class="mt-3 text-center text-base text-ivory/85">Delivered within 7 days as a private page + PDF.</p>
 
-              <ul class="mt-7 space-y-2.5 border-t hairline pt-6 text-[15px] text-ash">
+              <ul class="mt-7 space-y-2.5 border-t hairline pt-6 text-base text-ash">
                 <li class="flex gap-2.5"><span class="text-gold" aria-hidden="true">·</span>Order by 15 January to have it before Li Chun, 4 February 2027.</li>
                 <li class="flex gap-2.5"><span class="text-gold" aria-hidden="true">·</span>Birth details are asked for right after payment. Two minutes.</li>
                 <li class="flex gap-2.5"><span class="text-gold" aria-hidden="true">·</span>Buying for someone else? Enter their details on the next page, with their consent.</li>
@@ -713,9 +713,9 @@
           </template>
         </div>
         <div>
-          <p class="font-mono text-[12px] uppercase tracking-[0.22em] text-gold">The Power Calendar</p>
+          <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-gold">The Power Calendar</p>
           <p class="mt-2 font-display text-2xl leading-snug text-ivory sm:text-3xl">Months in your Outlook. <em class="text-gold">Exact days and hours in your Power Calendar.</em></p>
-          <p class="mt-2 text-base leading-relaxed text-ivory/85">One month of your own days comes complimentary with your report, as a private web page, so you can see how day-level timing works before you ever need it.</p>
+          <p class="mt-2 text-[17px] leading-[1.65] text-ivory/85">One month of your own days comes complimentary with your report, as a private web page, so you can see how day-level timing works before you ever need it.</p>
         </div>
       </div>
     </section>
@@ -725,7 +725,7 @@
     <!-- FAQ: one open at a time. -->
     <section id="faq" class="mx-auto max-w-3xl px-4 py-24 sm:px-6" x-data="{ open: 0 }">
       <div class="text-center">
-        <p class="font-mono text-[12px] uppercase tracking-[0.24em] text-gold">Questions</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Questions</p>
         <h2 class="mt-3 font-display text-4xl font-light text-ivory sm:text-5xl">Before you order</h2>
       </div>
 
@@ -752,7 +752,7 @@
             <div class="grid transition-[grid-template-rows] duration-500 ease-out" :class="open === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
                  :id="'faq-a-' + i" role="region" :aria-labelledby="'faq-q-' + i">
               <div class="overflow-hidden">
-                <p class="pb-6 pr-10 text-base leading-relaxed text-ivory/85" x-text="f[1]"></p>
+                <p class="pb-6 pr-10 text-[17px] leading-[1.65] text-ivory/85" x-text="f[1]"></p>
               </div>
             </div>
           </div>
@@ -774,18 +774,18 @@
     <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 text-center sm:px-6 md:flex-row md:justify-between md:text-left lg:px-10">
       <a href="/" class="focus-ring flex items-center gap-3" aria-label="Jeff Seah, home">
         <img src="/img/seal-mark.png" alt="" width="36" height="36" class="h-9 w-9 opacity-90" />
-        <span class="font-mono text-[12px] uppercase tracking-[0.2em] text-ash">Strategic Timing Intelligence</span>
+        <span class="font-mono text-[13px] uppercase tracking-[0.2em] text-ash">Strategic Timing Intelligence</span>
       </a>
       <nav aria-label="Footer">
-        <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[15px] text-ash">
+        <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-base text-ash">
           <li><a class="transition hover:text-gold" href="/">Home</a></li>
           <li><a class="transition hover:text-gold" href="/#pricing">Power Calendar</a></li>
           <li><a class="transition hover:text-gold" href="/book">Book a session</a></li>
         </ul>
       </nav>
     </div>
-    <p class="mx-auto mt-8 max-w-2xl px-4 text-center text-[15px] leading-relaxed text-ash">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
-    <p class="mt-3 text-center text-[15px] text-ash">&copy; 2026 Jeff Seah. All rights reserved.</p>
+    <p class="mx-auto mt-8 max-w-2xl px-4 text-center text-base leading-relaxed text-ash">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
+    <p class="mt-3 text-center text-base text-ash">&copy; 2026 Jeff Seah. All rights reserved.</p>
   </footer>
 
   <!-- Mobile order bar: appears once the hero CTA has scrolled away, hides while the price block is on screen. -->
@@ -795,8 +795,8 @@
     <div class="border-t border-gold/25 bg-obsidian/90 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-lg">
       <div class="mx-auto flex max-w-xl items-center justify-between gap-4">
         <div class="min-w-0">
-          <p class="truncate text-[15px] font-bold text-ivory">2027 Outlook · USD <span x-text="$store.offer.price">88</span></p>
-          <p class="truncate text-[15px] text-ash" x-show="!$store.offer.after">Early bird until Dec 31 · <s>USD 138</s></p>
+          <p class="truncate text-base font-bold text-ivory">2027 Outlook · USD <span x-text="$store.offer.price">88</span></p>
+          <p class="truncate text-base text-ash" x-show="!$store.offer.after">Early bird until Dec 31 · <s>USD 138</s></p>
         </div>
         <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
            class="btn-ember shrink-0 rounded-full px-6 py-3 text-[15px] font-extrabold tracking-wide">Order Now</a>
