@@ -381,12 +381,15 @@
     .sweep-seal::after { content: ""; position: absolute; inset: 0; opacity: 0;
       background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
       -webkit-mask: url(/img/seal-mark.png) center / contain no-repeat; mask: url(/img/seal-mark.png) center / contain no-repeat; }
-    .is-swept .sweep-seal::after { opacity: 1; animation: footSweep 1.8s ease-in-out forwards; }
-    .is-swept .sweep-text { color: transparent; -webkit-background-clip: text; background-clip: text;
-      background-image: linear-gradient(100deg, var(--ash) 40%, #FFF3C4 50%, var(--ash) 60%); background-size: 300% 100%; background-repeat: no-repeat; background-position: 130% 0;
-      animation: footSweep 1.8s ease-in-out 0.12s forwards; }
+    .sweep-text { position: relative; }
+    .sweep-text::after { content: attr(data-text); position: absolute; inset: 0; opacity: 0; color: transparent; pointer-events: none;
+      -webkit-background-clip: text; background-clip: text;
+      background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
+      -webkit-background-clip: text; background-clip: text; }
+    .is-swept .sweep-seal::after { opacity: 1; animation: footSweep 1.6s ease-in-out forwards; }
+    .is-swept .sweep-text::after { opacity: 1; animation: footSweep 3.4s ease-in-out 0.9s forwards; }
     @keyframes footSweep { from { background-position: 130% 0; } to { background-position: -30% 0; } }
-    @media (prefers-reduced-motion: reduce) { .ember-glow { animation: none; color: var(--ember); } .is-swept .sweep-seal::after, .is-swept .sweep-text { animation: none; opacity: 0; } .is-swept .sweep-text { opacity: 1; color: var(--ash); background: none; } }
+    @media (prefers-reduced-motion: reduce) { .ember-glow { animation: none; color: var(--ember); } .is-swept .sweep-seal::after, .is-swept .sweep-text::after { animation: none; opacity: 0; } }
   </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -936,7 +939,7 @@
     <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 text-center sm:px-6 md:flex-row md:justify-between md:text-left lg:px-10">
       <a href="/" class="foot-sweep focus-ring flex items-center gap-3" aria-label="Jeff Seah, home">
         <span class="sweep-seal"><img src="/img/seal-mark.png" alt="" width="36" height="36" class="h-9 w-9 opacity-90" /></span>
-        <span class="sweep-text font-mono text-[13px] uppercase tracking-[0.2em] text-ash">Strategic Timing Intelligence</span>
+        <span class="sweep-text font-mono text-[13px] uppercase tracking-[0.2em] text-ash" data-text="Strategic Timing Intelligence">Strategic Timing Intelligence</span>
       </a>
       <nav aria-label="Footer">
         <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-base text-ash">
@@ -1600,7 +1603,7 @@
         io.disconnect();
         setTimeout(() => {
           a.classList.add('is-swept');
-          setTimeout(() => a.classList.remove('is-swept'), 2200);
+          setTimeout(() => a.classList.remove('is-swept'), 5000);
         }, 400);
       }), { threshold: 0.8 });
       io.observe(a);
