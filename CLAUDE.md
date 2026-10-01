@@ -80,6 +80,11 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-10-01: Homepage kinetic pass, same system as `/2027`: scroll reveals on every section below the hero
+  (`data-reveal`), teaser chip ripple (outline) and best days lighting in turn, month-map peak days flare after the
+  scan then breathe (`.is-breathing`), `.btn-ember` lift/sheen/press/magnetic with scroll-in sheen on the two price
+  buttons, looping sweeps on the hero eyebrow (`ebLoop`), Most Popular badge (`.badge-sheen`) and footer, 丁未 on the
+  Outlook card breathes ember (`.brush-breathe`). Reduced motion skips all of it. No new Tailwind classes.
 - 2026-10-01 (branch `claude/hopeful-faraday-l3jxme`): `/2027` kinetic pass. Below-the-fold blocks reveal on scroll
   (`data-reveal`, `data-reveal="stagger"` for children, `data-reveal-delay`); the Contact & Clash panel and its wheel
   cascade (gold clock hand, `cascadeWheel()`) now wait until on screen, so phones see them. Picking an animal sends a
