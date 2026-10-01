@@ -80,6 +80,9 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-10-01: Homepage trial copy now matches `/power-calendar`: meta and og descriptions say "30-day free trial,
+  card required"; the $97 card bullet is "30 days free, then USD 97 a month"; FAQ 1 says "Your 30-day free trial";
+  FAQ 4 asks "What happens after my free month?". "Complimentary" stays only on `/2027` for the Outlook's sample month.
 - 2026-10-01: Homepage kinetic pass, same system as `/2027`: scroll reveals on every section below the hero
   (`data-reveal`), teaser chip ripple (outline) and best days lighting in turn, month-map peak days flare after the
   scan then breathe (`.is-breathing`), `.btn-ember` lift/sheen/press/magnetic with scroll-in sheen on the two price
