@@ -80,6 +80,12 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
 
 ### Change log
+- 2026-10-01: Readability pass on `/`, `/2027`, `/book` (Jeff's audience is 35 to 55, mostly on phones): paragraphs 17px,
+  fine print 15 to 16px, labels 12 to 13px, nothing under 12px, grey token `ash` now `#A8ADB6`, no dimmed grey text.
+  Keep these floors when adding copy. Not yet applied to `/welcome`, `/2027-next`, `/power-calendar`.
+  Also: `/2027` FAQ rewritten (Q3 now "How is my outlook prepared?"), "Dossier" label is "Summary", month stage has a
+  "Tap or click any month" hint, tier renamed "Calendar + Coaching". Hero 丁未 warms gold to ember; footer seal and line get a
+  one-time slow light sweep (`.foot-sweep`); `/2027` eyebrow gets a matching sweep. Compiled CSS must be rebuilt after class changes.
 - 2026-09-30: `/power-calendar` rebuilt in the house style (ledger and rulings:
   `docs/design/POWER_CALENDAR_REBUILD_LEDGER.md`). The invented sample month is replaced by the real month
   as calendar entries; "30-day free trial, card required" replaces "First month complimentary"; one plan
