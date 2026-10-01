@@ -12,7 +12,7 @@ module.exports = {
         ember: '#E06D53',
         ink: '#7F9BD1',
         ivory: '#EDE6D6',
-        ash: '#8A8F98',
+        ash: '#A8ADB6',
       },
       fontFamily: {
         display: ['"Cormorant Garamond"', 'serif'],

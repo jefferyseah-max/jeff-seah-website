@@ -136,7 +136,7 @@
   <footer>
     <div class="container">
       <div class="footer-inner">
-        <a href="/" class="footer-brand" aria-label="Jeff Seah, home"><img src="/img/seal-mark.png" alt="" width="36" height="36"><span>Strategic Timing Intelligence</span></a>
+        <a href="/" class="footer-brand foot-sweep" aria-label="Jeff Seah, home"><span class="sweep-seal"><img src="/img/seal-mark.png" alt="" width="36" height="36"></span><span class="sweep-text" data-text="Strategic Timing Intelligence">Strategic Timing Intelligence</span></a>
       </div>
       <p class="footer-disclaimer">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
       <p class="footer-copy">&copy; 2026 Jeff Seah. All rights reserved.</p>
@@ -262,6 +262,22 @@
         btn.textContent = 'Send my birth details';
       }
     });
+  </script>
+  <script>
+    // Footer: run the light sweep once, when the footer is on screen.
+    (function () {
+      const a = document.querySelector('.foot-sweep');
+      if (!a || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        setTimeout(() => {
+          a.classList.add('is-swept');
+          setTimeout(() => a.classList.remove('is-swept'), 5000);
+        }, 400);
+      }), { threshold: 0.8 });
+      io.observe(a);
+    })();
   </script>
 </body>
 </html>

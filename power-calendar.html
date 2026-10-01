@@ -40,7 +40,7 @@
       --ochre: #C99A55;
       --ink: #7F9BD1;
       --ivory: #EDE6D6;
-      --ash: #8A8F98;
+      --ash: #A8ADB6;
       --ease: cubic-bezier(0.16, 1, 0.3, 1);
     }
     html { scroll-behavior: smooth; }
@@ -98,7 +98,7 @@
     /* Tone system (fixed site meanings: gold flow, ochre hold, ember friction). */
     .tag-peak { --tone: var(--gold); }
     .tag-good { --tone: #E2C56B; }
-    .tag-neutral { --tone: #8A8F98; }
+    .tag-neutral { --tone: #A8ADB6; }
     .tag-hold { --tone: var(--ochre); }
     .tag-pause { --tone: var(--ember); }
     .tone-text { color: var(--tone); }
@@ -135,13 +135,27 @@
       .seal-ring, .seal-glint, .evt { transition: none; }
       .seal-link:hover .seal-ring, .seal-link:hover .seal-glint { transform: none; }
     }
+    /* Footer: one slow light sweep across the seal and the line. */
+    .sweep-seal { position: relative; display: inline-block; flex: none; line-height: 0; }
+    .sweep-seal::after { content: ""; position: absolute; inset: 0; opacity: 0;
+      background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
+      -webkit-mask: url(/img/seal-mark.png) center / contain no-repeat; mask: url(/img/seal-mark.png) center / contain no-repeat; }
+    .sweep-text { position: relative; }
+    .sweep-text::after { content: attr(data-text); position: absolute; inset: 0; opacity: 0; color: transparent; pointer-events: none;
+      -webkit-background-clip: text; background-clip: text;
+      background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
+      -webkit-background-clip: text; background-clip: text; }
+    .is-swept .sweep-seal::after { opacity: 1; animation: footSweep 1.6s ease-in-out forwards; }
+    .is-swept .sweep-text::after { opacity: 1; animation: footSweep 3.4s ease-in-out 0.9s forwards; }
+    @keyframes footSweep { from { background-position: 130% 0; } to { background-position: -30% 0; } }
+    @media (prefers-reduced-motion: reduce) { .ember-glow { animation: none; color: var(--ember); } .is-swept .sweep-seal::after, .is-swept .sweep-text::after { animation: none; opacity: 0; } }
   </style>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
 </head>
 <body class="font-sans antialiased">
-  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-obsidian">Skip to content</a>
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-gold focus:px-4 focus:py-2 focus:text-[15px] focus:font-bold focus:text-obsidian">Skip to content</a>
   <div class="ambient" aria-hidden="true"></div>
 
   <!-- Watermark Luopan (same symbol as /2027, /book and the homepage). Used at 3.5% opacity. -->
@@ -159,14 +173,14 @@
         </span>
         <span class="font-display text-lg font-semibold tracking-wide text-ivory">Jeff Seah</span>
       </a>
-      <ul class="hidden items-center gap-7 text-sm text-ivory/75 lg:flex">
+      <ul class="hidden items-center gap-7 text-[15px] text-ivory/85 lg:flex">
         <li><a class="transition hover:text-gold" href="#month">Your month</a></li>
         <li><a class="transition hover:text-gold" href="#how">How it arrives</a></li>
         <li><a class="transition hover:text-gold" href="#faq">FAQ</a></li>
         <li><a class="transition hover:text-gold" href="/2027">2027 Outlook</a></li>
       </ul>
       <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer"
-         class="focus-ring shrink-0 rounded-full border border-gold/40 px-4 py-2 text-xs font-bold uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold/10">Start free trial</a>
+         class="focus-ring shrink-0 rounded-full border border-gold/40 px-4 py-2 text-[15px] font-bold uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold/10">Start free trial</a>
     </nav>
   </header>
 
@@ -179,11 +193,11 @@
       </div>
       <div class="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
         <div>
-          <p class="font-mono text-[10px] uppercase tracking-[0.26em] text-gold" data-anim="hero">Power Calendar</p>
+          <p class="font-mono text-[13px] uppercase tracking-[0.26em] text-gold" data-anim="hero">Power Calendar</p>
           <h1 class="mt-4 font-display text-[3rem] font-light leading-[0.98] tracking-[-0.015em] text-ivory sm:text-7xl" data-anim="hero">
             The outlook gives you months. <em class="block text-gold">This gives you days.</em>
           </h1>
-          <p class="mt-6 max-w-xl text-lg leading-relaxed text-ivory/70" data-anim="hero">
+          <p class="mt-6 max-w-xl text-lg leading-relaxed text-ivory/85" data-anim="hero">
             Every month I read the coming month against your chart and pick the days and hours that matter: when to push, when to sign, when to hold. Each one lands as an entry in your own Google Calendar, beside your real schedule.
           </p>
           <div class="mt-8 flex flex-col items-start gap-3" data-anim="hero">
@@ -192,49 +206,49 @@
               Start my 30-day free trial
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
-            <p class="text-sm text-ash">Then USD 97 a month. Card required, cancel anytime.</p>
+            <p class="text-[15px] text-ash">Then USD 97 a month. Card required, cancel anytime.</p>
           </div>
         </div>
 
         <!-- Teaser: the three best days and the one to avoid in the next 30 days -->
         <div id="teaser" class="panel rounded-[24px] p-5 sm:p-6" x-data="teaser" data-anim="hero">
           <p class="flex items-center justify-between gap-3">
-            <span class="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">Your next good days</span>
-            <span class="font-mono text-[10px] uppercase tracking-[0.16em] text-ash">Next 30 days</span>
+            <span class="font-mono text-[13px] uppercase tracking-[0.22em] text-gold">Your next good days</span>
+            <span class="font-mono text-[13px] uppercase tracking-[0.16em] text-ash">Next 30 days</span>
           </p>
-          <p class="mt-3 text-sm text-ivory/80">Tap your birth-year animal.</p>
+          <p class="mt-3 text-[15px] text-ivory/80">Tap your birth-year animal.</p>
           <div class="mt-3 grid grid-cols-6 gap-1.5" role="group" aria-label="Birth-year animal">
             <template x-for="(a, i) in animals" :key="a.en">
               <button type="button" class="focus-ring flex h-11 flex-col items-center justify-center rounded-xl border leading-none transition duration-300"
                       :class="animal === i ? 'border-gold bg-gold text-obsidian shadow-[0_0_24px_-6px_rgba(212,175,55,0.8)]' : 'border-white/10 bg-obsidian/60 text-ivory/80 hover:border-gold/60 hover:text-gold'"
                       :aria-pressed="(animal === i).toString()" :aria-label="a.en" @click="pick(i)">
-                <span class="font-han text-sm" x-text="a.cn"></span>
-                <span class="mt-0.5 text-[8px] font-bold tracking-wide" x-text="a.en"></span>
+                <span class="font-han text-[15px]" x-text="a.cn"></span>
+                <span class="mt-0.5 text-[13px] font-bold tracking-wide" x-text="a.en"></span>
               </button>
             </template>
           </div>
-          <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ash">
+          <div class="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[15px] text-ash">
             <label for="birthYear">Or your birth year</label>
             <input id="birthYear" type="number" inputmode="numeric" min="1920" max="2026" placeholder="1988"
-                   class="focus-ring w-20 rounded-full border border-gold/25 bg-obsidian px-3 py-1 text-center font-mono text-xs text-ivory placeholder:text-ash/50 focus:border-gold"
+                   class="focus-ring w-20 rounded-full border border-gold/25 bg-obsidian px-3 py-1 text-center font-mono text-[15px] text-ivory placeholder:text-ash focus:border-gold"
                    x-model="birthYear" @input="fromYear()" />
-            <span class="text-ash/70">Born before about 4 February? Use the year before.</span>
+            <span class="text-ash">Born before about 4 February? Use the year before.</span>
           </div>
           <div class="mt-4 min-h-[5.5rem]" aria-live="polite">
             <template x-if="!read">
-              <p class="rounded-2xl border border-dashed hairline px-4 py-4 text-center text-xs text-ash">Your three best days and the one to avoid appear here, read from each day's pillar.</p>
+              <p class="rounded-2xl border border-dashed hairline px-4 py-4 text-center text-[15px] text-ash">Your three best days and the one to avoid appear here, read from each day's pillar.</p>
             </template>
             <template x-if="read">
               <div>
                 <ul class="flex flex-wrap gap-2">
                   <template x-for="d in read.best" :key="d.key">
-                    <li class="rounded-full border border-gold/60 bg-gold/10 px-3 py-1.5 text-xs font-bold text-gold"><span x-text="d.short"></span> <span class="font-han font-normal text-gold/70" x-text="d.pillar"></span></li>
+                    <li class="rounded-full border border-gold/60 bg-gold/10 px-3 py-1.5 text-[15px] font-bold text-gold"><span x-text="d.short"></span> <span class="font-han font-normal text-gold/80" x-text="d.pillar"></span></li>
                   </template>
                   <template x-if="read.avoid">
-                    <li class="rounded-full border border-ember/60 bg-ember/10 px-3 py-1.5 text-xs font-bold text-ember">Avoid <span x-text="read.avoid.short"></span></li>
+                    <li class="rounded-full border border-ember/60 bg-ember/10 px-3 py-1.5 text-[15px] font-bold text-ember">Avoid <span x-text="read.avoid.short"></span></li>
                   </template>
                 </ul>
-                <p class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-ash">
+                <p class="mt-3 flex flex-wrap items-center justify-between gap-2 text-[15px] text-ash">
                   <span>Indicative: your animal against each day's pillar.</span>
                   <a href="#month" class="font-bold uppercase tracking-[0.14em] text-gold hover:text-champagne">See it as a calendar &darr;</a>
                 </p>
@@ -251,19 +265,19 @@
         <svg class="absolute right-[-20rem] top-[-4rem] w-[38rem] sm:w-[46rem] lg:right-[-18rem] lg:top-[-10rem] lg:w-[58rem]"><use href="#bagua" /></svg>
       </div>
       <div class="max-w-3xl">
-        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Your month, as it lands</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Your month, as it lands</p>
         <h2 class="mt-3 font-display text-[2.6rem] font-light leading-[1.02] tracking-[-0.01em] text-ivory sm:text-6xl">
           <span x-text="monthName">October 2026</span>, <em class="text-gold">in your calendar.</em>
         </h2>
-        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ivory/70">
+        <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ivory/85">
           This is the real month, every day read from its own pillar against the month and your birth-year animal. Marked days arrive as entries; ordinary days stay empty. Tap an entry to open it.
         </p>
       </div>
 
       <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3 text-sm text-ash">
+        <div class="flex items-center gap-3 text-[15px] text-ash">
           <label for="calAnimal">Read for</label>
-          <select id="calAnimal" class="focus-ring rounded-full border border-gold/30 bg-obsidian px-4 py-2 text-sm text-ivory focus:border-gold"
+          <select id="calAnimal" class="focus-ring rounded-full border border-gold/30 bg-obsidian px-4 py-2 text-[15px] text-ivory focus:border-gold"
                   :value="animal === null ? '' : String(animal)" @change="setAnimal($event.target.value)">
             <option value="">Month breaks only</option>
             <template x-for="(a, i) in animals" :key="a.en"><option :value="String(i)" x-text="a.en + ' ' + a.cn"></option></template>
@@ -271,7 +285,7 @@
         </div>
         <div class="flex rounded-full border border-gold/25 p-1" role="group" aria-label="Month">
           <template x-for="(t, i) in targets" :key="t.label">
-            <button type="button" class="focus-ring rounded-full px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.14em] transition"
+            <button type="button" class="focus-ring rounded-full px-4 py-1.5 font-mono text-[13px] uppercase tracking-[0.14em] transition"
                     :class="which === i ? 'bg-gold text-obsidian' : 'text-ash hover:text-gold'" :aria-pressed="(which === i).toString()" @click="show(i)" x-text="t.label"></button>
           </template>
         </div>
@@ -281,11 +295,11 @@
         <!-- Month view -->
         <div class="panel relative overflow-hidden rounded-[24px]">
           <div class="flex flex-wrap items-center justify-between gap-3 border-b hairline px-4 py-3 sm:px-5">
-            <p class="flex items-center gap-2 text-sm text-ivory/85">
+            <p class="flex items-center gap-2 text-[15px] text-ivory/85">
               <span class="h-2.5 w-2.5 rounded-sm bg-gold" aria-hidden="true"></span>Power Calendar
-              <span class="font-han text-xs text-gold/80" x-text="monthPillars"></span>
+              <span class="font-han text-[15px] text-gold/80" x-text="monthPillars"></span>
             </p>
-            <ul class="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[10px] uppercase tracking-[0.14em] text-ash" aria-label="Legend">
+            <ul class="flex flex-wrap gap-x-3 gap-y-1 font-mono text-[13px] uppercase tracking-[0.14em] text-ash" aria-label="Legend">
               <li class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm bg-gold"></span>Peak</li>
               <li class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm border-l-[3px] border-[#E2C56B] bg-gold/15"></span>Favourable</li>
               <li class="flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-sm border-l-[3px] border-[#C99A55] bg-[#C99A55]/20"></span>Hold</li>
@@ -293,7 +307,7 @@
             </ul>
           </div>
           <div class="relative" x-ref="gridWrap">
-            <div class="grid grid-cols-7 border-b hairline text-center font-mono text-[10px] uppercase tracking-[0.14em] text-ash">
+            <div class="grid grid-cols-7 border-b hairline text-center font-mono text-[13px] uppercase tracking-[0.14em] text-ash">
               <template x-for="w in ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']" :key="w"><span class="py-2" x-text="w"></span></template>
             </div>
             <div class="grid grid-cols-7" x-ref="grid" role="group" :aria-label="monthName + ' calendar'">
@@ -303,15 +317,15 @@
                   <template x-if="!c.out">
                     <button type="button" class="focus-ring flex w-full items-center justify-between gap-1 rounded-md text-left"
                             :aria-label="c.label" :aria-pressed="(current && current.key === c.key) ? 'true' : 'false'">
-                      <span class="cal-num grid h-6 min-w-[1.5rem] place-items-center rounded-full px-1 text-xs font-bold text-ivory/85" x-text="c.d"></span>
-                      <span class="hidden font-han text-[10px] text-ivory/35 sm:inline" x-text="c.pillar"></span>
+                      <span class="cal-num grid h-6 min-w-[1.5rem] place-items-center rounded-full px-1 text-[15px] font-bold text-ivory/85" x-text="c.d"></span>
+                      <span class="hidden font-han text-[13px] text-ivory/85 sm:inline" x-text="c.pillar"></span>
                     </button>
                   </template>
                   <template x-if="!c.out && c.monthStart">
-                    <span class="evt evt-month hidden px-1.5 py-0.5 text-[10px] sm:block" x-text="c.monthStart"></span>
+                    <span class="evt evt-month hidden px-1.5 py-0.5 text-[13px] sm:block" x-text="c.monthStart"></span>
                   </template>
                   <template x-if="!c.out && c.tag !== 'neutral'">
-                    <span class="evt block px-1 py-1 text-[10px] font-bold sm:px-1.5 sm:text-[11px]" :class="'tag-' + c.tag" data-evt aria-hidden="true">
+                    <span class="evt block px-1 py-1 text-[13px] font-bold sm:px-1.5 sm:text-[13px]" :class="'tag-' + c.tag" data-evt aria-hidden="true">
                       <span class="hidden truncate sm:block" x-text="c.chip"></span>
                       <span class="block h-1 sm:hidden"></span>
                     </span>
@@ -332,21 +346,21 @@
                   <span class="mt-2 h-3.5 w-3.5 shrink-0 rounded tone-bg" aria-hidden="true"></span>
                   <div class="min-w-0">
                     <h3 class="font-display text-[1.75rem] font-semibold leading-tight text-ivory" x-text="current.title"></h3>
-                    <p class="mt-1 text-sm text-ash"><span x-text="current.long"></span> · All day</p>
+                    <p class="mt-1 text-[15px] text-ash"><span x-text="current.long"></span> · All day</p>
                   </div>
                 </div>
                 <dl class="mt-5 space-y-4 text-[15px]">
                   <div class="flex gap-3">
-                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ash">Pillar</dt>
+                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[13px] uppercase tracking-[0.16em] text-ash">Pillar</dt>
                     <dd class="font-han text-lg tone-text" x-text="current.pillar + ' day'"></dd>
                   </div>
                   <div class="flex gap-3">
-                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ash">The day</dt>
+                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[13px] uppercase tracking-[0.16em] text-ash">The day</dt>
                     <dd class="text-ivory/90" x-text="current.line"></dd>
                   </div>
                   <div class="flex gap-3">
-                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ash">Why</dt>
-                    <dd class="text-sm text-ivory/70">
+                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[13px] uppercase tracking-[0.16em] text-ash">Why</dt>
+                    <dd class="text-[15px] text-ivory/85">
                       <template x-if="current.reasons.length">
                         <ul class="space-y-1"><template x-for="r in current.reasons" :key="r"><li x-text="r"></li></template></ul>
                       </template>
@@ -354,30 +368,30 @@
                     </dd>
                   </div>
                   <div class="flex gap-3">
-                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-ash">Best hours</dt>
+                    <dt class="w-20 shrink-0 pt-0.5 font-mono text-[13px] uppercase tracking-[0.16em] text-ash">Best hours</dt>
                     <dd class="flex-1">
                       <div class="space-y-1.5" aria-hidden="true">
                         <div class="lock-bar h-3 w-4/5 rounded-full"></div>
                         <div class="lock-bar h-3 w-3/5 rounded-full"></div>
                       </div>
-                      <p class="mt-2 text-xs text-ash">In your Power Calendar, read from your full chart.</p>
+                      <p class="mt-2 text-[15px] text-ash">In your Power Calendar, read from your full chart.</p>
                     </dd>
                   </div>
                 </dl>
                 <div class="gold-rule mt-6"></div>
-                <p class="mt-4 text-xs leading-relaxed text-ash">
+                <p class="mt-4 text-[15px] leading-relaxed text-ash">
                   Indicative: built from <span x-text="animal === null ? 'the month alone' : 'your birth-year animal'"></span>. Your Power Calendar reads every day against your full chart and adds the hours.
                 </p>
               </div>
             </template>
           </div>
           <div class="panel mt-4 rounded-[24px] p-5 sm:p-6">
-            <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-gold" x-text="monthName + ' at a glance'"></p>
-            <dl class="mt-4 grid grid-cols-4 gap-2 text-center">
+            <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-gold" x-text="monthName + ' at a glance'"></p>
+            <dl class="mt-4 grid grid-cols-4 gap-1.5 text-center">
               <template x-for="t in ['peak', 'good', 'hold', 'pause']" :key="t">
-                <div class="rounded-xl border hairline bg-obsidian/60 px-1 py-3" :class="'tag-' + t">
+                <div class="rounded-xl border hairline bg-obsidian/60 px-0 py-3" :class="'tag-' + t">
                   <dd class="font-display text-3xl font-semibold tone-text" x-text="tally[t]"></dd>
-                  <dt class="mt-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-ash" x-text="t === 'good' ? 'favour' : t"></dt>
+                  <dt class="mt-0.5 font-mono text-[12px] uppercase tracking-normal text-ash" x-text="t === 'good' ? 'favour' : t"></dt>
                 </div>
               </template>
             </dl>
@@ -392,20 +406,20 @@
     <!-- ============ What the full calendar adds ============ -->
     <section class="border-y hairline bg-coal/60">
       <div class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-10">
-        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">What your calendar adds</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">What your calendar adds</p>
         <h2 class="mt-3 max-w-2xl font-display text-[2.4rem] font-light leading-[1.05] text-ivory sm:text-5xl">The map above is one layer. <em class="text-gold">Yours has three more.</em></h2>
         <div class="mt-10 grid gap-8 md:grid-cols-3">
           <div class="border-t border-gold/25 pt-5">
             <h3 class="font-display text-2xl font-semibold text-ivory">The hours</h3>
-            <p class="mt-2 leading-relaxed text-ivory/70">On the days that matter, the entry names the hours to use, so a meeting, a signing or a launch can sit in the right window. The rest of the day is yours.</p>
+            <p class="mt-2 leading-relaxed text-ivory/85">On the days that matter, the entry names the hours to use, so a meeting, a signing or a launch can sit in the right window. The rest of the day is yours.</p>
           </div>
           <div class="border-t border-gold/25 pt-5">
             <h3 class="font-display text-2xl font-semibold text-ivory">Your whole chart</h3>
-            <p class="mt-2 leading-relaxed text-ivory/70">The map reads your birth-year animal. Your calendar reads your date, time and place of birth, so it marks your personal power days and the days that drain you.</p>
+            <p class="mt-2 leading-relaxed text-ivory/85">The map reads your birth-year animal. Your calendar reads your date, time and place of birth, so it marks your personal power days and the days that drain you.</p>
           </div>
           <div class="border-t border-gold/25 pt-5">
             <h3 class="font-display text-2xl font-semibold text-ivory">The month's rare markers</h3>
-            <p class="mt-2 leading-relaxed text-ivory/70">New and full moons, keep-your-guard-up days and the month's few manifesting windows, written in plain English.</p>
+            <p class="mt-2 leading-relaxed text-ivory/85">New and full moons, keep-your-guard-up days and the month's few manifesting windows, written in plain English.</p>
           </div>
         </div>
       </div>
@@ -413,23 +427,23 @@
 
     <!-- ============ How it arrives ============ -->
     <section id="how" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-10">
-      <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">How it arrives</p>
+      <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">How it arrives</p>
       <h2 class="mt-3 max-w-2xl font-display text-[2.4rem] font-light leading-[1.05] text-ivory sm:text-5xl">In your Google Calendar, <em class="text-gold">not in another app.</em></h2>
       <ol class="mt-10 grid gap-8 md:grid-cols-3">
         <li class="border-t hairline pt-5">
           <span class="font-display text-4xl font-light text-gold">01</span>
           <h3 class="mt-2 font-display text-2xl font-semibold text-ivory">Start the trial</h3>
-          <p class="mt-2 leading-relaxed text-ivory/70">Thirty days free, then USD 97 a month. A card is taken at checkout; cancel anytime.</p>
+          <p class="mt-2 leading-relaxed text-ivory/85">Thirty days free, then USD 97 a month. A card is taken at checkout; cancel anytime.</p>
         </li>
         <li class="border-t hairline pt-5">
           <span class="font-display text-4xl font-light text-gold">02</span>
           <h3 class="mt-2 font-display text-2xl font-semibold text-ivory">Send your birth details</h3>
-          <p class="mt-2 leading-relaxed text-ivory/70">A two-minute form right after checkout: date, time and place of birth, and the Google account to share the calendar with.</p>
+          <p class="mt-2 leading-relaxed text-ivory/85">A two-minute form right after checkout: date, time and place of birth, and the Google account to share the calendar with.</p>
         </li>
         <li class="border-t hairline pt-5">
           <span class="font-display text-4xl font-light text-gold">03</span>
           <h3 class="mt-2 font-display text-2xl font-semibold text-ivory">Plan around it</h3>
-          <p class="mt-2 leading-relaxed text-ivory/70">Your first month lands in your Google Calendar within 7 days, then each month after. Open the day, read the note, plan around it. Nothing to download.</p>
+          <p class="mt-2 leading-relaxed text-ivory/85">Your first month lands in your Google Calendar within 7 days, then each month after. Open the day, read the note, plan around it. Nothing to download.</p>
         </li>
       </ol>
     </section>
@@ -437,16 +451,16 @@
     <!-- ============ Offer ============ -->
     <section id="order" class="relative mx-auto max-w-3xl px-4 py-20 sm:px-6">
       <div class="text-center">
-        <p class="font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Start free</p>
+        <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Start free</p>
         <h2 class="mt-3 font-display text-[2.4rem] font-light leading-[1.05] text-ivory sm:text-5xl">Your days, <em class="text-gold">every month.</em></h2>
       </div>
       <div id="order-price" class="panel relative mt-10 overflow-hidden rounded-[28px] p-6 sm:p-9">
         <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(22rem_18rem_at_80%_0%,rgba(212,175,55,0.12),transparent_70%)]" aria-hidden="true"></div>
         <div class="relative">
-          <p class="font-mono text-[10px] uppercase tracking-[0.22em] text-gold">Monthly · 30-day free trial</p>
+          <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-gold">Monthly · 30-day free trial</p>
           <h3 class="mt-2 font-display text-4xl font-semibold text-ivory">Power Calendar</h3>
           <p class="mt-4 flex items-baseline gap-2 font-display text-6xl font-semibold text-gold"><span class="font-sans text-base font-bold tracking-[0.12em] text-gold/80">USD</span>97<span class="font-sans text-base font-normal text-ash">/ month</span></p>
-          <ul class="mt-6 space-y-3 text-[15px] text-ivory/85">
+          <ul class="mt-6 space-y-3 text-base text-ivory/85">
             <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span>Your month's favorable days and pause days, read from your full chart</li>
             <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span>The best hours on the days that matter</li>
             <li class="flex gap-3"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span>Delivered into your own Google Calendar, every month</li>
@@ -457,10 +471,10 @@
             Start my 30-day free trial
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10m0 0L8 3m5 5l-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <p class="mt-3 text-center text-sm text-ivory/70">Card required. Continues at USD 97 a month unless you cancel.</p>
+          <p class="mt-3 text-center text-[15px] text-ivory/85">Card required. Continues at USD 97 a month unless you cancel.</p>
         </div>
       </div>
-      <div class="mt-8 space-y-3 text-center text-sm leading-relaxed text-ash">
+      <div class="mt-8 space-y-3 text-center text-[15px] leading-relaxed text-ash">
         <p>Monthly plans are billed on the 15th of each month. Cancel before the 15th and you will not be charged for the next month. Cancel anytime in <a href="https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">Manage your plan</a>.</p>
         <p>Want a written read of each month as well? The report and coaching plans are on the <a href="/#pricing" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">homepage</a>.</p>
         <p>Want the year first? <a href="/2027" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">The 2027 Annual Outlook</a> maps your twelve months, and includes a sample month of your own days.</p>
@@ -469,7 +483,7 @@
 
     <!-- ============ FAQ ============ -->
     <section id="faq" class="mx-auto max-w-3xl px-4 pb-24 pt-8 sm:px-6" x-data="{ open: 0 }">
-      <p class="text-center font-mono text-[10px] uppercase tracking-[0.24em] text-gold">Before you start</p>
+      <p class="text-center font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Before you start</p>
       <h2 class="mt-3 text-center font-display text-[2.4rem] font-light leading-[1.05] text-ivory sm:text-5xl">Questions, answered</h2>
       <div class="mt-10 divide-y divide-white/[0.08] border-y hairline">
         <template x-for="(f, i) in [
@@ -487,7 +501,7 @@
               </button>
             </h3>
             <div :id="'faq-' + i" class="grid transition-[grid-template-rows] duration-500" :class="open === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'">
-              <div class="overflow-hidden"><p class="pb-6 pr-10 leading-relaxed text-ivory/70" x-text="f.a"></p></div>
+              <div class="overflow-hidden"><p class="pb-6 pr-10 leading-relaxed text-ivory/85" x-text="f.a"></p></div>
             </div>
           </div>
         </template>
@@ -498,20 +512,20 @@
   <!-- Footer -->
   <footer class="border-t hairline pb-28 pt-12 lg:pb-12">
     <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 text-center sm:px-6 md:flex-row md:justify-between md:text-left lg:px-10">
-      <a href="/" class="focus-ring flex items-center gap-3" aria-label="Jeff Seah, home">
-        <img src="/img/seal-mark.png" alt="" width="36" height="36" class="h-9 w-9 opacity-90" />
-        <span class="font-mono text-[10px] uppercase tracking-[0.2em] text-ash">Strategic Timing Intelligence</span>
+      <a href="/" class="foot-sweep focus-ring flex items-center gap-3" aria-label="Jeff Seah, home">
+        <span class="sweep-seal"><img src="/img/seal-mark.png" alt="" width="36" height="36" class="h-9 w-9 opacity-90" /></span>
+        <span class="sweep-text font-mono text-[13px] uppercase tracking-[0.2em] text-ash" data-text="Strategic Timing Intelligence">Strategic Timing Intelligence</span>
       </a>
       <nav aria-label="Footer">
-        <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-ash">
+        <ul class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-[15px] text-ash">
           <li><a class="transition hover:text-gold" href="/">Home</a></li>
           <li><a class="transition hover:text-gold" href="/2027">2027 Outlook</a></li>
           <li><a class="transition hover:text-gold" href="/book">Book a session</a></li>
         </ul>
       </nav>
     </div>
-    <p class="mx-auto mt-8 max-w-2xl px-4 text-center text-xs leading-relaxed text-ash/60">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
-    <p class="mt-3 text-center text-xs text-ash/60">&copy; 2026 Jeff Seah. All rights reserved.</p>
+    <p class="mx-auto mt-8 max-w-2xl px-4 text-center text-[15px] leading-relaxed text-ash">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
+    <p class="mt-3 text-center text-[15px] text-ash">&copy; 2026 Jeff Seah. All rights reserved.</p>
   </footer>
 
   <!-- Mobile order bar: appears once the hero CTA has scrolled away, hides while the price block is on screen. -->
@@ -521,10 +535,10 @@
     <div class="border-t border-gold/25 bg-obsidian/90 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-lg">
       <div class="mx-auto flex max-w-xl items-center justify-between gap-4">
         <div class="min-w-0">
-          <p class="truncate text-sm font-bold text-ivory">Power Calendar · USD 97/mo</p>
-          <p class="truncate text-xs text-ash">30-day free trial</p>
+          <p class="truncate text-[15px] font-bold text-ivory">Power Calendar · USD 97/mo</p>
+          <p class="truncate text-[15px] text-ash">30-day free trial</p>
         </div>
-        <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer" class="btn-ember focus-ring shrink-0 rounded-full px-5 py-3 text-sm font-extrabold">Start free</a>
+        <a href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05" target="_blank" rel="noopener noreferrer" class="btn-ember focus-ring shrink-0 rounded-full px-5 py-3 text-[15px] font-extrabold">Start free</a>
       </div>
     </div>
   </div>
@@ -755,6 +769,22 @@
         .fromTo('[data-anim="nav"]', { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.6 })
         .to(hero, { opacity: 1, y: 0, duration: 0.8, stagger: 0.09, clearProps: 'transform' }, 0.1);
     });
+  </script>
+  <script>
+    // Footer: run the light sweep once, when the footer is on screen.
+    (function () {
+      const a = document.querySelector('.foot-sweep');
+      if (!a || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        setTimeout(() => {
+          a.classList.add('is-swept');
+          setTimeout(() => a.classList.remove('is-swept'), 5000);
+        }, 400);
+      }), { threshold: 0.8 });
+      io.observe(a);
+    })();
   </script>
 </body>
 </html>
