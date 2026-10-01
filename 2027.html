@@ -97,6 +97,7 @@
     .tag-vault { --tone: #F3D98B; }
     .wt-col { fill: transparent; cursor: pointer; outline: none; transition: fill 0.25s var(--ease); }
     .wt-col:hover, .wt-col:focus-visible, .wt-col.is-active { fill: rgba(212, 175, 55, 0.06); }
+    .wt-col:hover, .wt-col:focus-visible { fill: rgba(212, 175, 55, 0.12); }
     .tone-text { color: var(--tone); }
     .chip {
       border: 1px solid color-mix(in srgb, var(--tone) 45%, transparent);
@@ -542,6 +543,8 @@
 
           <!-- Month readout: follows the comet, then any month you tap. Sticks to the viewport bottom on small screens. -->
           <div class="sticky bottom-[5.5rem] z-10 mt-4 lg:static" x-cloak x-show="current">
+            <p class="mb-2 px-1 font-mono text-[11px] uppercase tracking-[0.16em] text-gold/80" x-cloak x-show="phase === 'done' && !picked"
+               x-transition.opacity.duration.400ms>Tap or click any month to read what it means for your decision</p>
             <div class="rounded-2xl border hairline bg-obsidian/90 p-4 backdrop-blur sm:p-5" :class="current ? 'tag-' + current.tag : ''">
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <p class="flex items-baseline gap-3">
@@ -1429,6 +1432,7 @@
           current: null,
           dossier: null,
           tally: { flow: 0, friction: 0, trap: 0, vault: 0 },
+          picked: false,   // true once the visitor taps a month; hides the hint
           stamp: '',
           vertical: false,
 
@@ -1474,7 +1478,7 @@
             this.vertical = this.isVertical();
             this.stamp = new Date().toLocaleString('en-SG', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
             this.current = null;
-            refs = renderStage(this.$refs.svg, path, this.vertical, k => this.pick(k));
+            refs = renderStage(this.$refs.svg, path, this.vertical, k => { this.picked = true; this.pick(k); });
 
             const counts = { flow: 0, friction: 0, trap: 0, vault: 0 };
             path.forEach(m => { if (m.tag in counts) counts[m.tag]++; });
