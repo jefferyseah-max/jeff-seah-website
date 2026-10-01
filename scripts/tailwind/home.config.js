@@ -13,7 +13,7 @@ module.exports = {
         ink: '#7F9BD1',
         jade: '#6FB39A',
         ivory: '#EDE6D6',
-        ash: '#8A8F98',
+        ash: '#A8ADB6',
       },
       fontFamily: {
         display: ['"Cormorant Garamond"', 'serif'],
