@@ -225,7 +225,7 @@
     .ember-glow { color: rgba(212, 175, 55, 0.55); animation: emberShift 1.5s ease-in-out 0.9s forwards; }
     @keyframes emberShift { to { color: var(--ember); text-shadow: 0 0 12px rgba(224, 109, 83, 0.5), 0 0 2px rgba(224, 109, 83, 0.7); } }
 
-    /* Footer: one light sweep across the seal and the line when the footer scrolls into view. */
+    /* Footer: a slow light sweep across the seal, then the line, repeating every 9 s once the footer has been seen. */
     .sweep-seal { position: relative; display: inline-block; flex: none; line-height: 0; }
     .sweep-seal::after { content: ""; position: absolute; inset: 0; opacity: 0;
       background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
@@ -235,16 +235,25 @@
       -webkit-background-clip: text; background-clip: text;
       background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
       -webkit-background-clip: text; background-clip: text; }
-    .is-swept .sweep-seal::after { opacity: 1; animation: footSweep 1.6s ease-in-out forwards; }
-    .is-swept .sweep-text::after { opacity: 1; animation: footSweep 3.4s ease-in-out 0.9s forwards; }
+    .is-swept .sweep-seal::after { opacity: 1; animation: sweepSeal 9s ease-in-out infinite; }
+    .is-swept .sweep-text::after { opacity: 1; animation: sweepText 9s ease-in-out 0.9s infinite both; }
     @keyframes footSweep { from { background-position: 130% 0; } to { background-position: -30% 0; } }
+    /* Looping sweeps: the pass takes the first part of the cycle, then the light rests off to the left. */
+    @keyframes sweepSeal { 0% { background-position: 130% 0; } 18% { background-position: -30% 0; } 100% { background-position: -30% 0; } }
+    @keyframes sweepText { 0% { background-position: 130% 0; } 38% { background-position: -30% 0; } 100% { background-position: -30% 0; } }
     @media (prefers-reduced-motion: reduce) { .ember-glow { animation: none; color: var(--ember); } .is-swept .sweep-seal::after, .is-swept .sweep-text::after { animation: none; opacity: 0; } }
-    /* Hero eyebrow: one slow light sweep after 丁未 has warmed, left to right across both phrases. */
+    /* Hero eyebrow: a slow light sweep after 丁未 has warmed, left to right across both phrases, every 10 s. */
     .eb-sweep { position: relative; }
     .eb-sweep::after { content: attr(data-text); position: absolute; inset: 0; color: transparent; pointer-events: none;
       background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
-      -webkit-background-clip: text; background-clip: text; animation: footSweep 2.6s ease-in-out 2.8s forwards; }
+      -webkit-background-clip: text; background-clip: text; animation: ebLoop 10s ease-in-out 2.8s infinite both; }
+    @keyframes ebLoop { 0% { background-position: 130% 0; } 26% { background-position: -30% 0; } 100% { background-position: -30% 0; } }
     .eb-sweep-2::after { animation-delay: 4.6s; }
+    /* Power Calendar bridge: quiet days; the lit ones drift to nearby days with a slow crossfade (JS). */
+    .pc-day { background: rgba(237, 230, 214, 0.08); transition: background-color 1.4s ease-in-out, box-shadow 1.4s ease-in-out; }
+    .pc-day.is-gold { background: rgba(212, 175, 55, 0.78); box-shadow: 0 0 6px rgba(212, 175, 55, 0.35); }
+    .pc-day.is-ember { background: rgba(224, 109, 83, 0.45); }
+    @media (prefers-reduced-motion: reduce) { .pc-day { transition: none; } }
     @media (prefers-reduced-motion: reduce) { .eb-sweep::after { animation: none; } }
   </style>
 
@@ -771,7 +780,7 @@
         <div class="grid w-[9.5rem] grid-cols-7 gap-1.5 justify-self-center" aria-hidden="true">
           <template x-for="d in 35" :key="d">
             <span class="aspect-square rounded-[3px]" data-day
-                  :class="[4, 9, 17, 23, 30].includes(d) ? 'bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)]' : [12, 26].includes(d) ? 'bg-ember/60' : 'bg-ivory/10'"></span>
+                  :class="[4, 9, 17, 23, 30].includes(d) ? 'pc-day is-gold' : [12, 26].includes(d) ? 'pc-day is-ember' : 'pc-day'"></span>
           </template>
         </div>
         <div>
@@ -1140,23 +1149,62 @@
         }, null, 0.35);
     });
 
-    function cascadeWheel(wheel, nodes, delay) {
-      const each = 0.07, turn = each * 12;
-      gsap.timeline({ delay })
-        .fromTo(wheel.querySelector('[data-hand]'), { rotation: 0, autoAlpha: 0 }, { autoAlpha: 1, duration: 0.15 }, 0)
-        .to(wheel.querySelector('[data-hand]'), { rotation: 360, duration: turn + 0.1, ease: 'none' }, 0)
-        .to(wheel.querySelector('[data-hand]'), { autoAlpha: 0, duration: 0.45 }, turn)
-        .fromTo(nodes, { scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.5, stagger: each, ease: 'back.out(1.8)', clearProps: 'transform' }, 0.05);
+    // Watches an element for as long as the page is open; returns a getter for "is it on screen now".
+    function liveVisibility(el) {
+      let on = false;
+      new IntersectionObserver(([e]) => { on = e.isIntersecting; }).observe(el);
+      return () => on && !document.hidden;
     }
 
-    // Power Calendar bridge: the 35 days fill in row by row, then the five gold days flare like lit lanterns.
+    // The clock: the first pass draws the twelve branches in behind the hand (0.11 s apart). After that the hand
+    // keeps sweeping every few seconds and each branch glows softly as it passes, until a visitor picks an animal
+    // (the wheel is then theirs); after Reset the sweep returns. Paused while the wheel is off screen.
+    function cascadeWheel(wheel, nodes, delay) {
+      const hand = wheel.querySelector('[data-hand]');
+      const each = 0.11, turn = each * 12;
+      gsap.timeline({ delay, onComplete: () => idleSweep(wheel, hand, nodes) })
+        .fromTo(hand, { rotation: 0, autoAlpha: 0 }, { autoAlpha: 1, duration: 0.2 }, 0)
+        .to(hand, { rotation: 360, duration: turn + 0.15, ease: 'none' }, 0)
+        .to(hand, { autoAlpha: 0, duration: 0.6 }, turn)
+        .fromTo(nodes, { scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.6, stagger: each, ease: 'back.out(1.8)', clearProps: 'transform' }, 0.06);
+    }
+
+    function idleSweep(wheel, hand, nodes) {
+      const visible = liveVisibility(wheel);
+      const turn = 3.2;
+      const tick = () => {
+        if (!visible() || Alpine.store('reader').animal !== null) return gsap.delayedCall(1.5, tick);
+        gsap.timeline({ onComplete: () => gsap.delayedCall(4.5, tick) })
+          .fromTo(hand, { rotation: 0, autoAlpha: 0 }, { autoAlpha: 0.65, duration: 0.5 }, 0)
+          .to(hand, { rotation: 360, duration: turn, ease: 'none' }, 0)
+          .to(hand, { autoAlpha: 0, duration: 0.8 }, turn - 0.6)
+          .fromTo(nodes, { boxShadow: '0 0 0 0 rgba(212,175,55,0)' }, { boxShadow: '0 0 16px 1px rgba(212,175,55,0.5)', duration: 0.35, ease: 'sine.inOut',
+            stagger: { each: turn / 12, yoyo: true, repeat: 1 }, clearProps: 'boxShadow' }, 0.05);
+      };
+      gsap.delayedCall(3, tick);
+    }
+
+    // Power Calendar bridge: the 35 days fill in row by row. Then, while it is on screen, one lit day at a time
+    // drifts to an empty neighbouring day every 2.6 s with a slow crossfade (CSS .pc-day), so the month keeps shifting.
     function lightCalendar(el) {
-      const days = el.querySelectorAll('[data-day]');
-      const gold = [...days].filter(d => d.classList.contains('bg-gold'));
-      gsap.timeline({ delay: 0.25 })
-        .fromTo(days, { scale: 0.3 }, { autoAlpha: 1, scale: 1, duration: 0.35, stagger: 0.018, ease: 'back.out(2)', clearProps: 'transform' })
-        .fromTo(gold, { boxShadow: '0 0 10px rgba(212,175,55,0.8)' }, { boxShadow: '0 0 22px 3px rgba(255,236,170,1)', duration: 0.3, ease: 'power2.out',
-          stagger: { each: 0.15, yoyo: true, repeat: 1 }, clearProps: 'boxShadow' });
+      const days = [...el.querySelectorAll('[data-day]')];
+      gsap.fromTo(days, { scale: 0.3 }, { autoAlpha: 1, scale: 1, duration: 0.35, stagger: 0.018, ease: 'back.out(2)', delay: 0.25, clearProps: 'transform' });
+      const visible = liveVisibility(el);
+      const COLS = 7, lit = d => d.classList.contains('is-gold') || d.classList.contains('is-ember');
+      let last = null;
+      setInterval(() => {
+        if (!visible()) return;
+        const from = days.filter(d => lit(d) && d !== last);
+        const src = from[Math.floor(Math.random() * from.length)];
+        const i = days.indexOf(src), r = Math.floor(i / COLS), c = i % COLS;
+        const near = days.filter((d, j) => !lit(d) && Math.abs(Math.floor(j / COLS) - r) <= 1 && Math.abs((j % COLS) - c) <= 1);
+        if (!near.length) return;
+        const dst = near[Math.floor(Math.random() * near.length)];
+        const tone = src.classList.contains('is-gold') ? 'is-gold' : 'is-ember';
+        src.classList.remove(tone);
+        dst.classList.add(tone);
+        last = dst;
+      }, 2600);
     }
 
     // Magnetic CTA: on a mouse or trackpad, gold buttons lean a few px toward the cursor (CSS --mx / --my).
@@ -1666,7 +1714,7 @@
     });
   </script>
   <script>
-    // Footer: run the light sweep once, when the footer is on screen.
+    // Footer: start the looping light sweep the first time the footer is on screen.
     (function () {
       const a = document.querySelector('.foot-sweep');
       if (!a || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -1675,7 +1723,6 @@
         io.disconnect();
         setTimeout(() => {
           a.classList.add('is-swept');
-          setTimeout(() => a.classList.remove('is-swept'), 5000);
         }, 400);
       }), { threshold: 0.8 });
       io.observe(a);

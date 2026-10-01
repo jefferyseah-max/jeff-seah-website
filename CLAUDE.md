@@ -87,6 +87,10 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   comet arrives; the Power Calendar bridge days fill in. `.btn-ember`: 3px lift with a warmer shadow, light sweep on
   hover and once on scroll-in for price buttons (`.is-charged`), press state, magnetic pull on fine pointers. All of it
   is skipped under reduced motion. No new Tailwind classes, so no CSS rebuild.
+  Loops (Jeff, same day): hero eyebrow sweep every 10 s (`ebLoop`), footer seal and line every 9 s; wheel cascade
+  slowed to 0.11 s per branch, then an idle clock sweep every ~8 s with a soft glow per branch, paused once an
+  animal is picked or off screen (`idleSweep()`); Power Calendar days are quieter (`.pc-day`) and one lit day
+  drifts to a neighbouring day every 2.6 s while on screen.
 - 2026-10-01: Readability pass on `/`, `/2027`, `/book` (Jeff's audience is 35 to 55, mostly on phones): paragraphs 17px,
   fine print 15 to 16px, labels 12 to 13px, nothing under 12px, grey token `ash` now `#A8ADB6`, no dimmed grey text.
   Keep these floors when adding copy. Applied the same day to `/welcome`, `/2027-next` (shared `2027.css`) and `/power-calendar`.
