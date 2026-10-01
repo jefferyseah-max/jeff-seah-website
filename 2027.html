@@ -107,13 +107,35 @@
     .tone-bar { background: var(--tone); box-shadow: 0 0 18px color-mix(in srgb, var(--tone) 60%, transparent); }
 
     /* Primary CTA: molten gold with an ember undertone on hover. */
+    /* --mx / --my: a few px of magnetic pull toward the cursor (fine pointers only, set in JS). */
     .btn-ember {
+      position: relative; overflow: hidden; isolation: isolate;
       background: linear-gradient(135deg, #E9C766 0%, var(--gold) 45%, #C98E3A 100%);
       color: var(--obsidian);
       box-shadow: 0 10px 40px -12px rgba(212, 175, 55, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), background-position 0.6s var(--ease);
+      transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+      transition: transform 0.45s var(--ease), box-shadow 0.45s var(--ease);
     }
-    .btn-ember:hover { transform: translateY(-2px); box-shadow: 0 16px 50px -12px rgba(224, 109, 83, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+    /* Light sweep: on hover, and once when a price button scrolls into view (.is-charged). */
+    .btn-ember::after {
+      content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+      background: linear-gradient(105deg, transparent 35%, rgba(255, 248, 225, 0.7) 50%, transparent 65%) 150% 0 / 250% 100% no-repeat;
+    }
+    .btn-ember.is-charged::after { animation: btnSheen 1.1s cubic-bezier(0.4, 0, 0.2, 1) 1; }
+    @keyframes btnSheen { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+    @media (hover: hover) {
+      .btn-ember:hover {
+        transform: translate3d(var(--mx, 0px), calc(var(--my, 0px) - 3px), 0);
+        box-shadow: 0 24px 64px -14px rgba(224, 109, 83, 0.7), 0 10px 28px -12px rgba(233, 199, 102, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+      }
+      .btn-ember:hover::after { animation: btnSheen 0.9s cubic-bezier(0.4, 0, 0.2, 1) 1; }
+    }
+    /* Press: the tactile cue phones actually get. */
+    .btn-ember:active {
+      transform: translate3d(var(--mx, 0px), calc(var(--my, 0px) + 1px), 0) scale(0.98);
+      box-shadow: 0 6px 22px -10px rgba(224, 109, 83, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transition-duration: 0.12s;
+    }
     .btn-ember:focus-visible, .focus-ring:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
     /* Scarcity badge: live ember dot. */
@@ -171,6 +193,17 @@
       animation: ping 3s var(--ease) infinite;
     }
     .chords { filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.45)); }
+    /* Clock hand: a gold wedge swept once around the branch ring as the twelve nodes cascade in. */
+    .sweep-hand {
+      position: absolute; inset: 0; border-radius: 9999px; pointer-events: none; opacity: 0;
+      background: conic-gradient(from 0deg, transparent 0deg, transparent 290deg, rgba(212, 175, 55, 0.28) 352deg, rgba(255, 243, 196, 0.85) 359deg, transparent 360deg);
+      -webkit-mask: radial-gradient(circle, transparent 31%, #000 32%, #000 49%, transparent 49.5%);
+      mask: radial-gradient(circle, transparent 31%, #000 32%, #000 49%, transparent 49.5%);
+    }
+    /* Resonance pulse: rings radiating from the chosen branch. */
+    .resonance {
+      position: absolute; width: 15%; aspect-ratio: 1; border-radius: 9999px; border: 1.5px solid; pointer-events: none;
+    }
 
     /* Locked 12-month map shimmer. Deliberately uncoloured: it is a placeholder, not a reading. */
     .locked-cell {
@@ -186,12 +219,13 @@
       .seal-ring, .seal-glint { transition: none; }
       .seal-link:hover .seal-ring, .seal-link:hover .seal-glint { transform: none; }
       .node, .btn-ember { transition: none; }
+      .btn-ember::after, .btn-ember:hover::after, .btn-ember.is-charged::after { animation: none; }
     }
     /* Hero eyebrow: 丁未 warms from muted gold to ember (Fire Goat year). */
     .ember-glow { color: rgba(212, 175, 55, 0.55); animation: emberShift 1.5s ease-in-out 0.9s forwards; }
     @keyframes emberShift { to { color: var(--ember); text-shadow: 0 0 12px rgba(224, 109, 83, 0.5), 0 0 2px rgba(224, 109, 83, 0.7); } }
 
-    /* Footer: one light sweep across the seal and the line when the footer scrolls into view. */
+    /* Footer: a slow light sweep across the seal, then the line, repeating every 9 s once the footer has been seen. */
     .sweep-seal { position: relative; display: inline-block; flex: none; line-height: 0; }
     .sweep-seal::after { content: ""; position: absolute; inset: 0; opacity: 0;
       background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
@@ -201,16 +235,25 @@
       -webkit-background-clip: text; background-clip: text;
       background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
       -webkit-background-clip: text; background-clip: text; }
-    .is-swept .sweep-seal::after { opacity: 1; animation: footSweep 1.6s ease-in-out forwards; }
-    .is-swept .sweep-text::after { opacity: 1; animation: footSweep 3.4s ease-in-out 0.9s forwards; }
+    .is-swept .sweep-seal::after { opacity: 1; animation: sweepSeal 9s ease-in-out infinite; }
+    .is-swept .sweep-text::after { opacity: 1; animation: sweepText 9s ease-in-out 0.9s infinite both; }
     @keyframes footSweep { from { background-position: 130% 0; } to { background-position: -30% 0; } }
+    /* Looping sweeps: the pass takes the first part of the cycle, then the light rests off to the left. */
+    @keyframes sweepSeal { 0% { background-position: 130% 0; } 18% { background-position: -30% 0; } 100% { background-position: -30% 0; } }
+    @keyframes sweepText { 0% { background-position: 130% 0; } 38% { background-position: -30% 0; } 100% { background-position: -30% 0; } }
     @media (prefers-reduced-motion: reduce) { .ember-glow { animation: none; color: var(--ember); } .is-swept .sweep-seal::after, .is-swept .sweep-text::after { animation: none; opacity: 0; } }
-    /* Hero eyebrow: one slow light sweep after 丁未 has warmed, left to right across both phrases. */
+    /* Hero eyebrow: a slow light sweep after 丁未 has warmed, left to right across both phrases, every 10 s. */
     .eb-sweep { position: relative; }
     .eb-sweep::after { content: attr(data-text); position: absolute; inset: 0; color: transparent; pointer-events: none;
       background: linear-gradient(100deg, transparent 40%, rgba(255, 243, 196, 0.95) 50%, transparent 60%) 130% 0 / 300% 100% no-repeat;
-      -webkit-background-clip: text; background-clip: text; animation: footSweep 2.6s ease-in-out 2.8s forwards; }
+      -webkit-background-clip: text; background-clip: text; animation: ebLoop 10s ease-in-out 2.8s infinite both; }
+    @keyframes ebLoop { 0% { background-position: 130% 0; } 26% { background-position: -30% 0; } 100% { background-position: -30% 0; } }
     .eb-sweep-2::after { animation-delay: 4.6s; }
+    /* Power Calendar bridge: quiet days; the lit ones drift to nearby days with a slow crossfade (JS). */
+    .pc-day { background: rgba(237, 230, 214, 0.08); transition: background-color 1.4s ease-in-out, box-shadow 1.4s ease-in-out; }
+    .pc-day.is-gold { background: rgba(212, 175, 55, 0.78); box-shadow: 0 0 6px rgba(212, 175, 55, 0.35); }
+    .pc-day.is-ember { background: rgba(224, 109, 83, 0.45); }
+    @media (prefers-reduced-motion: reduce) { .pc-day { transition: none; } }
     @media (prefers-reduced-motion: reduce) { .eb-sweep::after { animation: none; } }
   </style>
 
@@ -331,16 +374,19 @@
             Tap your birth animal
           </p>
 
-          <div class="relative mx-auto mt-5 aspect-square w-full max-w-[400px]" role="group" aria-label="Birth animal">
-            <!-- Decorative Luopan rings: 72 fine ticks, 12 major, slow drift. -->
+          <div x-ref="wheel" class="relative mx-auto mt-5 aspect-square w-full max-w-[400px]" role="group" aria-label="Birth animal" data-wheel>
+            <!-- Decorative Luopan rings: 72 fine ticks, 12 major, slow drift. The dial group clicks into place on a pick. -->
             <svg class="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
-              <g class="wheel-spin" fill="none">
-                <circle cx="50" cy="50" r="49" stroke="rgba(212,175,55,0.35)" stroke-width="1.4" pathLength="360" stroke-dasharray="0.35 4.65" />
-                <circle cx="50" cy="50" r="49" stroke="rgba(212,175,55,0.7)" stroke-width="2.6" pathLength="360" stroke-dasharray="0.6 29.4" />
+              <g x-ref="dial">
+                <g class="wheel-spin" fill="none">
+                  <circle cx="50" cy="50" r="49" stroke="rgba(212,175,55,0.35)" stroke-width="1.4" pathLength="360" stroke-dasharray="0.35 4.65" />
+                  <circle cx="50" cy="50" r="49" stroke="rgba(212,175,55,0.7)" stroke-width="2.6" pathLength="360" stroke-dasharray="0.6 29.4" />
+                </g>
               </g>
               <circle cx="50" cy="50" r="47.2" fill="none" stroke="rgba(212,175,55,0.18)" stroke-width="0.25" />
               <circle cx="50" cy="50" r="31.5" fill="none" stroke="rgba(237,230,214,0.07)" stroke-width="0.25" />
             </svg>
+            <div class="sweep-hand" aria-hidden="true" data-hand></div>
 
             <!-- Chords from your animal to the Goat, drawn on selection. -->
             <svg class="chords pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" aria-hidden="true">
@@ -348,7 +394,7 @@
             </svg>
 
             <!-- Centre disc -->
-            <div class="absolute left-1/2 top-1/2 grid aspect-square w-[44%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-gold/15 bg-obsidian/85 text-center shadow-[0_0_60px_-10px_rgba(224,109,83,0.35)] backdrop-blur"
+            <div x-ref="disc" class="absolute left-1/2 top-1/2 grid aspect-square w-[44%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-gold/15 bg-obsidian/85 text-center shadow-[0_0_60px_-10px_rgba(224,109,83,0.35)] backdrop-blur"
                  :class="year ? 'tone-' + year.tone : ''">
               <div x-ref="centre" class="px-2">
                 <template x-if="!year">
@@ -483,7 +529,7 @@
               <div class="mt-5 grid grid-cols-6 gap-1.5 sm:grid-cols-12" aria-hidden="true">
                 <template x-for="m in months" :key="m">
                   <div class="text-center" data-month>
-                    <div class="locked-cell h-10 rounded-md"></div>
+                    <div class="locked-cell h-10 rounded-md" data-lantern></div>
                     <p class="mt-1 font-mono text-[13px] uppercase tracking-wider text-ash" x-text="m"></p>
                   </div>
                 </template>
@@ -512,7 +558,7 @@
       <div class="watermark" aria-hidden="true">
         <svg class="absolute right-[-20rem] top-[-4rem] w-[38rem] sm:w-[46rem] lg:right-[-18rem] lg:top-[-10rem] lg:w-[58rem]"><use href="#bagua" /></svg>
       </div>
-      <div class="max-w-3xl">
+      <div class="max-w-3xl" data-reveal="stagger">
         <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">The 2027 When-To Index</p>
         <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] tracking-[-0.01em] text-ivory sm:text-6xl">
           Pick the decision. <em class="text-gold">Watch the year play it out.</em>
@@ -523,7 +569,7 @@
       </div>
 
       <!-- Goal chips -->
-      <div class="mt-9 flex flex-wrap gap-2.5" role="group" aria-label="What are you planning?">
+      <div class="mt-9 flex flex-wrap gap-2.5" role="group" aria-label="What are you planning?" data-reveal="stagger">
         <template x-for="g in goals" :key="g.key">
           <button type="button"
                   class="focus-ring inline-flex items-center gap-2.5 rounded-full border px-5 py-2.5 text-[15px] font-bold transition duration-300"
@@ -546,7 +592,7 @@
 
       <div class="mt-8 grid gap-6 lg:grid-cols-[1.7fr_1fr]">
         <!-- Stage -->
-        <div class="panel relative rounded-[28px] p-4 sm:p-6">
+        <div class="panel relative rounded-[28px] p-4 sm:p-6" data-reveal>
           <div class="flex flex-wrap items-center justify-between gap-3 px-1">
             <ul class="flex flex-wrap gap-x-4 gap-y-1 font-mono text-[13px] uppercase tracking-[0.16em] text-ash" aria-label="Legend">
               <li class="flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-gold"></span>Flow</li>
@@ -594,7 +640,7 @@
         </div>
 
         <!-- Summary -->
-        <aside class="panel rounded-[28px] p-6 sm:p-7 lg:sticky lg:top-24 lg:self-start">
+        <aside class="panel rounded-[28px] p-6 sm:p-7 lg:sticky lg:top-24 lg:self-start" data-reveal data-reveal-delay="0.15">
           <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-gold">Summary ·<span x-text="stamp"></span></p>
           <h3 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory">Your 2027 <span class="italic text-gold" x-text="goalLabel"></span> path</h3>
           <p class="mt-1 text-base text-ash" x-text="animal !== null ? 'Tuned to your ' + animalName : 'The year’s climate, untuned'"></p>
@@ -636,7 +682,7 @@
         </aside>
       </div>
 
-      <p class="mt-6 max-w-3xl text-base leading-relaxed text-ash">
+      <p class="mt-6 max-w-3xl text-base leading-relaxed text-ash" data-reveal>
         Indicative, not your reading. This path is generated from the twelve month pillars of 2027 against the year's Goat branch, plus your animal if you picked one above. Your Outlook runs the same months against your Day Pillar and luck cycle, which is where your real timing lives. Month start dates follow the solar terms and can shift by a day.
       </p>
     </section>
@@ -647,7 +693,7 @@
 
     <!-- Offer -->
     <section id="order" class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-10" x-data>
-      <div class="mx-auto max-w-2xl text-center">
+      <div class="mx-auto max-w-2xl text-center" data-reveal="stagger">
         <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Order</p>
         <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] text-ivory sm:text-6xl">
           Your 2027, <em class="text-gold">mapped before it opens.</em>
@@ -655,7 +701,7 @@
         <p class="mt-5 text-lg text-ivory/85">One report, calculated from your full birth chart, written for you alone. You read it once in twenty minutes and use the tables all year.</p>
       </div>
 
-      <div class="relative mt-12 rounded-[32px] bg-gradient-to-br from-gold/60 via-gold/10 to-ember/50 p-px shadow-[0_50px_140px_-50px_rgba(212,175,55,0.45)]">
+      <div class="relative mt-12 rounded-[32px] bg-gradient-to-br from-gold/60 via-gold/10 to-ember/50 p-px shadow-[0_50px_140px_-50px_rgba(212,175,55,0.45)]" data-reveal>
         <div class="grid overflow-hidden rounded-[31px] bg-coal lg:grid-cols-[1.25fr_1fr]">
 
           <!-- Value stack -->
@@ -663,7 +709,7 @@
             <p class="font-mono text-[13px] uppercase tracking-[0.22em] text-ash">One-time · both editions included</p>
             <h3 class="mt-2 font-display text-3xl font-semibold leading-tight text-ivory sm:text-4xl">2027 Annual Outlook <span class="block text-xl font-light italic text-gold sm:text-2xl">Ding Wei, the Fire Goat year</span></h3>
 
-            <ul class="mt-8 space-y-5">
+            <ul class="mt-8 space-y-5" data-reveal="stagger" data-reveal-delay="0.2">
               <template x-for="item in [
                 ['Simplified and Advanced editions', 'Plain English first. Tap the Advanced button to see the working: Ten Gods, contacts, stars and a glossary.'],
                 ['Twelve-month tactical roadmap', 'Every month paced Push, Build, Steady or Soft, each with Do, Avoid and Watch.'],
@@ -684,7 +730,7 @@
             </ul>
 
             <!-- Bonus -->
-            <div class="mt-7 flex gap-4 rounded-2xl border border-dashed border-gold/40 bg-gold/[0.05] p-4 sm:p-5">
+            <div data-reveal data-reveal-delay="0.3" class="mt-7 flex gap-4 rounded-2xl border border-dashed border-gold/40 bg-gold/[0.05] p-4 sm:p-5">
               <span class="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-gold text-obsidian" aria-hidden="true">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M6 .8l1.5 3.3 3.6.4-2.7 2.4.8 3.5L6 8.6 2.8 10.4l.8-3.5L.9 4.5l3.6-.4z"/></svg>
               </span>
@@ -730,11 +776,11 @@
       </div>
 
       <!-- Power Calendar bridge: positioned as what comes after, never as a second price table. -->
-      <div class="mt-8 grid items-center gap-6 rounded-[28px] border hairline bg-white/[0.02] p-6 sm:grid-cols-[auto_1fr] sm:gap-8 sm:p-8">
+      <div data-reveal="calendar" class="mt-8 grid items-center gap-6 rounded-[28px] border hairline bg-white/[0.02] p-6 sm:grid-cols-[auto_1fr] sm:gap-8 sm:p-8">
         <div class="grid w-[9.5rem] grid-cols-7 gap-1.5 justify-self-center" aria-hidden="true">
           <template x-for="d in 35" :key="d">
-            <span class="aspect-square rounded-[3px]"
-                  :class="[4, 9, 17, 23, 30].includes(d) ? 'bg-gold shadow-[0_0_10px_rgba(212,175,55,0.8)]' : [12, 26].includes(d) ? 'bg-ember/60' : 'bg-ivory/10'"></span>
+            <span class="aspect-square rounded-[3px]" data-day
+                  :class="[4, 9, 17, 23, 30].includes(d) ? 'pc-day is-gold' : [12, 26].includes(d) ? 'pc-day is-ember' : 'pc-day'"></span>
           </template>
         </div>
         <div>
@@ -749,12 +795,12 @@
 
     <!-- FAQ: one open at a time. -->
     <section id="faq" class="mx-auto max-w-3xl px-4 py-24 sm:px-6" x-data="{ open: 0 }">
-      <div class="text-center">
+      <div class="text-center" data-reveal="stagger">
         <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Questions</p>
         <h2 class="mt-3 font-display text-4xl font-light text-ivory sm:text-5xl">Before you order</h2>
       </div>
 
-      <div class="mt-10 divide-y divide-white/[0.08] border-y hairline">
+      <div class="mt-10 divide-y divide-white/[0.08] border-y hairline" data-reveal="stagger">
         <template x-for="(f, i) in [
           ['What if I don’t know my exact birth time?', 'If your birth time is unknown or uncertain, the report will say so, and your directions section will be shorter.'],
           ['How is this different from my zodiac horoscope?', 'A zodiac forecast starts with your birth-year animal. Your Outlook uses your birth chart and current ten-year luck cycle to examine how 2027 unfolds for you, month by month.'],
@@ -784,7 +830,7 @@
         </template>
       </div>
 
-      <div class="mt-14 text-center" x-data>
+      <div class="mt-14 text-center" x-data data-reveal="stagger">
         <p class="font-display text-2xl italic text-ivory/90 sm:text-3xl">See 2027 through your chart before the year begins.</p>
         <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
            class="btn-ember mt-7 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-base font-extrabold tracking-wide">
@@ -972,11 +1018,32 @@
           return 'border-white/10 bg-obsidian/80 text-ivory/80 hover:border-gold/60 hover:text-gold';
         },
 
-        pick(i) { this.animal = i; this.birthYear = ''; },
+        pick(i) { this.animal = i; this.birthYear = ''; this.pulse(i); },
         pickSeason(k) { this.season = k; },
         fromYear() {
           const y = parseInt(this.birthYear, 10);
-          if (y >= 1900 && y <= 2100) this.animal = (((y - 4) % 12) + 12) % 12;
+          if (!(y >= 1900 && y <= 2100)) return;
+          const i = (((y - 4) % 12) + 12) % 12;
+          if (i !== this.animal) { this.animal = i; this.pulse(i); }
+        },
+
+        // Resonance: two rings radiate from the chosen branch in its contact tone, the dial clicks into place
+        // and the centre disc flares, so the pick reads as locked in.
+        pulse(i) {
+          if (REDUCED || !window.gsap) return;
+          const p = this.pos(i), colour = TONE_HEX[YEAR[i].tone];
+          for (let r = 0; r < 2; r++) {
+            const ring = document.createElement('span');
+            ring.className = 'resonance';
+            ring.setAttribute('aria-hidden', 'true');
+            ring.style.cssText = `left:${p.x}%;top:${p.y}%;border-color:${colour};box-shadow:0 0 18px ${colour}, inset 0 0 12px ${colour}`;
+            this.$refs.wheel.appendChild(ring);
+            gsap.fromTo(ring, { xPercent: -50, yPercent: -50, scale: 1, opacity: 0.95 },
+              { scale: 3.6 - r * 0.8, opacity: 0, duration: 1.2, delay: r * 0.2, ease: 'power2.out', onComplete: () => ring.remove() });
+          }
+          gsap.fromTo(this.$refs.dial, { rotation: -10 }, { rotation: 0, svgOrigin: '50 50', duration: 1.1, ease: 'elastic.out(1, 0.45)' });
+          gsap.fromTo(this.$refs.disc, { boxShadow: `0 0 90px -2px ${colour}` },
+            { boxShadow: '0 0 60px -10px rgba(224,109,83,0.35)', duration: 1.3, ease: 'power2.out', clearProps: 'boxShadow' });
         },
         reset() { this.animal = null; this.season = null; this.birthYear = ''; },
 
@@ -1021,9 +1088,13 @@
         revealCore() {
           const card = this.$refs.coreCard;
           if (!card || REDUCED || !window.gsap) return;
+          // Lanterns: the twelve months light left to right, Feb to Jan, 0.1 s apart, each with a brief gold flare.
           gsap.timeline()
             .fromTo(card, { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: 'power3.out', delay: 0.15 })
-            .fromTo(card.querySelectorAll('[data-month]'), { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.04, ease: 'power2.out' }, '-=0.4');
+            .fromTo(card.querySelectorAll('[data-month]'), { autoAlpha: 0, y: 8 }, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out' }, '-=0.4')
+            .fromTo(card.querySelectorAll('[data-lantern]'), { boxShadow: '0 0 0 0 rgba(212,175,55,0)' },
+              { boxShadow: '0 0 18px 2px rgba(212,175,55,0.75)', duration: 0.35, ease: 'power2.out',
+                stagger: { each: 0.1, yoyo: true, repeat: 1 }, clearProps: 'boxShadow' }, '<');
         },
       }));
     });
@@ -1035,19 +1106,118 @@
     }
 
     // ---- Page-load choreography, once Alpine has rendered the wheel. ----
+    // The hero plays on load. Everything else (the Contact & Clash panel and its wheel included, which sit
+    // below the fold on phones) waits until it is on screen, so every visitor actually sees it arrive.
     document.addEventListener('alpine:initialized', () => {
       const root = document.documentElement;
       if (REDUCED || !window.gsap) { root.classList.remove('preload'); return; }
       const hero = gsap.utils.toArray('[data-anim="hero"]');
+      const panel = document.querySelector('[data-anim="panel"]');
+      const wheel = document.querySelector('[data-wheel]');
       const nodes = gsap.utils.toArray('[data-node]');
+      const reveals = gsap.utils.toArray('[data-reveal]');
+      const targetsOf = el => el.dataset.reveal === 'stagger' ? [...el.children].filter(c => c.tagName !== 'TEMPLATE') : [el];
       gsap.set(['[data-anim]', ...nodes], { autoAlpha: 0 });
+      reveals.forEach(el => gsap.set(targetsOf(el), { autoAlpha: 0 }));
+      gsap.set('[data-reveal="calendar"] [data-day]', { autoAlpha: 0 });
       root.classList.remove('preload');
+
+      const onScreen = (el, fn, rootMargin = '0px 0px -12% 0px') => {
+        const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { io.disconnect(); fn(); } }, { rootMargin });
+        io.observe(el);
+      };
+
       gsap.timeline({ defaults: { ease: 'power3.out' } })
         .to('[data-anim="nav"]', { autoAlpha: 1, duration: 0.6 })
         .fromTo(hero, { y: 28 }, { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.09 }, '-=0.3')
-        .fromTo('[data-anim="panel"]', { y: 40, scale: 0.98 }, { autoAlpha: 1, y: 0, scale: 1, duration: 1.1, clearProps: 'transform' }, 0.35)
-        .fromTo(nodes, { scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.045, ease: 'back.out(1.8)', clearProps: 'transform' }, 0.8);
+        .call(() => {
+          let panelAt = 0;
+          onScreen(panel, () => {
+            panelAt = performance.now();
+            gsap.fromTo(panel, { y: 40, scale: 0.98 }, { autoAlpha: 1, y: 0, scale: 1, duration: 1.1, ease: 'power3.out', clearProps: 'transform' });
+          }, '0px');
+          // The clock: once the wheel is well in view, a gold hand sweeps one turn and the branches pop in behind it.
+          onScreen(wheel, () => cascadeWheel(wheel, nodes, Math.max(0, 0.45 - (performance.now() - panelAt) / 1000)), '0px 0px -25% 0px');
+          reveals.forEach(el => onScreen(el, () => {
+            gsap.fromTo(targetsOf(el), { y: 26 }, { autoAlpha: 1, y: 0, duration: 0.9, ease: 'power3.out', stagger: 0.09, delay: +el.dataset.revealDelay || 0, clearProps: 'transform' });
+            if (el.dataset.reveal === 'calendar') lightCalendar(el);
+          }));
+          // Price buttons: one light sweep as each scrolls into view (the hover cue phones never get).
+          document.querySelectorAll('#order-price .btn-ember, #faq .btn-ember').forEach(b => onScreen(b, () => {
+            setTimeout(() => { b.classList.add('is-charged'); setTimeout(() => b.classList.remove('is-charged'), 1300); }, 500);
+          }, '0px 0px -20% 0px'));
+        }, null, 0.35);
     });
+
+    // Watches an element for as long as the page is open; returns a getter for "is it on screen now".
+    function liveVisibility(el) {
+      let on = false;
+      new IntersectionObserver(([e]) => { on = e.isIntersecting; }).observe(el);
+      return () => on && !document.hidden;
+    }
+
+    // The clock: the first pass draws the twelve branches in behind the hand (0.11 s apart). After that the hand
+    // keeps sweeping every few seconds and each branch glows softly as it passes, until a visitor picks an animal
+    // (the wheel is then theirs); after Reset the sweep returns. Paused while the wheel is off screen.
+    function cascadeWheel(wheel, nodes, delay) {
+      const hand = wheel.querySelector('[data-hand]');
+      const each = 0.11, turn = each * 12;
+      gsap.timeline({ delay, onComplete: () => idleSweep(wheel, hand, nodes) })
+        .fromTo(hand, { rotation: 0, autoAlpha: 0 }, { autoAlpha: 1, duration: 0.2 }, 0)
+        .to(hand, { rotation: 360, duration: turn + 0.15, ease: 'none' }, 0)
+        .to(hand, { autoAlpha: 0, duration: 0.6 }, turn)
+        .fromTo(nodes, { scale: 0.4 }, { autoAlpha: 1, scale: 1, duration: 0.6, stagger: each, ease: 'back.out(1.8)', clearProps: 'transform' }, 0.06);
+    }
+
+    function idleSweep(wheel, hand, nodes) {
+      const visible = liveVisibility(wheel);
+      const turn = 3.2;
+      const tick = () => {
+        if (!visible() || Alpine.store('reader').animal !== null) return gsap.delayedCall(1.5, tick);
+        gsap.timeline({ onComplete: () => gsap.delayedCall(4.5, tick) })
+          .fromTo(hand, { rotation: 0, autoAlpha: 0 }, { autoAlpha: 0.65, duration: 0.5 }, 0)
+          .to(hand, { rotation: 360, duration: turn, ease: 'none' }, 0)
+          .to(hand, { autoAlpha: 0, duration: 0.8 }, turn - 0.6)
+          .fromTo(nodes, { boxShadow: '0 0 0 0 rgba(212,175,55,0)' }, { boxShadow: '0 0 16px 1px rgba(212,175,55,0.5)', duration: 0.35, ease: 'sine.inOut',
+            stagger: { each: turn / 12, yoyo: true, repeat: 1 }, clearProps: 'boxShadow' }, 0.05);
+      };
+      gsap.delayedCall(3, tick);
+    }
+
+    // Power Calendar bridge: the 35 days fill in row by row. Then, while it is on screen, one lit day at a time
+    // drifts to an empty neighbouring day every 2.6 s with a slow crossfade (CSS .pc-day), so the month keeps shifting.
+    function lightCalendar(el) {
+      const days = [...el.querySelectorAll('[data-day]')];
+      gsap.fromTo(days, { scale: 0.3 }, { autoAlpha: 1, scale: 1, duration: 0.35, stagger: 0.018, ease: 'back.out(2)', delay: 0.25, clearProps: 'transform' });
+      const visible = liveVisibility(el);
+      const COLS = 7, lit = d => d.classList.contains('is-gold') || d.classList.contains('is-ember');
+      let last = null;
+      setInterval(() => {
+        if (!visible()) return;
+        const from = days.filter(d => lit(d) && d !== last);
+        const src = from[Math.floor(Math.random() * from.length)];
+        const i = days.indexOf(src), r = Math.floor(i / COLS), c = i % COLS;
+        const near = days.filter((d, j) => !lit(d) && Math.abs(Math.floor(j / COLS) - r) <= 1 && Math.abs((j % COLS) - c) <= 1);
+        if (!near.length) return;
+        const dst = near[Math.floor(Math.random() * near.length)];
+        const tone = src.classList.contains('is-gold') ? 'is-gold' : 'is-ember';
+        src.classList.remove(tone);
+        dst.classList.add(tone);
+        last = dst;
+      }, 2600);
+    }
+
+    // Magnetic CTA: on a mouse or trackpad, gold buttons lean a few px toward the cursor (CSS --mx / --my).
+    if (!REDUCED && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      document.querySelectorAll('.btn-ember').forEach(b => {
+        b.addEventListener('pointermove', e => {
+          const r = b.getBoundingClientRect();
+          b.style.setProperty('--mx', (((e.clientX - r.left) / r.width - 0.5) * 8).toFixed(1) + 'px');
+          b.style.setProperty('--my', (((e.clientY - r.top) / r.height - 0.5) * 6).toFixed(1) + 'px');
+        });
+        b.addEventListener('pointerleave', () => { b.style.removeProperty('--mx'); b.style.removeProperty('--my'); });
+      });
+    }
   </script>
 
   <!-- When-To data model. Month pillars are the 2027 Ding Wei sequence (壬寅 to 癸丑).
@@ -1383,7 +1553,7 @@
 
       const tl = gsap.timeline({ onComplete: hooks.onDone });
       tl.from(refs.bands, { opacity: 0, duration: 0.5, stagger: 0.08 })
-        .from(refs.labels, { opacity: 0, y: 6, duration: 0.35, stagger: 0.03 }, '<0.1')
+        .from(refs.labels, { opacity: 0, y: 6, duration: 0.35, stagger: 0.05 }, '<0.1')
         .from(refs.ghost, { opacity: 0, duration: 0.6 }, '<')
         .to([refs.comet, refs.halo], { opacity: 1, duration: 0.3 });
 
@@ -1404,6 +1574,13 @@
           },
         }, '<');
         tl.call(() => hooks.onMonth(k, 'arrive'));
+        // Lantern: the month name and pillar flare as the comet reaches them, then settle back (zero-length on the timeline).
+        const [name, pillar] = refs.labels[k].children;
+        tl.call(() => {
+          gsap.fromTo(name, { fill: '#FFF3C4' }, { fill: '#BDB6A6', duration: 1.1, ease: 'power2.out' });
+          gsap.fromTo(pillar, { fill: '#FFE9A8' }, { fill: 'rgba(212,175,55,0.7)', duration: 1.4, ease: 'power2.out' });
+          gsap.fromTo(refs.labels[k], { y: -3 }, { y: 0, duration: 0.6, ease: 'back.out(3)' });
+        });
 
         if (m.tag === 'flow') {
           tl.to(n.core, { scale: 1, duration: 0.45, ease: 'back.out(2.2)' })
@@ -1537,7 +1714,7 @@
     });
   </script>
   <script>
-    // Footer: run the light sweep once, when the footer is on screen.
+    // Footer: start the looping light sweep the first time the footer is on screen.
     (function () {
       const a = document.querySelector('.foot-sweep');
       if (!a || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -1546,7 +1723,6 @@
         io.disconnect();
         setTimeout(() => {
           a.classList.add('is-swept');
-          setTimeout(() => a.classList.remove('is-swept'), 5000);
         }, 400);
       }), { threshold: 0.8 });
       io.observe(a);
