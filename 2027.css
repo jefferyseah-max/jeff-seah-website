@@ -213,6 +213,7 @@ footer { position: relative; z-index: 1; border-top: 1px solid var(--hair); padd
   box-shadow: 0 30px 80px -40px rgba(0,0,0,0.8); position: relative;
 }
 .lead-form::before { content: ''; position: absolute; top: 0; left: 10%; right: 10%; height: 1px; background: linear-gradient(90deg, transparent, rgba(212,175,55,0.5), transparent); }
+.lead-form[hidden] { display: none; }
 .lead-row { display: grid; grid-template-columns: 1fr; gap: 1.1rem; }
 .lead-field { display: flex; flex-direction: column; gap: 0.4rem; }
 fieldset.lead-field { border: none; padding: 0; margin: 0; min-width: 0; }
@@ -229,6 +230,7 @@ fieldset.lead-field legend { padding: 0; margin-bottom: 0.4rem; float: left; wid
 .lead-input:focus, .form-textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.2); }
 .lead-input[aria-invalid="true"], .form-textarea[aria-invalid="true"] { border-color: rgba(224,109,83,0.7); }
 .lead-input:disabled { opacity: 0.4; }
+.intake-zone-suggestion { align-self: flex-start; background: transparent; color: var(--gold); border: 1px solid rgba(237,230,214,0.25); border-radius: 0.75rem; padding: 0.7rem 1rem; font: inherit; cursor: pointer; }
 .form-textarea { resize: vertical; min-height: 6.5rem; }
 .checkbox-row { display: flex; align-items: center; gap: 0.6rem; }
 .checkbox-row input { width: 18px; height: 18px; flex-shrink: 0; accent-color: var(--gold); }

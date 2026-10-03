@@ -26,9 +26,10 @@ const PRODUCTS = {
 const COMMON = ['receivedAt', 'submittedAt', 'name', 'email', 'calendarEmail', 'birthDate', 'birthTime',
   'birthTimeUnknown', 'birthCity', 'gender'];
 const TAIL = ['paid', 'stripeSessionId', 'status'];
+const ANNUAL_COLUMNS = ['intakeId','subjectName','residenceCity','residenceRegion','residenceCountry','reportTimeZone','reportTimeZoneConfirmed','reportTimeZoneSource','reportTimeZoneConfirmedAt','employmentStatus','careerFocus','contextObservedAt','circumstances','focalQuestions','exclusions','birthTimeZone','birthTimeConvention'];
 
 function doGet() {
-  return json({ result: 'ok' });
+  return json({ result: 'ok', annualIntakeSchemaVersion: 2 });
 }
 
 function doPost(e) {
@@ -43,29 +44,38 @@ function doPost(e) {
     if (!product) return json({ result: 'error', error: 'unknown product' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(data.email || ''))) return json({ result: 'error', error: 'bad email' });
 
-    const columns = COMMON.concat(product.extra, TAIL);
-    const row = columns.map(function (key) {
-      if (key === 'receivedAt') return new Date();
-      if (key === 'status') return 'New';
-      return clean(data[key]);
-    });
-
+    const isAnnual = data.product === '2027-annual-outlook';
+    if (isAnnual && data.intakeSchemaVersion !== undefined) validateAnnual(data);
+    let saved;
     const lock = LockService.getScriptLock();
     lock.waitLock(20000);
     try {
-      sheetFor(product.tab, columns).appendRow(row);
+      saved = saveIntake(data, product, product.tab);
     } finally {
       lock.releaseLock();
     }
 
-    notify(product, columns, row);
-    enchargeIntake(data, row[0]);
-    return json({ result: 'success' });
+    if (!saved.duplicate) {
+      if (isAnnual && data.intakeSchemaVersion === 2) {
+        // The receipt describes storage. A follow-up failure must not invite duplicate client submissions.
+        [function () { notify(product, saved.columns, saved.row); }, function () { enchargeIntake(data, saved.row[saved.columns.indexOf('receivedAt')]); }].forEach(function (followUp) {
+          try { followUp(); } catch (followUpError) {
+            console.error('Saved annual intake follow-up failed', data.intakeId, String(followUpError));
+            try { MailApp.sendEmail(NOTIFY_EMAIL, 'jeffseah.rocks saved intake follow-up ERROR', 'Intake ID: '+data.intakeId+'\n'+String(followUpError)); }
+            catch (alertError) { console.error('Follow-up error notification failed', String(alertError)); }
+          }
+        });
+      } else {
+        notify(product, saved.columns, saved.row);
+        enchargeIntake(data, saved.row[saved.columns.indexOf('receivedAt')]);
+      }
+    }
+    return json({ result: 'success', saved: true, intakeId: data.intakeId || '', intakeSchemaVersion: isAnnual && data.intakeSchemaVersion === 2 ? 2 : 1 });
   } catch (err) {
     // Never fail silently: tell Jeff, and let the page show its email fallback.
     try {
       MailApp.sendEmail(NOTIFY_EMAIL, 'jeffseah.rocks intake ERROR', String(err && err.stack || err));
-    } catch (_) {}
+    } catch (alertError) { console.error('Intake error notification failed', String(alertError)); }
     return json({ result: 'error', error: String(err) });
   }
 }
@@ -168,7 +178,7 @@ function sendEncharge(events) {
   });
 }
 
-function sheetFor(tab, columns) {
+function sheetFor(tab, columns, added) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sheet = ss.getSheetByName(tab);
   if (!sheet) {
@@ -176,7 +186,116 @@ function sheetFor(tab, columns) {
     sheet.appendRow(columns);
     sheet.setFrozenRows(1);
   }
+  if (added) {
+    const header = sheet.getDataRange().getValues()[0];
+    if (!header || header.some(function (key) { return !key; }) || new Set(header).size !== header.length) throw new Error('Invalid or duplicate intake headers');
+    columns.forEach(function (key) { if (header.indexOf(key) < 0) throw new Error('Missing legacy intake column: ' + key); });
+    const missing = added.filter(function (key) { return header.indexOf(key) < 0; });
+    if (missing.length) {
+      const needed = header.length + missing.length;
+      if (needed > sheet.getMaxColumns()) sheet.insertColumnsAfter(sheet.getMaxColumns(), needed - sheet.getMaxColumns());
+      sheet.getRange(1, header.length + 1, 1, missing.length).setValues([missing]);
+    }
+  }
   return sheet;
+}
+
+function saveIntake(data, product, tab) {
+  const base = COMMON.concat(product.extra, TAIL);
+  const sheet = sheetFor(tab, base, data.product === '2027-annual-outlook' ? ANNUAL_COLUMNS : null);
+  const values = sheet.getDataRange().getValues();
+  const columns = values[0];
+  const idColumn = columns.indexOf('intakeId');
+  const compareKeys = base.filter(function (key) { return ['receivedAt','submittedAt','status'].indexOf(key) < 0; }).concat(ANNUAL_COLUMNS);
+  if (data.intakeId && idColumn >= 0) {
+    for (let i = 1; i < values.length; i++) {
+      if (String(values[i][idColumn]) !== data.intakeId) continue;
+      compareKeys.forEach(function (key) { const stored = values[i][columns.indexOf(key)]; if (String(stored == null ? '' : stored) !== String(clean(data[key]))) throw new Error('Intake ID already belongs to different details'); });
+      return { columns: columns, row: values[i], duplicate: true };
+    }
+  }
+  const row = columns.map(function (key) { return key === 'receivedAt' ? new Date() : key === 'status' ? 'New' : base.indexOf(key) >= 0 || ANNUAL_COLUMNS.indexOf(key) >= 0 ? clean(data[key]) : ''; });
+  // Sheets otherwise coerces ISO dates and clock strings. Format only the new row.
+  const nextRow = sheet.getLastRow() + 1;
+  sheet.getRange(nextRow, 1, 1, columns.length).setNumberFormat('@');
+  sheet.getRange(nextRow, 1, 1, columns.length).setValues([row]);
+  sheet.getRange(nextRow, columns.indexOf('receivedAt') + 1).setNumberFormat('yyyy-mm-dd hh:mm:ss');
+  const stored = sheet.getRange(nextRow, 1, 1, columns.length).getValues()[0];
+  columns.forEach(function (key, i) { if (key !== 'receivedAt' && String(stored[i]) !== String(row[i])) throw new Error('Saved intake read-back mismatch: ' + key); });
+  return { columns: columns, row: row, duplicate: false };
+}
+
+function annualDate(value) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value || '') && !Number.isNaN(Date.parse(value+'T00:00:00Z')) && new Date(value+'T00:00:00Z').toISOString().startsWith(value);
+}
+function annualZone(value) {
+  if (!/^[A-Za-z_]+\/[A-Za-z_]+(?:\/[A-Za-z_]+)?$/.test(value || '')) return false;
+  try { new Intl.DateTimeFormat('en-GB', { timeZone: value }).format(0); return true; } catch (_) { return false; }
+}
+function validateAnnual(data) {
+  if (data.intakeSchemaVersion !== 2) throw new Error('Unsupported annual intake schema');
+  Object.keys(data).forEach(function (key) { const v = data[key]; if ((typeof v === 'string' && v.length > MAX_FIELD) || (Array.isArray(v) && (!v.every(function (item) { return typeof item === 'string'; }) || v.join('\n').length > MAX_FIELD))) throw new Error('Invalid or oversized annual field: ' + key); });
+  ['name','subjectName','email','birthCity'].forEach(function (key) { if (typeof data[key] !== 'string' || !data[key].trim()) throw new Error('Missing ' + key); });
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(data.intakeId || '')) throw new Error('Invalid intake ID');
+  if (!annualDate(data.birthDate) || new Date(data.birthDate+'T00:00:00Z') > new Date()) throw new Error('Invalid birth date');
+  if (typeof data.birthTimeUnknown !== 'boolean' || (!data.birthTimeUnknown && !/^([01]\d|2[0-3]):[0-5]\d$/.test(data.birthTime || '')) || (data.birthTimeUnknown && data.birthTime !== '')) throw new Error('Invalid birth time');
+  if (['female','male'].indexOf(data.gender) < 0 || ['simplified','advanced'].indexOf(data.edition) < 0 || data.consent !== true) throw new Error('Missing required choices');
+  const localClock = data.reportTimeZoneSource === 'local-clock-policy';
+  if (localClock) {
+    if (['residenceCity','residenceRegion','residenceCountry','reportTimeZone','reportTimeZoneConfirmedAt'].some(function (key) { return data[key] !== ''; }) || data.reportTimeZoneConfirmed !== false) throw new Error('Local-clock policy cannot include a confirmed location');
+  } else if (!annualZone(data.reportTimeZone) || data.reportTimeZoneConfirmed !== true || ['subject-confirmed','gift-buyer-confirmed'].indexOf(data.reportTimeZoneSource) < 0 || !annualDate(data.reportTimeZoneConfirmedAt) || !String(data.residenceCity || '').trim() || !String(data.residenceCountry || '').trim()) throw new Error('Report location confirmation required');
+  if (data.birthTimeZone && !annualZone(data.birthTimeZone)) throw new Error('Invalid birth time zone');
+  if (['employed','self-employed','employed-and-self-employed','between-jobs','student','retired','prefer-not-to-say'].indexOf(data.employmentStatus) < 0 || ['career','business','both','general'].indexOf(data.careerFocus) < 0) throw new Error('Invalid work status or focus');
+  if (data.contextObservedAt && !annualDate(data.contextObservedAt)) throw new Error('Invalid observation date');
+  if (!Array.isArray(data.focalQuestions) || data.focalQuestions.length < 1 || data.focalQuestions.length > 5 || data.focalQuestions.some(function (q) { return q.trim().length < 3; }) || !Array.isArray(data.exclusions)) throw new Error('Invalid questions or exclusions');
+}
+
+// Operator-only editor functions. Neither is exposed by doGet/doPost.
+function migrateAnnualIntake() {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    const product = PRODUCTS['2027-annual-outlook'];
+    const sheet = sheetFor(product.tab, COMMON.concat(product.extra, TAIL), ANNUAL_COLUMNS);
+    console.log(JSON.stringify({ status: 'migration-verified', tab: product.tab, columns: sheet.getDataRange().getValues()[0] }));
+  } finally { lock.releaseLock(); }
+}
+
+function annualIntakeSelfTest() {
+  if (annualZone('Not/AZone') || annualZone('EST')) throw new Error('Invalid zone accepted');
+  const cases = [
+    ['Singapore','Singapore','Asia/Singapore','self-employed','business'],
+    ['Mumbai','India','Asia/Kolkata','employed','career'],
+    ['New York','United States','America/New_York','between-jobs','business'],
+    ['Phoenix','United States','America/Phoenix','employed-and-self-employed','both']
+  ];
+  const results = [];
+  const lock = LockService.getScriptLock();
+  lock.waitLock(20000);
+  try {
+    cases.forEach(function (item, i) {
+      const data = { product: '2027-annual-outlook', intakeSchemaVersion: 2, intakeId: Utilities.getUuid(), name: 'Annual Intake Test '+(i+1), subjectName: 'Annual Intake Test '+(i+1), email: 'annual-intake-'+(i+1)+'@example.invalid', calendarEmail: '', birthDate: '1990-01-02', birthTime: '', birthTimeUnknown: true, birthCity: 'Synthetic birth place', gender: 'female', workType: item[3], decisions: 'How should I plan my work?', edition: i===2?'advanced':'simplified', paid: false, stripeSessionId: '', submittedAt: new Date().toISOString(), consent: true, elapsedMs: 60000, website: '', residenceCity: item[0], residenceRegion: i>1?'Test state':'', residenceCountry: item[1], reportTimeZone: item[2], reportTimeZoneConfirmed: true, reportTimeZoneSource: i===2?'gift-buyer-confirmed':'subject-confirmed', reportTimeZoneConfirmedAt: Utilities.formatDate(new Date(), item[2], 'yyyy-MM-dd'), employmentStatus: item[3], careerFocus: item[4], contextObservedAt: '', circumstances: 'Synthetic transport QA only', focalQuestions: ['How should I plan my work?'], exclusions: ['No health discussion'], birthTimeZone: '', birthTimeConvention: '' };
+      validateAnnual(data);
+      const saved = saveIntake(data, PRODUCTS[data.product], 'annual-2027-qa');
+      const retry = saveIntake(data, PRODUCTS[data.product], 'annual-2027-qa');
+      if (!retry.duplicate || saved.columns.length !== 33) throw new Error('Transport QA failed');
+      results.push({ intakeId: data.intakeId, timeZone: item[2], employmentStatus: item[3], questionCount: data.focalQuestions.length, duplicateRetry: true });
+    });
+    console.log(JSON.stringify({ status: 'pass', tab: 'annual-2027-qa', cases: results, notificationsSent: 0, crmCalls: 0 }));
+  } finally { lock.releaseLock(); }
+}
+
+// Operator-only local-clock regression; never sends email or CRM events.
+function annualLocalClockSelfTest() {
+  const data = { product:'2027-annual-outlook', intakeSchemaVersion:2, intakeId:Utilities.getUuid(), name:'Local Clock Intake Test', subjectName:'Local Clock Intake Test', email:'local-clock@example.invalid', calendarEmail:'', birthDate:'1990-01-02', birthTime:'', birthTimeUnknown:true, birthCity:'Synthetic birth place', gender:'female', workType:'business-owner', employmentStatus:'self-employed', careerFocus:'business', decisions:'How should I plan 2027?', focalQuestions:['How should I plan 2027?'], exclusions:[], edition:'simplified', paid:false, stripeSessionId:'', submittedAt:new Date().toISOString(), consent:true, elapsedMs:60000, website:'', residenceCity:'', residenceRegion:'', residenceCountry:'', reportTimeZone:'', reportTimeZoneConfirmed:false, reportTimeZoneSource:'local-clock-policy', reportTimeZoneConfirmedAt:'', contextObservedAt:'', circumstances:'Synthetic local-clock QA only', birthTimeZone:'', birthTimeConvention:'' };
+  validateAnnual(data);
+  const lock=LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    const saved=saveIntake(data,PRODUCTS[data.product],'annual-2027-qa');
+    const retry=saveIntake(data,PRODUCTS[data.product],'annual-2027-qa');
+    if(!retry.duplicate||saved.columns.length!==33)throw new Error('Local-clock transport QA failed');
+    console.log(JSON.stringify({status:'pass',tab:'annual-2027-qa',intakeId:data.intakeId,timingPolicy:data.reportTimeZoneSource,duplicateRetry:true,notificationsSent:0,crmCalls:0}));
+  } finally {lock.releaseLock();}
 }
 
 function notify(product, columns, row) {
@@ -193,7 +312,8 @@ function notify(product, columns, row) {
 function clean(value) {
   if (value === undefined || value === null) return '';
   if (typeof value === 'boolean' || typeof value === 'number') return value;
-  let s = String(value).trim().slice(0, MAX_FIELD);
+  let s = (Array.isArray(value) ? value.join('\n') : String(value)).trim();
+  if (s.length > MAX_FIELD) throw new Error('Intake field exceeds 2,000 characters');
   if (/^[=+\-@]/.test(s)) s = "'" + s;
   return s;
 }
