@@ -219,6 +219,7 @@ function saveIntake(data, product, tab) {
   const nextRow = sheet.getLastRow() + 1;
   sheet.getRange(nextRow, 1, 1, columns.length).setNumberFormat('@');
   sheet.getRange(nextRow, 1, 1, columns.length).setValues([row]);
+  sheet.getRange(nextRow, columns.indexOf('receivedAt') + 1).setNumberFormat('yyyy-mm-dd hh:mm:ss');
   const stored = sheet.getRange(nextRow, 1, 1, columns.length).getValues()[0];
   columns.forEach(function (key, i) { if (key !== 'receivedAt' && String(stored[i]) !== String(row[i])) throw new Error('Saved intake read-back mismatch: ' + key); });
   return { columns: columns, row: row, duplicate: false };
