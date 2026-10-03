@@ -2,6 +2,7 @@ import {validateAnnualIntake,validZone} from './annual-intake.mjs';
 const form=document.getElementById('intakeForm'),readyAt=Date.now();
 const field=id=>document.getElementById(id),value=id=>field(id).value.trim();
 const unknown=field('unknownTime'),confirmation=field('reportTimeZoneConfirmed');
+for(const id of ['reportTimeZone','birthTimeZone'])field(id).addEventListener('input',()=>field(id).setCustomValidity(''));
 let confirmedAt=null,previousSignature=null,pendingPayload=null;
 const zones=Intl.supportedValuesOf?Intl.supportedValuesOf('timeZone'):['Asia/Singapore','Asia/Kolkata','America/New_York','America/Phoenix'];
 for(const zone of zones){const option=document.createElement('option');option.value=zone;field('timeZones').append(option);}
