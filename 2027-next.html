@@ -50,7 +50,7 @@
       <div class="intake-inner">
         <div class="section-label centered">Thank you, one more step</div>
         <h1>Your report details</h1>
-        <p class="intake-sub">Tell me who the report is for, where they live and what they want to explore. Your private web report includes Simplified and Advanced editions and follows within 7 days, with your sample Power Calendar month.</p>
+        <p class="intake-sub">Tell me who the report is for, their birth details and what they want to explore. Your private web report includes Simplified and Advanced editions and follows within 7 days, with your sample Power Calendar month.</p>
 
         <form class="lead-form" id="intakeForm" novalidate>
           <!-- Honeypot: hidden from humans; bots fill it and get silently rejected. Do not remove. -->
@@ -58,7 +58,7 @@
 
           <div class="lead-row two">
             <div class="lead-field">
-              <label class="lead-above-label" for="fullName">Full name of the person the report is for</label>
+              <label class="lead-above-label" id="subjectNameLabel" for="fullName">Your full name</label>
               <input class="lead-input" id="fullName" name="name" type="text" autocomplete="name" required />
               <span class="field-error" id="err-fullName">Please enter the full name of the person the outlook is for.</span>
             </div>
@@ -71,8 +71,10 @@
 
           <div class="checkbox-row">
             <input type="checkbox" id="giftOrder" />
-            <label for="giftOrder">This report is a gift for someone else.</label>
+            <label for="giftOrder">This report is for someone else.</label>
           </div>
+
+          <p class="lead-help" id="subjectDetailsHelp">Enter your birth details, work status and questions below.</p>
 
           <div class="lead-row two">
             <div class="lead-field">
@@ -107,31 +109,6 @@
             <span class="field-error" id="err-gender">Please choose one.</span>
           </fieldset>
 
-          <details class="lead-field">
-            <summary class="lead-help">Optional birth-time information</summary>
-            <label class="lead-above-label" for="birthTimeZone">Birth time zone, if known</label>
-            <input class="lead-input" id="birthTimeZone" name="birthTimeZone" list="timeZones" placeholder="For example, Asia/Singapore" maxlength="2000" />
-            <label class="lead-above-label" for="birthTimeConvention">Birth-time note</label>
-            <input class="lead-input" id="birthTimeConvention" name="birthTimeConvention" placeholder="Recorded clock time, or adjusted by a practitioner" maxlength="2000" />
-            <span class="lead-help">Leave these blank if unsure. They do not set the time zone used for your report dates.</span>
-          </details>
-
-          <fieldset class="lead-field">
-            <legend class="lead-above-label">Current location of the person the report is for</legend>
-            <div class="lead-row two">
-              <div class="lead-field"><label for="residenceCity">City</label><input class="lead-input" id="residenceCity" name="residenceCity" autocomplete="address-level2" maxlength="2000" required /></div>
-              <div class="lead-field"><label for="residenceRegion">State or region, if needed</label><input class="lead-input" id="residenceRegion" name="residenceRegion" autocomplete="address-level1" maxlength="2000" /></div>
-            </div>
-            <label for="residenceCountry">Country</label>
-            <input class="lead-input" id="residenceCountry" name="residenceCountry" autocomplete="country-name" maxlength="2000" required />
-            <label for="reportTimeZone">Time zone for report dates</label>
-            <input class="lead-input" id="reportTimeZone" name="reportTimeZone" list="timeZones" placeholder="For example, Asia/Singapore or America/New_York" maxlength="2000" required />
-            <datalist id="timeZones"></datalist>
-            <button class="intake-zone-suggestion" id="suggestTimeZone" type="button">Suggest this browser's time zone</button>
-            <span class="lead-help">Choose the time zone for their current location. For a gift, confirm their location rather than yours. Seasonal clock changes are handled for each report date.</span>
-            <div class="checkbox-row"><input type="checkbox" id="reportTimeZoneConfirmed" name="reportTimeZoneConfirmed" required /><label for="reportTimeZoneConfirmed">I confirm this is the report subject's current location and time zone.</label></div>
-          </fieldset>
-
           <fieldset class="lead-field">
             <legend class="lead-above-label">Current work status</legend>
             <select class="lead-input" id="employmentStatus" name="employmentStatus" aria-label="Current work status" required>
@@ -147,9 +124,6 @@
           <div class="lead-field">
             <label class="lead-above-label" for="circumstances">Relevant current circumstances <span class="lead-optional">optional</span></label>
             <textarea class="form-textarea" id="circumstances" name="circumstances" maxlength="2000" placeholder="For example, between jobs and exploring a possible side gig."></textarea>
-            <label class="lead-above-label" for="contextObservedAt">As of which date? <span class="lead-optional">if known</span></label>
-            <input class="lead-input" type="date" id="contextObservedAt" name="contextObservedAt" />
-            <span class="lead-help">Leave the date blank if it is unknown.</span>
           </div>
 
           <div class="lead-field">
@@ -158,15 +132,6 @@
             <span class="lead-help">One per line, up to five. A general question is welcome.</span>
           </div>
           <div class="lead-field"><label class="lead-above-label" for="exclusions">Topics to leave out <span class="lead-optional">optional</span></label><textarea class="form-textarea" id="exclusions" name="exclusions" maxlength="2000" placeholder="One per line."></textarea></div>
-
-          <fieldset class="lead-field">
-            <legend class="lead-above-label">Which edition do you want to open first?</legend>
-            <div class="radio-group">
-              <label class="radio-option"><input type="radio" name="edition" value="simplified" required checked /> Simplified, plain English</label>
-              <label class="radio-option"><input type="radio" name="edition" value="advanced" /> Advanced, shows the working</label>
-            </div>
-            <span class="lead-help">Both are on the same page. This only sets which one opens first.</span>
-          </fieldset>
 
           <div class="checkbox-row">
             <input type="checkbox" id="consent" name="consent" required />
@@ -198,7 +163,7 @@
       <div class="footer-inner">
         <a href="/" class="footer-brand foot-sweep" aria-label="Jeff Seah, home"><span class="sweep-seal"><img src="/img/seal-mark.png" alt="" width="36" height="36"></span><span class="sweep-text" data-text="Strategic Timing Intelligence">Strategic Timing Intelligence</span></a>
       </div>
-      <p class="footer-disclaimer">For timing and planning. Not medical, legal or financial advice, and not a guarantee that events will happen.</p>
+      <p class="footer-disclaimer">For timing and planning. Not medical, legal or financial advice.</p>
       <p class="footer-copy">&copy; 2026 Jeff Seah. All rights reserved.</p>
     </div>
   </footer>

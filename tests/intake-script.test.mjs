@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import test from 'node:test';
 import vm from 'node:vm';
 import crypto from 'node:crypto';
-import {annualIntake} from './fixtures/annual-intake.mjs';
+import {annualIntake,localClockIntake} from './fixtures/annual-intake.mjs';
 import {ANNUAL_COLUMNS} from '../js/annual-intake.mjs';
 
 const source = fs.readFileSync(new URL('../docs/intake/Code.gs', import.meta.url), 'utf8');
@@ -149,4 +149,11 @@ test('duplicate or missing legacy headers refuse migration without replacing dat
 test('operator QA uses its separate tab and sends no email or CRM events',()=>{
   const s=sandbox();s.ctx.Utilities.getUuid=()=>crypto.randomUUID();s.ctx.annualIntakeSelfTest();
   assert.equal(s.tabs['annual-2027-qa'].data.length,5);assert.equal(s.tabs['annual-2027'],undefined);assert.equal(s.mails.length,0);assert.equal(s.fetched.length,0);
+});
+
+test('local-clock orders save blank location fields and retry without duplicate notification',()=>{
+  const s=sandbox();assert.equal(s.post(localClockIntake).saved,true);assert.equal(s.post(localClockIntake).saved,true);
+  const saved=Object.fromEntries(s.tabs['annual-2027'].data[0].map((k,i)=>[k,s.tabs['annual-2027'].data[1][i]]));
+  assert.equal(saved.reportTimeZoneSource,'local-clock-policy');assert.equal(saved.reportTimeZoneConfirmed,false);assert.equal(saved.residenceCity,'');assert.equal(saved.edition,'simplified');assert.equal(s.mails.length,1);
+  const operator=sandbox();operator.ctx.Utilities.getUuid=()=>crypto.randomUUID();operator.ctx.annualLocalClockSelfTest();assert.equal(operator.tabs['annual-2027-qa'].data.length,2);assert.equal(operator.mails.length,0);assert.equal(operator.fetched.length,0);
 });

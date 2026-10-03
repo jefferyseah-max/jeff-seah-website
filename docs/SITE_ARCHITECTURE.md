@@ -190,7 +190,7 @@ The monthly form retains its inline `no-cors` POST, so its success screen cannot
 | | `/welcome` | `/2027-next` |
 |---|---|---|
 | `product` sent | `monthly-welcome` | `2027-annual-outlook` |
-| Fields | name, email, calendarEmail (optional Google account for calendar sharing; `/welcome` only, `/2027-next` always sends empty), birthDate, birthTime or "Unknown" + birthTimeUnknown, birthCity, gender (female/male), consent | same, plus `workType` (employed / business-owner / both), `decisions` (free text), `edition` (simplified / advanced) |
+| Fields | name, email, calendarEmail (optional Google account for calendar sharing; `/welcome` only, `/2027-next` always sends empty), birthDate, birthTime or "Unknown" + birthTimeUnknown, birthCity, gender (female/male), consent | same, plus `workType` (employed / business-owner / both), `decisions` (free text), `edition` (fixed simplified) |
 | From URL | `plan` (97/197/297/497; drives the greeting "Welcome to your <plan> plan"), `session_id` | `session_id`, `paid=1` |
 | `paid` | true if `paid=1` **or** `session_id` starts with `cs_` | same |
 | Spam guards | honeypot input `company_website` (sent as `website`), and `elapsedMs` (form open under 3 s is ignored) | same |
@@ -236,7 +236,7 @@ The original annual tab remains headers-only after the 2026-10-03 migration. Sep
 the Olares watcher reads annual status and `reportDelivered` marks delivery only after separate release. There is **no automatic join** between `stripe-signups` and `monthly-welcome`
 (the subscription row has Stripe ids, the intake row has the Checkout Session id and email).
 
-The annual tab retains the 16 columns above and appends: `intakeId, subjectName, residenceCity, residenceRegion, residenceCountry, reportTimeZone, reportTimeZoneConfirmed, reportTimeZoneSource, reportTimeZoneConfirmedAt, employmentStatus, careerFocus, contextObservedAt, circumstances, focalQuestions, exclusions, birthTimeZone, birthTimeConvention`. Header-based writes preserve operator columns. Date text uses exact row writes to prevent Sheet coercion. Private packet conversion requires explicit canonical-client resolution; intake never updates the vault or authorizes release. Only name/email/product/edition metadata enters Encharge. Existing CRM launch gates remain in force.
+The annual tab retains the 16 columns above and appends: `intakeId, subjectName, residenceCity, residenceRegion, residenceCountry, reportTimeZone, reportTimeZoneConfirmed, reportTimeZoneSource, reportTimeZoneConfirmedAt, employmentStatus, careerFocus, contextObservedAt, circumstances, focalQuestions, exclusions, birthTimeZone, birthTimeConvention`. Header-based writes preserve operator columns. Date text uses exact row writes to prevent Sheet coercion. Private packet conversion requires explicit canonical-client resolution; intake never updates the vault or authorizes release. Only name/email/product/edition metadata enters Encharge. Existing CRM launch gates remain in force. The simplified buyer form leaves birthTimeZone, birthTimeConvention, all residence fields, reportTimeZone, reportTimeZoneConfirmedAt and contextObservedAt blank, and always submits edition=simplified. It submits reportTimeZoneSource=local-clock-policy and reportTimeZoneConfirmed=false. Suggested planning times use the recipient's local clock, while solar-calendar boundaries retain their source zone. These compatibility columns are preserved for existing records.
 
 The old "Power Calendar Leads" Sheet and its Apps Script belong to the retired free-month lead form and
 are no longer used by the site.
@@ -342,7 +342,7 @@ Integration points a CRM can hook without redesign:
 - **Logo**: the nav on every page stacks the transparent seal layers (`seal-ring.png`,
   `seal-monogram.png`, a `[data-sheen]` sweep once after load, ring turns on hover); footers use
   `seal-mark.png`. `seal-128.png` is only the touch icon. Every footer carries the disclaimer "For timing
-  and planning. Not medical, legal or financial advice, and not a guarantee that events will happen."
+  and planning. Not medical, legal or financial advice."
 - **No visible email address** on any page (Jeff, 2026-09-30: bots scrape it). The intake pages'
   "Email Jeff" fallbacks are `[data-mail]` links: `2027.js` assembles `coaching@jeffseah.rocks` on click,
   opens the mail client and shows the address for copying.

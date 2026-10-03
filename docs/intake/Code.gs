@@ -235,12 +235,15 @@ function annualZone(value) {
 function validateAnnual(data) {
   if (data.intakeSchemaVersion !== 2) throw new Error('Unsupported annual intake schema');
   Object.keys(data).forEach(function (key) { const v = data[key]; if ((typeof v === 'string' && v.length > MAX_FIELD) || (Array.isArray(v) && (!v.every(function (item) { return typeof item === 'string'; }) || v.join('\n').length > MAX_FIELD))) throw new Error('Invalid or oversized annual field: ' + key); });
-  ['name','subjectName','email','birthCity','residenceCity','residenceCountry'].forEach(function (key) { if (typeof data[key] !== 'string' || !data[key].trim()) throw new Error('Missing ' + key); });
+  ['name','subjectName','email','birthCity'].forEach(function (key) { if (typeof data[key] !== 'string' || !data[key].trim()) throw new Error('Missing ' + key); });
   if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(data.intakeId || '')) throw new Error('Invalid intake ID');
   if (!annualDate(data.birthDate) || new Date(data.birthDate+'T00:00:00Z') > new Date()) throw new Error('Invalid birth date');
   if (typeof data.birthTimeUnknown !== 'boolean' || (!data.birthTimeUnknown && !/^([01]\d|2[0-3]):[0-5]\d$/.test(data.birthTime || '')) || (data.birthTimeUnknown && data.birthTime !== '')) throw new Error('Invalid birth time');
   if (['female','male'].indexOf(data.gender) < 0 || ['simplified','advanced'].indexOf(data.edition) < 0 || data.consent !== true) throw new Error('Missing required choices');
-  if (!annualZone(data.reportTimeZone) || data.reportTimeZoneConfirmed !== true || ['subject-confirmed','gift-buyer-confirmed'].indexOf(data.reportTimeZoneSource) < 0 || !annualDate(data.reportTimeZoneConfirmedAt)) throw new Error('Report location confirmation required');
+  const localClock = data.reportTimeZoneSource === 'local-clock-policy';
+  if (localClock) {
+    if (['residenceCity','residenceRegion','residenceCountry','reportTimeZone','reportTimeZoneConfirmedAt'].some(function (key) { return data[key] !== ''; }) || data.reportTimeZoneConfirmed !== false) throw new Error('Local-clock policy cannot include a confirmed location');
+  } else if (!annualZone(data.reportTimeZone) || data.reportTimeZoneConfirmed !== true || ['subject-confirmed','gift-buyer-confirmed'].indexOf(data.reportTimeZoneSource) < 0 || !annualDate(data.reportTimeZoneConfirmedAt) || !String(data.residenceCity || '').trim() || !String(data.residenceCountry || '').trim()) throw new Error('Report location confirmation required');
   if (data.birthTimeZone && !annualZone(data.birthTimeZone)) throw new Error('Invalid birth time zone');
   if (['employed','self-employed','employed-and-self-employed','between-jobs','student','retired','prefer-not-to-say'].indexOf(data.employmentStatus) < 0 || ['career','business','both','general'].indexOf(data.careerFocus) < 0) throw new Error('Invalid work status or focus');
   if (data.contextObservedAt && !annualDate(data.contextObservedAt)) throw new Error('Invalid observation date');
@@ -280,6 +283,19 @@ function annualIntakeSelfTest() {
     });
     console.log(JSON.stringify({ status: 'pass', tab: 'annual-2027-qa', cases: results, notificationsSent: 0, crmCalls: 0 }));
   } finally { lock.releaseLock(); }
+}
+
+// Operator-only local-clock regression; never sends email or CRM events.
+function annualLocalClockSelfTest() {
+  const data = { product:'2027-annual-outlook', intakeSchemaVersion:2, intakeId:Utilities.getUuid(), name:'Local Clock Intake Test', subjectName:'Local Clock Intake Test', email:'local-clock@example.invalid', calendarEmail:'', birthDate:'1990-01-02', birthTime:'', birthTimeUnknown:true, birthCity:'Synthetic birth place', gender:'female', workType:'business-owner', employmentStatus:'self-employed', careerFocus:'business', decisions:'How should I plan 2027?', focalQuestions:['How should I plan 2027?'], exclusions:[], edition:'simplified', paid:false, stripeSessionId:'', submittedAt:new Date().toISOString(), consent:true, elapsedMs:60000, website:'', residenceCity:'', residenceRegion:'', residenceCountry:'', reportTimeZone:'', reportTimeZoneConfirmed:false, reportTimeZoneSource:'local-clock-policy', reportTimeZoneConfirmedAt:'', contextObservedAt:'', circumstances:'Synthetic local-clock QA only', birthTimeZone:'', birthTimeConvention:'' };
+  validateAnnual(data);
+  const lock=LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    const saved=saveIntake(data,PRODUCTS[data.product],'annual-2027-qa');
+    const retry=saveIntake(data,PRODUCTS[data.product],'annual-2027-qa');
+    if(!retry.duplicate||saved.columns.length!==33)throw new Error('Local-clock transport QA failed');
+    console.log(JSON.stringify({status:'pass',tab:'annual-2027-qa',intakeId:data.intakeId,timingPolicy:data.reportTimeZoneSource,duplicateRetry:true,notificationsSent:0,crmCalls:0}));
+  } finally {lock.releaseLock();}
 }
 
 function notify(product, columns, row) {

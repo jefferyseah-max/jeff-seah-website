@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {annualIntake} from './fixtures/annual-intake.mjs';
+import {annualIntake,localClockIntake} from './fixtures/annual-intake.mjs';
 import {validateAnnualIntake} from '../js/annual-intake.mjs';
 import {submitAnnualIntake,POST} from '../api/annual-intake.mjs';
 test('server requires the saved matching v2 receipt and follows the Apps Script redirect',async()=>{
@@ -17,4 +17,9 @@ test('server rejects invalid input before contacting Apps Script and does not ac
 test('Singapore, India, seasonal and nonseasonal US zones and gift confirmation are retained',()=>{
   for(const zone of ['Asia/Singapore','Asia/Kolkata','America/New_York','America/Phoenix'])assert.equal(validateAnnualIntake({...annualIntake,reportTimeZone:zone,reportTimeZoneSource:'gift-buyer-confirmed',employmentStatus:'between-jobs'}).reportTimeZone,zone);
   assert.equal(validateAnnualIntake(annualIntake).contextObservedAt,'');
+});
+
+test('local-clock intake accepts no residence and cannot falsely claim a confirmed zone',()=>{
+  assert.equal(validateAnnualIntake(localClockIntake).edition,'simplified');
+  for(const patch of [{reportTimeZoneConfirmed:true},{reportTimeZone:'Asia/Singapore'},{residenceCity:'Singapore'},{reportTimeZoneSource:''}])assert.throws(()=>validateAnnualIntake({...localClockIntake,...patch}));
 });
