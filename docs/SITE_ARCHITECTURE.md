@@ -185,10 +185,7 @@ Stripe Payment Links cannot set a billing day, so `/api/stripe-webhook` fixes ea
 
 ### The two forms
 
-Both are plain HTML forms with inline JS that POSTs JSON with `fetch(..., {mode: 'no-cors'})` to the
-Apps Script URL (constant `INTAKE_ENDPOINT` inside each page). Because of `no-cors` the page **cannot
-read the response**: it shows "Received, thank you" whenever the network call does not throw. Server-side
-failures are therefore surfaced by the script's own error email, not by the page.
+The monthly form retains its inline `no-cors` POST, so its success screen cannot prove storage. The staged annual form uses `js/annual-intake-form.mjs` and the same-origin `/api/annual-intake` relay. It requires a schema-2 saved receipt matching the stable intake ID after Apps Script row read-back. An unchanged retry keeps the ID; changed details create a new ID. Backend version 4 and the append-only Sheet migration are live; the new website form awaits its separate publication approval.
 
 | | `/welcome` | `/2027-next` |
 |---|---|---|
@@ -207,8 +204,8 @@ Neither page verifies the Stripe session with Stripe; anyone can open `/welcome`
 |---|---|
 | Project | "jeffseah.rocks Intake", bound to the Sheet below. Script ID `1kTAeB7imLYo8xsv5_98ztlu76wMejSRul_W__y7JmlVH2ab_eQMI_UIt` |
 | Web app URL | `https://script.google.com/macros/s/AKfycbwwvJbirKRXE8OzoUjgVZobM8X5XqMeUY0pjlEaIQ3E_qot_FaSt3vgm30MVUxllAUT/exec` (used by both forms and by `lib/signup-alert.mjs`) |
-| Deployment | "Intake v2: Stripe signup alerts", **Version 2**, 2026-09-27. Execute as Me (jefferyseah@gmail.com), access Anyone. |
-| Source | `docs/intake/Code.gs`. Live code was byte-compared with the repo before the v2 deploy; keep them identical. |
+| Deployment | "Intake v4: confirmed annual context and saved receipts", **Version 4**, 2026-10-03. Existing URL, execution account and access preserved. |
+| Source | `docs/intake/Code.gs`. Editor source independently copied back and compared before deployment. |
 | Redeploy after a code change | Paste code, save, then Deploy, **Manage deployments**, edit (pencil), Version: **New version**, Deploy. That keeps the URL. A "New deployment" creates a new URL and breaks the site and webhook. |
 | Speed | Form submissions about 9 s end to end; alert posts about 4 s. |
 
@@ -219,14 +216,14 @@ Neither page verifies the Stripe session with Stripe; anyone can open `/welcome`
    email must look valid; then a row is appended under a script lock and Jeff is emailed.
 3. Any exception emails Jeff "jeffseah.rocks intake ERROR" with the stack, and returns `{"result":"error"}`.
 
-All string values pass through `clean()`: trimmed, capped at 2000 chars, and prefixed with `'` if they
+All string values pass through `clean()`: trimmed, rejected above 2000 chars, and prefixed with `'` if they
 start with `= + - @` (spreadsheet formula injection guard). Tabs are auto-created with a header row on
 first use.
 
 ### The Sheet: "jeffseah.rocks Intake"
 
 ID `1fdbOETsz_hCbBHTOQcHHl0sBxvVuPZ1wM-Bbond2n4c`, owned by jefferyseah@gmail.com.
-As of 2026-09-27 every tab holds headers only (all test rows deleted).
+The original annual tab remains headers-only after the 2026-10-03 migration. Separate `annual-2027-qa` rows are synthetic storage checks, not orders. The Olares watcher does not watch that tab. See `docs/intake/INTAKE_SETUP.md` for the migration and operator-only QA procedure.
 
 | Tab | Columns (in order) |
 |---|---|
@@ -236,8 +233,10 @@ As of 2026-09-27 every tab holds headers only (all test rows deleted).
 | `stripe-signups` | receivedAt, subscription, customer, plan, status, firstCharge, intakeReceived |
 
 `status` is written as `New`; `intakeReceived` is written as `check`. Both are for Jeff to update by hand;
-nothing reads them back. There is **no automatic join** between `stripe-signups` and `monthly-welcome`
+the Olares watcher reads annual status and `reportDelivered` marks delivery only after separate release. There is **no automatic join** between `stripe-signups` and `monthly-welcome`
 (the subscription row has Stripe ids, the intake row has the Checkout Session id and email).
+
+The annual tab retains the 16 columns above and appends: `intakeId, subjectName, residenceCity, residenceRegion, residenceCountry, reportTimeZone, reportTimeZoneConfirmed, reportTimeZoneSource, reportTimeZoneConfirmedAt, employmentStatus, careerFocus, contextObservedAt, circumstances, focalQuestions, exclusions, birthTimeZone, birthTimeConvention`. Header-based writes preserve operator columns. Date text uses exact row writes to prevent Sheet coercion. Private packet conversion requires explicit canonical-client resolution; intake never updates the vault or authorizes release. Only name/email/product/edition metadata enters Encharge. Existing CRM launch gates remain in force.
 
 The old "Power Calendar Leads" Sheet and its Apps Script belong to the retired free-month lead form and
 are no longer used by the site.
@@ -279,7 +278,7 @@ alert covers it.
 
 ## 8. Known limits and deliberate choices
 
-- Forms cannot see server errors (`no-cors`); errors reach Jeff by email instead.
+- Monthly intake cannot see server errors (`no-cors`). Annual schema 2 requires a saved receipt; storage and follow-up errors reach Jeff.
 - The Apps Script URL is public. Abuse would mean junk rows/emails; mitigated by honeypot, timing and
   id-format checks. A shared secret was deliberately not added (it would have to live in page source or
   be typed into Script Properties).

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Your birth details | 2027 Annual Outlook | Jeff Seah</title>
-  <meta name="description" content="Send Jeff your birth details to begin your 2027 Annual Outlook." />
+  <title>Your report details | 2027 Annual Outlook | Jeff Seah</title>
+  <meta name="description" content="Send Jeff the birth details, current location and questions for your 2027 Annual Outlook." />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://www.jeffseah.rocks/2027-next" />
   <link rel="icon" type="image/png" sizes="64x64" href="/img/seal-64.png" />
@@ -49,8 +49,8 @@
     <div class="container">
       <div class="intake-inner">
         <div class="section-label centered">Thank you, one more step</div>
-        <h1>Your birth details</h1>
-        <p class="intake-sub">Two minutes. This is what your 2027 Annual Outlook is calculated from, and your sample Power Calendar month too. Your private page and PDF follow within 7 days.</p>
+        <h1>Your report details</h1>
+        <p class="intake-sub">Tell me who the report is for, where they live and what they want to explore. Your private web report includes Simplified and Advanced editions and follows within 7 days, with your sample Power Calendar month.</p>
 
         <form class="lead-form" id="intakeForm" novalidate>
           <!-- Honeypot: hidden from humans; bots fill it and get silently rejected. Do not remove. -->
@@ -58,7 +58,7 @@
 
           <div class="lead-row two">
             <div class="lead-field">
-              <label class="lead-above-label" for="fullName">Full name</label>
+              <label class="lead-above-label" for="fullName">Full name of the person the report is for</label>
               <input class="lead-input" id="fullName" name="name" type="text" autocomplete="name" required />
               <span class="field-error" id="err-fullName">Please enter the full name of the person the outlook is for.</span>
             </div>
@@ -67,6 +67,11 @@
               <input class="lead-input" id="email" name="email" type="email" autocomplete="email" inputmode="email" required />
               <span class="field-error" id="err-email">Please enter a valid email address.</span>
             </div>
+          </div>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="giftOrder" />
+            <label for="giftOrder">This report is a gift for someone else.</label>
           </div>
 
           <div class="lead-row two">
@@ -83,7 +88,7 @@
           </div>
           <div class="checkbox-row">
             <input type="checkbox" id="unknownTime" name="birthTimeUnknown" />
-            <label for="unknownTime">I do not know my birth time (a two-hour window is enough if you have one)</label>
+            <label for="unknownTime">The birth time is unknown.</label>
           </div>
 
           <div class="lead-field">
@@ -102,21 +107,57 @@
             <span class="field-error" id="err-gender">Please choose one.</span>
           </fieldset>
 
+          <details class="lead-field">
+            <summary class="lead-help">Optional birth-time information</summary>
+            <label class="lead-above-label" for="birthTimeZone">Birth time zone, if known</label>
+            <input class="lead-input" id="birthTimeZone" name="birthTimeZone" list="timeZones" placeholder="For example, Asia/Singapore" maxlength="2000" />
+            <label class="lead-above-label" for="birthTimeConvention">Birth-time note</label>
+            <input class="lead-input" id="birthTimeConvention" name="birthTimeConvention" placeholder="Recorded clock time, or adjusted by a practitioner" maxlength="2000" />
+            <span class="lead-help">Leave these blank if unsure. They do not set the time zone used for your report dates.</span>
+          </details>
+
           <fieldset class="lead-field">
-            <legend class="lead-above-label">Employed or business owner</legend>
-            <div class="radio-group">
-              <label class="radio-option"><input type="radio" name="workType" value="employed" required /> Employed</label>
-              <label class="radio-option"><input type="radio" name="workType" value="business-owner" /> Business owner</label>
-              <label class="radio-option"><input type="radio" name="workType" value="both" /> Both</label>
+            <legend class="lead-above-label">Current location of the person the report is for</legend>
+            <div class="lead-row two">
+              <div class="lead-field"><label for="residenceCity">City</label><input class="lead-input" id="residenceCity" name="residenceCity" autocomplete="address-level2" maxlength="2000" required /></div>
+              <div class="lead-field"><label for="residenceRegion">State or region, if needed</label><input class="lead-input" id="residenceRegion" name="residenceRegion" autocomplete="address-level1" maxlength="2000" /></div>
             </div>
-            <span class="field-error" id="err-workType">Please choose one.</span>
+            <label for="residenceCountry">Country</label>
+            <input class="lead-input" id="residenceCountry" name="residenceCountry" autocomplete="country-name" maxlength="2000" required />
+            <label for="reportTimeZone">Time zone for report dates</label>
+            <input class="lead-input" id="reportTimeZone" name="reportTimeZone" list="timeZones" placeholder="For example, Asia/Singapore or America/New_York" maxlength="2000" required />
+            <datalist id="timeZones"></datalist>
+            <button class="intake-zone-suggestion" id="suggestTimeZone" type="button">Suggest this browser's time zone</button>
+            <span class="lead-help">Choose the time zone for their current location. For a gift, confirm their location rather than yours. Seasonal clock changes are handled for each report date.</span>
+            <div class="checkbox-row"><input type="checkbox" id="reportTimeZoneConfirmed" name="reportTimeZoneConfirmed" required /><label for="reportTimeZoneConfirmed">I confirm this is the report subject's current location and time zone.</label></div>
+          </fieldset>
+
+          <fieldset class="lead-field">
+            <legend class="lead-above-label">Current work status</legend>
+            <select class="lead-input" id="employmentStatus" name="employmentStatus" aria-label="Current work status" required>
+              <option value="">Choose one</option><option value="employed">Employee</option><option value="self-employed">Business owner or self-employed</option><option value="employed-and-self-employed">Employed and self-employed</option><option value="between-jobs">Between jobs</option><option value="student">Student</option><option value="retired">Retired</option><option value="prefer-not-to-say">Prefer not to say</option>
+            </select>
+            <span class="lead-help">Your declared work role guides the annual reading. Considering a side gig does not mean you already run a business.</span>
           </fieldset>
 
           <div class="lead-field">
-            <label class="lead-above-label" for="decisions">The two or three decisions on your mind for 2027</label>
-            <textarea class="form-textarea" id="decisions" name="decisions" placeholder="Whether to change jobs. When to launch. Whether to sign the lease." required></textarea>
-            <span class="field-error" id="err-decisions">A line or two is enough; this shapes the When To index.</span>
+            <label class="lead-above-label" for="careerFocus">Reading focus <span class="lead-optional">optional</span></label>
+            <select class="lead-input" id="careerFocus" name="careerFocus"><option value="general">General outlook</option><option value="career">Career</option><option value="business">Business</option><option value="both">Career and business</option></select>
           </div>
+          <div class="lead-field">
+            <label class="lead-above-label" for="circumstances">Relevant current circumstances <span class="lead-optional">optional</span></label>
+            <textarea class="form-textarea" id="circumstances" name="circumstances" maxlength="2000" placeholder="For example, between jobs and exploring a possible side gig."></textarea>
+            <label class="lead-above-label" for="contextObservedAt">As of which date? <span class="lead-optional">if known</span></label>
+            <input class="lead-input" type="date" id="contextObservedAt" name="contextObservedAt" />
+            <span class="lead-help">Leave the date blank if it is unknown.</span>
+          </div>
+
+          <div class="lead-field">
+            <label class="lead-above-label" for="decisions">Questions or decisions for 2027</label>
+            <textarea class="form-textarea" id="decisions" name="decisions" maxlength="2000" placeholder="How can I make the best use of Ding Wei?" required></textarea>
+            <span class="lead-help">One per line, up to five. A general question is welcome.</span>
+          </div>
+          <div class="lead-field"><label class="lead-above-label" for="exclusions">Topics to leave out <span class="lead-optional">optional</span></label><textarea class="form-textarea" id="exclusions" name="exclusions" maxlength="2000" placeholder="One per line."></textarea></div>
 
           <fieldset class="lead-field">
             <legend class="lead-above-label">Which edition do you want to open first?</legend>
@@ -133,18 +174,19 @@
           </div>
           <span class="field-error" id="err-consent">Please confirm this before sending.</span>
 
-          <button type="submit" class="lead-submit" id="submitBtn">Send my birth details</button>
-          <p class="lead-note">Your birth details are used only to calculate your chart, are stored on my own machine and are never shared. I will also email you a few notes on getting the most from your report, and now and then about my other services; every email has a one-click unsubscribe. Something wrong with the form? <a href="#" data-mail data-mail-subject="Birth details">Email Jeff</a> with your birth date, time and place.</p>
+          <button type="submit" class="lead-submit" id="submitBtn">Send report details</button>
+          <p class="lead-note">Your details are used to prepare and deliver your report. Birth details, personal questions and exclusions are kept out of marketing records. I will also email you a few notes on getting the most from your report, and now and then about my other services; every email has a one-click unsubscribe. Something wrong with the form? <a href="#" data-mail data-mail-subject="Report details">Email Jeff</a>.</p>
         </form>
 
         <div class="form-state" id="successState" role="status">
           <h2>Received, thank you</h2>
-          <p>Your 2027 Annual Outlook is on its way. Expect your private page and PDF within 7 days at the email you gave. If you ordered by 15 January it arrives before Li Chun. It comes with a sample month of your Power Calendar for the next full month, as a private web page beside your report. Nothing renews.</p>
+          <p>Your report details have been saved. Expect your private web report with Simplified and Advanced editions within 7 days at the email you gave. It comes with a sample month of your Power Calendar for the next full month, as a private web page beside your report. Nothing renews.</p>
         </div>
 
         <div class="form-state form-error" id="errorState" role="alert">
-          <h2>Your details were not sent</h2>
-          <p>Please try again, or <a href="#" data-mail data-mail-subject="Birth details">email Jeff</a> directly with your birth date, time and place. Your payment is safe either way.</p>
+          <h2>Please check your submission</h2>
+          <p id="formErrorText">We could not confirm that your details were saved. Please retry or email Jeff.</p>
+          <p><a href="#" data-mail data-mail-subject="Report details">Email Jeff</a> if you need help. Your payment is safe either way.</p>
         </div>
       </div>
     </div>
@@ -162,124 +204,7 @@
   </footer>
 
   <script src="/2027.js"></script>
-  <script>
-    // Apps Script intake (docs/intake/Code.gs). While empty, submissions show
-    // the error state with the email fallback so nobody's details vanish.
-    const INTAKE_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwwvJbirKRXE8OzoUjgVZobM8X5XqMeUY0pjlEaIQ3E_qot_FaSt3vgm30MVUxllAUT/exec';
-
-    const form = document.getElementById('intakeForm');
-    const unknownTimeBox = document.getElementById('unknownTime');
-    const birthTimeInput = document.getElementById('birthTime');
-    const btn = document.getElementById('submitBtn');
-    const successState = document.getElementById('successState');
-    const errorState = document.getElementById('errorState');
-    const FORM_READY_AT = Date.now();
-
-    unknownTimeBox.addEventListener('change', () => {
-      const unknown = unknownTimeBox.checked;
-      birthTimeInput.value = '';
-      birthTimeInput.disabled = unknown;
-      birthTimeInput.required = !unknown;
-      showError('birthTime', false);
-    });
-
-    function showError(key, on) {
-      const el = document.getElementById('err-' + key);
-      if (el) el.classList.toggle('visible', on);
-    }
-    function markInvalid(input, on) {
-      if (!input) return;
-      input.setAttribute('aria-invalid', on ? 'true' : 'false');
-    }
-
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-      successState.classList.remove('visible');
-      errorState.classList.remove('visible');
-
-      // Honeypot and time-trap, same pattern as the homepage lead form.
-      const honeypot = document.getElementById('company_website').value;
-      if (honeypot || Date.now() - FORM_READY_AT < 3000) return;
-
-      let ok = true;
-      const name = document.getElementById('fullName').value.trim();
-      const nameOk = name.length >= 2 && !/https?:|www\.|@/i.test(name);
-      showError('fullName', !nameOk); markInvalid(document.getElementById('fullName'), !nameOk); ok = ok && nameOk;
-
-      const emailEl = document.getElementById('email');
-      const emailOk = emailEl.validity.valid && emailEl.value.trim() !== '';
-      showError('email', !emailOk); markInvalid(emailEl, !emailOk); ok = ok && emailOk;
-
-      const dobValue = document.getElementById('birthDate').value;
-      const dob = new Date(dobValue);
-      const ageYears = (Date.now() - dob) / (365.25 * 24 * 3600 * 1000);
-      const dobOk = !isNaN(dob.getTime()) && dob <= new Date() && ageYears <= 120;
-      showError('birthDate', !dobOk); markInvalid(document.getElementById('birthDate'), !dobOk); ok = ok && dobOk;
-
-      const timeOk = unknownTimeBox.checked || birthTimeInput.value !== '';
-      showError('birthTime', !timeOk); markInvalid(birthTimeInput, !timeOk); ok = ok && timeOk;
-
-      const city = document.getElementById('birthCity').value.trim();
-      const cityOk = city.length >= 2 && !/\d/.test(city);
-      showError('birthCity', !cityOk); markInvalid(document.getElementById('birthCity'), !cityOk); ok = ok && cityOk;
-
-      const genderOk = !!form.gender.value; showError('gender', !genderOk); ok = ok && genderOk;
-      const workOk = !!form.workType.value; showError('workType', !workOk); ok = ok && workOk;
-
-      const decisions = document.getElementById('decisions').value.trim();
-      const decOk = decisions.length >= 3; showError('decisions', !decOk); ok = ok && decOk;
-
-      const consentOk = document.getElementById('consent').checked; showError('consent', !consentOk); ok = ok && consentOk;
-
-      if (!ok) {
-        const firstBad = form.querySelector('[aria-invalid="true"], .field-error.visible');
-        if (firstBad) firstBad.scrollIntoView({ block: 'center', behavior: 'smooth' });
-        return;
-      }
-
-      const params = new URLSearchParams(location.search);
-      const payload = {
-        product: '2027-annual-outlook',
-        name,
-        email: emailEl.value.trim(),
-        calendarEmail: '',
-        birthDate: dobValue,
-        birthTime: unknownTimeBox.checked ? 'Unknown' : birthTimeInput.value,
-        birthTimeUnknown: unknownTimeBox.checked,
-        birthCity: city,
-        gender: form.gender.value,
-        workType: form.workType.value,
-        decisions,
-        edition: form.edition.value,
-        consent: true,
-        paid: params.get('paid') === '1' || (params.get('session_id') || '').startsWith('cs_'),
-        stripeSessionId: params.get('session_id') || '',
-        submittedAt: new Date().toISOString(),
-        elapsedMs: Date.now() - FORM_READY_AT,
-        website: honeypot
-      };
-
-      btn.disabled = true;
-      btn.textContent = 'Sending...';
-
-      try {
-        if (!INTAKE_ENDPOINT) throw new Error('intake endpoint not configured');
-        await fetch(INTAKE_ENDPOINT, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        form.hidden = true;
-        successState.classList.add('visible');
-        successState.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      } catch (err) {
-        errorState.classList.add('visible');
-        btn.disabled = false;
-        btn.textContent = 'Send my birth details';
-      }
-    });
-  </script>
+  <script type="module" src="/js/annual-intake-form.mjs"></script>
   <script>
     // Footer: run the light sweep once, when the footer is on screen.
     (function () {
