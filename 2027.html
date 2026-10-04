@@ -689,6 +689,16 @@
 
     <div class="gold-rule mx-auto max-w-5xl"></div>
 
+    <section data-annual-testimonials hidden aria-labelledby="annual-reader-experiences" class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-10">
+      <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Reader experiences</p>
+      <h2 id="annual-reader-experiences" class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] text-ivory">Is this report right for you?</h2>
+      <p class="mt-5 text-lg text-ivory/85">Readers share what they found useful and how they approached their outlook. Names may be initials or pseudonyms, as chosen by each reader.</p>
+      <div data-testimonial-cards class="annual-testimonial-grid"></div>
+    </section>
+    <style>
+      [data-annual-testimonials][hidden]{display:none!important}.annual-testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;margin-top:32px}.annual-testimonial-card{margin:0;padding:26px;border:1px solid rgba(212,175,55,.25);border-radius:14px;background:#13151B}.annual-testimonial-stars{color:#D4AF37;font-size:20px;letter-spacing:3px;margin:0 0 16px}.annual-testimonial-card blockquote{margin:0;font:400 17px/1.8 'Plus Jakarta Sans',sans-serif;color:#EDE6D6;white-space:pre-line;overflow-wrap:anywhere}.annual-testimonial-card figcaption{margin-top:20px;color:#A8ADB6;font-size:14px;overflow-wrap:anywhere}
+    </style>
+    <script type="module" src="/js/annual-testimonials.mjs"></script>
     <!-- ============ STEP 3: offer, Power Calendar bridge, FAQ ============ -->
 
     <!-- Offer -->
