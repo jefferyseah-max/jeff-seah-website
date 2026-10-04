@@ -2,7 +2,7 @@
 
 `/2027` reads `data/annual-2027-testimonials.json` through `js/annual-testimonials.mjs`. The section sits before Order and stays hidden when the approved selection is empty. It is not present on the homepage. No sample reviews or aggregate star claims are published.
 
-The public schema contains only `id`, `year`, `name`, `quote` and `rating`. `rating` is the reader's optional overall 1 to 5 score, or null. Clarity, navigation and usefulness scores remain private. Names are chosen by readers and may be pseudonyms or Anonymous reader. Rendering uses plain text.
+The public schema contains only `id`, `year`, `name`, `quote`, `rating` and optional `comparisonRating`. The comparison score is 1 to 5, or null, and is rendered separately under Compared with previous reports, with 1: Very similar and 5: Refreshingly different. It requires a previous-report comparison and the newer annual-testimonial-v2 publication consent. Older consent, an unanswered comparison and no previous report do not yield a public comparison score. `rating` is the reader's optional overall 1 to 5 score, or null. Clarity, navigation and usefulness scores remain private. Names are chosen by readers and may be pseudonyms or Anonymous reader. Rendering uses plain text.
 
 The authoritative feedback receipts live in the authenticated annual-report host's private R2 bucket. The review register is [2027 Annual Outlook Feedback](https://docs.google.com/spreadsheets/d/10soI-jUMwXLyKMaQCdkCRg3Z67kXzOU7EPCYJS427b0/edit), tab Responses, header row 5, data from row 6, approvalStatus in column R. It is an agent-refreshed register, not an automatic mirror. Preserve review decisions by submissionId when refreshing it.
 
