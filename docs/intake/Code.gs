@@ -29,12 +29,13 @@ const TAIL = ['paid', 'stripeSessionId', 'status'];
 const ANNUAL_COLUMNS = ['intakeId','subjectName','residenceCity','residenceRegion','residenceCountry','reportTimeZone','reportTimeZoneConfirmed','reportTimeZoneSource','reportTimeZoneConfirmedAt','employmentStatus','careerFocus','contextObservedAt','circumstances','focalQuestions','exclusions','birthTimeZone','birthTimeConvention'];
 
 function doGet() {
-  return json({ result: 'ok', annualIntakeSchemaVersion: 2 });
+  return json({ result: 'ok', annualIntakeSchemaVersion: 2, feedbackNotificationVersion: 'annual-feedback-alert-v1' });
 }
 
 function doPost(e) {
   try {
     const data = JSON.parse(e.postData.contents);
+    if (data.type === 'annual-feedback') return annualFeedbackAlert(data);
     if (data.type === 'stripe-subscription') return stripeAlert(data);
     if (data.type === 'report-delivered') return reportDelivered(data);
     if (data.website && String(data.website).trim() !== '') return json({ result: 'ignored' });
@@ -320,4 +321,65 @@ function clean(value) {
 
 function json(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+
+// Feedback alerts use an unpredictable, private per-response capability, rather than trusting
+// posted ratings or a public report URL. The fixed report host confirms the saved response.
+// No intake, client email or CRM event is created by this path.
+const FEEDBACK_ALERT_COLUMNS = ['receivedAt','route','submissionId','status','emailedAt','test'];
+const FEEDBACK_REVIEW_URL = 'https://docs.google.com/spreadsheets/d/10soI-jUMwXLyKMaQCdkCRg3Z67kXzOU7EPCYJS427b0/edit';
+
+function annualFeedbackAlert(data) {
+  let lock;
+  try {
+    const uuid = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
+    const route = '[a-z0-9-]+-20[0-9]{2}-[a-f0-9]{10,}';
+    const pattern = new RegExp('^https://(reports\\.jeffseah\\.rocks|annual-v12-review-20261004\\.pages\\.dev)/r/('+route+')/__feedback-alert/('+uuid+')/([a-f0-9]{64})$');
+    const match = pattern.exec(String(data.sourceUrl || ''));
+    if (!match) return json({result:'error',error:'Invalid feedback receipt source'});
+    const source = UrlFetchApp.fetch(data.sourceUrl, {method:'get',followRedirects:false,muteHttpExceptions:true});
+    if (source.getResponseCode() !== 200) throw new Error('Feedback receipt could not be verified');
+    const receipt = JSON.parse(source.getContentText());
+    const isTest = match[1] === 'annual-v12-review-20261004.pages.dev';
+    if (receipt.result !== 'verified' || receipt.notificationVersion !== 'annual-feedback-alert-v1' || receipt.saved !== true || receipt.route !== match[2] || receipt.submissionId !== match[3] || receipt.test !== isTest || (isTest && !/^feedback-email-test-2027-[a-f0-9]{10,}$/.test(receipt.route))) throw new Error('Feedback receipt did not match');
+    lock = LockService.getScriptLock();
+    lock.waitLock(20000);
+    const sheet = sheetFor('annual-feedback-alerts', FEEDBACK_ALERT_COLUMNS);
+    const values = sheet.getDataRange().getValues();
+    if (JSON.stringify(values[0]) !== JSON.stringify(FEEDBACK_ALERT_COLUMNS)) throw new Error('Feedback alert ledger headings changed');
+    let row = -1;
+    for (let i=1; i<values.length; i++) {
+      if (values[i][1] === receipt.route && values[i][2] === receipt.submissionId) {
+        if (values[i][3] === 'sent') return json({result:'success',notificationVersion:receipt.notificationVersion,route:receipt.route,submissionId:receipt.submissionId,emailed:true,duplicate:true});
+        row=i+1;break;
+      }
+    }
+    if (row<0) {sheet.appendRow([new Date(),receipt.route,receipt.submissionId,'pending','',isTest]);row=sheet.getLastRow();}
+    const score = function(value) { return Number.isInteger(value) && value>=1 && value<=5 ? value+'/5' : 'Not answered'; };
+    const safe = function(value,limit) { return String(value || '').slice(0,limit); };
+    const body = [
+      isTest ? 'TEST EMAIL: synthetic feedback only. No client submitted this response.' : 'New feedback has been saved privately for your review.',
+      '', 'Report: '+safe(receipt.title,160), 'Report ID: '+receipt.route,
+      'Received: '+safe(receipt.receivedAt,40), 'Edition: '+(receipt.edition==='practitioner'?'Advanced':'Simplified'),
+      '', 'Easy to understand: '+score(receipt.clarity), 'Navigation: '+score(receipt.navigation),
+      'Helpful: '+score(receipt.usefulness), 'Overall experience: '+score(receipt.overall),
+      'Compared with previous reports: '+(receipt.comparisonExperience==='no'?'No previous report to compare':score(receipt.comparisonRating)),
+      'Would recommend: '+safe(receipt.recommend,20),
+      '', 'Most useful: '+safe(receipt.mostUseful,160), 'What could improve: '+safe(receipt.improvements,2000),
+      '', 'Testimonial: '+safe(receipt.testimonial,1500), 'Chosen display name: '+safe(receipt.displayName,80),
+      'Permission for public use: '+(receipt.publishConsent===true?'Yes, still requires your approval':'No, private feedback only'),
+      '', 'Private review sheet: '+FEEDBACK_REVIEW_URL,
+      'The review sheet is agent-refreshed. Ask an agent to import the latest saved feedback before reviewing there.',
+      'Nothing is published automatically.', 'Submission ID: '+receipt.submissionId
+    ].join('\n');
+    MailApp.sendEmail({to:NOTIFY_EMAIL,subject:(isTest?'[TEST] ':'')+'New Annual Outlook feedback: '+safe(receipt.title,120).replace(/[\r\n]/g,' '),body:body});
+    sheet.getRange(row,4,1,2).setValues([['sent',new Date()]]);
+    if (sheet.getRange(row,4).getValues()[0][0] !== 'sent') throw new Error('Email ledger read-back failed');
+    return json({result:'success',notificationVersion:receipt.notificationVersion,route:receipt.route,submissionId:receipt.submissionId,emailed:true,duplicate:false});
+  } catch (err) {
+    // The report gateway retains a pending alert; its monitored retry handles service outages.
+    // Never echo the source URL/capability or send an unverified error email.
+    console.error('annual-feedback alert not confirmed');
+    return json({result:'error',error:'Feedback notification not confirmed'});
+  } finally {if(lock)lock.releaseLock();}
 }

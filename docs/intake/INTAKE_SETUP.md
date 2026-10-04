@@ -26,6 +26,8 @@ The annual form separates declared work status from reading focus. Employee, bus
 
 ## After a code change
 
+The same deployment also sends verified Annual Outlook report-feedback notifications to Jeff. This uses a separate private ledger and monitored report outbox, without creating intake or CRM events. See [FEEDBACK_ALERTS.md](FEEDBACK_ALERTS.md) for receipt verification, retry, monitoring and test-send rules.
+
 Deploy, Manage deployments, edit the existing deployment, Version: New version. This keeps the same
 URL. A brand new deployment gets a new URL and the site would need updating.
 
