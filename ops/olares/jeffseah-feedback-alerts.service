@@ -1,0 +1,14 @@
+[Unit]
+Description=Retry saved Annual Outlook feedback email alerts
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=olares
+Group=olares
+EnvironmentFile=/home/olares/.feedback-alerts.env
+Environment=TZ=Asia/Singapore
+TimeoutStartSec=600
+ExecStart=/usr/bin/python3 /home/olares/coach/jeffseah-feedback-alerts.py
+# OnFailure and ExecStopPost are installed by the canonical monitoring drop-in map.
