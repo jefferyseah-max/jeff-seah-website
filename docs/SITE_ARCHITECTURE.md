@@ -185,7 +185,7 @@ Stripe Payment Links cannot set a billing day, so `/api/stripe-webhook` fixes ea
 
 ### The two forms
 
-The monthly form retains its inline `no-cors` POST, so its success screen cannot prove storage. The published annual form uses `js/annual-intake-form.mjs` and the same-origin `/api/annual-intake` relay. It requires a schema-2 saved receipt matching the stable intake ID after Apps Script row read-back. An unchanged retry keeps the ID; changed details create a new ID. Backend version 6 and the simplified website form are live. Production publication is PR #22, merge commit `227f783fc44d89601f7790404ca7c1de90443b27`, verified 2026-10-03. A specifically authorized synthetic submission verified row storage and operator notification; its unchanged retry produced no duplicate row or notification. Customer email delivery and CRM flow activation remain separately unverified.
+The monthly form retains its inline `no-cors` POST, so its success screen cannot prove storage. The published annual form uses `js/annual-intake-form.mjs` and the same-origin `/api/annual-intake` relay. It requires a schema-2 saved receipt matching the stable intake ID after Apps Script row read-back. An unchanged retry keeps the ID; changed details create a new ID. The simplified website form went live on backend Version 6; the backend is now Version 7. Production publication is PR #22, merge commit `227f783fc44d89601f7790404ca7c1de90443b27`, verified 2026-10-03. A specifically authorized synthetic submission verified row storage and operator notification; its unchanged retry produced no duplicate row or notification. Customer email delivery and CRM flow activation remain separately unverified.
 
 | | `/welcome` | `/2027-next` |
 |---|---|---|
@@ -204,7 +204,7 @@ Neither page verifies the Stripe session with Stripe; anyone can open `/welcome`
 |---|---|
 | Project | "jeffseah.rocks Intake", bound to the Sheet below. Script ID `1kTAeB7imLYo8xsv5_98ztlu76wMejSRul_W__y7JmlVH2ab_eQMI_UIt` |
 | Web app URL | `https://script.google.com/macros/s/AKfycbwwvJbirKRXE8OzoUjgVZobM8X5XqMeUY0pjlEaIQ3E_qot_FaSt3vgm30MVUxllAUT/exec` (used by both forms and by `lib/signup-alert.mjs`) |
-| Deployment | "Intake v6: local-clock planning and simplified form", **Version 6**, 2026-10-03. Existing URL, execution account and access preserved. The feedback alert handler went out in a later version (GET health receipt showed `annual-feedback-alert-v1` on 2026-10-06); see `docs/intake/FEEDBACK_ALERTS.md`. |
+| Deployment | "Intake v6: local-clock planning and simplified form", **Version 6**, 2026-10-03. Existing URL, execution account and access preserved. **Version 7**, live by 2026-10-04 (Codex handoff), added the feedback alert handler; the GET health receipt showed `annual-feedback-alert-v1` on 2026-10-06. See `docs/intake/FEEDBACK_ALERTS.md`. |
 | Source | `docs/intake/Code.gs`. Editor source independently copied back and compared before deployment. |
 | Redeploy after a code change | Paste code, save, then Deploy, **Manage deployments**, edit (pencil), Version: **New version**, Deploy. That keeps the URL. A "New deployment" creates a new URL and breaks the site and webhook. |
 | Speed | Form submissions about 9 s end to end; alert posts about 4 s. |
