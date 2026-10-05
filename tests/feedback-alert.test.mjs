@@ -9,7 +9,7 @@ const receipt={result:'verified',notificationVersion:'annual-feedback-alert-v1',
 function sandbox({code=200,data=receipt,mailFails=false}={}){
  const mails=[],rows=[],requests=[];const sheet={appendRow:r=>rows.push(r),setFrozenRows(){},getLastRow:()=>rows.length,getDataRange:()=>({getValues:()=>rows}),getRange:(r,c,h=1,w=1)=>({setValues:v=>v.forEach((row,i)=>row.forEach((value,j)=>rows[r+i-1][c+j-1]=value)),getValues:()=>[rows[r-1].slice(c-1,c-1+w)]})};
  const ctx={console:{error(){}},LockService:{getScriptLock:()=>({waitLock(){},releaseLock(){}})},SpreadsheetApp:{getActiveSpreadsheet:()=>({getSheetByName:()=>rows.length?sheet:null,insertSheet:()=>sheet})},MailApp:{sendEmail:m=>{if(mailFails)throw Error('Mail unavailable');mails.push(m);}},UrlFetchApp:{fetch:(u,o)=>{requests.push({url:u,options:o});return {getResponseCode:()=>code,getContentText:()=>JSON.stringify(data)};}},ContentService:{MimeType:{JSON:'json'},createTextOutput:s=>({setMimeType:()=>JSON.parse(s)})}};
- vm.createContext(ctx);vm.runInContext(source,ctx);return {mails,rows,requests,post:v=>ctx.doPost({postData:{contents:JSON.stringify(v)}})};
+ vm.createContext(ctx);vm.runInContext(source,ctx);return {mails,rows,requests,health:()=>ctx.doGet(),post:v=>ctx.doPost({postData:{contents:JSON.stringify(v)}})};
 }
 test('confirmed feedback sends fixed operator recipient only, with separate ratings and private consent',()=>{
  const s=sandbox(),result=s.post({type:'annual-feedback',sourceUrl:url,to:'stranger@example.com',overall:1});
@@ -25,4 +25,28 @@ test('synthetic preview alert is clearly labelled TEST and ordinary client previ
  const testRoute='feedback-email-test-2027-abcdef1234',testUrl=url.replace('reports.jeffseah.rocks','annual-v12-review-20261004.pages.dev').replace(route,testRoute);
  const s=sandbox({data:{...receipt,route:testRoute,test:true}});assert.equal(s.post({type:'annual-feedback',sourceUrl:testUrl}).emailed,true);assert.match(s.mails[0].subject,/^\[TEST\]/);assert.match(s.mails[0].body,/No client submitted/);
  const denied=sandbox({data:{...receipt,test:true}});assert.equal(denied.post({type:'annual-feedback',sourceUrl:url.replace('reports.jeffseah.rocks','annual-v12-review-20261004.pages.dev')}).result,'error');assert.equal(denied.mails.length,0);
+});
+
+test('v3 mail accurately labels scores, preserves long answers and keeps each permission independent',()=>{
+ for(const ratingsPublicationConsent of [false,true])for(const testimonialPublicationConsent of [false,true]){
+  const s=sandbox({data:{...receipt,formVersion:'annual-feedback-form-v3',usefulness:4,value:5,distinctiveness:3,comparisonExperience:'yes',mostUseful:'H'.repeat(2000),improvements:'C'.repeat(2000),testimonial:'Original synthetic quotation',ratingsPublicationConsent,testimonialPublicationConsent}});
+  assert.equal(s.post({type:'annual-feedback',sourceUrl:url,to:'stranger@example.com',value:1}).emailed,true);
+  const body=s.mails[0].body;assert.match(body,/Usefulness: 4\/5/);assert.match(body,/Value: 5\/5/);assert.match(body,/Distinctiveness: 3\/5/);
+  assert.ok(body.includes('H'.repeat(2000)));assert.ok(body.includes('C'.repeat(2000)));
+  assert.ok(body.includes('Permission to publish ratings: '+(ratingsPublicationConsent?'Yes, still requires your approval':'No, private feedback only')));
+  assert.ok(body.includes('Permission to publish testimonial: '+(testimonialPublicationConsent?'Yes, still requires your approval':'No, private feedback only')));
+  assert.doesNotMatch(body,/Easy to understand:|Navigation:|Overall experience:|Would recommend:|Permission for public use:/);
+  assert.equal(s.mails[0].to,'jefferyseah@gmail.com');assert.equal(s.post({type:'annual-feedback',sourceUrl:url}).duplicate,true);assert.equal(s.mails.length,1);
+ }
+});
+test('v3 no previous report and unanswered optional scores are explicit, without old field inference',()=>{
+ const s=sandbox({data:{...receipt,formVersion:'annual-feedback-form-v3',usefulness:null,value:null,distinctiveness:null,comparisonExperience:'no'}});
+ assert.equal(s.post({type:'annual-feedback',sourceUrl:url}).emailed,true);assert.match(s.mails[0].body,/Usefulness: Not answered/);assert.match(s.mails[0].body,/Value: Not answered/);assert.match(s.mails[0].body,/Distinctiveness: No previous report to compare/);
+});
+test('unknown receipt form version fails before ledger or mail and v3 advertises read-only support',()=>{
+ const s=sandbox({data:{...receipt,formVersion:'unsupported'}});assert.equal(s.post({type:'annual-feedback',sourceUrl:url}).result,'error');assert.equal(s.rows.length,0);assert.equal(s.mails.length,0);
+ assert.deepEqual(Array.from(s.health().feedbackFormVersions),['annual-feedback-form-v3']);assert.equal(s.health().annualIntakeSchemaVersion,2);
+});
+test('v3 mail failure retains pending ledger for the unchanged monitored retry',()=>{
+ const s=sandbox({mailFails:true,data:{...receipt,formVersion:'annual-feedback-form-v3',value:4}});assert.equal(s.post({type:'annual-feedback',sourceUrl:url}).result,'error');assert.equal(s.rows[1][3],'pending');assert.equal(s.mails.length,0);
 });

@@ -29,7 +29,7 @@ const TAIL = ['paid', 'stripeSessionId', 'status'];
 const ANNUAL_COLUMNS = ['intakeId','subjectName','residenceCity','residenceRegion','residenceCountry','reportTimeZone','reportTimeZoneConfirmed','reportTimeZoneSource','reportTimeZoneConfirmedAt','employmentStatus','careerFocus','contextObservedAt','circumstances','focalQuestions','exclusions','birthTimeZone','birthTimeConvention'];
 
 function doGet() {
-  return json({ result: 'ok', annualIntakeSchemaVersion: 2, feedbackNotificationVersion: 'annual-feedback-alert-v1' });
+  return json({ result: 'ok', annualIntakeSchemaVersion: 2, feedbackNotificationVersion: 'annual-feedback-alert-v1', feedbackFormVersions: ['annual-feedback-form-v3'] });
 }
 
 function doPost(e) {
@@ -342,6 +342,8 @@ function annualFeedbackAlert(data) {
     const receipt = JSON.parse(source.getContentText());
     const isTest = match[1] === 'annual-v12-review-20261004.pages.dev';
     if (receipt.result !== 'verified' || receipt.notificationVersion !== 'annual-feedback-alert-v1' || receipt.saved !== true || receipt.route !== match[2] || receipt.submissionId !== match[3] || receipt.test !== isTest || (isTest && !/^feedback-email-test-2027-[a-f0-9]{10,}$/.test(receipt.route))) throw new Error('Feedback receipt did not match');
+    const readerV3 = receipt.formVersion === 'annual-feedback-form-v3';
+    if (receipt.formVersion && !readerV3) throw new Error('Unsupported saved feedback form');
     lock = LockService.getScriptLock();
     lock.waitLock(20000);
     const sheet = sheetFor('annual-feedback-alerts', FEEDBACK_ALERT_COLUMNS);
@@ -357,7 +359,20 @@ function annualFeedbackAlert(data) {
     if (row<0) {sheet.appendRow([new Date(),receipt.route,receipt.submissionId,'pending','',isTest]);row=sheet.getLastRow();}
     const score = function(value) { return Number.isInteger(value) && value>=1 && value<=5 ? value+'/5' : 'Not answered'; };
     const safe = function(value,limit) { return String(value || '').slice(0,limit); };
-    const body = [
+    const body = readerV3 ? [
+      isTest ? 'TEST EMAIL: synthetic feedback only. No client submitted this response.' : 'New feedback has been saved privately for your review.',
+      '', 'Report: '+safe(receipt.title,160), 'Report ID: '+receipt.route,
+      'Received: '+safe(receipt.receivedAt,40), 'Edition: '+(receipt.edition==='practitioner'?'Advanced':'Simplified'),
+      '', 'Usefulness: '+score(receipt.usefulness), 'Value: '+score(receipt.value),
+      'Distinctiveness: '+(receipt.comparisonExperience==='no'?'No previous report to compare':score(receipt.distinctiveness)),
+      '', 'What helped: '+safe(receipt.mostUseful,2000), 'What could be clearer: '+safe(receipt.improvements,2000),
+      '', 'Testimonial: '+safe(receipt.testimonial,1500), 'Chosen display name: '+safe(receipt.displayName,80),
+      'Permission to publish ratings: '+(receipt.ratingsPublicationConsent===true?'Yes, still requires your approval':'No, private feedback only'),
+      'Permission to publish testimonial: '+(receipt.testimonialPublicationConsent===true?'Yes, still requires your approval':'No, private feedback only'),
+      '', 'Private review sheet: '+FEEDBACK_REVIEW_URL,
+      'The review sheet is agent-refreshed. Ask an agent to import the latest saved feedback before reviewing there.',
+      'Nothing is published automatically.', 'Submission ID: '+receipt.submissionId
+    ].join('\n') : [
       isTest ? 'TEST EMAIL: synthetic feedback only. No client submitted this response.' : 'New feedback has been saved privately for your review.',
       '', 'Report: '+safe(receipt.title,160), 'Report ID: '+receipt.route,
       'Received: '+safe(receipt.receivedAt,40), 'Edition: '+(receipt.edition==='practitioner'?'Advanced':'Simplified'),
