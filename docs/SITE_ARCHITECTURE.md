@@ -204,7 +204,7 @@ Neither page verifies the Stripe session with Stripe; anyone can open `/welcome`
 |---|---|
 | Project | "jeffseah.rocks Intake", bound to the Sheet below. Script ID `1kTAeB7imLYo8xsv5_98ztlu76wMejSRul_W__y7JmlVH2ab_eQMI_UIt` |
 | Web app URL | `https://script.google.com/macros/s/AKfycbwwvJbirKRXE8OzoUjgVZobM8X5XqMeUY0pjlEaIQ3E_qot_FaSt3vgm30MVUxllAUT/exec` (used by both forms and by `lib/signup-alert.mjs`) |
-| Deployment | "Intake v6: local-clock planning and simplified form", **Version 6**, 2026-10-03. Existing URL, execution account and access preserved. |
+| Deployment | "Intake v6: local-clock planning and simplified form", **Version 6**, 2026-10-03. Existing URL, execution account and access preserved. The feedback alert handler went out in a later version (GET health receipt showed `annual-feedback-alert-v1` on 2026-10-06); see `docs/intake/FEEDBACK_ALERTS.md`. |
 | Source | `docs/intake/Code.gs`. Editor source independently copied back and compared before deployment. |
 | Redeploy after a code change | Paste code, save, then Deploy, **Manage deployments**, edit (pencil), Version: **New version**, Deploy. That keeps the URL. A "New deployment" creates a new URL and breaks the site and webhook. |
 | Speed | Form submissions about 9 s end to end; alert posts about 4 s. |
