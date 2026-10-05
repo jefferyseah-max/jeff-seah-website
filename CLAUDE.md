@@ -78,8 +78,37 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   proved Stripe -> webhook -> Encharge -> intake/report delivery -> email. Keep the 30-day Calendar
   trial, then discount its first three *paid* invoices; use reply-to-claim private offers once the
   Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
+- **`/2027` conversion plan (2026-10-06), parked until the sample Outlook's design and copy are final**
+  (dashboard TODO 56). Jeff had Gemini review `/2027` for cold ad traffic. Verdict, Jeff agreed to park:
+  do NOT adopt Gemini's rewrite (it critiqued an older draft; its fear and money framing, "timing
+  investments", "protect your assets", contradicts the footer's not-financial-advice line and the calm
+  tone that sells the monthly plans; its "capacity strictly capped" scarcity is untrue) and do NOT run a
+  50/50 page split yet (about 7,700 visitors per page to read a 1% to 1.5% purchase lift, and the
+  Dec 31 price step would skew it mid-test). Worth keeping from Gemini: one short "not a PDF you forget"
+  section in Jeff's voice, and an About Jeff section built on proof, not a self-given title.
+  Jeff's decisions: ads run on **ChatGPT ads, not Meta**; email capture goes to **Encharge, a new list**;
+  social proof is still being collected. When revisited, in this order:
+  1. Measurement before any spend: the page has no analytics at all. Add UTM-aware analytics and a
+     purchase event on `/2027-next?paid=1`. Open question: what conversion reporting ChatGPT ads offers
+     and whether it serves Jeff's target markets; check before building.
+  2. Lead capture after the Contact & Clash result (offer: the visitor's 2027 notes plus a reminder before
+     the price goes to 138), with an explicit consent tickbox (non-buyers have no soft opt-in). Post via a
+     new API route to Encharge with its own tag and segment (Encharge's "list"), for example
+     `lead-2027-check`. Public form = untrusted, so it must never set a buyer tag (Trust rule in
+     `docs/crm/ENCHARGE_CRM.md`); buying (`outlook-2027-buyer`) exits the lead sequence.
+  3. Testimonials: section is wired but hidden and `data/annual-2027-testimonials.json` is empty. Fill
+     from approved annual feedback (`docs/ANNUAL_TESTIMONIALS.md`); never use Jeffery (he is Jeff).
+  4. Sample: unhide "Read Jeff's 2027 Outlook" once the sample is published (a 60 s screen recording of
+     a report is the fallback).
+  5. Phone check: the hero only appears after GSAP loads from a CDN (could not confirm on a real phone;
+     overlaps dashboard TODO 36).
+  6. Test angles at the ad level, one landing page. A/B the hero only at about 500 clicks a week,
+     measured on click-to-checkout, not purchases.
+  The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-10-06: Added the parked `/2027` conversion plan to Pending (Gemini review verdict, ChatGPT ads,
+  Encharge lead list).
 - 2026-10-01: Homepage trial copy now matches `/power-calendar`: meta and og descriptions say "30-day free trial,
   card required"; the $97 card bullet is "30 days free, then USD 97 a month"; FAQ 1 says "Your 30-day free trial";
   FAQ 4 asks "What happens after my free month?". "Complimentary" stays only on `/2027` for the Outlook's sample month.
