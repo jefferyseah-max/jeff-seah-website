@@ -17,6 +17,17 @@ Open website sessions with this folder as the working directory, not the coachin
   for code changes and checking the Sheet, Gmail and deployments; cannot click in Stripe or edit Sheets.
 If a task needs Stripe or Sheet edits and the session is cloud, say so at the start.
 
+## How Jeff wants work done (Jeff, 2026-10-06)
+Do not ask Jeff to do anything Claude can do itself. Work down this ladder and stop at the first rung that works:
+1. **Claude does it directly** in this session (code, GitHub, Vercel, Gmail, Drive and any other connected tool).
+2. **Claude in Chrome**, if this session has it (local sessions), for anything clicked in a browser: Stripe, Google Sheets,
+   Apps Script, Ads Manager and other dashboards.
+3. **A ready-to-paste Claude in Chrome prompt plus the exact link to open first**, when this session can't reach the browser
+   (cloud sessions). Make the prompt self-contained: safety rules (for example test mode only, never delete without asking),
+   numbered steps, exact values, and a pass/fail report at the end for Jeff to paste back.
+4. **Manual steps for Jeff only as the last resort**, when none of the above can work (for example signing in, an OAuth
+   Allow, a 2FA code, or a decision that is his to make). Keep them short and give direct links.
+
 ## Offers and payments (as of 2026-09-29)
 - Monthly plans on Stripe Payment Links: 97 Calendar (30-day card trial), 197 Calendar + Brief,
   297 Calendar + Premium, 497 Coaching. Single Session USD 197 via `/book`, paid at booking on CalendarHero `/singlesession`.
@@ -117,6 +128,7 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-10-06: Added "How Jeff wants work done" (Claude does it, then Claude in Chrome, then a Chrome prompt plus link, manual steps last).
 - 2026-10-06: ChatGPT Ads pixel ID set in `js/measure.js`.
 - 2026-10-06: `/2027` step 1 (measurement) built: `js/measure.js` on `/2027` and `/2027-next`.
 - 2026-10-06: Added the parked `/2027` conversion plan to Pending (Gemini review verdict, ChatGPT ads,
