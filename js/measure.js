@@ -9,7 +9,7 @@
 //    It loads only for visitors who arrived from a ChatGPT ad (oppref in the URL or the
 //    __oppref cookie the pixel set on landing), so organic visitors get no ad cookie.
 (function () {
-  var OPENAI_PIXEL_ID = '';
+  var OPENAI_PIXEL_ID = 'WszgasoEPAiE21zUpcFH6N'; // ChatGPT Ads Manager pixel, 2026-10-06
   var PRICE_STEP_AT = Date.UTC(2026, 11, 31, 16, 0, 0); // same as 2027.js and 2027.html
   var price = function () { return Date.now() >= PRICE_STEP_AT ? 138 : 88; };
   var ATTR_KEY = 'js_attr';
