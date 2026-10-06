@@ -66,6 +66,7 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | `2027.css` / `2027.js` | Shared CSS and JS for the two intake pages only. House style since 2026-09-30, hand-written, no build step. `[data-mail]` links build the contact address on click |
 | `api/stripe-webhook.mjs`, `lib/billing-anchor.mjs`, `lib/signup-alert.mjs`, `tests/` | 15th-billing webhook and new-subscriber alert; `node --test tests/*.test.mjs` |
 | `lib/encharge.mjs`, `scripts/report-delivered.mjs`, `ops/olares/` | CRM: Stripe and intake events to Encharge, delivery trigger, Olares intake watcher. Spec and switch-on: `docs/crm/ENCHARGE_CRM.md` |
+| `js/measure.js` | Funnel measurement for `/2027` and `/2027-next`: Vercel Analytics, UTM memory, Checkout/Purchase events, Stripe `client_reference_id`, ChatGPT Ads pixel (off until `OPENAI_PIXEL_ID` is set) |
 | `.vercelignore` | Keeps `tests/`, `docs/`, `scripts/`, `ops/` and `*.md` off the public site |
 
 ## Pending
@@ -88,9 +89,16 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   section in Jeff's voice, and an About Jeff section built on proof, not a self-given title.
   Jeff's decisions: ads run on **ChatGPT ads, not Meta**; email capture goes to **Encharge, a new list**;
   social proof is still being collected. When revisited, in this order:
-  1. Measurement before any spend: the page has no analytics at all. Add UTM-aware analytics and a
-     purchase event on `/2027-next?paid=1`. Open question: what conversion reporting ChatGPT ads offers
-     and whether it serves Jeff's target markets; check before building.
+  1. Measurement before any spend: **built 2026-10-06** as `js/measure.js` (loaded by `/2027` and
+     `/2027-next` only): Vercel Web Analytics (page views, UTM breakdown), UTM tags remembered 30 days,
+     `Checkout` and `Purchase` events (one per Stripe `session_id`), Stripe links get
+     `client_reference_id=<source>_<campaign>`, and the ChatGPT Ads pixel (`oaiq`), which stays off until
+     `OPENAI_PIXEL_ID` is filled in and loads only for ad-click visitors (`oppref`). ChatGPT Ads (checked
+     2026-10-06): self-serve Ads Manager live in Singapore and SEA since 2026-09-23; pixel plus server-side
+     Conversions API (`bzr.openai.com/v1/events`), 30-day click window, aggregate reporting only. Still
+     Jeff's: enable Web Analytics in Vercel (custom events need Pro; on Hobby, `/2027-next` visitors =
+     buyers), create the Ads Manager pixel, tag ad URLs `utm_source=chatgpt&utm_medium=cpc&utm_campaign=...`.
+     Later: send `order_created` server-side from the Stripe webhook (needs an OpenAI Ads API key).
   2. Lead capture after the Contact & Clash result (offer: the visitor's 2027 notes plus a reminder before
      the price goes to 138), with an explicit consent tickbox (non-buyers have no soft opt-in). Post via a
      new API route to Encharge with its own tag and segment (Encharge's "list"), for example
@@ -107,6 +115,7 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-10-06: `/2027` step 1 (measurement) built: `js/measure.js` on `/2027` and `/2027-next`.
 - 2026-10-06: Added the parked `/2027` conversion plan to Pending (Gemini review verdict, ChatGPT ads,
   Encharge lead list).
 - 2026-10-01: Homepage trial copy now matches `/power-calendar`: meta and og descriptions say "30-day free trial,
