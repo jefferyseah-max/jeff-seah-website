@@ -81,6 +81,16 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | `.vercelignore` | Keeps `tests/`, `docs/`, `scripts/`, `ops/` and `*.md` off the public site |
 
 ## Pending
+**Outstanding as of 2026-10-06 (who does it):**
+- Delete the sandbox test row (`annual-2027` row 2, "TEST Buyer") in the Intake Sheet (Claude in Chrome).
+- Phone check of `/2027` on mobile data: hero visible within a couple of seconds (plan step 5; Jeff, 2 min).
+- Finish the sample Outlook's design and copy; it unblocks plan steps 3 and 4 and the ad creative (Jeff).
+- First ChatGPT ads campaign: goal Order created, tagged ad URLs (Jeff, in Ads Manager).
+- Lead capture after the Contact & Clash result (plan step 2): needs consent wording and the Encharge list (Claude builds).
+- After a week of ads, if Ads Manager shows fewer sales than Stripe: server-side `order_created` from the webhook
+  (needs an OpenAI Ads API key in Vercel).
+- Encharge launch and the 1 Jan 2027 price step, below.
+
 - 1 Jan 2027 (reminder set): Jeff deactivates the USD 88 Outlook link in Stripe (plink_1UJTagRmcvZfydHfw0B40mtH).
   "Price-step metadata" = in `2027.html`, JSON-LD `price` 88 to 138 and drop or move `priceValidUntil`
   (2026-12-31); `description`, `og:description`, `twitter:description` drop "USD 88 until 31 December 2026".
@@ -109,8 +119,13 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
      Conversions API (`bzr.openai.com/v1/events`), 30-day click window, aggregate reporting only. Web
      Analytics enabled and recording (2026-10-06; custom events need Pro, on Hobby `/2027-next` visitors =
      buyers). Pixel `WszgasoEPAiE21zUpcFH6N` set 2026-10-06; Ads Manager conversion events: Order created
-     (primary), Checkout started. Test: `/2027?oppref=test`, click order, watch View event stream. Still
-     Jeff's: tag ad URLs `utm_source=chatgpt&utm_medium=cpc&utm_campaign=...`.
+     (primary), Checkout started. **End-to-end sandbox test passed 2026-10-06** (Stripe Sandbox link
+     `buy.stripe.com/test_aFa28t3Uz6Oq6A2fCFbwk00`, product "2027 Outlook TEST"): redirect to `/2027-next`,
+     intake row + "New intake" email, Stripe `client_reference_id=chatgpt_test`, Ads Manager `order_created`
+     USD 88.00. The pixel's `__oppref` cookie carried from `/2027` to `/2027-next`, so the landing pixel ran
+     even though the stream only listed the later events. The Sheet's `paid` cell is a real boolean (`clean()`
+     keeps booleans); `workType` maps self-employed to `business-owner` on purpose (`annual-intake-form.mjs`).
+     When creating the campaign: goal = Order created; ad URLs `utm_source=chatgpt&utm_medium=cpc&utm_campaign=...`.
      Later: send `order_created` server-side from the Stripe webhook (needs an OpenAI Ads API key).
   2. Lead capture after the Contact & Clash result (offer: the visitor's 2027 notes plus a reminder before
      the price goes to 138), with an explicit consent tickbox (non-buyers have no soft opt-in). Post via a
@@ -128,6 +143,7 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-10-06: Sandbox end-to-end Outlook checkout test passed; Pending now opens with an outstanding list.
 - 2026-10-06: Added "How Jeff wants work done" (Claude does it, then Claude in Chrome, then a Chrome prompt plus link, manual steps last).
 - 2026-10-06: ChatGPT Ads pixel ID set in `js/measure.js`.
 - 2026-10-06: `/2027` step 1 (measurement) built: `js/measure.js` on `/2027` and `/2027-next`.
