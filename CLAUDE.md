@@ -17,6 +17,17 @@ Open website sessions with this folder as the working directory, not the coachin
   for code changes and checking the Sheet, Gmail and deployments; cannot click in Stripe or edit Sheets.
 If a task needs Stripe or Sheet edits and the session is cloud, say so at the start.
 
+## How Jeff wants work done (Jeff, 2026-10-06)
+Do not ask Jeff to do anything Claude can do itself. Work down this ladder and stop at the first rung that works:
+1. **Claude does it directly** in this session (code, GitHub, Vercel, Gmail, Drive and any other connected tool).
+2. **Claude in Chrome**, if this session has it (local sessions), for anything clicked in a browser: Stripe, Google Sheets,
+   Apps Script, Ads Manager and other dashboards.
+3. **A ready-to-paste Claude in Chrome prompt plus the exact link to open first**, when this session can't reach the browser
+   (cloud sessions). Make the prompt self-contained: safety rules (for example test mode only, never delete without asking),
+   numbered steps, exact values, and a pass/fail report at the end for Jeff to paste back.
+4. **Manual steps for Jeff only as the last resort**, when none of the above can work (for example signing in, an OAuth
+   Allow, a 2FA code, or a decision that is his to make). Keep them short and give direct links.
+
 ## Offers and payments (as of 2026-09-29)
 - Monthly plans on Stripe Payment Links: 97 Calendar (30-day card trial), 197 Calendar + Brief,
   297 Calendar + Premium, 497 Coaching. Single Session USD 197 via `/book`, paid at booking on CalendarHero `/singlesession`.
@@ -70,6 +81,14 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | `.vercelignore` | Keeps `tests/`, `docs/`, `scripts/`, `ops/` and `*.md` off the public site |
 
 ## Pending
+**Outstanding as of 2026-10-06 (who does it):**
+- Finish the sample Outlook's design and copy; it unblocks plan steps 3 and 4 and the ad creative (Jeff).
+- First ChatGPT ads campaign: goal Order created, tagged ad URLs (Jeff, in Ads Manager).
+- Lead capture after the Contact & Clash result (plan step 2): needs consent wording and the Encharge list (Claude builds).
+- After a week of ads, if Ads Manager shows fewer sales than Stripe: server-side `order_created` from the webhook
+  (needs an OpenAI Ads API key in Vercel).
+- Encharge launch and the 1 Jan 2027 price step, below.
+
 - 1 Jan 2027 (reminder set): Jeff deactivates the USD 88 Outlook link in Stripe (plink_1UJTagRmcvZfydHfw0B40mtH).
   "Price-step metadata" = in `2027.html`, JSON-LD `price` 88 to 138 and drop or move `priceValidUntil`
   (2026-12-31); `description`, `og:description`, `twitter:description` drop "USD 88 until 31 December 2026".
@@ -98,8 +117,13 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
      Conversions API (`bzr.openai.com/v1/events`), 30-day click window, aggregate reporting only. Web
      Analytics enabled and recording (2026-10-06; custom events need Pro, on Hobby `/2027-next` visitors =
      buyers). Pixel `WszgasoEPAiE21zUpcFH6N` set 2026-10-06; Ads Manager conversion events: Order created
-     (primary), Checkout started. Test: `/2027?oppref=test`, click order, watch View event stream. Still
-     Jeff's: tag ad URLs `utm_source=chatgpt&utm_medium=cpc&utm_campaign=...`.
+     (primary), Checkout started. **End-to-end sandbox test passed 2026-10-06** (Stripe Sandbox link
+     `buy.stripe.com/test_aFa28t3Uz6Oq6A2fCFbwk00`, product "2027 Outlook TEST"): redirect to `/2027-next`,
+     intake row + "New intake" email, Stripe `client_reference_id=chatgpt_test`, Ads Manager `order_created`
+     USD 88.00. The pixel's `__oppref` cookie carried from `/2027` to `/2027-next`, so the landing pixel ran
+     even though the stream only listed the later events. The Sheet's `paid` cell is a real boolean (`clean()`
+     keeps booleans); `workType` maps self-employed to `business-owner` on purpose (`annual-intake-form.mjs`).
+     When creating the campaign: goal = Order created; ad URLs `utm_source=chatgpt&utm_medium=cpc&utm_campaign=...`.
      Later: send `order_created` server-side from the Stripe webhook (needs an OpenAI Ads API key).
   2. Lead capture after the Contact & Clash result (offer: the visitor's 2027 notes plus a reminder before
      the price goes to 138), with an explicit consent tickbox (non-buyers have no soft opt-in). Post via a
@@ -110,13 +134,15 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
      from approved annual feedback (`docs/ANNUAL_TESTIMONIALS.md`); never use Jeffery (he is Jeff).
   4. Sample: unhide "Read Jeff's 2027 Outlook" once the sample is published (a 60 s screen recording of
      a report is the fallback).
-  5. Phone check: the hero only appears after GSAP loads from a CDN (could not confirm on a real phone;
-     overlaps dashboard TODO 36).
+  5. Phone check: **passed 2026-10-06** (Jeff, real phone on mobile data, hero loads fine).
   6. Test angles at the ad level, one landing page. A/B the hero only at about 500 clicks a week,
      measured on click-to-checkout, not purchases.
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-10-06: Sandbox test row deleted; `/2027` phone check passed.
+- 2026-10-06: Sandbox end-to-end Outlook checkout test passed; Pending now opens with an outstanding list.
+- 2026-10-06: Added "How Jeff wants work done" (Claude does it, then Claude in Chrome, then a Chrome prompt plus link, manual steps last).
 - 2026-10-06: ChatGPT Ads pixel ID set in `js/measure.js`.
 - 2026-10-06: `/2027` step 1 (measurement) built: `js/measure.js` on `/2027` and `/2027-next`.
 - 2026-10-06: Added the parked `/2027` conversion plan to Pending (Gemini review verdict, ChatGPT ads,
