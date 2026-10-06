@@ -82,8 +82,6 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 
 ## Pending
 **Outstanding as of 2026-10-06 (who does it):**
-- Delete the sandbox test row (`annual-2027` row 2, "TEST Buyer") in the Intake Sheet (Claude in Chrome).
-- Phone check of `/2027` on mobile data: hero visible within a couple of seconds (plan step 5; Jeff, 2 min).
 - Finish the sample Outlook's design and copy; it unblocks plan steps 3 and 4 and the ad creative (Jeff).
 - First ChatGPT ads campaign: goal Order created, tagged ad URLs (Jeff, in Ads Manager).
 - Lead capture after the Contact & Clash result (plan step 2): needs consent wording and the Encharge list (Claude builds).
@@ -136,13 +134,13 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
      from approved annual feedback (`docs/ANNUAL_TESTIMONIALS.md`); never use Jeffery (he is Jeff).
   4. Sample: unhide "Read Jeff's 2027 Outlook" once the sample is published (a 60 s screen recording of
      a report is the fallback).
-  5. Phone check: the hero only appears after GSAP loads from a CDN (could not confirm on a real phone;
-     overlaps dashboard TODO 36).
+  5. Phone check: **passed 2026-10-06** (Jeff, real phone on mobile data, hero loads fine).
   6. Test angles at the ad level, one landing page. A/B the hero only at about 500 clicks a week,
      measured on click-to-checkout, not purchases.
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-10-06: Sandbox test row deleted; `/2027` phone check passed.
 - 2026-10-06: Sandbox end-to-end Outlook checkout test passed; Pending now opens with an outstanding list.
 - 2026-10-06: Added "How Jeff wants work done" (Claude does it, then Claude in Chrome, then a Chrome prompt plus link, manual steps last).
 - 2026-10-06: ChatGPT Ads pixel ID set in `js/measure.js`.
