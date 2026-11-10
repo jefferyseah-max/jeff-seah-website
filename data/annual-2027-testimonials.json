@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "id": "5bf0df98-0602-449e-ac31-fdbf98b996ab",
+    "year": 2027,
+    "name": "Sophie L",
+    "quote": "Chinese metaphysics always felt intimidating, so I was hesitant when my friend nudged me to get this. But having both an accessible overview and deeper layers meant I never felt lost. It gave me a clear, grounded picture of what to prepare for in 2027 without drowning in confusing terms!",
+    "highlight": "I never felt lost",
+    "rating": null
+  },
+  {
+    "id": "1785fd0a-71bf-43c1-9e36-9f112ac89e9c",
+    "year": 2027,
+    "name": "Don",
+    "quote": "The month-by-month breakdown was exactly what I needed. It takes away the guesswork and shows me precisely which quarters to sprint and when to conserve energy. Straight to the point and practical.",
+    "highlight": "which quarters to sprint and when to conserve energy",
+    "rating": null
+  },
+  {
+    "id": "f46d1465-1b0e-4ffb-8958-32478b9b3c91",
+    "year": 2027,
+    "name": "Stuart",
+    "quote": "This isn’t a fluffy summary; it’s a comprehensive roadmap. Having the high-level strategy, auxiliary stars, and nobleman analysis laid out side by side turns it into a reference manual I’ll be dipping into all year long. A genuinely solid investment.",
+    "highlight": "a reference manual I’ll be dipping into all year long",
+    "rating": null
+  },
+  {
+    "id": "0e448c05-9b93-4507-b153-82887b8bfda7",
+    "year": 2027,
+    "name": "Rebecca T",
+    "quote": "The section identifying key supporters for 2027 gave me instant clarity. I literally started mapping out people in my circle right away! The sample calendar layout is brilliant too; knowing exactly which dates are green lights and which are red flags makes daily scheduling effortless.",
+    "highlight": "instant clarity",
+    "rating": null
+  },
+  {
+    "id": "95b5cdc6-0ba8-42f0-a400-fc6efeb020d2",
+    "year": 2027,
+    "name": "Yen L",
+    "quote": "I usually consult practitioners face-to-face, so a written digital report was new territory for me. While you don’t get the back-and-forth dialogue of a live session, the sheer depth and zero-jargon English made up for it. Incredible value for the price point.",
+    "highlight": "zero-jargon English",
+    "rating": null
+  },
+  {
+    "id": "0441aa2a-4394-4aef-ac31-999c6a57fc2d",
+    "year": 2027,
+    "name": "Cheryl M",
+    "quote": "What surprised me most was how validating the reading felt. Instead of anxiety about what the year might bring, it gave me a calm, grounded perspective on how to pace myself and manage my energy. It feels less like fortune-telling and more like having an intuitive internal compass for 2027.",
+    "highlight": "a calm, grounded perspective",
+    "rating": null
+  },
+  {
+    "id": "3251febe-1ce2-4d31-8d7d-be60e3d6bf2c",
+    "year": 2027,
+    "name": "Marcus K",
+    "quote": "I don’t have hours to decipher cryptic charts. What sold me was how quickly I could translate the findings into actionable quarterly goals. Having clear windows for launches and knowing when to pull back on risk made my planning far easier.",
+    "highlight": "actionable quarterly goals",
+    "rating": null
+  }
+]

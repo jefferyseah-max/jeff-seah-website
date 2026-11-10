@@ -742,6 +742,31 @@
     </section>
     <style>
       [data-annual-testimonials][hidden]{display:none!important}.annual-testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;margin-top:32px}.annual-testimonial-card{margin:0;padding:26px;border:1px solid rgba(212,175,55,.25);border-radius:14px;background:#13151B}.annual-testimonial-stars{color:#D4AF37;font-size:20px;letter-spacing:3px;margin:0 0 16px}.annual-testimonial-rating-label,.annual-testimonial-rating-scale{display:block;color:#A8ADB6;font-size:13px;letter-spacing:normal;line-height:1.6}.annual-testimonial-rating-label{margin-bottom:6px}.annual-testimonial-rating-scale{margin-top:6px}.annual-testimonial-card blockquote{margin:0;font:400 17px/1.8 'Plus Jakarta Sans',sans-serif;color:#EDE6D6;white-space:pre-line;overflow-wrap:anywhere}.annual-testimonial-card figcaption{margin-top:20px;color:#A8ADB6;font-size:14px;overflow-wrap:anywhere}
+      /* Reader dial: one quote at a time, words ink in, a gold hand moves to the next reader's mark. */
+      .rd{max-width:780px;margin:40px auto 0;text-align:center}
+      .rd-dial{display:block;width:min(100%,300px);margin:0 auto;overflow:visible}
+      .rd-arc{fill:none;stroke:rgba(212,175,55,.28);stroke-width:1}
+      .rd-tick{fill:#0B0C10;stroke:#D4AF37;stroke-width:1.2;cursor:pointer;transition:fill .6s ease,filter .6s ease}
+      .rd-tick.is-on{fill:#D4AF37;filter:drop-shadow(0 0 5px rgba(212,175,55,.7))}
+      .rd-hand{stroke:#D4AF37;stroke-width:1.5;stroke-linecap:round;transform-box:view-box;transform-origin:140px 98px;transition:transform 1.2s cubic-bezier(.6,0,.2,1)}
+      .rd-hub{fill:#D4AF37}
+      .rd-stage{display:grid;margin-top:22px;touch-action:pan-y}
+      .rd-slide{grid-area:1/1;margin:0;visibility:hidden;opacity:0;transition:opacity .5s ease,visibility 0s linear .5s}
+      .rd-slide.is-active{visibility:visible;opacity:1;transition:opacity .5s ease}
+      .rd-slide blockquote{margin:0;font:400 23px/1.55 'Cormorant Garamond',serif;color:#EDE6D6;overflow-wrap:anywhere}
+      @media (min-width:640px){.rd-slide blockquote{font-size:30px}}
+      .rd-w{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(4px);transition:opacity .6s ease,transform .6s ease,filter .6s ease;transition-delay:calc(var(--i) * 45ms)}
+      .rd-slide.is-active .rd-w{opacity:1;transform:none;filter:none}
+      .rd-slide:not(.is-active) .rd-w,.rd-slide:not(.is-active) figcaption{transition-delay:0s}
+      .rd-gold{color:#D4AF37}
+      .rd-slide figcaption{margin-top:24px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#A8ADB6;opacity:0;transition:opacity .8s ease;transition-delay:calc(var(--i) * 45ms + .3s)}
+      .rd-slide figcaption::before{content:"";display:block;width:28px;height:1px;margin:0 auto 14px;background:#D4AF37}
+      .rd-slide.is-active figcaption{opacity:1}
+      .rd-bar{display:flex;justify-content:center;align-items:center;gap:10px;margin-top:30px}
+      .rd-btn{width:44px;height:44px;border:1px solid rgba(212,175,55,.35);border-radius:9999px;background:transparent;color:#D4AF37;font-size:15px;cursor:pointer;transition:background-color .3s ease,border-color .3s ease}
+      .rd-btn:hover{background:rgba(212,175,55,.1);border-color:#D4AF37}
+      .rd-btn:focus-visible{outline:2px solid #D4AF37;outline-offset:3px}
+      .rd-count{min-width:52px;font-family:ui-monospace,monospace;font-size:13px;color:#A8ADB6}
     </style>
     <script type="module" src="/js/annual-testimonials.mjs"></script>
     <!-- ============ STEP 3: offer, Power Calendar bridge, FAQ ============ -->
