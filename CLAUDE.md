@@ -130,8 +130,8 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
      new API route to Encharge with its own tag and segment (Encharge's "list"), for example
      `lead-2027-check`. Public form = untrusted, so it must never set a buyer tag (Trust rule in
      `docs/crm/ENCHARGE_CRM.md`); buying (`outlook-2027-buyer`) exits the lead sequence.
-  3. Testimonials: section is wired but hidden and `data/annual-2027-testimonials.json` is empty. Fill
-     from approved annual feedback (`docs/ANNUAL_TESTIMONIALS.md`); never use Jeffery (he is Jeff).
+  3. Testimonials: DONE 2026-11-10. Seven quotes live in the reader dial (`js/annual-testimonials.mjs`).
+     Add new ones from approved annual feedback (`docs/ANNUAL_TESTIMONIALS.md`); never use Jeffery (he is Jeff).
   4. Sample: unhide "Read Jeff's 2027 Outlook" once the sample is published (a 60 s screen recording of
      a report is the fallback).
   5. Phone check: **passed 2026-10-06** (Jeff, real phone on mobile data, hero loads fine).
@@ -140,6 +140,9 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-11-10: `/2027` testimonials live (PR #29): seven reader quotes in an animated reader dial (words ink in,
+  gold `highlight` phrase, gold hand across one mark per reader; auto-advances only on screen; reduced motion gets
+  the card grid). Marcus K and Rebecca T quotes carry Jeff's edits, approved by the readers per Jeff.
 - 2026-10-06: Sandbox test row deleted; `/2027` phone check passed.
 - 2026-10-06: Sandbox end-to-end Outlook checkout test passed; Pending now opens with an outstanding list.
 - 2026-10-06: Added "How Jeff wants work done" (Claude does it, then Claude in Chrome, then a Chrome prompt plus link, manual steps last).
