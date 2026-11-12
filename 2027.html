@@ -333,12 +333,17 @@
               <span class="opacity-40">·</span>
               <span>USD <span x-text="$store.offer.price">88</span></span>
             </a>
-            <a href="#teaser" class="focus-ring inline-flex items-center justify-center gap-2 px-2 py-2 text-[15px] font-bold text-ivory/85 transition hover:text-gold lg:hidden">
+            <a href="#teaser" class="focus-ring inline-flex items-center justify-center gap-2 px-2 py-2 text-[15px] font-bold text-ivory/85 transition hover:text-gold">
               Or try the free 2027 check
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 2v10m0 0l-4-4m4 4l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </a>
           </div>
 
+          <!-- One reader line by the first button. Exact sentence from data/annual-2027-testimonials.json (Don); remove it here if that entry is ever withdrawn. -->
+          <figure data-anim="hero" style="margin:28px 0 0;max-width:34rem;padding-left:16px;border-left:1px solid rgba(212,175,55,.55)">
+            <blockquote class="font-display text-ivory" style="margin:0;font-size:1.45rem;line-height:1.3;font-style:italic">“The month-by-month breakdown was exactly what I needed.”</blockquote>
+            <figcaption class="text-[15px] text-ash" style="margin-top:8px">Don, reader · <a href="#annual-reader-experiences" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">Read more reader experiences</a></figcaption>
+          </figure>
           <dl class="mt-12 grid max-w-xl grid-cols-[1fr_1.4fr_1fr] gap-4 border-t hairline pt-6" data-anim="hero">
             <div>
               <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ash">Mapped</dt>
@@ -358,7 +363,28 @@
           </p>
         </div>
 
-        <!-- Right: the 2027 Contact & Clash check -->
+        <!-- Right: the 28 s sample teaser, so every visitor sees the product before any tool. Video and poster load only when near the screen. -->
+        <figure id="sample" class="sample-figure" data-anim="hero">
+          <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold" style="margin:0 0 14px;text-align:center">Sample report · 28 seconds</p>
+          <div class="sample-frame">
+            <video data-sample-video muted loop playsinline preload="none"
+                   data-src="/media/2027/juniper-2027-sample-teaser-v2.mp4" data-poster="/media/2027/juniper-2027-sample-teaser-v2-poster.jpg"
+                   aria-label="28-second animated sample of a 2027 Annual Outlook for a fictional client"></video>
+          </div>
+            <button type="button" class="sample-sound focus-ring" data-sample-sound aria-pressed="false">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 6h2.2L8 3.2v9.6L4.7 10H2.5z" fill="currentColor"/><path data-off d="M10.5 6l3.5 4m0-4l-3.5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path data-on d="M10.5 5.5a3.5 3.5 0 010 5M12.3 3.8a6 6 0 010 8.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" hidden/></svg>
+              <span data-label>Play sound</span>
+            </button>
+          <figcaption class="mt-3 text-center text-[15px] text-ash">Sample report for a fictional client.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <div class="gold-rule mx-auto max-w-5xl"></div>
+
+    <!-- The free 2027 Contact & Clash check, in its own section below the hero. -->
+    <section class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-10">
+      <div style="max-width:38rem;margin:0 auto">
         <div id="teaser" x-data="contactClash" class="panel relative rounded-[28px] p-5 sm:p-8" data-anim="panel">
           <div class="flex items-start justify-between gap-4">
             <div>
@@ -551,47 +577,12 @@
         </div>
       </div>
     </section>
-
-    <div class="gold-rule mx-auto max-w-5xl"></div>
-
-    <!-- Sample teaser: an 18 s look at a real Outlook for a fictional client. Video and poster load only when near the screen. -->
-    <section id="sample" class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-10">
-      <div class="sample-grid">
-        <div data-reveal="stagger">
-          <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Sample report</p>
-          <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] text-ivory sm:text-6xl">
-            See an Outlook <em class="text-gold">in 18 seconds.</em>
-          </h2>
-          <p class="mt-5 max-w-xl text-lg leading-relaxed text-ivory/85">
-            The year's rhythm, the timing wheel, a month card, decision windows, the moves and traps, and a month of Power Calendar days. This is what lands in your inbox, calculated from your own chart.
-          </p>
-          <a href="#order" class="btn-ember mt-8 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-base font-extrabold tracking-wide" x-data>
-            Get my 2027 Outlook
-            <span class="opacity-40">·</span>
-            <span>USD <span x-text="$store.offer.price">88</span></span>
-          </a>
-        </div>
-
-        <figure class="sample-figure" data-reveal>
-          <div class="sample-frame">
-            <video data-sample-video muted loop playsinline preload="none"
-                   data-src="/media/2027/juniper-2027-sample-teaser.mp4" data-poster="/media/2027/juniper-2027-sample-teaser-poster.jpg"
-                   aria-label="18-second animated sample of a 2027 Annual Outlook for a fictional client"></video>
-            <button type="button" class="sample-sound focus-ring" data-sample-sound aria-pressed="false">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 6h2.2L8 3.2v9.6L4.7 10H2.5z" fill="currentColor"/><path data-off d="M10.5 6l3.5 4m0-4l-3.5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path data-on d="M10.5 5.5a3.5 3.5 0 010 5M12.3 3.8a6 6 0 010 8.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" hidden/></svg>
-              <span data-label>Sound on</span>
-            </button>
-          </div>
-          <figcaption class="mt-3 text-center text-[15px] text-ash">Sample report for a fictional client.</figcaption>
-        </figure>
-      </div>
-    </section>
     <style>
       .sample-grid { display: grid; gap: 3rem; align-items: center; }
-      .sample-figure { margin: 0; width: 100%; max-width: 24rem; justify-self: center; }
+      .sample-figure { margin: 0 auto; width: 100%; max-width: 24rem; justify-self: center; align-self: start; scroll-margin-top: 6rem; }
       .sample-frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 24px; border: 1px solid rgba(212,175,55,.35); background: #13151B; box-shadow: 0 40px 120px -50px rgba(212,175,55,.45); }
       .sample-frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
-      .sample-sound { position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(212,175,55,.5); background: rgba(11,12,16,.78); color: #EDE6D6; font-size: 14px; font-weight: 700; backdrop-filter: blur(6px); transition: border-color .2s, color .2s; }
+      .sample-sound { display: flex; width: fit-content; margin: 14px auto 0; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(212,175,55,.5); background: rgba(11,12,16,.78); color: #EDE6D6; font-size: 14px; font-weight: 700; backdrop-filter: blur(6px); transition: border-color .2s, color .2s; }
       .sample-sound:hover, .sample-sound[aria-pressed="true"] { border-color: #D4AF37; color: #D4AF37; }
       @media (min-width: 1024px) { .sample-grid { grid-template-columns: 1fr 24rem; gap: 5rem; } }
     </style>
@@ -722,7 +713,7 @@
           </div>
 
           <a href="#order" class="btn-ember mt-6 flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-base font-extrabold tracking-wide">
-            Time it on my Day Pillar <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
+            Time it on my own chart <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
           </a>
         </aside>
       </div>
@@ -744,6 +735,10 @@
       [data-annual-testimonials][hidden]{display:none!important}.annual-testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;margin-top:32px}.annual-testimonial-card{margin:0;padding:26px;border:1px solid rgba(212,175,55,.25);border-radius:14px;background:#13151B}.annual-testimonial-stars{color:#D4AF37;font-size:20px;letter-spacing:3px;margin:0 0 16px}.annual-testimonial-rating-label,.annual-testimonial-rating-scale{display:block;color:#A8ADB6;font-size:13px;letter-spacing:normal;line-height:1.6}.annual-testimonial-rating-label{margin-bottom:6px}.annual-testimonial-rating-scale{margin-top:6px}.annual-testimonial-card blockquote{margin:0;font:400 17px/1.8 'Plus Jakarta Sans',sans-serif;color:#EDE6D6;white-space:pre-line;overflow-wrap:anywhere}.annual-testimonial-card figcaption{margin-top:20px;color:#A8ADB6;font-size:14px;overflow-wrap:anywhere}
       /* Reader dial: one quote at a time, words ink in, a gold hand moves to the next reader's mark. */
       .rd{max-width:780px;margin:40px auto 0;text-align:center}
+      .rd-marks{list-style:none;margin:0 0 34px;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+      .rd-mark{min-height:44px;padding:9px 16px;border:1px solid rgba(212,175,55,.3);border-radius:14px;background:#13151B;color:#EDE6D6;font:400 16px/1.35 'Plus Jakarta Sans',sans-serif;text-align:left;cursor:pointer;transition:border-color .3s ease,background-color .3s ease}
+      .rd-mark b{display:block;font-weight:700;color:#D4AF37}.rd-mark span{display:block;margin-top:2px;font-size:13px;color:#A8ADB6}
+      .rd-mark:hover,.rd-mark.is-on{border-color:#D4AF37;background:rgba(212,175,55,.08)}.rd-mark:focus-visible{outline:2px solid #D4AF37;outline-offset:3px}
       .rd-dial{display:block;width:min(100%,300px);margin:0 auto;overflow:visible}
       .rd-arc{fill:none;stroke:rgba(212,175,55,.28);stroke-width:1}
       .rd-tick{fill:#0B0C10;stroke:#D4AF37;stroke-width:1.2;cursor:pointer;transition:fill .6s ease,filter .6s ease}
@@ -841,7 +836,7 @@
 
               <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
                  class="btn-ember mt-8 flex w-full items-center justify-center gap-3 rounded-full px-6 py-5 text-base font-extrabold tracking-wide">
-                Get My 2027 Outlook <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
+                Get my 2027 Outlook <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
               </a>
               <p class="mt-3 text-center text-base text-ivory/85">Delivered within 7 days as a private web report with Simplified and Advanced editions.</p>
 
@@ -914,7 +909,7 @@
         <p class="font-display text-2xl italic text-ivory/90 sm:text-3xl">See 2027 through your chart before the year begins.</p>
         <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
            class="btn-ember mt-7 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-base font-extrabold tracking-wide">
-          Get My 2027 Outlook <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
+          Get my 2027 Outlook <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
         </a>
       </div>
     </section>
@@ -947,10 +942,10 @@
       <div class="mx-auto flex max-w-xl items-center justify-between gap-4">
         <div class="min-w-0">
           <p class="truncate text-base font-bold text-ivory">2027 Outlook · USD <span x-text="$store.offer.price">88</span></p>
-          <p class="truncate text-base text-ash" x-show="!$store.offer.after">Early bird until Dec 31 · <s>USD 138</s></p>
+          <p class="truncate text-base text-ash" x-show="!$store.offer.after">Until Dec 31 · <s>USD 138</s></p>
         </div>
         <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
-           class="btn-ember shrink-0 rounded-full px-6 py-3 text-[15px] font-extrabold tracking-wide">Order Now</a>
+           class="btn-ember shrink-0 rounded-full px-6 py-3 text-[15px] font-extrabold tracking-wide">Order now</a>
       </div>
     </div>
   </div>
@@ -987,7 +982,7 @@
         v.muted = !v.muted;
         if (!v.muted) v.play().catch(() => {});
         btn.setAttribute('aria-pressed', String(!v.muted));
-        btn.querySelector('[data-label]').textContent = v.muted ? 'Sound on' : 'Sound off';
+        btn.querySelector('[data-label]').textContent = v.muted ? 'Play sound' : 'Mute sound';
         btn.querySelector('[data-on]').toggleAttribute('hidden', v.muted);
         btn.querySelector('[data-off]').toggleAttribute('hidden', !v.muted);
       });
