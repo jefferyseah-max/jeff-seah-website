@@ -52,6 +52,10 @@ function renderDial(section,cards,items){
   const btn=(label,glyph)=>{const b=document.createElement('button');b.type='button';b.className='rd-btn';b.setAttribute('aria-label',label);b.textContent=glyph;bar.append(b);return b};
   const prev=btn('Previous reader','←'),pause=btn('Pause','❙❙'),next=btn('Next reader','→');
   const count=document.createElement('span');count.className='rd-count';bar.append(count);
+  // Every reader's highlight phrase at a glance, so the proof does not depend on waiting for the dial to turn.
+  const marks=document.createElement('ul');marks.className='rd-marks';
+  const markBtns=items.map((item,i)=>{if(!item.highlight)return null;const li=document.createElement('li'),b=document.createElement('button'),ph=document.createElement('b'),who=document.createElement('span');b.type='button';b.className='rd-mark';ph.textContent='“'+item.highlight+'”';who.textContent=item.name;b.append(ph,who);b.addEventListener('click',()=>{go(i);hold()});li.append(b);marks.append(li);return b});
+  if(marks.children.length)cards.append(marks);
   cards.append(svg,stage,bar);
 
   let cur=-1,timer=0,auto=true,visible=false,hovering=false;
@@ -59,6 +63,7 @@ function renderDial(section,cards,items){
     cur=(i+N)%N;
     slides.forEach((s,j)=>{const on=j===cur;s.classList.toggle('is-active',on);s.setAttribute('aria-hidden',on?'false':'true')});
     ticks.forEach((t,j)=>t.classList.toggle('is-on',j===cur));
+    markBtns.forEach((b,j)=>{if(b)b.classList.toggle('is-on',j===cur)});
     hand.style.transform='rotate('+angle(cur)+'deg)';
     count.textContent=(cur+1)+' / '+N;
     schedule();
