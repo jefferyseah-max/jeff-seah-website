@@ -140,6 +140,15 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-11-12: `/2027` sample teaser replaced and the page reordered (PR #31). The 28 s teaser
+  (`media/2027/juniper-2027-sample-teaser-v2.mp4`, one question answered at year, month, day and hour, from the
+  5 Nov Juniper sample where July is the peak) now sits in the hero's right column, id `sample`, muted by default,
+  button below the frame reads "Play sound" / "Mute sound". The Contact & Clash check (`#teaser`) is its own section
+  after the hero. One reader line (Don) is typed into the hero under the first button: remove it if that entry is
+  withdrawn from `data/annual-2027-testimonials.json`. `js/annual-testimonials.mjs` shows every reader's highlight
+  phrase above the dial (`.rd-marks`). The old "See an Outlook in 18 seconds" section is gone. Video source
+  (HyperFrames, outside the repo): `C:\Users\jeffe\Developer\videos\juniper-2027-teaser-v2`; music is Jeff's
+  "Palace at Dawn". If the Juniper sample changes again, re-check the teaser's facts against it.
 - 2026-11-10: `/2027` testimonials live (PR #29): seven reader quotes in an animated reader dial (words ink in,
   gold `highlight` phrase, gold hand across one mark per reader; auto-advances only on screen; reduced motion gets
   the card grid). Marcus K and Rebecca T quotes carry Jeff's edits, approved by the readers per Jeff.
