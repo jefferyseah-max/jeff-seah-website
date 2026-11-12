@@ -554,13 +554,13 @@
 
     <div class="gold-rule mx-auto max-w-5xl"></div>
 
-    <!-- Sample teaser: an 18 s look at a real Outlook for a fictional client. Video and poster load only when near the screen. -->
+    <!-- Sample teaser: a 28 s look at a real Outlook for a fictional client. Video and poster load only when near the screen. -->
     <section id="sample" class="relative mx-auto max-w-6xl px-4 py-24 sm:px-6 lg:px-10">
       <div class="sample-grid">
         <div data-reveal="stagger">
           <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Sample report</p>
           <h2 class="mt-3 font-display text-[2.7rem] font-light leading-[1.02] text-ivory sm:text-6xl">
-            See an Outlook <em class="text-gold">in 18 seconds.</em>
+            See an Outlook <em class="text-gold">in 28 seconds.</em>
           </h2>
           <p class="mt-5 max-w-xl text-lg leading-relaxed text-ivory/85">
             The year's rhythm, the timing wheel, a month card, decision windows, the moves and traps, and a month of Power Calendar days. This is what lands in your inbox, calculated from your own chart.
@@ -575,13 +575,13 @@
         <figure class="sample-figure" data-reveal>
           <div class="sample-frame">
             <video data-sample-video muted loop playsinline preload="none"
-                   data-src="/media/2027/juniper-2027-sample-teaser.mp4" data-poster="/media/2027/juniper-2027-sample-teaser-poster.jpg"
-                   aria-label="18-second animated sample of a 2027 Annual Outlook for a fictional client"></video>
+                   data-src="/media/2027/juniper-2027-sample-teaser-v2.mp4" data-poster="/media/2027/juniper-2027-sample-teaser-v2-poster.jpg"
+                   aria-label="28-second animated sample of a 2027 Annual Outlook for a fictional client"></video>
+          </div>
             <button type="button" class="sample-sound focus-ring" data-sample-sound aria-pressed="false">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 6h2.2L8 3.2v9.6L4.7 10H2.5z" fill="currentColor"/><path data-off d="M10.5 6l3.5 4m0-4l-3.5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path data-on d="M10.5 5.5a3.5 3.5 0 010 5M12.3 3.8a6 6 0 010 8.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" hidden/></svg>
               <span data-label>Sound on</span>
             </button>
-          </div>
           <figcaption class="mt-3 text-center text-[15px] text-ash">Sample report for a fictional client.</figcaption>
         </figure>
       </div>
@@ -591,7 +591,7 @@
       .sample-figure { margin: 0; width: 100%; max-width: 24rem; justify-self: center; }
       .sample-frame { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 24px; border: 1px solid rgba(212,175,55,.35); background: #13151B; box-shadow: 0 40px 120px -50px rgba(212,175,55,.45); }
       .sample-frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
-      .sample-sound { position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(212,175,55,.5); background: rgba(11,12,16,.78); color: #EDE6D6; font-size: 14px; font-weight: 700; backdrop-filter: blur(6px); transition: border-color .2s, color .2s; }
+      .sample-sound { display: flex; width: fit-content; margin: 14px auto 0; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(212,175,55,.5); background: rgba(11,12,16,.78); color: #EDE6D6; font-size: 14px; font-weight: 700; backdrop-filter: blur(6px); transition: border-color .2s, color .2s; }
       .sample-sound:hover, .sample-sound[aria-pressed="true"] { border-color: #D4AF37; color: #D4AF37; }
       @media (min-width: 1024px) { .sample-grid { grid-template-columns: 1fr 24rem; gap: 5rem; } }
     </style>
