@@ -3,6 +3,14 @@
 Spec and runbook. Written 2026-09-27 (Claude, with Jeff). Start with the 2027 Annual Outlook; the
 monthly plans reuse the same plumbing later.
 
+## Status 2026-11-17: flows A, B and C are ACTIVE
+
+Jeff asked for the emails to be activated before the ChatGPT ads launch and accepted his $1 live test as proof of payment.
+Before activation: C1 lost the follow-up question line (D10), C2 lost "Reply if you have a question", and C1/B2 point to the
+report's Start Here tab. C3 to C6 remain **disconnected**, so Flow C sends only C1 and C2. The checklist below still gates
+connecting C3 to C6 (sample-calendar link, three paid invoice discount, reply suppression). Not yet observed: a real buyer
+passing through Stripe -> webhook -> Encharge; watch the first live order.
+
 ## Launch status and blockers (2026-09-29)
 
 The pricing page and its Stripe links are live. The Encharge sending domain and sender are verified,

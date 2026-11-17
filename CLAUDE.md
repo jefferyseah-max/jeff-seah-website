@@ -92,12 +92,14 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 - 1 Jan 2027 (reminder set): Jeff deactivates the USD 88 Outlook link in Stripe (plink_1UJTagRmcvZfydHfw0B40mtH).
   "Price-step metadata" = in `2027.html`, JSON-LD `price` 88 to 138 and drop or move `priceValidUntil`
   (2026-12-31); `description`, `og:description`, `twitter:description` drop "USD 88 until 31 December 2026".
-- **Encharge email launch still pending:** `docs/crm/ENCHARGE_CRM.md` opens with the current
-  checkable launch blockers. The sending domain and `coaching@jeffseah.rocks` sender are verified;
-  flows A/B/C are drafted but deactivated. C3 to C6 are disconnected. No real checkout has yet
-  proved Stripe -> webhook -> Encharge -> intake/report delivery -> email. Keep the 30-day Calendar
-  trial, then discount its first three *paid* invoices; use reply-to-claim private offers once the
-  Stripe fulfillment method has been tested. Jeff still needs to approve copy and footer address.
+  `img/2027/og-2027.jpg` has "USD 88 until 31 December 2026" painted in and needs a 138 version
+  (or a price-free re-export).
+- **Encharge flows A, B and C are ACTIVE since 2026-11-17** (Jeff: "get the emails activated"; he
+  accepted his $1 live test as proof of payment). Before activation C1 lost the follow-up question
+  line (D10), C2 lost "Reply if you have a question", and C1/B2 now point to the report's Start Here
+  tab instead of the retired Annual Compass. C3 to C6 stay disconnected, so Flow C sends only C1
+  and C2: do not connect them until the private sample-calendar link, the three-paid-invoice
+  discount and reply suppression are proven (`docs/crm/ENCHARGE_CRM.md`).
 - **`/2027` conversion plan (2026-10-06), parked until the sample Outlook's design and copy are final**
   (dashboard TODO 56). Jeff had Gemini review `/2027` for cold ad traffic. Verdict, Jeff agreed to park:
   do NOT adopt Gemini's rewrite (it critiqued an older draft; its fear and money framing, "timing
@@ -140,6 +142,16 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-11-17: Launch prep for the ChatGPT ads. `/privacy` and `/terms` added (refund rule in
+  `terms.html#refunds`, Jeff: no refund once work begins; before that, the amount paid less the
+  payment processing fee, which Jeff does not absorb; Outlook work begins when birth details are
+  submitted; `/refund` redirects there). Privacy and Terms in every footer. `/2027`: refund line under
+  the price, birth-details FAQ, "Who writes your Outlook" block (no photo by Jeff's choice; slots
+  marked in comments), hero says what arrives, "Your own questions, answered" in the value list, nav
+  and hero buttons go to `#order-price` with a re-aiming scroll, shorter hero entrance, one-line
+  buttons. GSAP and Alpine self-hosted in `js/vendor/` with `defer` on all four sales pages.
+  `/welcome` small print no longer claims birth details stay "on my own machine". Encharge flows
+  A, B, C activated (see Pending).
 - 2026-11-12: `/2027` sample teaser replaced and the page reordered (PR #31). The 28 s teaser
   (`media/2027/juniper-2027-sample-teaser-v2.mp4`, one question answered at year, month, day and hour, from the
   5 Nov Juniper sample where July is the peak) now sits in the hero's right column, id `sample`, muted by default,

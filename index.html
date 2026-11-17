@@ -441,8 +441,10 @@
     @media (prefers-reduced-motion: reduce) { .ember-glow { animation: none; color: var(--ember); } .is-swept .sweep-seal::after, .is-swept .sweep-text::after { animation: none; opacity: 0; } }
   </style>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <!-- Self-hosted, so no third-party host sits on the paint path. Deferred scripts run in order once the page
+       is parsed: GSAP, then Alpine. The inline scripts in the body have registered their alpine:init listeners by then. -->
+  <script defer src="/js/vendor/gsap-3.12.5.min.js"></script>
+  <script defer src="/js/vendor/alpine-3.14.9.min.js"></script>
 </head>
 
 <body class="font-sans font-light antialiased selection:bg-gold/30" x-data>
@@ -995,6 +997,8 @@
           <li><a class="transition hover:text-gold" href="/power-calendar">Power Calendar</a></li>
           <li><a class="transition hover:text-gold" href="/2027">2027 Outlook</a></li>
           <li><a class="transition hover:text-gold" href="/book">Book a session</a></li>
+          <li><a class="transition hover:text-gold" href="/privacy">Privacy</a></li>
+          <li><a class="transition hover:text-gold" href="/terms">Terms</a></li>
         </ul>
       </nav>
     </div>
