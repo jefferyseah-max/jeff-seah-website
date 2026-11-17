@@ -74,7 +74,7 @@ Hi {{ person.firstName }},
 
 Your outlook is coming together. Here is how to get the most from it in twenty minutes:
 
-1. **Start with the Annual Compass.** Seven lines that hold the whole year.
+1. **Start with the Start Here tab.** It opens first and shows you how the report fits together.
 2. **Check your Year at a Glance.** Mark the Push months for the decisions you told me about.
 3. **Keep When To open when you plan.** Launch, negotiate, ask, rest: best window, also good, avoid.
 
@@ -100,10 +100,8 @@ Jeff
 
 ## Flow C: after delivery (warm, then the Calendar plans)
 
-> **Open before activation (2026-09-30, rulings D9/D10):** the C1 draft inside Encharge probably still
-> carries the follow-up question line already removed from this file; delete it there. C2's closing "Reply if you have
-> a question about your reading." awaits Jeff's keep-or-drop ruling. See the launch blockers in
-> `ENCHARGE_CRM.md`.
+> **Live since 2026-11-17.** C1 and C2 match Encharge (follow-up question and reply lines removed, D10). C3 to C6 are
+> disconnected in Encharge and do not send. See `ENCHARGE_CRM.md`.
 
 Trigger: event **Report Delivered**. Filter: tag `outlook-2027-buyer`.
 Exit: tag `monthly-subscriber` (they bought a plan) or unsubscribed.
@@ -116,7 +114,7 @@ Hi {{ person.firstName }},
 Your 2027 Annual Outlook is ready:
 **[Open my 2027 Outlook]({{ person.reportUrl }})**
 
-Read the Annual Compass first, then Before the Year Opens. That's what to do before 4 February.
+Start with the Start Here tab. It opens first and walks you through your year.
 
 Jeff
 
@@ -130,8 +128,6 @@ After a few days with your outlook, here are three ways to put it to work:
 1. **Before a big conversation**, check the month's Do / Avoid / Watch row.
 2. **Before you commit money**, look up "review money" and "negotiate" in When To.
 3. **When you feel stuck**, sit with your back to your clarity direction and write the decision down.
-
-Reply if you have a question about your reading.
 
 Jeff
 
