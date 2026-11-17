@@ -257,8 +257,10 @@
     @media (prefers-reduced-motion: reduce) { .eb-sweep::after { animation: none; } }
   </style>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+  <!-- Self-hosted, so no third-party host sits on the paint path. Deferred scripts run in order once the page
+       is parsed: GSAP, then Alpine. The inline scripts in the body have registered their alpine:init listeners by then. -->
+  <script defer src="/js/vendor/gsap-3.12.5.min.js"></script>
+  <script defer src="/js/vendor/alpine-3.14.9.min.js"></script>
   <script defer src="/js/measure.js"></script>
 </head>
 
@@ -280,7 +282,7 @@
         </span>
         <span class="font-display text-lg font-semibold tracking-wide text-ivory">Jeff Seah</span>
       </a>
-      <a href="#order" class="focus-ring rounded-full border border-gold/40 px-4 py-2 text-[15px] font-bold uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold/10">
+      <a href="#order-price" class="focus-ring rounded-full border border-gold/40 px-4 py-2 text-[15px] font-bold uppercase tracking-[0.14em] text-gold transition hover:border-gold hover:bg-gold/10">
         Get my Outlook
       </a>
     </nav>
@@ -310,7 +312,7 @@
           </h1>
 
           <p class="mt-7 max-w-xl text-lg leading-relaxed text-ivory/85 sm:text-xl" data-anim="hero">
-            The 2027 Annual Outlook maps the Ding Wei Fire Goat year onto your full birth chart. A month-by-month guide to when to act, prepare, or pause on the decisions ahead.
+            A private written web report on your 2027, the Ding Wei Fire Goat year, calculated from your birth date, time and place. Month by month, it shows when to act, when to prepare and when to pause. Prepared and reviewed by Jeff, and delivered within 7 days of your birth details.
           </p>
 
           <!-- Early bird scarcity badge. Hidden once the price steps up on 1 January 2027 SGT. -->
@@ -327,9 +329,9 @@
             </div>
           </div>
 
-          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center" data-anim="hero">
-            <a href="#order" class="btn-ember inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-base font-extrabold tracking-wide" x-data>
-              Get my 2027 Outlook
+          <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center" data-anim="hero">
+            <a href="#order-price" class="btn-ember inline-flex shrink-0 items-center justify-center gap-3 whitespace-nowrap rounded-full px-6 py-4 text-base font-extrabold tracking-wide sm:px-8" x-data>
+              <span>Get my 2027 Outlook</span>
               <span class="opacity-40">·</span>
               <span>USD <span x-text="$store.offer.price">88</span></span>
             </a>
@@ -354,10 +356,13 @@
               <dd class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.6rem]">5 moves, 5 traps</dd>
             </div>
             <div>
-              <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ash">Delivery</dt>
-              <dd class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.6rem]">7 days</dd>
+              <dt class="font-mono text-[13px] uppercase tracking-[0.2em] text-ash">Delivered</dt>
+              <dd class="mt-1 font-display text-lg font-semibold leading-tight text-ivory sm:text-[1.6rem]">Within 7 days</dd>
             </div>
           </dl>
+          <p class="mt-4 max-w-xl text-base text-ash" data-anim="hero">
+            Moves are the five things worth doing in your 2027. Traps are the five to steer clear of.
+          </p>
           <p class="mt-5 max-w-xl text-base text-ash" data-anim="hero">
             The Fire Goat year opens on 4 February 2027. Order by 15 January to have your map in hand before it does.
           </p>
@@ -563,7 +568,7 @@
               </div>
               <p class="mt-2 text-[13px] text-ash">Feb 2027 to Jan 2028, month by month, calculated from your full chart.</p>
 
-              <a href="#order" class="btn-ember mt-5 flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-base font-extrabold tracking-wide">
+              <a href="#order" class="btn-ember mt-5 flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-4 text-base font-extrabold tracking-wide sm:gap-3 sm:px-6">
                 <span class="sm:hidden">Unlock my map</span><span class="hidden sm:inline">Unlock my 12-month map</span>
                 <span class="opacity-40">·</span>
                 <span>USD <span x-text="$store.offer.price">88</span></span>
@@ -712,8 +717,8 @@
             </dl>
           </div>
 
-          <a href="#order" class="btn-ember mt-6 flex w-full items-center justify-center gap-3 rounded-full px-6 py-4 text-base font-extrabold tracking-wide">
-            Time it on my own chart <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
+          <a href="#order" class="btn-ember mt-6 flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-4 text-base font-extrabold tracking-wide sm:gap-3 sm:px-6">
+            <span>Time it on my chart</span> <span class="opacity-40">·</span> <span>USD <span x-text="$store.offer.price">88</span></span>
           </a>
         </aside>
       </div>
@@ -764,6 +769,23 @@
       .rd-count{min-width:52px;font-family:ui-monospace,monospace;font-size:13px;color:#A8ADB6}
     </style>
     <script type="module" src="/js/annual-testimonials.mjs"></script>
+    <!-- Who writes your Outlook (audit B2). Verifiable facts only: no titles, years of practice or client counts
+         until Jeff supplies them. -->
+    <section aria-labelledby="who-writes" class="relative mx-auto max-w-3xl px-4 sm:px-6" data-reveal>
+      <div class="flex flex-col gap-6 rounded-[28px] border hairline bg-white/[0.02] p-6 sm:flex-row sm:gap-8 sm:p-9">
+        <!-- PHOTO SLOT: when Jeff supplies a photo, replace this seal with
+             <img src="/img/jeff-seah.jpg" alt="Jeff Seah" width="96" height="96" class="h-24 w-24 shrink-0 rounded-full object-cover" /> -->
+        <img src="/img/seal-mark.png" alt="" width="72" height="72" class="h-[72px] w-[72px] shrink-0 opacity-90" />
+        <div>
+          <p class="font-mono text-[13px] uppercase tracking-[0.24em] text-gold">Who writes your Outlook</p>
+          <h2 id="who-writes" class="mt-3 font-display text-3xl font-light leading-tight text-ivory sm:text-4xl">I'm Jeff Seah. <em class="text-gold">I read every chart myself.</em></h2>
+          <p class="mt-4 text-[17px] leading-[1.65] text-ivory/85">I work from Singapore. Your Outlook is read from your full birth chart using BaZi, the Four Pillars method, not from your animal sign alone. I review every Outlook before it is released. Through the year I also write monthly reports and Power Calendars for private clients.</p>
+          <!-- CREDENTIALS SLOT: one or two factual lines (for example years of practice, reports written) go here
+               as <p class="mt-3 text-[17px] leading-[1.65] text-ivory/85">...</p> once Jeff confirms them. -->
+        </div>
+      </div>
+    </section>
+
     <!-- ============ STEP 3: offer, Power Calendar bridge, FAQ ============ -->
 
     <!-- Offer -->
@@ -786,6 +808,7 @@
 
             <ul class="mt-8 space-y-5" data-reveal="stagger" data-reveal-delay="0.2">
               <template x-for="item in [
+                ['Your own questions, answered', 'Bring up to five questions or decisions for 2027. Your Outlook answers them.'],
                 ['Simplified and Advanced editions', 'Plain English first. Tap the Advanced button to see the working: Ten Gods, contacts, stars and a glossary.'],
                 ['Twelve-month tactical roadmap', 'Every month paced Push, Build, Steady or Soft, each with Do, Avoid and Watch.'],
                 ['The When-To decision index', 'Best window, also good, and avoid for launching, negotiating, asking, repricing, travel, rest and money reviews.'],
@@ -833,10 +856,11 @@
                 <p class="mb-2 text-base text-ash" x-show="!$store.offer.after"><s class="decoration-ember/70">USD 138</s><br />from 1 January</p>
               </div>
               <p class="mt-2 text-base text-ash">One payment. No subscription.</p>
+              <p class="mt-1 text-base text-ash">Refundable, less the payment processing fee, until you send your birth details. After that, the work has begun. <a href="/terms#refunds" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold">Refund terms</a></p>
 
               <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
-                 class="btn-ember mt-8 flex w-full items-center justify-center gap-3 rounded-full px-6 py-5 text-base font-extrabold tracking-wide">
-                Get my 2027 Outlook <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
+                 class="btn-ember mt-8 flex w-full items-center justify-center gap-2 whitespace-nowrap rounded-full px-4 py-5 text-base font-extrabold tracking-wide sm:gap-3 sm:px-6">
+                <span>Get my 2027 Outlook</span> <span class="opacity-40">·</span> <span>USD <span x-text="$store.offer.price">88</span></span>
               </a>
               <p class="mt-3 text-center text-base text-ivory/85">Delivered within 7 days as a private web report with Simplified and Advanced editions.</p>
 
@@ -880,6 +904,7 @@
           ['What if I don’t know my exact birth time?', 'If your birth time is unknown or uncertain, the report will say so, and your directions section will be shorter.'],
           ['How is this different from my zodiac horoscope?', 'A zodiac forecast starts with your birth-year animal. Your Outlook uses your birth chart and current ten-year luck cycle to examine how 2027 unfolds for you, month by month.'],
           ['How is my outlook prepared?', 'I calculate your birth chart using my own engine, then review how the 2027 year and months interact with your chart and current luck cycle. I decide what matters and write the reading for you. I may use AI to refine the wording and presentation; the interpretation is mine.'],
+          ['What happens to my birth details?', 'They are used only to prepare your readings. They are never shared with advertisers, and you can ask me to delete them at any time.', ['/privacy', 'Read the privacy policy']],
           ['When will I receive my report?', 'Within 7 days, as a private web report with Simplified and Advanced editions. The Fire Goat year opens on 4 February 2027, so order by 15 January to have it in hand before then.'],
           ['Can I gift this to someone else?', 'Yes, with their consent. After payment, enter their birth details on the intake page and choose whether the report goes to your email or theirs.'],
         ]" :key="i">
@@ -898,7 +923,7 @@
             <div class="grid transition-[grid-template-rows] duration-500 ease-out" :class="open === i ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
                  :id="'faq-a-' + i" role="region" :aria-labelledby="'faq-q-' + i">
               <div class="overflow-hidden">
-                <p class="pb-6 pr-10 text-[17px] leading-[1.65] text-ivory/85" x-text="f[1]"></p>
+                <p class="pb-6 pr-10 text-[17px] leading-[1.65] text-ivory/85"><span x-text="f[1]"></span><template x-if="f[2]"><span> <a :href="f[2][0]" x-text="f[2][1]" class="text-gold underline decoration-gold/40 underline-offset-4 hover:decoration-gold"></a>.</span></template></p>
               </div>
             </div>
           </div>
@@ -908,8 +933,8 @@
       <div class="mt-14 text-center" x-data data-reveal="stagger">
         <p class="font-display text-2xl italic text-ivory/90 sm:text-3xl">See 2027 through your chart before the year begins.</p>
         <a :href="$store.offer.link" href="https://buy.stripe.com/3cI6oJ8aPegSgaC769bwk04"
-           class="btn-ember mt-7 inline-flex items-center justify-center gap-3 rounded-full px-8 py-4 text-base font-extrabold tracking-wide">
-          Get my 2027 Outlook <span class="opacity-40">·</span> USD <span x-text="$store.offer.price">88</span>
+           class="btn-ember mt-7 inline-flex items-center justify-center gap-3 whitespace-nowrap rounded-full px-6 py-4 text-base font-extrabold tracking-wide sm:px-8">
+          <span>Get my 2027 Outlook</span> <span class="opacity-40">·</span> <span>USD <span x-text="$store.offer.price">88</span></span>
         </a>
       </div>
     </section>
@@ -927,6 +952,8 @@
           <li><a class="transition hover:text-gold" href="/">Home</a></li>
           <li><a class="transition hover:text-gold" href="/#pricing">Power Calendar</a></li>
           <li><a class="transition hover:text-gold" href="/book">Book a session</a></li>
+          <li><a class="transition hover:text-gold" href="/privacy">Privacy</a></li>
+          <li><a class="transition hover:text-gold" href="/terms">Terms</a></li>
         </ul>
       </nav>
     </div>
@@ -1210,6 +1237,27 @@
       if (document.readyState === 'complete') sweep(); else window.addEventListener('load', sweep, { once: true });
     }
 
+    // ---- Order links: land on the target even though the page above it grows. ----
+    // The When-To Index opens out as it scrolls into view, so a plain anchor jump stops about a screen short
+    // on phones. Aim at the target, then re-aim until it sits under the nav. Any touch, wheel or key cancels.
+    document.querySelectorAll('a[href="#order"], a[href="#order-price"]').forEach(a => a.addEventListener('click', e => {
+      const target = document.getElementById(a.getAttribute('href').slice(1));
+      if (!target) return;
+      e.preventDefault();
+      let live = true, tries = 0;
+      const stop = () => { live = false; };
+      ['wheel', 'touchstart', 'keydown'].forEach(t => window.addEventListener(t, stop, { once: true, passive: true }));
+      const aim = () => target.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
+      const check = () => {
+        if (!live || tries++ >= 4) return;
+        const off = target.getBoundingClientRect().top - parseFloat(getComputedStyle(target).scrollMarginTop || 0);
+        if (Math.abs(off) > 40) aim();
+        setTimeout(check, 800);
+      };
+      aim();
+      setTimeout(check, 900);
+    }));
+
     // ---- Page-load choreography, once Alpine has rendered the wheel. ----
     // The hero plays on load. Everything else (the Contact & Clash panel and its wheel included, which sit
     // below the fold on phones) waits until it is on screen, so every visitor actually sees it arrive.
@@ -1233,8 +1281,10 @@
       };
 
       gsap.timeline({ defaults: { ease: 'power3.out' } })
-        .to('[data-anim="nav"]', { autoAlpha: 1, duration: 0.6 })
-        .fromTo(hero, { y: 28 }, { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.09 }, '-=0.3')
+        // Short on purpose (audit H5): the hero button is on screen and clickable about 0.2 s after scripts run
+        // and settled by 0.7 s. Paid clicks should not wait for a staged entrance.
+        .to('[data-anim="nav"]', { autoAlpha: 1, duration: 0.3 })
+        .fromTo(hero, { y: 14 }, { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.035 }, 0)
         .call(() => {
           let panelAt = 0;
           onScreen(panel, () => {
