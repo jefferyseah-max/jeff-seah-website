@@ -142,6 +142,9 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-11-17 (later): Jeff's legal page rulings. `/privacy` names no tools or vendors (he changes tools) and has no
+  advertising section (lead sources stay private); measurement is described generically. `/terms`: Single Session refund
+  (less the processing fee) only if cancelled at least 48 hours before; rescheduling also needs 48 hours (matches `/book`).
 - 2026-11-17: Launch prep for the ChatGPT ads. `/privacy` and `/terms` added (refund rule in
   `terms.html#refunds`, Jeff: no refund once work begins; before that, the amount paid less the
   payment processing fee, which Jeff does not absorb; Outlook work begins when birth details are
