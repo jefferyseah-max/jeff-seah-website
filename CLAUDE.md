@@ -31,6 +31,16 @@ Do not ask Jeff to do anything Claude can do itself. Work down this ladder and s
 ## Offers and payments (as of 2026-09-29)
 - Monthly plans on Stripe Payment Links: 97 Calendar (30-day card trial), 197 Calendar + Brief,
   297 Calendar + Premium, 497 Coaching. Single Session USD 197 via `/book`, paid at booking on CalendarHero `/singlesession`.
+- **The 97 plan and its trial are delivered in the personal Tong Shu app in the members portal, not Google Calendar**
+  (Jeff, 2026-11-18: "No more google calendar route for trial clients"). Promise on every page: access "within 5 working
+  days" of birth details. `/welcome?plan=97` hides the Google account field and posts plan `97-portal-trial`; portal
+  access is set up by hand (portal contract: `G:/AgentDesk/Client Monthly Workflow/docs/PERSONAL_BAZI_TONGSHU_PORTAL.md`).
+  197/297/497 keep their Google Calendar wording.
+- `/2027` exit offer (`#exit-offer`, script at the end of `2027.html`): offers the 97 Tong Shu trial to visitors leaving
+  without ordering. Desktop: pointer leaves through the top; phones: fast flick up after two screens. Once per visitor per
+  7 days (`localStorage` `jsr-exit-2027`), armed after 8 s, never after an Outlook order click. Trial link carries
+  `client_reference_id=exit_2027`. Preview `/2027?exit=1`, disable `?noexit=1`. Picture: `img/tongshu-preview.webp`
+  (Jeff's own December 2026 grid with 5 December open; cropped above W-60 and the chart-interaction chips).
 - 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. `/2027` holds both links in
   its own inline Alpine store (`Alpine.store('offer')` in `2027.html`), which switches link and copy at
   00:00 SGT 1 Jan; `2027.js` keeps the same constants for the other pages (the homepage has its own
@@ -81,6 +91,19 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | `.vercelignore` | Keeps `tests/`, `docs/`, `scripts/`, `ops/` and `*.md` off the public site |
 
 ## Pending
+**Outstanding from the 2026-11-18 Tong Shu trial switch (who does it):**
+- Portal access for trial users does not exist yet: the portal is Jeffery-only (uploader accepts only his package; each
+  person needs a client record, mapping and paid end date; no Stripe link). A `97-portal-trial` intake must be set up by
+  hand within 5 working days, and access removed if the trial is cancelled (Jeff decides scope; Codex builds).
+- Confirm what a trial user sees without Tide-authored Big Rocks entries ("Your calendar" items); the popup and
+  `/power-calendar` picture shows Jeff's authored entries (Codex to confirm, Jeff to accept or swap the picture).
+- Popup video: Jeff records 8 to 12 s of the app (month, tap a day, details, best hours, activities). Claude trims,
+  crops, compresses with ffmpeg to a muted looping MP4 (0.5 to 1 MB), poster = current picture, load only when the
+  popup opens, still picture under reduced motion. Choose a day with nothing private on screen.
+- Walkthrough page (for example `/tongshu`): 60 to 90 s video, screenshots, same trial button. Then restore
+  "See how it works" in the popup (comment marks the spot) pointing to it.
+- Not yet checked on a real phone: the popup's flick trigger and layout.
+
 **Outstanding as of 2026-10-06 (who does it):**
 - Finish the sample Outlook's design and copy; it unblocks plan steps 3 and 4 and the ad creative (Jeff).
 - First ChatGPT ads campaign: goal Order created, tagged ad URLs (Jeff, in Ads Manager).
@@ -142,6 +165,8 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
   The monthly upsell stays post-purchase (Flow C and the sample Power Calendar month), not on `/2027`.
 
 ### Change log
+- 2026-11-18 (PR #35): `/2027` exit offer for the 97 trial, and the 97 plan moved to the personal Tong Shu app on
+  `/2027`, `/power-calendar`, the homepage and `/welcome?plan=97` (no Google Calendar promise, "within 5 working days").
 - 2026-11-17 (later): Jeff's legal page rulings. `/privacy` names no tools or vendors (he changes tools) and has no
   advertising section (lead sources stay private); measurement is described generically. `/terms`: Single Session refund
   (less the processing fee) only if cancelled at least 48 hours before; rescheduling also needs 48 hours (matches `/book`).
