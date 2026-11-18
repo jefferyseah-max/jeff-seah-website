@@ -43,8 +43,12 @@ Do not ask Jeff to do anything Claude can do itself. Work down this ladder and s
   captioned walkthrough (`media/tongshu/tongshu-walkthrough.mp4`, Jeff's voice, owner name blurred), loaded on open,
   muted autoplay with a Sound on button; build notes `docs/design/TONGSHU_WALKTHROUGH_VIDEO.md`.
   `img/tongshu-preview.webp` stays on `/power-calendar`.
-- Signup source (2026-11-19): every monthly-plan Stripe link carries `client_reference_id` = `home`, `power_calendar`
-  or `exit_2027`; on `/2027` `js/measure.js` keeps it and appends the ad source (`exit_2027__chatgpt_launch`) and logs
+- Naming (Jeff, 2026-11-19, for US, NZ and AU ads): customer-facing name is **Power Calendar**; "Tong Shu" is the source
+  ("built on the Chinese Tong Shu almanac, read against your birth chart"). The portal page keeps "My Tongshu".
+  `/2027` also has a quiet trial band after the FAQ (`.pc-band`, outlined, never ember; tag `2027_footer`, plus a
+  "See how it works" link to `/power-calendar`) for visitors the exit offer misses.
+- Signup source (2026-11-19): every monthly-plan Stripe link carries `client_reference_id` = `home`, `power_calendar`,
+  `exit_2027` or `2027_footer`; on `/2027` `js/measure.js` keeps it and appends the ad source (`exit_2027__chatgpt_launch`) and logs
   trial clicks as "Trial checkout", not Outlook "Checkout". The webhook puts it in the "New subscriber" email subject
   and Sheet plan cell ("Power Calendar (97) via exit_2027"; "via unknown" means the Checkout Session lookup failed,
   e.g. the restricted key lacks Checkout Sessions read) and in Encharge as a `src-<placement>` tag.

@@ -1,6 +1,6 @@
 # Tong Shu walkthrough video (short cut, `/2027` exit offer)
 
-Live file: `media/tongshu/tongshu-walkthrough.mp4` (960x720, 56 s, about 3 MB) and poster
+Live file: `media/tongshu/tongshu-walkthrough.mp4` (960x720, 57 s, about 3 MB) and poster
 `media/tongshu/tongshu-walkthrough-poster.webp`. Used only in the `/2027` exit offer (`#exit-offer`):
 fetched when the offer opens, autoplays muted, "Sound on" button for the voice, click to pause or replay.
 
@@ -22,14 +22,15 @@ Then encode for the web (crf 27, faststart) into `media/tongshu/`. Scene list, c
 captions and the blur box are at the top of the script.
 
 ## Script (one line per scene)
-1. This is your personal Tong Shu. Not the generic almanac everyone reads, but one read against your own birth chart.
+1. This is your personal Power Calendar. Built on the Tong Shu, the Chinese almanac, but read against your own birth chart.
+   (Re-recorded 2026-11-19 when the product name became Power Calendar for US, NZ and AU ads; the first take is `vo/vo1-tongshu-v1.mp3`.)
 2. Tap This Week, and you see the notable days ahead, the good ones and the tricky ones, so you can plan in advance.
 3. Open any entry, and it tells you why the day matters, and exactly what to do with it.
 4. Caution days are spelled out too: what to avoid, and how to move through them.
 5. Pick any date in the month to read it in full.
 6. Every day is checked against your natal chart. When a day clashes with your chart, it tells you so, and why.
 7. Even the hours are ranked: your best hours, and the ones to avoid.
-8. Try it free for thirty days. (end card: seal, "Your personal Tong Shu", "Free for 30 days")
+8. Try it free for thirty days. (end card: seal, "Your personal Power Calendar", "Free for 30 days")
 
 ## Later
 The longer cut belongs on `/power-calendar`, with a "Find out more" link from the homepage subscribe card.
