@@ -49,8 +49,8 @@ keeps Calendar-only billing on the trial end, not the 15th), so day 25 gives fiv
 4. **Portal readiness for other clients.** The portal guide (`Client Monthly Workflow/docs/PERSONAL_BAZI_TONGSHU_PORTAL.md`)
    describes My Tongshu as a Jeffery-only pilot. D3 and D4 describe the app as it is for Jeffery; confirm a
    trial client sees the same sections before these send.
-5. **Time zone.** My Week, entries and hours show in Singapore time. US, NZ and AU clients will read them
-   as local unless told. D3 says so plainly; Jeff to decide whether that is the long-term answer.
+5. **Time zone.** Settled 2026-11-19 (Jeff): Tong Shu hours apply in the client's local time, so no conversion
+   is needed anywhere; D3 says so.
 6. **Stripe's own trial reminder.** If Settings > Billing > Subscriptions and emails > "trial ending"
    reminders is on, clients get Stripe's email and D5. Keep one; D5 is warmer and names what they keep.
 
@@ -147,7 +147,8 @@ Tap any date in your calendar and it opens in full. Here is how to read it, top 
 5. **Hours.** Swipe along the strip: **Best** hours in red, **Usable** in green, **Avoid** in dark. When
    a day is mixed, the hours tell you when within it to act.
 
-All dates and hours are shown in Singapore time, so allow for your own time zone when you plan.
+Every time is your own local time, wherever you live: a Best hour of 1pm to 3pm means 1pm to 3pm where you are,
+with no converting.
 
 A simple way to start: open **My Week** on Monday morning, mark the one or two days that suit what you
 most need to do, and check the hours before anything important.
