@@ -19,14 +19,27 @@ const trial = {
 test('an Outlook checkout tags the buyer, then fires Outlook Purchased', () => {
   assert.deepEqual(checkoutEvents(outlook), [
     { name: 'identify', user: { email: 'jane@example.com', name: 'Jane Tan', firstName: 'Jane', tags: 'outlook-2027-buyer' } },
-    { name: 'Outlook Purchased', user: { email: 'jane@example.com' }, properties: { product: '2027-annual-outlook', amount: 88, currency: 'USD', sessionId: 'cs_live_a1' } },
+    { name: 'Outlook Purchased', user: { email: 'jane@example.com' }, properties: { product: '2027-annual-outlook', amount: 88, currency: 'USD', sessionId: 'cs_live_a1', source: 'direct' } },
   ]);
 });
 
 test('a monthly checkout (trial included) tags the plan and fires Subscription Started', () => {
   const [identify, started] = checkoutEvents(trial);
   assert.equal(identify.user.tags, 'monthly-subscriber,monthly-97');
-  assert.deepEqual(started.properties, { plan: '97', amount: 0, currency: 'USD', sessionId: 'cs_live_b2', subscription: 'sub_7' });
+  assert.deepEqual(started.properties, { plan: '97', amount: 0, currency: 'USD', sessionId: 'cs_live_b2', subscription: 'sub_7', source: 'direct' });
+});
+
+test('the checkout source becomes a src- tag and a source property', () => {
+  const [identify, started] = checkoutEvents({ ...trial, client_reference_id: 'exit_2027' });
+  assert.equal(identify.user.tags, 'monthly-subscriber,monthly-97,src-exit_2027');
+  assert.equal(started.properties.source, 'exit_2027');
+  // Placement plus ad source: the tag keeps the placement, the property keeps both.
+  const [adId, adStarted] = checkoutEvents({ ...trial, client_reference_id: 'exit_2027__chatgpt_launch' });
+  assert.equal(adId.user.tags, 'monthly-subscriber,monthly-97,src-exit_2027');
+  assert.equal(adStarted.properties.source, 'exit_2027__chatgpt_launch');
+  const [buyer] = checkoutEvents({ ...outlook, client_reference_id: 'chatgpt_launch' });
+  assert.equal(buyer.user.tags, 'outlook-2027-buyer,src-chatgpt_launch');
+  assert.equal(checkoutEvents({ ...trial, client_reference_id: 'home' })[0].user.tags, 'monthly-subscriber,monthly-97,src-home');
 });
 
 test('the updated Coaching link tags new buyers as monthly-497', () => {

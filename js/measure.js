@@ -2,8 +2,9 @@
 // 1. Vercel Web Analytics: page views with UTM breakdown (cookieless). Switch it on in the
 //    Vercel dashboard (project > Analytics > Enable) or /_vercel/insights/script.js 404s.
 // 2. Remembers the first-party UTM tags of the latest tagged visit (localStorage, 30 days).
-// 3. Order click: "Checkout" event, and the Stripe link gets client_reference_id=<source>_<campaign>
-//    so every paid Checkout Session in Stripe shows where the buyer came from.
+// 3. Order click: "Checkout" event (the 97 trial gets "Trial checkout" instead, no pixel), and the Stripe
+//    link gets client_reference_id=<source>_<campaign>, kept behind any placement tag the link already has
+//    (exit_2027__<source>_<campaign>), so every Checkout Session in Stripe shows where the buyer came from.
 // 4. /2027-next?paid=1&session_id=cs_...: one "Purchase" event per session id.
 // 5. ChatGPT Ads pixel (oaiq): off until OPENAI_PIXEL_ID is filled in (Ads Manager > Conversions).
 //    It loads only for visitors who arrived from a ChatGPT ad (oppref in the URL or the
@@ -67,15 +68,24 @@
   var OUTLOOK = { id: 'outlook-2027', name: '2027 Annual Outlook', content_type: 'product', quantity: 1 };
 
   // -- 3. Order clicks (any Stripe Payment Link on the page) --
+  // A link may already carry its own placement tag (exit_2027 on the exit offer). That tag is kept and the
+  // ad source joins it after a double underscore: exit_2027__chatgpt_launch. Without a tag: chatgpt_launch.
+  var TRIAL_LINK = '8x2cN72QvegSf6y1LPbwk05'; // Power Calendar 97, 30-day trial
   document.addEventListener('click', function (e) {
     var a = e.target.closest && e.target.closest('a[href^="https://buy.stripe.com/"]');
     if (!a) return;
+    var url = new URL(a.href);
+    var own = (url.searchParams.get('client_reference_id') || '').split('__')[0];
     if (attr) {
       // Stripe allows letters, digits, dashes and underscores, up to 200 characters.
-      var ref = [attr.source, attr.campaign].filter(Boolean).join('_').replace(/[^A-Za-z0-9_-]/g, '-').slice(0, 200);
-      var url = new URL(a.href);
-      url.searchParams.set('client_reference_id', ref);
+      var ad = [attr.source, attr.campaign].filter(Boolean).join('_').replace(/[^A-Za-z0-9_-]/g, '-');
+      url.searchParams.set('client_reference_id', (own ? own + '__' + ad : ad).slice(0, 200));
       a.href = url.toString();
+    }
+    // The trial is not an Outlook order: count it on its own and keep it out of the ad pixel.
+    if (url.pathname.indexOf(TRIAL_LINK) !== -1) {
+      window.va('event', { name: 'Trial checkout', data: withTags({ placement: own || 'none' }) });
+      return;
     }
     window.va('event', { name: 'Checkout', data: withTags({ price: price() }) });
     if (pixel) window.oaiq('measure', 'checkout_started', { type: 'contents', amount: price() * 100, currency: 'USD', contents: [OUTLOOK] });

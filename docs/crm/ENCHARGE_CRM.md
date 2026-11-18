@@ -105,6 +105,10 @@ omits `success_url`; a new link must set the redirect and be added to `lib/encha
 
 - Tags: `outlook-2027-buyer`, `monthly-subscriber`, `monthly-97/197/297/497`, `intake-received`,
   `annual-intake`, `monthly-intake`, `report-delivered`.
+- Source tags (2026-11-19, from the Stripe link's `client_reference_id`): `src-home`, `src-power_calendar`,
+  `src-exit_2027`, or the ad source (`src-chatgpt_<campaign>`). The full value, placement plus ad source
+  (`exit_2027__chatgpt_launch`), is the `source` property on "Subscription Started" / "Outlook Purchased";
+  `direct` when the link carried none.
 - Custom fields: `edition` and `reportUrl` are text; `reportDue` is Date and Time in Encharge.
 - Intended sender: Jeff Seah <coaching@jeffseah.rocks>. On 2026-09-29, the only Encharge account
   available in Jeff's login was `bigstorm.tech`. `jeffseah.rocks` was added and **verified** there.

@@ -76,8 +76,9 @@ test('route emails Jeff after anchoring, and returns 500 when the alert fails, s
       const ok = await POST(request(body, sign(body)));
       assert.equal(ok.status, 200);
       assert.equal((await ok.json()).alerted, true);
-      assert.equal(urls.length, 2);
-      assert.match(urls[1], /^https:\/\/script\.google\.com\/macros\//);
+      assert.equal(urls.length, 3); // anchor update, checkout source lookup, alert
+      assert.match(urls[1], /^https:\/\/api\.stripe\.com\/v1\/checkout\/sessions\?subscription=/);
+      assert.match(urls[2], /^https:\/\/script\.google\.com\/macros\//);
 
       fakeBackends('error');
       const origError = console.error; console.error = () => {};
@@ -109,6 +110,9 @@ test('calendar route preserves billing, emails original trial end, and retries f
       const calls = [];
       let fail = true;
       globalThis.fetch = async (url, init) => {
+        if (url.startsWith('https://api.stripe.com/v1/checkout/sessions')) {
+          return Response.json({data: [{id: 'cs_1', client_reference_id: 'exit_2027'}]});
+        }
         calls.push({url, payload: JSON.parse(init.body)});
         assert.match(url, /^https:\/\/script\.google\.com\/macros\//);
         return Response.json({result: fail ? 'error' : 'success'});
@@ -122,7 +126,7 @@ test('calendar route preserves billing, emails original trial end, and retries f
       assert.equal((await response.json()).alerted, true);
       assert.equal(calls.length, 2);
       assert.equal(calls[1].payload.firstCharge, '2026-12-21');
-      assert.equal(calls[1].payload.plan, 'Power Calendar (97)');
+      assert.equal(calls[1].payload.plan, 'Power Calendar (97) via exit_2027');
     });
   } finally { globalThis.fetch = realFetch; }
 });
