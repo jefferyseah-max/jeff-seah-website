@@ -53,7 +53,8 @@ Do not ask Jeff to do anything Claude can do itself. Work down this ladder and s
 - Homepage leads with the Outlook plus the sample month (`#outlook`) until 00:00 SGT 1 Feb 2027, then
   switches itself to lead with the Power Calendar trial (`LEAD_FLIP_AT`, `Alpine.store('season')`). The old no-card free-month
   lead form is retired; its Apps Script and "Power Calendar Leads" Sheet are no longer used by the site.
-- Billing on the 15th: `/api/stripe-webhook` (see `BILLING_ANCHOR_SETUP.md`), live. Vercel env
+- Billing policy update (Jeff, 2026-11-18): Calendar-only retains its 30-day trial then existing monthly renewal; report/calendar plans retain 15th billing. No automatic upgrade migration. See `BILLING_ANCHOR_SETUP.md` for release/copy checklist.
+- Historical billing on the 15th: `/api/stripe-webhook` (see `BILLING_ANCHOR_SETUP.md`), live. Vercel env
   `STRIPE_API_KEY` (restricted, Subscriptions write) and `STRIPE_WEBHOOK_SECRET`. Never type keys.
 - Customer portal: https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00 (linked from the pricing note).
 - Stripe account acct_1ScW2gRmcvZfydHf. Webhooks live in Workbench (Developers bar, bottom left).

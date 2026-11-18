@@ -1,4 +1,14 @@
-# Billing on the 15th: switch-on steps
+# Billing policies: Calendar-only versus report plans
+
+## November 18, 2026 separation (deployment must be verified)
+
+Jeff keeps Calendar-only on its original 30-day free trial, then the existing USD 97 monthly price. Monthly means a calendar-month renewal, not a new fixed 30-day recurring price. The handler now preserves the exact Calendar price and sends the signup alert using its original trial end. Report plans retain the existing 15th rule. Unknown or mixed subscriptions are not changed. Existing subscriptions and upgrades are not migrated by this patch. Report-plan upgrades need a separately agreed transition/proration policy.
+
+Before release, align customer wording: Calendar-only first payment after 30 days, then monthly on its renewal date; report/calendar plans billed on the 15th. Stripe product description still has the old 15th sentence. Proposed replacement: "Your first payment is due when your 30-day free trial ends. Your plan then renews monthly on your billing date until you cancel. Cancel before your next payment to avoid that charge." Preserve the Tong Shu access promise and all prices. Homepage pricing note and FAQ plus Power Calendar billing note/FAQ also require this distinction. Copy changes are not yet applied.
+
+Verification: run `node --test tests/*.test.mjs`. Tests use fake Stripe/Apps Script backends only. No live customer signup/payment or migration is needed for unit coverage. Verify deployment and real event behavior separately after release authorization.
+
+## Historical September setup (Calendar trial rule below is superseded)
 
 Built 2026-09-25. **Live since 2026-09-25**: steps 1 to 4 below are done and the site copy is updated. Step 5 (a real test signup) is still pending; see `CLAUDE.md`.
 

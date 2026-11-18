@@ -5,7 +5,7 @@ import test from 'node:test';
 import { POST } from '../api/stripe-webhook.mjs';
 
 const secret = 'whsec_route_test';
-const event = { id: 'evt_1', type: 'customer.subscription.created', data: { object: { id: 'sub_9', status: 'active', created: 1790300000, metadata: {} } } };
+const event = { id: 'evt_1', type: 'customer.subscription.created', data: { object: { id: 'sub_9', status: 'active', created: 1790300000, metadata: {}, items: { data: [{ price: { id: 'price_1UJU74RmcvZfydHfXiBh79tC' } }] } } } };
 
 function request(body, sig) {
   return new Request('https://www.jeffseah.rocks/api/stripe-webhook', { method: 'POST', body, headers: { 'stripe-signature': sig } });
@@ -94,6 +94,35 @@ test('route sends no alert for events it ignores', async () => {
       const urls = fakeBackends();
       assert.equal((await POST(request(body, sign(body)))).status, 200);
       assert.equal(urls.length, 0);
+    });
+  } finally { globalThis.fetch = realFetch; }
+});
+
+test('calendar route preserves billing, emails original trial end, and retries failed alerts', async () => {
+  const realFetch = globalThis.fetch;
+  try {
+    await withEnv({ STRIPE_API_KEY: 'rk_test', STRIPE_WEBHOOK_SECRET: secret }, async () => {
+      const trial = structuredClone(event);
+      Object.assign(trial.data.object, {status: 'trialing', trial_end: Date.UTC(2026, 11, 21, 4) / 1000,
+        items: {data: [{price: {id: 'price_1UJU4uRmcvZfydHfKKY4QrSU', unit_amount: 9700, currency: 'usd'}}]}});
+      const body = JSON.stringify(trial);
+      const calls = [];
+      let fail = true;
+      globalThis.fetch = async (url, init) => {
+        calls.push({url, payload: JSON.parse(init.body)});
+        assert.match(url, /^https:\/\/script\.google\.com\/macros\//);
+        return Response.json({result: fail ? 'error' : 'success'});
+      };
+      const origError = console.error; console.error = () => {};
+      try { assert.equal((await POST(request(body, sign(body)))).status, 500); }
+      finally { console.error = origError; }
+      fail = false;
+      const response = await POST(request(body, sign(body)));
+      assert.equal(response.status, 200);
+      assert.equal((await response.json()).alerted, true);
+      assert.equal(calls.length, 2);
+      assert.equal(calls[1].payload.firstCharge, '2026-12-21');
+      assert.equal(calls[1].payload.plan, 'Power Calendar (97)');
     });
   } finally { globalThis.fetch = realFetch; }
 });
