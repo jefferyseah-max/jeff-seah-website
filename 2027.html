@@ -261,7 +261,7 @@
     .xo[hidden] { display: none; }
     .xo-backdrop { position: absolute; inset: 0; background: rgba(5, 6, 9, 0.78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity 0.35s ease; }
     .xo-card {
-      position: relative; width: 100%; max-width: 30rem; max-height: calc(100vh - 32px); overflow-y: auto;
+      position: relative; width: 100%; max-width: 34rem; max-height: calc(100vh - 32px); overflow-y: auto;
       border-radius: 28px; border: 1px solid rgba(212, 175, 55, 0.28); padding: 36px 32px 28px;
       background: radial-gradient(28rem 18rem at 100% 0%, rgba(224, 109, 83, 0.12), transparent 65%),
                   radial-gradient(24rem 16rem at 0% 0%, rgba(212, 175, 55, 0.10), transparent 60%), var(--coal);
@@ -278,14 +278,27 @@
     .xo-title em { display: block; color: var(--gold); }
     .xo-body { margin-top: 14px; font-size: 17px; line-height: 1.6; color: rgba(237, 230, 214, 0.85); }
     .xo-shot { margin: 22px 0 0; border-radius: 16px; overflow: hidden; border: 1px solid rgba(212, 175, 55, 0.22); background: #10262a; }
-    .xo-shot img { display: block; width: 100%; height: auto; -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent); mask-image: linear-gradient(180deg, #000 72%, transparent); }
+    .xo-shot { position: relative; }
+    .xo-shot video { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: #0b1416; cursor: pointer; }
+    .xo-sound { position: absolute; top: 10px; right: 10px; display: flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid rgba(212, 175, 55, 0.5); background: rgba(11, 12, 16, 0.78); color: var(--ivory); font-size: 13px; font-weight: 700; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition: border-color 0.2s, color 0.2s; }
+    .xo-sound:hover, .xo-sound[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
+    .xo-sound:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
     .xo-cta { margin-top: 24px; display: flex; width: 100%; align-items: center; justify-content: center; gap: 12px; border-radius: 999px; padding: 18px 24px; font-size: 16px; font-weight: 800; letter-spacing: 0.02em; }
     .xo-fine { margin-top: 10px; text-align: center; font-size: 15px; color: var(--ash); }
     .xo-links { margin-top: 18px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 16px; font-size: 15px; }
     .xo-link { color: var(--gold); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(212, 175, 55, 0.4); }
     .xo-skip { color: var(--ash); }
     .xo-skip:hover { color: var(--ivory); }
-    @media (max-width: 420px) { .xo-card { padding: 32px 20px 22px; } .xo-title { font-size: 2rem; } }
+    @media (max-height: 860px) and (min-width: 421px) {
+      .xo-card { padding: 24px 30px 12px; }
+      .xo-title { font-size: 2rem; }
+      .xo-body { margin-top: 10px; }
+      .xo-shot { margin-top: 14px; }
+      .xo-cta { margin-top: 14px; padding: 15px 24px; }
+      .xo-fine { margin-top: 8px; }
+      .xo-links { margin-top: 6px; }
+    }
+    @media (max-width: 420px) { .xo-card { padding: 32px 20px 18px; } .xo-title { font-size: 2rem; } }
     @media (max-width: 350px) { .xo-card { padding: 30px 14px 20px; } }
     @media (prefers-reduced-motion: reduce) { .xo-backdrop, .xo-card { transition: none; } }
   </style>
@@ -1928,10 +1941,17 @@
       </button>
       <p class="xo-eyebrow">Before you go</p>
       <h2 class="xo-title" id="xo-title">Not ready for the whole year? <em>Try your own Tong Shu.</em></h2>
-      <p class="xo-body" id="xo-body">Your personal almanac, read against your birth chart. Every day of the month is marked: your strong days, your caution days, and why. Free for 30 days.</p>
+      <p class="xo-body" id="xo-body">Your personal almanac, read against your birth chart: your strong days, your caution days, and why. Free for 30 days.</p>
+      <!-- 56 s walkthrough of the Tong Shu app (captioned; voice is Jeff's). Loads only when the offer opens,
+           plays muted, sound on request. Source and build notes: docs/design/TONGSHU_WALKTHROUGH_VIDEO.md -->
       <figure class="xo-shot">
-        <img src="/img/tongshu-preview.webp" width="980" height="480" decoding="async"
-             alt="The Tong Shu app: a December month grid with each day's officer and coloured markers, and 5 December open in detail." />
+        <video data-xo-video muted playsinline preload="none" width="960" height="720"
+               data-src="/media/tongshu/tongshu-walkthrough.mp4" poster="/media/tongshu/tongshu-walkthrough-poster.webp"
+               aria-label="56-second walkthrough of the personal Tong Shu app: the week view, a day entry, a caution day, a date in the month, the chart clash note and the best hours. Captioned."></video>
+        <button type="button" class="xo-sound" data-xo-sound aria-pressed="false">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 6h2.2L8 3.2v9.6L4.7 10H2.5z" fill="currentColor"/><path data-off d="M10.5 6l3.5 4m0-4l-3.5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path data-on d="M10.5 5.5a3.5 3.5 0 010 5M12.3 3.8a6 6 0 010 8.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" hidden/></svg>
+          <span data-label>Sound on</span>
+        </button>
       </figure>
       <a class="btn-ember xo-cta" href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05?client_reference_id=exit_2027" target="_blank" rel="noopener noreferrer" data-xo-cta>
         Start my 30-day free trial
@@ -1975,13 +1995,52 @@
         void box.offsetWidth; // commit the hidden state so the fade-in transition runs
         box.classList.add('is-open');
         box.querySelector('[data-xo-cta]').focus({ preventScroll: true });
+        playVideo();
       }
       function close() {
+        if (vid) vid.pause();
         box.classList.remove('is-open');
         document.documentElement.style.overflow = '';
         setTimeout(() => { box.hidden = true; }, matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 400);
         if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
       }
+      // Walkthrough video: fetched only when the offer opens, autoplays muted (captions carry the story),
+      // sound on request. Reduced motion: no autoplay, native controls instead.
+      const vid = box.querySelector('[data-xo-video]');
+      const sound = box.querySelector('[data-xo-sound]');
+      const REDUCED_XO = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function loadVideo() {
+        if (!vid || vid.src) return;
+        vid.src = vid.dataset.src;
+        vid.preload = 'auto';
+        if (REDUCED_XO) vid.controls = true;
+      }
+      function playVideo() {
+        if (!vid) return;
+        loadVideo();
+        if (!REDUCED_XO) vid.play().catch(() => {});
+      }
+      function setSound(on) {
+        vid.muted = !on;
+        sound.setAttribute('aria-pressed', String(on));
+        sound.querySelector('[data-label]').textContent = on ? 'Sound off' : 'Sound on';
+        sound.querySelector('[data-on]').toggleAttribute('hidden', !on);
+        sound.querySelector('[data-off]').toggleAttribute('hidden', on);
+      }
+      if (vid && sound) {
+        sound.addEventListener('click', () => {
+          loadVideo();
+          const on = vid.muted;
+          if (on && vid.ended) vid.currentTime = 0;
+          setSound(on);
+          if (on) vid.play().catch(() => {});
+        });
+        vid.addEventListener('click', () => {
+          if (vid.controls) return;
+          if (vid.paused || vid.ended) { if (vid.ended) vid.currentTime = 0; vid.play().catch(() => {}); } else vid.pause();
+        });
+      }
+
       box.querySelectorAll('[data-xo-close]').forEach(el => el.addEventListener('click', close));
       box.querySelector('[data-xo-cta]').addEventListener('click', () => setTimeout(close, 300));
       document.addEventListener('keydown', e => {

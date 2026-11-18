@@ -39,8 +39,10 @@ Do not ask Jeff to do anything Claude can do itself. Work down this ladder and s
 - `/2027` exit offer (`#exit-offer`, script at the end of `2027.html`): offers the 97 Tong Shu trial to visitors leaving
   without ordering. Desktop: pointer leaves through the top; phones: fast flick up after two screens. Once per visitor per
   7 days (`localStorage` `jsr-exit-2027`), armed after 8 s, never after an Outlook order click. Trial link carries
-  `client_reference_id=exit_2027`. Preview `/2027?exit=1`, disable `?noexit=1`. Picture: `img/tongshu-preview.webp`
-  (Jeff's own December 2026 grid with 5 December open; cropped above W-60 and the chart-interaction chips).
+  `client_reference_id=exit_2027`. Preview `/2027?exit=1`, disable `?noexit=1`. Since 2026-11-19 it shows a 56 s
+  captioned walkthrough (`media/tongshu/tongshu-walkthrough.mp4`, Jeff's voice, owner name blurred), loaded on open,
+  muted autoplay with a Sound on button; build notes `docs/design/TONGSHU_WALKTHROUGH_VIDEO.md`.
+  `img/tongshu-preview.webp` stays on `/power-calendar`.
 - 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. `/2027` holds both links in
   its own inline Alpine store (`Alpine.store('offer')` in `2027.html`), which switches link and copy at
   00:00 SGT 1 Jan; `2027.js` keeps the same constants for the other pages (the homepage has its own
