@@ -11,6 +11,13 @@ report's Start Here tab. C3 to C6 remain **disconnected**, so Flow C sends only 
 connecting C3 to C6 (sample-calendar link, three paid invoice discount, reply suppression). Not yet observed: a real buyer
 passing through Stripe -> webhook -> Encharge; watch the first live order.
 
+## Flow D: Power Calendar trial (drafted 2026-11-19, not built)
+
+Copy, flow map and activation gates: `docs/crm/emails-power-calendar-trial.md`. Trigger: "Subscription
+Started" with tag `monthly-97`. The webhook now tags `monthly-cancelled` (contact matched by `userId` =
+Stripe customer; needs `customer.subscription.updated`/`.deleted` added to the Stripe webhook); D4 needs a
+manual `power-calendar-ready` tag. Until then trial sign-ups get no email from us.
+
 ## Launch status and blockers (2026-09-29)
 
 The pricing page and its Stripe links are live. The Encharge sending domain and sender are verified,
