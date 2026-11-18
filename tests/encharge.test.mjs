@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import test from 'node:test';
 
-import { checkoutEvents, sendToEncharge } from '../lib/encharge.mjs';
+import { checkoutEvents, subscriptionEvents, sendToEncharge } from '../lib/encharge.mjs';
 import { POST } from '../api/stripe-webhook.mjs';
 
 const outlook = {
@@ -112,4 +112,66 @@ test('route ignores a checkout for an unknown product without needing the Enchar
   const res = await run({ ENCHARGE_WRITE_KEY: '' }, async () => { called = true; return new Response(''); }, checkout({ ...outlook, success_url: 'https://x.test/book' }));
   assert.equal(res.status, 200);
   assert.equal(called, false);
+});
+
+// ---- Cancellations (2026-11-19): subscription events carry no email, so the contact is matched by userId. ----
+
+test('a checkout stores the Stripe customer as the Encharge userId', () => {
+  const [identify] = checkoutEvents({ ...trial, customer: 'cus_9' });
+  assert.equal(identify.user.userId, 'cus_9');
+  assert.equal(identify.user.email, 'lee@example.com');
+  assert.equal('userId' in checkoutEvents(trial)[0].user, false);
+});
+
+const sub = { id: 'sub_7', object: 'subscription', customer: 'cus_9', status: 'trialing', cancel_at_period_end: false, cancel_at: null };
+const subEvent = (type, object, previous) => ({ id: 'evt_s', type, data: { object, ...(previous && { previous_attributes: previous }) } });
+
+test('an ended subscription tags the contact monthly-cancelled and fires Subscription Cancelled', () => {
+  const [identify, cancelled] = subscriptionEvents(subEvent('customer.subscription.deleted', { ...sub, status: 'canceled', ended_at: 1797000000 }));
+  assert.deepEqual(identify, { name: 'identify', user: { userId: 'cus_9', tags: 'monthly-cancelled' } });
+  assert.equal(cancelled.name, 'Subscription Cancelled');
+  assert.deepEqual(cancelled.user, { userId: 'cus_9' });
+  assert.equal(cancelled.properties.subscription, 'sub_7');
+  assert.equal(cancelled.properties.endsAt, new Date(1797000000 * 1000).toISOString());
+});
+
+test('setting a subscription to cancel later tags it once; unrelated updates send nothing', () => {
+  const later = subEvent('customer.subscription.updated', { ...sub, cancel_at_period_end: true, cancel_at: 1797000000 }, { cancel_at_period_end: false, cancel_at: null });
+  assert.deepEqual(subscriptionEvents(later).map(e => e.name), ['identify', 'Subscription Cancelled']);
+  // The portal may set cancel_at alone.
+  const atOnly = subEvent('customer.subscription.updated', { ...sub, cancel_at: 1797000000 }, { cancel_at: null });
+  assert.deepEqual(subscriptionEvents(atOnly).map(e => e.name), ['identify', 'Subscription Cancelled']);
+  // Already cancelling, something else changed: nothing.
+  assert.deepEqual(subscriptionEvents(subEvent('customer.subscription.updated', { ...sub, cancel_at_period_end: true }, { metadata: {} })), []);
+  assert.deepEqual(subscriptionEvents(subEvent('customer.subscription.updated', sub, { status: 'incomplete' })), []);
+});
+
+test('undoing a cancellation fires Subscription Resumed without touching tags', () => {
+  const resumed = subscriptionEvents(subEvent('customer.subscription.updated', sub, { cancel_at_period_end: true }));
+  assert.deepEqual(resumed, [{ name: 'Subscription Resumed', user: { userId: 'cus_9' }, properties: { subscription: 'sub_7', status: 'trialing' } }]);
+});
+
+test('subscription events without a customer, or for other objects, send nothing', () => {
+  assert.deepEqual(subscriptionEvents(subEvent('customer.subscription.deleted', { ...sub, customer: null })), []);
+  assert.deepEqual(subscriptionEvents(subEvent('customer.subscription.deleted', { id: 'in_1', object: 'invoice', customer: 'cus_9' })), []);
+  assert.deepEqual(subscriptionEvents(undefined), []);
+});
+
+test('route sends a cancellation to Encharge, ignores no-change updates, and returns 500 on failure', async () => {
+  const bodies = [];
+  const ok = await run({ ENCHARGE_WRITE_KEY: 'wk' }, async (url, init) => { bodies.push({ url, body: JSON.parse(init.body) }); return new Response('', { status: 200 }); },
+    subEvent('customer.subscription.deleted', { ...sub, status: 'canceled' }));
+  assert.equal(ok.status, 200);
+  assert.deepEqual(await ok.json(), { action: 'crm', encharge: ['identify', 'Subscription Cancelled'] });
+  assert.ok(bodies.every(b => b.url === 'https://ingest.encharge.io/v1/'));
+  assert.equal(bodies[0].body.user.tags, 'monthly-cancelled');
+
+  let called = false;
+  const quiet = await run({ ENCHARGE_WRITE_KEY: '' }, async () => { called = true; return new Response(''); },
+    subEvent('customer.subscription.updated', sub, { metadata: {} }));
+  assert.equal(quiet.status, 200);
+  assert.equal(called, false);
+
+  assert.equal((await run({ ENCHARGE_WRITE_KEY: 'wk' }, async () => new Response('', { status: 500 }),
+    subEvent('customer.subscription.deleted', sub))).status, 500);
 });

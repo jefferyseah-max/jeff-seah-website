@@ -31,7 +31,8 @@ How: Stripe Payment Links cannot set a billing day. When Stripe reports a new su
 1. **Restricted key.** Stripe, Developers, API keys, Create restricted key. Name it `billing-anchor`. Give it **Subscriptions: Write** and nothing else. Copy the `rk_live_...` value.
 2. **Webhook.** Stripe, Developers, Webhooks, Add endpoint:
    - URL: `https://www.jeffseah.rocks/api/stripe-webhook`
-   - Events: `customer.subscription.created` and `checkout.session.completed`.
+   - Events: `customer.subscription.created` and `checkout.session.completed`, plus (from 2026-11-19, for the
+     Encharge cancellation tag) `customer.subscription.updated` and `customer.subscription.deleted`.
    - Save, then reveal and copy the signing secret (`whsec_...`).
 3. **Vercel.** Project `jeff-seah-website`, Settings, Environment Variables, Production:
    - `STRIPE_API_KEY` = the `rk_live_...` value

@@ -34,9 +34,11 @@ keeps Calendar-only billing on the trial end, not the 15th), so day 25 gives fiv
 
 ### Before activation (gates)
 
-1. **Cancellations reach Encharge.** D5 must not go to someone who already cancelled. The webhook does
-   not tell Encharge about cancellations yet; add `customer.subscription.deleted` (and a cancel-at-period-end
-   update) -> tag `monthly-cancelled`. Small webhook change, with tests.
+1. **Cancellations reach Encharge.** Built 2026-11-19: the webhook tags `monthly-cancelled` and fires
+   "Subscription Cancelled" (or "Subscription Resumed") from `customer.subscription.deleted` / `.updated`,
+   matching the contact by `userId` = Stripe customer, which checkouts now store. Still to do: Jeff adds those
+   two events to the Stripe webhook destination. Contacts created before 2026-11-19 (only Jeff's own test
+   trial) have no `userId`, so their cancellation would not find them.
 2. **Intake email can differ from checkout email.** The `intake-received` tag lands on the email typed into
    `/welcome`; the flow runs on the Stripe checkout email. In the 18 Nov test they differed, so D2R would
    have gone to someone who had already sent the form. D2R's copy covers this ("if you've already sent
@@ -115,7 +117,8 @@ you, when it clashes with your chart, and why.
 - **Green**: your power days, the ones that back you. Good for the things that matter.
 - **Black**: caution days. Not bad luck; days to keep simple, finish rather than start, and say less.
 - **Red**: auspicious and activation days, plus the full and new moons.
-- **Purple**: TLC days, for rest and looking after yourself. **[CHECK wording]**
+- **Purple**: TLC days, tender loving care for your body. Your immunity runs lower, so rest, eat well
+  and don't push it.
 - **Gold**: reference days, such as solar terms and festivals.
 
 **My Week sits at the top.** It lists only the days that matter this week, Monday to Sunday, so you can plan

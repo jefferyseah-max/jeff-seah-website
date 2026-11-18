@@ -1,6 +1,7 @@
 // Stripe webhook: https://www.jeffseah.rocks/api/stripe-webhook
 // customer.subscription.created: preserves Calendar-only billing; anchors report plans to the 15th, then emails Jeff
 //   about the new subscriber (lib/signup-alert.mjs).
+// customer.subscription.deleted / .updated: tags a cancelling subscriber monthly-cancelled in Encharge.
 // checkout.session.completed: tells Encharge who bought what, which starts the client email flows
 //   (lib/encharge.mjs, docs/crm/ENCHARGE_CRM.md).
 // Setup and switch-on steps: BILLING_ANCHOR_SETUP.md. Logic and tests: lib/ and tests/.
@@ -11,7 +12,7 @@
 
 import { verifyStripeSignature, handleStripeEvent } from '../lib/billing-anchor.mjs';
 import { checkoutSource, sendSignupAlert } from '../lib/signup-alert.mjs';
-import { checkoutEvents, sendToEncharge } from '../lib/encharge.mjs';
+import { checkoutEvents, subscriptionEvents, sendToEncharge } from '../lib/encharge.mjs';
 
 export async function POST(request) {
   const apiKey = process.env.STRIPE_API_KEY;
@@ -33,6 +34,15 @@ export async function POST(request) {
       const events = checkoutEvents(event.data.object);
       if (!events.length) {
         result = { action: 'ignored', reason: 'not a known product' };
+      } else {
+        const writeKey = process.env.ENCHARGE_WRITE_KEY;
+        if (!writeKey) throw new Error('ENCHARGE_WRITE_KEY is not set');
+        result = { action: 'crm', ...(await sendToEncharge(events, { writeKey })) };
+      }
+    } else if (event.type === 'customer.subscription.deleted' || event.type === 'customer.subscription.updated') {
+      const events = subscriptionEvents(event);
+      if (!events.length) {
+        result = { action: 'ignored', reason: 'no cancellation change' };
       } else {
         const writeKey = process.env.ENCHARGE_WRITE_KEY;
         if (!writeKey) throw new Error('ENCHARGE_WRITE_KEY is not set');

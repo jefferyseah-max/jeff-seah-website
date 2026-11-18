@@ -14,8 +14,9 @@ passing through Stripe -> webhook -> Encharge; watch the first live order.
 ## Flow D: Power Calendar trial (drafted 2026-11-19, not built)
 
 Copy, flow map and activation gates: `docs/crm/emails-power-calendar-trial.md`. Trigger: "Subscription
-Started" with tag `monthly-97`. Needs a `monthly-cancelled` tag from the webhook and a manual
-`power-calendar-ready` tag before it can be switched on. Until then trial sign-ups get no email from us.
+Started" with tag `monthly-97`. The webhook now tags `monthly-cancelled` (contact matched by `userId` =
+Stripe customer; needs `customer.subscription.updated`/`.deleted` added to the Stripe webhook); D4 needs a
+manual `power-calendar-ready` tag. Until then trial sign-ups get no email from us.
 
 ## Launch status and blockers (2026-09-29)
 
