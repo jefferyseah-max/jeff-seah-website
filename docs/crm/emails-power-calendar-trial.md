@@ -1,14 +1,14 @@
 # Encharge email drafts: Power Calendar 30-day trial (Flow D)
 
-Drafted 2026-11-19 (Claude, with Jeff). **Nothing sends until Jeff approves the copy and the flow is built
-and switched on in Encharge.** From: Jeff Seah <coaching@jeffseah.rocks>, reply-to the same. Every
+Drafted 2026-11-19 (Claude, with Jeff). **Built in Encharge 2026-11-19 (flows 415139 and 415144), switched off. Nothing sends until Jeff
+switches them on.** From: Jeff Seah <coaching@jeffseah.rocks>, reply-to the same. Every
 email carries Encharge's unsubscribe footer and mailing address.
 
 Customer-facing name: **Power Calendar** ("built on the Chinese Tong Shu almanac, read against your birth
 chart"). The app page itself is still titled "My Tongshu"; the emails name both once so the link is clear.
 Rulings D9 and D10 still apply: no email invites a question. Replying is offered only for form trouble.
 
-Merge fields: `{{ person.firstName }}`. Links marked **[CHECK]** need Jeff's confirmation before activation.
+Merge fields: `{{ person.firstName }}`. Review copy for Jeff (all series, editable): https://claude.ai/artifact/VnWF2pH2nGDWL2BGsSkCZk
 
 ---
 
@@ -147,7 +147,7 @@ Tap any date in your calendar and it opens in full. Here is how to read it, top 
 5. **Hours.** Swipe along the strip: **Best** hours in red, **Usable** in green, **Avoid** in dark. When
    a day is mixed, the hours tell you when within it to act.
 
-All dates and hours are shown in Singapore time, so allow for your own time zone when you plan. **[CHECK]**
+All dates and hours are shown in Singapore time, so allow for your own time zone when you plan.
 
 A simple way to start: open **My Week** on Monday morning, mark the one or two days that suit what you
 most need to do, and check the hours before anything important.
@@ -163,7 +163,7 @@ Hi {{ person.firstName }},
 
 Your Power Calendar is ready.
 
-**[Sign in to your Power Calendar]([CHECK: portal sign-in link])**
+**[Sign in to your Power Calendar](https://reports.jeffseah.rocks/members/portal/tongshu/)**
 
 Start with **My Week** at the top: it shows the days that matter this week. Tap any date for the full
 reading, down to the best hours.
