@@ -51,7 +51,7 @@ function fakeStripe() {
   return { calls, fetchImpl };
 }
 
-const subEvent = (sub, type = 'customer.subscription.created') => ({ id: 'evt_1', type, data: { object: { id: 'sub_1', status: 'active', created: sgt(2026, 9, 3), metadata: {}, ...sub } } });
+const subEvent = (sub, type = 'customer.subscription.created') => ({ id: 'evt_1', type, data: { object: { id: 'sub_1', status: 'active', created: sgt(2026, 9, 3), metadata: {}, items: { data: [{ price: { id: 'price_1UJU74RmcvZfydHfXiBh79tC' } }] }, ...sub } } });
 
 test('handler moves a new subscription to the 15th without charging extra', async () => {
   const { calls, fetchImpl } = fakeStripe();
@@ -79,4 +79,50 @@ test('handler ignores other events, already-anchored and ended subscriptions', a
 test('handler surfaces a Stripe API failure instead of swallowing it', async () => {
   const fetchImpl = async () => new Response('{"error":{"message":"No such subscription"}}', { status: 404 });
   await assert.rejects(handleStripeEvent(subEvent({}), { apiKey: 'k', fetchImpl }), /Stripe 404.*No such subscription/);
+});
+
+const calendarItems = { data: [{ price: { id: 'price_1UJU4uRmcvZfydHfKKY4QrSU' } }] };
+test('calendar-only keeps original trial end and monthly cycle with no Stripe mutation', async () => {
+  const { calls, fetchImpl } = fakeStripe();
+  for (const status of ['trialing', 'active']) {
+    const result = await handleStripeEvent(subEvent({ status, created: sgt(2026, 11, 21), trial_end: sgt(2026, 12, 21), items: calendarItems }), { apiKey: 'k', fetchImpl });
+    assert.equal(result.action, 'calendar-preserved');
+    assert.equal(result.anchor, status === 'trialing' ? '2026-12-21' : '2026-11-21');
+  }
+  assert.equal(calls.length, 0);
+});
+
+test('unknown, absent, mixed and truncated item lists never mutate billing', async () => {
+  const { calls, fetchImpl } = fakeStripe();
+  for (const items of [undefined, {data: []}, {data: [{price: {id: 'unknown', unit_amount: 9700}}]}, {data: [...calendarItems.data, ...calendarItems.data]}, {...calendarItems, has_more: true}]) {
+    assert.equal((await handleStripeEvent(subEvent({items}), {apiKey: 'k', fetchImpl})).action, 'skipped');
+  }
+  assert.equal(calls.length, 0);
+});
+
+test('calendar upgrades and existing anchored subscriptions are not migrated', async () => {
+  const { calls, fetchImpl } = fakeStripe();
+  assert.equal((await handleStripeEvent(subEvent({items: calendarItems}, 'customer.subscription.updated'), {apiKey: 'k', fetchImpl})).action, 'ignored');
+  assert.equal((await handleStripeEvent(subEvent({items: calendarItems, metadata: {billing_anchor: '2027-01-15'}}), {apiKey: 'k', fetchImpl})).action, 'skipped');
+  assert.equal(calls.length, 0);
+});
+
+test('all known report prices retain existing anchoring', async () => {
+  for (const id of ['price_1UJU74RmcvZfydHfXiBh79tC', 'price_1UJUOHRmcvZfydHfUqNSMerI', 'price_1UJUQERmcvZfydHfo3AOe5GD', 'price_1UKhMWRmcvZfydHfYU4KdQBj']) {
+    const {calls, fetchImpl} = fakeStripe();
+    assert.equal((await handleStripeEvent(subEvent({items: {data: [{price: {id}}]}}), {apiKey: 'k', fetchImpl})).action, 'anchored');
+    assert.equal(calls.length, 1);
+  }
+});
+
+test('calendar without trial and nonbillable statuses never alter Stripe', async () => {
+  const {calls, fetchImpl} = fakeStripe();
+  const result = await handleStripeEvent(subEvent({items: calendarItems}), {apiKey: 'k', fetchImpl});
+  assert.equal(result.action, 'calendar-preserved');
+  assert.equal(result.anchor, '2026-09-03');
+  for (const status of ['canceled', 'incomplete', 'past_due']) {
+    assert.equal((await handleStripeEvent(subEvent({items: calendarItems, status}), {apiKey: 'k', fetchImpl})).action, 'skipped');
+  }
+  await assert.rejects(handleStripeEvent(subEvent({items: calendarItems, status: 'trialing'}), {apiKey: 'k', fetchImpl}), /missing charge date/);
+  assert.equal(calls.length, 0);
 });

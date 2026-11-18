@@ -1,5 +1,5 @@
 // Stripe webhook: https://www.jeffseah.rocks/api/stripe-webhook
-// customer.subscription.created: moves the subscription's billing day to the 15th, then emails Jeff
+// customer.subscription.created: preserves Calendar-only billing; anchors report plans to the 15th, then emails Jeff
 //   about the new subscriber (lib/signup-alert.mjs).
 // checkout.session.completed: tells Encharge who bought what, which starts the client email flows
 //   (lib/encharge.mjs, docs/crm/ENCHARGE_CRM.md).
@@ -40,7 +40,7 @@ export async function POST(request) {
       }
     } else {
       result = await handleStripeEvent(event, { apiKey });
-      if (result.action === 'anchored') Object.assign(result, await sendSignupAlert(event.data.object, result.anchor));
+      if (['anchored', 'calendar-preserved'].includes(result.action)) Object.assign(result, await sendSignupAlert(event.data.object, result.anchor));
     }
     console.log('stripe-webhook:', JSON.stringify(result));
     return Response.json(result);
