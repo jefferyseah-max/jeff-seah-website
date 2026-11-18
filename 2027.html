@@ -256,6 +256,19 @@
     @media (prefers-reduced-motion: reduce) { .pc-day { transition: none; } }
     @media (prefers-reduced-motion: reduce) { .eb-sweep::after { animation: none; } }
 
+    /* Power Calendar trial band after the FAQ: secondary to the Outlook, so outlined gold, not ember. */
+    .pc-band { margin-top: 56px; display: grid; gap: 20px; align-items: center; border: 1px solid rgba(212, 175, 55, 0.22); border-radius: 24px; padding: 24px; background: rgba(255, 255, 255, 0.02); text-align: left; }
+    @media (min-width: 640px) { .pc-band { grid-template-columns: 1fr auto; gap: 28px; padding: 28px 32px; } }
+    .pc-band-title { font-family: 'Cormorant Garamond', serif; font-size: 1.75rem; line-height: 1.15; color: var(--ivory); }
+    .pc-band-body { margin-top: 8px; font-size: 17px; line-height: 1.6; color: rgba(237, 230, 214, 0.85); }
+    .pc-band-fine { margin-top: 6px; font-size: 15px; color: var(--ash); }
+    .pc-band-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .pc-band-btn { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; white-space: nowrap; border-radius: 999px; border: 1px solid rgba(212, 175, 55, 0.6); padding: 0 22px; font-size: 16px; font-weight: 800; color: var(--gold); transition: background-color 0.2s, border-color 0.2s; }
+    .pc-band-btn:hover { background: rgba(212, 175, 55, 0.1); border-color: var(--gold); }
+    .pc-band-link { font-size: 15px; color: var(--ash); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(168, 173, 182, 0.4); }
+    .pc-band-link:hover { color: var(--ivory); }
+    .pc-band-btn:focus-visible, .pc-band-link:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+    @media (max-width: 639px) { .pc-band-btn { width: 100%; } }
     /* Exit offer: Power Calendar trial for visitors leaving without the Outlook (script at the end of body). */
     .xo { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: 16px; }
     .xo[hidden] { display: none; }
@@ -290,10 +303,10 @@
     .xo-skip { color: var(--ash); }
     .xo-skip:hover { color: var(--ivory); }
     @media (max-height: 860px) and (min-width: 421px) {
-      .xo-card { padding: 24px 30px 12px; }
+      .xo-card { padding: 24px 30px 10px; }
       .xo-title { font-size: 2rem; }
-      .xo-body { margin-top: 10px; }
-      .xo-shot { margin-top: 14px; }
+      .xo-body { margin-top: 8px; }
+      .xo-shot { margin-top: 12px; }
       .xo-cta { margin-top: 14px; padding: 15px 24px; }
       .xo-fine { margin-top: 8px; }
       .xo-links { margin-top: 6px; }
@@ -983,6 +996,20 @@
           <span>Get my 2027 Outlook</span> <span class="opacity-40">·</span> <span>USD <span x-text="$store.offer.price">88</span></span>
         </a>
       </div>
+
+      <!-- The quiet second door: the 97 trial for readers not ready for the year, in case the exit offer never
+           showed or was dismissed. Outlined, never ember, so the Outlook stays the main ask. Tagged 2027_footer. -->
+      <aside class="pc-band" aria-labelledby="pc-band-title" data-reveal>
+        <div>
+          <p class="pc-band-title" id="pc-band-title">Not ready for the whole year?</p>
+          <p class="pc-band-body">Start with your personal Power Calendar, built on the Chinese Tong Shu almanac and read against your birth chart. Free for 30 days.</p>
+          <p class="pc-band-fine">Then USD 97 a month. Card required, cancel anytime.</p>
+        </div>
+        <div class="pc-band-actions">
+          <a class="pc-band-btn" href="https://buy.stripe.com/8x2cN72QvegSf6y1LPbwk05?client_reference_id=2027_footer" target="_blank" rel="noopener noreferrer">Start my 30-day free trial</a>
+          <a class="pc-band-link" href="/power-calendar">See how it works</a>
+        </div>
+      </aside>
     </section>
   </main>
 
@@ -1940,14 +1967,14 @@
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4 4l10 10M14 4L4 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
       </button>
       <p class="xo-eyebrow">Before you go</p>
-      <h2 class="xo-title" id="xo-title">Not ready for the whole year? <em>Try your own Tong Shu.</em></h2>
-      <p class="xo-body" id="xo-body">Your personal almanac, read against your birth chart: your strong days, your caution days, and why. Free for 30 days.</p>
-      <!-- 56 s walkthrough of the Tong Shu app (captioned; voice is Jeff's). Loads only when the offer opens,
+      <h2 class="xo-title" id="xo-title">Not ready for the whole year? <em>Try your Power Calendar.</em></h2>
+      <p class="xo-body" id="xo-body">Built on the Chinese Tong Shu almanac and read against your birth chart. Free for 30 days.</p>
+      <!-- 57 s walkthrough of the Power Calendar app (captioned; voice is Jeff's). Loads only when the offer opens,
            plays muted, sound on request. Source and build notes: docs/design/TONGSHU_WALKTHROUGH_VIDEO.md -->
       <figure class="xo-shot">
         <video data-xo-video muted playsinline preload="none" width="960" height="720"
                data-src="/media/tongshu/tongshu-walkthrough.mp4" poster="/media/tongshu/tongshu-walkthrough-poster.webp"
-               aria-label="56-second walkthrough of the personal Tong Shu app: the week view, a day entry, a caution day, a date in the month, the chart clash note and the best hours. Captioned."></video>
+               aria-label="57-second walkthrough of the personal Power Calendar app: the week view, a day entry, a caution day, a date in the month, the chart clash note and the best hours. Captioned."></video>
         <button type="button" class="xo-sound" data-xo-sound aria-pressed="false">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2.5 6h2.2L8 3.2v9.6L4.7 10H2.5z" fill="currentColor"/><path data-off d="M10.5 6l3.5 4m0-4l-3.5 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><path data-on d="M10.5 5.5a3.5 3.5 0 010 5M12.3 3.8a6 6 0 010 8.4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" hidden/></svg>
           <span data-label>Sound on</span>
@@ -1959,7 +1986,7 @@
       </a>
       <p class="xo-fine">Then USD 97 a month. Card required, cancel anytime. Your access is ready within 5 working days of sending your birth details.</p>
       <p class="xo-links">
-        <!-- "See how it works" returns here, linking to the Tong Shu walkthrough page, once its video exists. -->
+        <!-- "See how it works" returns here, linking to the Power Calendar walkthrough page, once its video exists. -->
         <button type="button" class="xo-skip" data-xo-close>No thanks, keep reading</button>
       </p>
     </div>

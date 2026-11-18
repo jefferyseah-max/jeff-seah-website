@@ -41,7 +41,7 @@ print("vo", [round(v, 2) for v in vo])
 #    vo = index of the line that starts on this scene; share = part of that line's time.
 S = [
     dict(src=(0.0, 3.8), crop=(1008, 756, 0, 0), vo=0, share=1.0, blur=(12, 104, 232, 40), lead=0.5,
-         cap=["Your personal Tong Shu", "read against your own birth chart"]),
+         cap=["Your personal Power Calendar", "the Tong Shu, read against your birth chart"]),
     dict(src=(5.0, 13.0), crop=(672, 504, 0, 150), vo=1, share=1.0,
          cap=["This Week: your notable good", "and challenging days, ahead of time"]),
     dict(src=(20.3, 25.0), crop=(672, 504, 0, 100), vo=2, share=1.0,
@@ -107,7 +107,7 @@ for i, (s, d) in enumerate(zip(S, scene_d)):
 d = END_D
 end_vf = (f"color=c=0x0b1416:s={OW}x{OH}:d={d:.3f}:r={FPS}[bg];"
           f"movie=seal.png,scale=170:-1,format=rgba[s];[bg][s]overlay=(W-w)/2:150[v1];"
-          f"[v1]drawtext=fontfile=fonts/georgia.ttf:text='Your personal Tong Shu':fontsize=50:"
+          f"[v1]drawtext=fontfile=fonts/georgia.ttf:text='Your personal Power Calendar':fontsize=50:"
           f"fontcolor=0xEDE6D6:x=(w-text_w)/2:y=370:alpha='min(1\\,t/0.6)',"
           f"drawtext=fontfile=fonts/georgiai.ttf:text='Free for 30 days':fontsize=42:fontcolor=0xD4AF37:"
           f"x=(w-text_w)/2:y=445:alpha='min(1\\,max(0\\,(t-0.4)/0.6))',"
