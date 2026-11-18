@@ -43,6 +43,11 @@ Do not ask Jeff to do anything Claude can do itself. Work down this ladder and s
   captioned walkthrough (`media/tongshu/tongshu-walkthrough.mp4`, Jeff's voice, owner name blurred), loaded on open,
   muted autoplay with a Sound on button; build notes `docs/design/TONGSHU_WALKTHROUGH_VIDEO.md`.
   `img/tongshu-preview.webp` stays on `/power-calendar`.
+- Signup source (2026-11-19): every monthly-plan Stripe link carries `client_reference_id` = `home`, `power_calendar`
+  or `exit_2027`; on `/2027` `js/measure.js` keeps it and appends the ad source (`exit_2027__chatgpt_launch`) and logs
+  trial clicks as "Trial checkout", not Outlook "Checkout". The webhook puts it in the "New subscriber" email subject
+  and Sheet plan cell ("Power Calendar (97) via exit_2027"; "via unknown" means the Checkout Session lookup failed,
+  e.g. the restricted key lacks Checkout Sessions read) and in Encharge as a `src-<placement>` tag.
 - 2027 Annual Outlook: USD 88 until 31 Dec 2026, USD 138 from 1 Jan 2027. `/2027` holds both links in
   its own inline Alpine store (`Alpine.store('offer')` in `2027.html`), which switches link and copy at
   00:00 SGT 1 Jan; `2027.js` keeps the same constants for the other pages (the homepage has its own

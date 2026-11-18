@@ -10,7 +10,7 @@
 // update with the same idempotency key, so it is safe.
 
 import { verifyStripeSignature, handleStripeEvent } from '../lib/billing-anchor.mjs';
-import { sendSignupAlert } from '../lib/signup-alert.mjs';
+import { checkoutSource, sendSignupAlert } from '../lib/signup-alert.mjs';
 import { checkoutEvents, sendToEncharge } from '../lib/encharge.mjs';
 
 export async function POST(request) {
@@ -40,7 +40,10 @@ export async function POST(request) {
       }
     } else {
       result = await handleStripeEvent(event, { apiKey });
-      if (['anchored', 'calendar-preserved'].includes(result.action)) Object.assign(result, await sendSignupAlert(event.data.object, result.anchor));
+      if (['anchored', 'calendar-preserved'].includes(result.action)) {
+        const source = await checkoutSource(event.data.object.id, { apiKey });
+        Object.assign(result, { source }, await sendSignupAlert(event.data.object, result.anchor, { source }));
+      }
     }
     console.log('stripe-webhook:', JSON.stringify(result));
     return Response.json(result);
