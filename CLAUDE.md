@@ -280,6 +280,10 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 - 2026-09-29: Replaced the stale Encharge setup steps with the current launch-gate pointer after
   domain verification and flow drafting; the pricing highlight moved to Calendar + Premium.
 
+## Automatic trial preparation start (19 November 2026)
+
+Jeff requested automatic preparation-order creation once a USD97 subscriber completes checkout and submits birth details. The signed webhook relays two live Stripe facts to the private report host; Olares matches the original form and creates one order and profile job. See `docs/TRIAL_ORDER_AUTOSTART.md`. Content review, publication and invitation remain separate. This supersedes older manual order/profile setup wording above, without changing billing or Encharge flows.
+
 ## Tooling (local sessions)
 - GitHub: local pushes use this machine's git creds (`gh auth` as `jefferyseah-max`).
 - olares-ssh MCP (`mcp__olares-ssh__exec`, host 192.168.1.3) reaches the shared vault
