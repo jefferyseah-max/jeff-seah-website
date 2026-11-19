@@ -274,7 +274,7 @@
           const verification = document.createElement('a');
           verification.className = 'btn btn-gold';
           verification.textContent = 'Verify my portal email';
-          verification.href = 'https://reports.jeffseah.rocks/members/auth/trial?session_id=' + encodeURIComponent(payload.stripeSessionId);
+          verification.href = 'https://reports.jeffseah.rocks/members/trial-auth?session_id=' + encodeURIComponent(payload.stripeSessionId);
           document.getElementById('successText').textContent = 'Please verify the portal email you entered. Your details may take a few minutes to arrive. Your personal apps will be ready within 5 working days after complete details are received.';
           document.getElementById('successText').after(verification);
         }
