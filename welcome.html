@@ -162,6 +162,8 @@
     const PORTAL_TRIAL = PLAN === '97';
     if (PORTAL_TRIAL) {
       document.getElementById('welcomeSub').textContent = 'Welcome to your 30-day trial. Two minutes: your personal Tong Shu is calculated from these details. Your sign-in link arrives by email within 5 working days.';
+      document.querySelector('label[for="email"]').textContent = 'Email for portal access and onboarding updates';
+      document.getElementById('email').insertAdjacentHTML('afterend', '<span class="lead-help">This may differ from your payment email. You will verify this address before we prepare your apps.</span>');
       document.getElementById('calendarEmailField').style.display = 'none'; // .lead-field sets display, so hidden alone is not enough
       document.getElementById('successText').innerHTML = 'Your personal Tong Shu is being set up. Expect an email with your sign-in link within 5 working days. You can manage or cancel your plan anytime in <a href="https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00" target="_blank" rel="noopener noreferrer">Manage your plan</a>.';
     }
@@ -268,6 +270,14 @@
           body: JSON.stringify(payload)
         });
         form.hidden = true;
+        if (PORTAL_TRIAL) {
+          const verification = document.createElement('a');
+          verification.className = 'btn btn-gold';
+          verification.textContent = 'Verify my portal email';
+          verification.href = 'https://reports.jeffseah.rocks/members/auth/trial?session_id=' + encodeURIComponent(payload.stripeSessionId);
+          document.getElementById('successText').textContent = 'Please verify the portal email you entered. Your details may take a few minutes to arrive. Your personal apps will be ready within 5 working days after complete details are received.';
+          document.getElementById('successText').after(verification);
+        }
         successState.classList.add('visible');
         successState.scrollIntoView({ block: 'center', behavior: 'smooth' });
       } catch (err) {
