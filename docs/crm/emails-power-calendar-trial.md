@@ -2,7 +2,8 @@
 
 Drafted 2026-11-19 (Claude, with Jeff). **Built in Encharge 2026-11-19 (flows 415139 and 415144), switched off. Nothing sends until Jeff
 switches them on.** From: Jeff Seah <coaching@jeffseah.rocks>, reply-to the same. Every
-email carries Encharge's unsubscribe footer and mailing address.
+email signs off "Jeff" with jeffseah.rocks below and carries Encharge's unsubscribe link, with no postal address
+(Jeff removed it 2026-11-19, accepting the US CAN-SPAM risk).
 
 Customer-facing name: **Power Calendar** ("built on the Chinese Tong Shu almanac, read against your birth
 chart"). The app page itself is still titled "My Tongshu"; the emails name both once so the link is clear.
@@ -78,7 +79,8 @@ can use it from the first morning.
 You can manage or cancel your plan anytime here:
 [Manage your plan](https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00)
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -97,7 +99,8 @@ the box; your calendar still works.
 If you've already sent them, thank you, and please ignore this. If the form gives you any trouble, reply
 and I'll help you complete it.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -126,7 +129,8 @@ the important meeting, the launch or the hard conversation in advance, instead o
 
 Tomorrow: how to read a single day, down to the hour.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -153,7 +157,8 @@ with no converting.
 A simple way to start: open **My Week** on Monday morning, mark the one or two days that suit what you
 most need to do, and check the hours before anything important.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -174,7 +179,8 @@ new entries straight away.
 
 Your free trial runs until 30 days after you signed up. I'll remind you before it ends.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -192,4 +198,5 @@ If you'd rather stop, you can cancel before then and you won't be charged:
 Before you decide, open your calendar and look at next week: the days that suit what you need to do,
 and the ones to keep simple. That is what each month brings.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
