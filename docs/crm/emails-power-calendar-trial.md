@@ -1,14 +1,15 @@
 # Encharge email drafts: Power Calendar 30-day trial (Flow D)
 
-Drafted 2026-11-19 (Claude, with Jeff). **Nothing sends until Jeff approves the copy and the flow is built
-and switched on in Encharge.** From: Jeff Seah <coaching@jeffseah.rocks>, reply-to the same. Every
-email carries Encharge's unsubscribe footer and mailing address.
+Drafted 2026-11-19 (Claude, with Jeff). **Built in Encharge 2026-11-19 (flows 415139 and 415144), switched off. Nothing sends until Jeff
+switches them on.** From: Jeff Seah <coaching@jeffseah.rocks>, reply-to the same. Every
+email signs off "Jeff" with jeffseah.rocks below and carries Encharge's unsubscribe link, with no postal address
+(Jeff removed it 2026-11-19, accepting the US CAN-SPAM risk).
 
 Customer-facing name: **Power Calendar** ("built on the Chinese Tong Shu almanac, read against your birth
 chart"). The app page itself is still titled "My Tongshu"; the emails name both once so the link is clear.
 Rulings D9 and D10 still apply: no email invites a question. Replying is offered only for form trouble.
 
-Merge fields: `{{ person.firstName }}`. Links marked **[CHECK]** need Jeff's confirmation before activation.
+Merge fields: `{{ person.firstName }}`. Review copy for Jeff (all series, editable): https://claude.ai/artifact/VnWF2pH2nGDWL2BGsSkCZk
 
 ---
 
@@ -49,8 +50,8 @@ keeps Calendar-only billing on the trial end, not the 15th), so day 25 gives fiv
 4. **Portal readiness for other clients.** The portal guide (`Client Monthly Workflow/docs/PERSONAL_BAZI_TONGSHU_PORTAL.md`)
    describes My Tongshu as a Jeffery-only pilot. D3 and D4 describe the app as it is for Jeffery; confirm a
    trial client sees the same sections before these send.
-5. **Time zone.** My Week, entries and hours show in Singapore time. US, NZ and AU clients will read them
-   as local unless told. D3 says so plainly; Jeff to decide whether that is the long-term answer.
+5. **Time zone.** Settled 2026-11-19 (Jeff): Tong Shu hours apply in the client's local time, so no conversion
+   is needed anywhere; D3 says so.
 6. **Stripe's own trial reminder.** If Settings > Billing > Subscriptions and emails > "trial ending"
    reminders is on, clients get Stripe's email and D5. Keep one; D5 is warmer and names what they keep.
 
@@ -78,7 +79,8 @@ can use it from the first morning.
 You can manage or cancel your plan anytime here:
 [Manage your plan](https://billing.stripe.com/p/login/aFa28t3Uz6Oq6A2fCFbwk00)
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -97,7 +99,8 @@ the box; your calendar still works.
 If you've already sent them, thank you, and please ignore this. If the form gives you any trouble, reply
 and I'll help you complete it.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -126,7 +129,8 @@ the important meeting, the launch or the hard conversation in advance, instead o
 
 Tomorrow: how to read a single day, down to the hour.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -147,12 +151,14 @@ Tap any date in your calendar and it opens in full. Here is how to read it, top 
 5. **Hours.** Swipe along the strip: **Best** hours in red, **Usable** in green, **Avoid** in dark. When
    a day is mixed, the hours tell you when within it to act.
 
-All dates and hours are shown in Singapore time, so allow for your own time zone when you plan. **[CHECK]**
+Every time is your own local time, wherever you live: a Best hour of 1pm to 3pm means 1pm to 3pm where you are,
+with no converting.
 
 A simple way to start: open **My Week** on Monday morning, mark the one or two days that suit what you
 most need to do, and check the hours before anything important.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -163,17 +169,18 @@ Hi {{ person.firstName }},
 
 Your Power Calendar is ready.
 
-**[Sign in to your Power Calendar]([CHECK: portal sign-in link])**
+**[Sign in to your Power Calendar](https://reports.jeffseah.rocks/members/portal/tongshu/)**
 
 Start with **My Week** at the top: it shows the days that matter this week. Tap any date for the full
 reading, down to the best hours.
 
-Your calendar updates on its own. If you have it open, the Refresh button at the bottom picks up any
-new entries straight away.
+Once it is set up, your calendar rarely changes. If you want to check for anything new, tap the Refresh
+button at the bottom.
 
 Your free trial runs until 30 days after you signed up. I'll remind you before it ends.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -191,4 +198,5 @@ If you'd rather stop, you can cancel before then and you won't be charged:
 Before you decide, open your calendar and look at next week: the days that suit what you need to do,
 and the ones to keep simple. That is what each month brings.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)

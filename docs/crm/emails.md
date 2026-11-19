@@ -6,7 +6,8 @@ reply-to the same.
 
 Merge fields (Encharge syntax): `{{ person.firstName }}`, `{{ person.reportDue }}` (for example
 "Sunday 4 October", set at intake), `{{ person.reportUrl }}` (set at delivery), `{{ person.edition }}`.
-Every email carries Encharge's unsubscribe footer and the mailing address.
+Every email signs off "Jeff" with jeffseah.rocks below and carries Encharge's unsubscribe link. No postal
+address (Jeff removed it 2026-11-19, accepting the US CAN-SPAM risk).
 
 ---
 
@@ -29,7 +30,8 @@ outlook still works, and only the directions section gets shorter.
 
 Your report arrives within 7 days of your details reaching me.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ### A2. 48 hours later, only if tag `intake-received` is missing
 **Subject:** I can't start your chart yet
@@ -42,7 +44,8 @@ A quick nudge: I don't have your birth details yet, so your 2027 Outlook hasn't 
 
 If the form gives you any trouble, reply and I will help you complete it.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -65,7 +68,8 @@ it and write your year. You'll get a private page and a PDF.
 One more thing is included: **a sample month of your Power Calendar**, free. It is your best and hardest
 days for next month, on a private web page beside your report. No card, nothing to do.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ### B2. Day 3
 **Subject:** How to read your Outlook when it lands
@@ -81,7 +85,8 @@ Your outlook is coming together. Here is how to get the most from it in twenty m
 You chose the {{ person.edition }} edition to open first. Both editions are on the same page, so you can
 switch any time.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ### B3. Day 6
 **Subject:** Nearly there
@@ -94,7 +99,8 @@ inside) by {{ person.reportDue }}.
 If anything has changed since you wrote to me, a new decision on the table or a date you're weighing,
 reply and tell me. I'll make sure the reading covers it.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ---
 
@@ -116,7 +122,8 @@ Your 2027 Annual Outlook is ready:
 
 Start with the Start Here tab. It opens first and walks you through your year.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ### C2. Day 3
 **Subject:** Three ways clients use their Outlook
@@ -129,7 +136,8 @@ After a few days with your outlook, here are three ways to put it to work:
 2. **Before you commit money**, look up "review money" and "negotiate" in When To.
 3. **When you feel stuck**, sit with your back to your clarity direction and write the decision down.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ### C3. Day 7
 **Subject:** Your sample Power Calendar month
@@ -145,7 +153,8 @@ strongest and weakest days of the next full month for your chart. Try planning a
 what you notice. The sample does not add anything to your Google Calendar or start a subscription. If
 you join a monthly plan, I will share your ongoing Power Calendar directly with your Google account.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ### C4. Day 14
 **Subject:** Try three months of Power Calendar at half price
@@ -166,7 +175,8 @@ anytime.
 You can [compare the plans](https://www.jeffseah.rocks/#pricing) before deciding. Please reply to
 claim the discount rather than checking out through the standard pricing page.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ### C5. Day 24
 **Subject:** Your Power Calendar invitation
@@ -182,7 +192,8 @@ The 50% invitation is still available if you want to keep using your personal ti
 Reply **CALENDAR** or **BRIEF** and I will arrange it and confirm the billing dates before you join.
 Your free sample needs no cancellation and does not charge you.
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)
 
 ### C6. Day 40
 **Subject:** The decision you wrote to me about
@@ -194,4 +205,5 @@ is close, a **Single Session** is an hour with me on exactly that: your chart, y
 
 **[Book a Single Session](https://www.jeffseah.rocks/book)** (USD 197)
 
-Jeff
+Jeff  
+[jeffseah.rocks](https://www.jeffseah.rocks)

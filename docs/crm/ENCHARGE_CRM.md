@@ -11,7 +11,16 @@ report's Start Here tab. C3 to C6 remain **disconnected**, so Flow C sends only 
 connecting C3 to C6 (sample-calendar link, three paid invoice discount, reply suppression). Not yet observed: a real buyer
 passing through Stripe -> webhook -> Encharge; watch the first live order.
 
-## Flow D: Power Calendar trial (drafted 2026-11-19, not built)
+## Flow D: Power Calendar trial (built 2026-11-19, switched OFF)
+
+Built in Encharge, both flows deactivated until Jeff switches them on:
+- `Power Calendar Trial - Welcome to Trial End` (ID `415139`, duplicated from Flow A, then rebuilt):
+  Subscription Started -> has `monthly-97` -> D1 -> wait 48 h -> has `intake-received`? yes: D2; no: D2R ->
+  wait 1 day -> D2. D2 -> wait 1 day -> D3 -> wait 22 days -> has `monthly-cancelled`? no: D5.
+  Its emails are new (D1, D2R, D2, D3, D5); the copied A1/A2 emails were detached, not edited.
+- `Power Calendar Trial - Calendar Ready` (ID `415144`): Tag Added `power-calendar-ready` -> has `monthly-97` -> D4.
+  Jeff adds that tag to a contact once their portal access is set up.
+Email copy (editable review doc): https://claude.ai/artifact/VnWF2pH2nGDWL2BGsSkCZk
 
 Copy, flow map and activation gates: `docs/crm/emails-power-calendar-trial.md`. Trigger: "Subscription
 Started" with tag `monthly-97`. The webhook now tags `monthly-cancelled` (contact matched by `userId` =
