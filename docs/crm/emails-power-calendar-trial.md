@@ -174,8 +174,8 @@ Your Power Calendar is ready.
 Start with **My Week** at the top: it shows the days that matter this week. Tap any date for the full
 reading, down to the best hours.
 
-Your calendar updates on its own. If you have it open, the Refresh button at the bottom picks up any
-new entries straight away.
+Once it is set up, your calendar rarely changes. If you want to check for anything new, tap the Refresh
+button at the bottom.
 
 Your free trial runs until 30 days after you signed up. I'll remind you before it ends.
 
