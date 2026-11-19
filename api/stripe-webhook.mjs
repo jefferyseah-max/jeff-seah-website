@@ -13,6 +13,7 @@
 import { verifyStripeSignature, handleStripeEvent } from '../lib/billing-anchor.mjs';
 import { checkoutSource, sendSignupAlert } from '../lib/signup-alert.mjs';
 import { checkoutEvents, subscriptionEvents, sendToEncharge } from '../lib/encharge.mjs';
+import {relayTrialSignup} from '../lib/trial-order.mjs';
 
 export async function POST(request) {
   const apiKey = process.env.STRIPE_API_KEY;
@@ -29,6 +30,10 @@ export async function POST(request) {
 
   try {
     const event = JSON.parse(raw);
+    // Registration is idempotent and happens before existing CRM side effects.
+    // A receipt failure returns 500, allowing Stripe to retry the same signed fact.
+    const trialPreparation=process.env.TRIAL_ORDER_AUTOSTART_ENABLED==='enabled'
+      ?await relayTrialSignup(event,{secret:process.env.PORTAL_TRIAL_SIGNUP_SECRET}):null;
     let result;
     if (event.type === 'checkout.session.completed') {
       const events = checkoutEvents(event.data.object);
@@ -55,6 +60,7 @@ export async function POST(request) {
         Object.assign(result, { source }, await sendSignupAlert(event.data.object, result.anchor, { source }));
       }
     }
+    if(trialPreparation)result.trialPreparation=trialPreparation;
     console.log('stripe-webhook:', JSON.stringify(result));
     return Response.json(result);
   } catch (err) {
