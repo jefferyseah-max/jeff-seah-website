@@ -103,6 +103,24 @@ integration points): `docs/SITE_ARCHITECTURE.md`. Read it before CRM or design w
 | `.vercelignore` | Keeps `tests/`, `docs/`, `scripts/`, `ops/` and `*.md` off the public site |
 
 ## Pending
+**Outstanding from the 2026-11-19 session (exit video, source tracking, Flow D). Jeff resumes these with the next agent:**
+1. Switch on Flow D in Encharge (`Power Calendar Trial - Welcome to Trial End` 415139 and `- Calendar Ready` 415144,
+   built and test-sent, both OFF). Jeff decides first: does D4 replace his manual sign-in email or follow it; keep
+   Stripe's trial-ending reminder or D5 (not both; check Stripe Settings > Billing > Subscriptions and emails); and
+   portal access for trial clients (the pilot is still Jeffery-only, see below). Copy: https://claude.ai/artifact/VnWF2pH2nGDWL2BGsSkCZk
+2. Jeff's own test trial (`sub_1UdCjLRmcvZfydHf7tqcod8n`, checkout `jefferyseah@gmail.com`, intake `awaken.warrior@gmail.com`)
+   charges USD 97 on 19 Dec 2026 unless cancelled in the portal; Jeff kept it to test Flow D. Its test rows are in Sheet
+   tabs `stripe-signups` and `monthly-welcome`. Its Encharge contact predates `userId`, so its cancellation will not tag it.
+3. Postal address: Jeff removed it from all 17 Encharge emails (accepting the US CAN-SPAM risk). When he has a PO box or
+   virtual mailbox, set it in Encharge account settings and put `{{account.mailingAddressSingleLine}}` back in the footers.
+4. Email polish: Gmail filed D2 and D3 under Promotions; sender name shows "Jeffery Seah" (sign-off is "Jeff");
+   C3 and C4 still promise Google Calendar delivery and must be reworded before they are connected.
+5. First real sign-up: its "New subscriber" email subject should read "via home / power_calendar / exit_2027 /
+   2027_footer", not "via unknown" (proves the billing-anchor key's new Checkout Sessions read permission).
+6. Longer Power Calendar walkthrough video for `/power-calendar`, plus a "Find out more" link from the homepage subscribe
+   card. Build notes and script: `docs/design/TONGSHU_WALKTHROUGH_VIDEO.md`, `scripts/video/`.
+7. An "Unnamed email" exists in Encharge that no agent created this session; Jeff to delete it if he does not recognise it.
+
 **Outstanding from the 2026-11-18 Tong Shu trial switch (who does it):**
 - Portal access for trial users does not exist yet: the portal is Jeffery-only (uploader accepts only his package; each
   person needs a client record, mapping and paid end date; no Stripe link). A `97-portal-trial` intake must be set up by
