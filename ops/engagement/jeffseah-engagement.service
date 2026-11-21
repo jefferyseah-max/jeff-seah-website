@@ -2,7 +2,6 @@
 Description=Collect anonymous website engagement to Olares
 Wants=network-online.target
 After=network-online.target
-OnFailure=alert-unit-failed@%n.service
 
 [Service]
 Type=oneshot
@@ -10,7 +9,6 @@ User=olares
 Group=olares
 UMask=0077
 ExecStart=/usr/bin/python3 /home/olares/jeffseah-engagement/collect.py
-ExecStopPost=/home/olares/cron-scripts/hb-report.sh jeffseah-engagement
 TimeoutStartSec=90
 NoNewPrivileges=true
 PrivateTmp=true
