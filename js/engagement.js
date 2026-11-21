@@ -5,7 +5,7 @@
   if (params.has('exit') || params.has('noanalytics') || navigator.webdriver) return;
   var endpoint = 'https://jeffseah-engagement.jefferyseah.workers.dev/events';
   var visit = crypto.randomUUID(), sequence = 0, queue = [], active = 0, depth = 0;
-  var lastTick = performance.now(), lastInput = lastTick, sent = {}, leaving = false;
+  var lastTick = performance.now(), lastInput = lastTick, sent = {}, leaving = false, lastSnapshot = '';
   var tags = {};
   try { var saved = JSON.parse(localStorage.getItem('js_attr') || 'null');
     if (saved && Date.now() - saved.at < 30 * 864e5) tags = saved;
@@ -39,7 +39,11 @@
       if (active >= seconds*1000) once('active:'+seconds, 'Active reading', {seconds:seconds});
     });
   }
-  function checkpoint() { tick(); track('Engagement', {active_seconds:Math.floor(active/1000), max_scroll:depth}); flush(); }
+  function checkpoint() {
+    tick(); var seconds=Math.floor(active/1000),snapshot=seconds+':'+depth;
+    if(snapshot!==lastSnapshot){lastSnapshot=snapshot;track('Engagement',{active_seconds:seconds,max_scroll:depth});}
+    flush();
+  }
   ['pointerdown','keydown','touchstart','scroll'].forEach(function (event) {
     addEventListener(event, function () { lastInput=performance.now(); }, {passive:true});
   });
@@ -52,7 +56,7 @@
     if (document.hidden) checkpoint(); else { lastTick=performance.now(); lastInput=lastTick; leaving=false; }
   });
   addEventListener('pagehide', function () { if(!leaving) { leaving=true; checkpoint(); } });
-  setInterval(tick,1000); setInterval(checkpoint,15000);
+  setInterval(tick,1000); setInterval(function(){if(!document.hidden)checkpoint();},15000);
   document.addEventListener('click', function (event) {
     var button=event.target.closest('button, a'); if(!button) return;
     var action=button.getAttribute('data-engagement');
