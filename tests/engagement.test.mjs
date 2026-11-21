@@ -44,3 +44,12 @@ test('exit CTA records a trial click and never submits the checkout URL or visit
  assert.deepEqual(JSON.parse(JSON.stringify(b.events().find(e=>e.name==='Trial checkout').data)),{placement:'exit_2027'});
  assert.doesNotMatch(JSON.stringify(b.events()),/buy.stripe|birth|email|oppref/);
 });
+
+test('guide analytics keep pages separate and accept fixed feature and link labels without URLs',()=>{
+ const cleaned=cleanEvent({...event,page:'portal-guide',name:'Link clicked',data:{target:'portal',placement:'hero',url:'https://private.invalid/?code=123456',email:'private@example.invalid'}});
+ assert.equal(cleaned.page,'portal-guide');
+ assert.deepEqual(cleaned.data,{placement:'hero',target:'portal'});
+ assert.equal(cleanEvent({...event,page:'not-allowed'}),null);
+ assert.deepEqual(cleanEvent({...event,page:'tongshu-guide',name:'Feature viewed',data:{feature:'saved-dates',trigger:'next'}}).data,{trigger:'next',feature:'saved-dates'});
+ assert.equal(cleanEvent(event).page,undefined);
+});
