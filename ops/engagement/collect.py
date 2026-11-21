@@ -1,4 +1,4 @@
-"""Drain the authenticated relay to local SQLite; report anonymous /2027 engagement."""
+"""Drain the authenticated relay to SQLite; report each anonymous page separately."""
 import argparse
 import datetime as dt
 import json
@@ -15,6 +15,8 @@ def database():
     connection.execute('PRAGMA journal_mode=WAL')
     connection.execute('CREATE TABLE IF NOT EXISTS events (id TEXT PRIMARY KEY, visit TEXT, name TEXT, received_at INTEGER, source TEXT, campaign TEXT, device TEXT, data TEXT)')
     connection.execute('CREATE INDEX IF NOT EXISTS events_time ON events(received_at)')
+    if 'page' not in {row[1] for row in connection.execute('PRAGMA table_info(events)')}:
+        connection.execute("ALTER TABLE events ADD COLUMN page TEXT NOT NULL DEFAULT '2027'")
     return connection
 
 def collect():
@@ -31,8 +33,8 @@ def collect():
             if not events:
                 break
             for event in events:
-                connection.execute('INSERT OR IGNORE INTO events VALUES (?,?,?,?,?,?,?,?)',
-                    (event['id'],event['visit'],event['name'],event['received_at'],event['source'],event['campaign'],event['device'],json.dumps(event['data'])))
+                connection.execute('INSERT OR IGNORE INTO events (id,visit,name,received_at,source,campaign,device,data,page) VALUES (?,?,?,?,?,?,?,?,?)',
+                    (event['id'],event['visit'],event['name'],event['received_at'],event['source'],event['campaign'],event['device'],json.dumps(event['data']),event.get('page','2027')))
             # Commit before ack. Replays after a lost acknowledgement cannot duplicate local records.
             connection.commit()
             if not request('/ack', {'ids':['event:'+event['id'] for event in events]}).get('ok'):
@@ -44,10 +46,10 @@ def collect():
         connection.execute('DELETE FROM events WHERE received_at < ?', (cutoff,))
     print(json.dumps({'ok':True,'received':total}))
 
-def report(days):
+def report(days, page='2027'):
     cutoff = int((dt.datetime.now(dt.timezone.utc)-dt.timedelta(days=days)).timestamp()*1000)
     with database() as connection:
-        rows = connection.execute('SELECT visit,name,received_at,source,campaign,device,data FROM events WHERE received_at>=? ORDER BY received_at', (cutoff,)).fetchall()
+        rows = connection.execute('SELECT visit,name,received_at,source,campaign,device,data FROM events WHERE received_at>=? AND page=? ORDER BY received_at', (cutoff,page)).fetchall()
     visits, counts, breakdown, sources, devices = {}, {}, {}, {}, {}
     for visit,name,received,source,campaign,device,raw in rows:
         data=json.loads(raw)
@@ -59,11 +61,11 @@ def report(days):
         if name=='Engagement':
             item['active_seconds']=max(item['active_seconds'],data.get('active_seconds',0))
             item['max_scroll']=max(item['max_scroll'],data.get('max_scroll',0))
-        label=data.get('trigger') or data.get('reason') or data.get('placement') or data.get('tool')
+        label=' / '.join(str(data[key]) for key in ['trigger','reason','placement','tool','target','feature','video','percent'] if key in data)
         if label:breakdown[name+': '+label]=breakdown.get(name+': '+label,0)+1
     times=sorted(value['active_seconds'] for value in visits.values())
     median=0 if not times else (times[len(times)//2]+times[(len(times)-1)//2])/2
-    print(json.dumps({'window_days':days,'generated_at':dt.datetime.now(dt.timezone.utc).isoformat(),
+    print(json.dumps({'page':page,'window_days':days,'generated_at':dt.datetime.now(dt.timezone.utc).isoformat(),
         'page_visits':counts.get('Page visit',0),'observed_visit_ids':len(visits),'events':counts,'breakdown':breakdown,
         'sources':sources,'devices':devices,'median_active_seconds':median,
         'average_active_seconds':round(sum(times)/len(times),1) if times else 0,
@@ -76,5 +78,6 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser()
     parser.add_argument('--report',action='store_true')
     parser.add_argument('--days',type=int,default=7,choices=range(1,91))
+    parser.add_argument('--page',choices=['2027','portal-guide','tongshu-guide'],default='2027')
     args=parser.parse_args()
-    report(args.days) if args.report else collect()
+    report(args.days,args.page) if args.report else collect()
