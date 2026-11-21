@@ -320,6 +320,7 @@
        is parsed: GSAP, then Alpine. The inline scripts in the body have registered their alpine:init listeners by then. -->
   <script defer src="/js/vendor/gsap-3.12.5.min.js"></script>
   <script defer src="/js/vendor/alpine-3.14.9.min.js"></script>
+  <script defer src="/js/engagement.js"></script>
   <script defer src="/js/measure.js"></script>
 </head>
 
@@ -511,7 +512,7 @@
                       :style="`left:${pos(i).x}%;top:${pos(i).y}%`"
                       :aria-pressed="(animal === i).toString()"
                       :aria-label="a.en + (i === 7 ? ', the 2027 year animal' : '')"
-                      @click="pick(i)"
+                      data-engagement="contact-clash" @click="pick(i)"
                       data-node>
                 <span class="font-han text-base sm:text-lg" x-text="a.cn"></span>
                 <span class="mt-0.5 text-[12px] font-bold sm:text-[13px]" x-text="a.en"></span>
@@ -524,7 +525,7 @@
             <label for="birthYear">Not sure? Enter your birth year</label>
             <input id="birthYear" type="number" inputmode="numeric" min="1920" max="2026" placeholder="1988"
                    class="focus-ring w-24 rounded-full border border-gold/25 bg-obsidian px-4 py-1.5 text-center font-mono text-[15px] text-ivory placeholder:text-ash focus:border-gold"
-                   x-model="birthYear" @input="fromYear()" />
+                   data-engagement="contact-clash" x-model="birthYear" @input="fromYear()" />
           </div>
           <p class="mx-auto mt-2 max-w-[400px] text-center text-base text-ash">Born 1 January to 3 February? Use the year before. The BaZi year turns at Li Chun, about 4 February.</p>
 
@@ -539,7 +540,7 @@
                       class="focus-ring rounded-2xl border px-3 py-3 text-left transition duration-300"
                       :class="season === s.key ? 'border-gold bg-gold/10' : 'hairline bg-white/[0.02] hover:border-gold/40'"
                       :aria-pressed="(season === s.key).toString()"
-                      @click="pickSeason(s.key)">
+                      data-engagement="contact-clash" @click="pickSeason(s.key)">
                 <span class="flex items-baseline justify-between gap-2">
                   <span class="text-[15px] font-bold" :class="season === s.key ? 'text-gold' : 'text-ivory'" x-text="s.label"></span>
                   <span class="font-han text-[15px] text-ash" x-text="s.cn"></span>
@@ -675,7 +676,7 @@
                   class="focus-ring inline-flex items-center gap-2.5 rounded-full border px-5 py-2.5 text-[15px] font-bold transition duration-300"
                   :class="goal === g.key ? 'border-gold bg-gold text-obsidian shadow-[0_8px_30px_-10px_rgba(212,175,55,0.7)]' : 'hairline bg-white/[0.02] text-ivory/80 hover:border-gold/50 hover:text-gold'"
                   :aria-pressed="(goal === g.key).toString()"
-                  @click="goal = g.key">
+                  data-engagement="when-to-index" @click="goal = g.key">
             <span class="h-4 w-4" x-html="g.icon" aria-hidden="true"></span>
             <span x-text="g.label"></span>
           </button>
@@ -2012,7 +2013,7 @@
         if (a && !box.contains(a)) sess(KEY + '-ordering', '1');
       }, true);
 
-      function open() {
+      function open(trigger) {
         if (blocked()) return;
         shown = true;
         store(KEY, String(Date.now()));
@@ -2021,10 +2022,13 @@
         document.documentElement.style.overflow = 'hidden';
         void box.offsetWidth; // commit the hidden state so the fade-in transition runs
         box.classList.add('is-open');
+        if (window.jsrEngagement) window.jsrEngagement('Popup shown', {trigger: typeof trigger === 'string' ? trigger : 'preview'});
         box.querySelector('[data-xo-cta]').focus({ preventScroll: true });
         playVideo();
       }
-      function close() {
+      function close(reason) {
+        if (box.hidden || !box.classList.contains('is-open')) return;
+        if (window.jsrEngagement) window.jsrEngagement('Popup dismissed', {reason: typeof reason === 'string' ? reason : 'close'});
         if (vid) vid.pause();
         box.classList.remove('is-open');
         document.documentElement.style.overflow = '';
@@ -2068,11 +2072,11 @@
         });
       }
 
-      box.querySelectorAll('[data-xo-close]').forEach(el => el.addEventListener('click', close));
-      box.querySelector('[data-xo-cta]').addEventListener('click', () => setTimeout(close, 300));
+      box.querySelectorAll('[data-xo-close]').forEach(el => el.addEventListener('click', () => close(el.classList.contains('xo-skip') ? 'keep-reading' : 'close')));
+      box.querySelector('[data-xo-cta]').addEventListener('click', () => setTimeout(() => close('checkout'), 300));
       document.addEventListener('keydown', e => {
         if (box.hidden) return;
-        if (e.key === 'Escape') return close();
+        if (e.key === 'Escape') return close('escape');
         if (e.key !== 'Tab') return;
         const f = [...box.querySelectorAll('a[href], button')];
         const first = f[0], last = f[f.length - 1];
@@ -2085,7 +2089,7 @@
 
       // Desktop: the pointer leaves the window through the top edge (towards the tabs, back button or address bar).
       document.addEventListener('mouseout', e => {
-        if (armed && !e.relatedTarget && e.clientY <= 8) open();
+        if (armed && !e.relatedTarget && e.clientY <= 8) open('desktop-exit');
       });
 
       // Phones and tablets: a quick flick back up after reading at least two screens down.
@@ -2102,7 +2106,7 @@
           const dt = t - lastT;
           if (dt > 40) {
             const speed = (lastY - y) / dt; // px per ms, positive when moving up
-            if (armed && deepest > innerHeight * 2 && speed > 2.5 && y < deepest - innerHeight) open();
+            if (armed && deepest > innerHeight * 2 && speed > 2.5 && y < deepest - innerHeight) open('mobile-scroll');
             lastY = y; lastT = t;
           }
         }, { passive: true });
