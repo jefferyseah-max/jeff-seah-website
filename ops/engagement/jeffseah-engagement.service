@@ -17,4 +17,3 @@ PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
 ReadWritePaths=/home/olares/jeffseah-engagement /home/olares/coach
-
