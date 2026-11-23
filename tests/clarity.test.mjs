@@ -23,20 +23,24 @@ function browser(options = {}) {
   }
   const sensitive = element('form');
   const footer = element('footer');
+  const quoteChoice = options.quoteChoice ? {hidden: false} : null;
+  let quoteObserver;
   const document = {currentScript: {dataset: {clarityProject: 'test-project',
     clarityHosts: 'www.jeffseah.rocks', clarityPaths: '/,/2027,/privacy', clarityPrivacy: '/privacy'}},
     readyState: 'complete', referrer: options.referrer || '', body: element('body'), head: element('head'),
-    createElement: element, querySelector: () => footer, querySelectorAll: () => [sensitive]};
+    createElement: element, querySelector: selector => selector === 'footer' ? footer : quoteChoice, querySelectorAll: () => [sensitive]};
   const location = {hostname: 'www.jeffseah.rocks', pathname: '/2027', search: '',
     reload: () => reloads++, ...options.location};
   const navigator = {webdriver: false, ...options.navigator};
   if (options.choice) storage.set('optional-clarity-v1', JSON.stringify({choice: options.choice, at: options.at ?? Date.now()}));
   const context = {document, location, navigator, URL, URLSearchParams, Date, console,
+    MutationObserver: class { constructor(callback) { quoteObserver = callback; } observe() {} },
     localStorage: {getItem: key => storage.get(key), setItem: (key, value) => storage.set(key, value)},
     addEventListener: (name, handler) => listeners[name] = handler};
   context.window = context;
   vm.runInNewContext(source, context);
-  return {context, document, elements, listeners, storage, sensitive, footer,
+  return {context, document, elements, listeners, storage, sensitive, footer, quoteChoice,
+    updateQuote: () => quoteObserver(),
     panel: elements.find(el => el.tagName === 'aside'),
     scripts: () => elements.filter(el => el.tagName === 'script'),
     reloads: () => reloads};
@@ -101,4 +105,13 @@ test('another tab can grant and revoke consent', () => {
   page.storage.set('optional-clarity-v1', JSON.stringify({choice: 'decline', at: Date.now()}));
   page.listeners.storage({key: 'optional-clarity-v1'});
   assert.equal(page.reloads(), 1);
+});
+test('the optional notice waits until the separate advertising choice is resolved', () => {
+  const page = browser({quoteChoice: true});
+  assert.equal(page.panel.hidden, true);
+  assert.equal(page.scripts().length, 0);
+  page.quoteChoice.hidden = true;
+  page.updateQuote();
+  assert.equal(page.panel.hidden, false);
+  assert.equal(page.scripts().length, 0);
 });

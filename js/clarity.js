@@ -96,6 +96,13 @@
     (document.querySelector('footer') || document.body).appendChild(preferences);
     var choice = savedChoice();
     panel.hidden = choice !== null;
+    // Avoid stacking this notice over Home Reno's separate ad-measurement choice.
+    var quoteChoice = document.querySelector('#quote-measurement-choice');
+    if (quoteChoice) {
+      function updateNotice() { panel.hidden = savedChoice() !== null || !quoteChoice.hidden; }
+      updateNotice();
+      new MutationObserver(updateNotice).observe(quoteChoice, { attributes: true, attributeFilter: ['hidden'] });
+    }
     if (choice === 'allow') start();
     window.addEventListener('storage', function (event) {
       if (event.key !== key) return;
